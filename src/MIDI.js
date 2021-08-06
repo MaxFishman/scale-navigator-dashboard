@@ -1,15 +1,13 @@
-import Snui from './Snui';
-
-const Navigation = () => {
+const MIDI = () => {
   return(
-      <div id="Navigation">
+      <div id="MIDI">
         <div>
           <div id="title_container">scale navigator</div>
           <div id="logo">dashboard</div>
           <p id="author">by <a href="https://www.nathanturczan.com/">Nathan Turczan</a></p>
         </div>
         <div className="scalenav_container">
-          <Snui />
+          <div className="Sketch" />
         </div>
         <div id="autopilot_container">
           <form>
@@ -27,4 +25,4 @@ const Navigation = () => {
 
 
 
-export default Navigation;
+export default MIDI;

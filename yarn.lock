@@ -6584,6 +6584,7 @@
     "jest-snapshot" "^26.6.2"
 
 "jest-resolve@*":
+  "integrity" "sha512-tRAz2bwraHufNp+CCmAD8ciyCpXCs1NQxB5EJAmtCFy6BN81loFEGWKzYu26Y62lAJJe4X4jg36Kf+NsQyiStQ=="
   "version" "26.6.0"
   dependencies:
     "@jest/types" "^26.6.0"
@@ -8010,6 +8011,11 @@
   "resolved" "https://registry.npmjs.org/p-try/-/p-try-2.2.0.tgz"
   "version" "2.2.0"
 
+"p5@^1.3.1":
+  "integrity" "sha512-U888W2ChcIzPhRhnv4FkNhaa4f5BDIWZfLhzvx9ZrQ5KtkZr/+o1UPIicV3yWTRy0HEG23NviHyDR3kgjaJ9wA=="
+  "resolved" "https://registry.npmjs.org/p5/-/p5-1.4.0.tgz"
+  "version" "1.4.0"
+
 "p5@1.1.9":
   "integrity" "sha512-gU+UBEAXLGt3RQFzTtsKijF+eBidweIqRrg51AniuLG8LKHzylrB5ilIOzyDgcR1/hWt6danWPArjaVtXHWfWg=="
   "resolved" "https://registry.npmjs.org/p5/-/p5-1.1.9.tgz"
@@ -9264,6 +9270,13 @@
   "integrity" "sha512-NAnt2iGDXohE5LI7uBnLnqvLQMtzhkiAOLXTmv+qnF9Ky7xAPcX8Up/xWIhxvLVGJvuLiNc4xQLtuqDRzb4fSA=="
   "resolved" "https://registry.npmjs.org/react-is/-/react-is-17.0.1.tgz"
   "version" "17.0.1"
+
+"react-p5-wrapper@^2.4.1":
+  "integrity" "sha512-sCxG5LTK7qymrr7mK2OE5KRpcbEybpz2SFBK4RM+eCfTjwgRjc/o9MqXz9qgM/W7/eISTCycRT9S1WdBIiQPEg=="
+  "resolved" "https://registry.npmjs.org/react-p5-wrapper/-/react-p5-wrapper-2.4.1.tgz"
+  "version" "2.4.1"
+  dependencies:
+    "p5" "^1.3.1"
 
 "react-p5@^1.3.19":
   "integrity" "sha512-jA/xmFOHiy6pIjlwMVu3hfcD9brB9pbfl5BSF0SCiruye6xjzv4jkcmTUKP0lgiTdcdEgu2CpAI7VFH05eaFJg=="
