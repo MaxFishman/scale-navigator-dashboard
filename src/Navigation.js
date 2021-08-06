@@ -1,4 +1,4 @@
-import Snui from './Snui';
+import Pfivesketch from './Pfivesketch';
 
 const Navigation = () => {
   return(
@@ -9,7 +9,7 @@ const Navigation = () => {
           <p id="author">by <a href="https://www.nathanturczan.com/">Nathan Turczan</a></p>
         </div>
         <div className="scalenav_container">
-          <Snui />
+          <Pfivesketch />
         </div>
         <div id="autopilot_container">
           <form>

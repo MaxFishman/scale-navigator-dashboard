@@ -1,7 +1,13 @@
 import React from 'react'
 import Sketch from 'react-p5'
 
-function Snui() {
+function Pfivesketch() {
+
+  const fps = 30;
+  const note_names = ["C", "D♭", "D", "E♭", "E", "F", "F#", "G", "A♭", "A", "B♭", "B"];
+
+  var nav, tab;
+
   const setup = (p5, canvasParentRef) => {
     p5.createCanvas(500, 400).parent(canvasParentRef)
   }
@@ -15,4 +21,4 @@ function Snui() {
   return <Sketch setup={setup} draw={draw} />
 }
 
-export default Snui
+export default Pfivesketch
