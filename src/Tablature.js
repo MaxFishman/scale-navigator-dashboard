@@ -1,3 +1,13 @@
+import Pfivesketch from "./Pfivesketch";
+import data from "./Data";
+
+import showPianoNotes from "./tablature_scripts/pianoscript"
+import displayFluteDiagrams from "./tablature_scripts/flutescript"
+import showGuitarNotes from "./tablature_scripts/guitarscript"
+import showCircleChords from "./tablature_scripts/chordcirclescript"
+
+import $ from "jquery";
+
 class TablatureManager {
     constructor() {
         $(document).ready(function() {
@@ -27,7 +37,7 @@ class TablatureManager {
         });
     }
 
-    setScale(key = random(Object.keys(data["scales"]))) {
+    setScale(key = Pfivesketch.p5.random(Object.keys(data["scales"]))) {
         var keyData = data["scales"][key]
 
         showPianoNotes(keyData.pitch_classes);
@@ -39,4 +49,4 @@ class TablatureManager {
     }
 }
 
-export default TablatureManager
+export default { TablatureManager }
