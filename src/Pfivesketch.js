@@ -3,23 +3,25 @@ import Sketch from 'react-p5'
 
 //pass in p5 in the draw func, and only where its needed. 
 
+import TablatureManager from './Tablature';
+import Navigator from './Navigator';
 // import Polygon from './Polygon'
 // import Helper from './Helper'
 
 function Pfivesketch() {
 
-    this.fps = 30;
-    this.note_names = ["C", "D♭", "D", "E♭", "E", "F", "F#", "G", "A♭", "A", "B♭", "B"];
+    var fps = 30;
+    var note_names = ["C", "D♭", "D", "E♭", "E", "F", "F#", "G", "A♭", "A", "B♭", "B"];
 
-    this.nav;
-    this.tab;
+    var nav = undefined;
+    var tab = undefined;
 
     const setup = (p5, canvasParentRef) => {
         p5.createCanvas(500, 400).parent(canvasParentRef)
-        p5.frameRate(this.fps)
+        p5.frameRate(fps)
 
-        this.nav = new Navigator();
-        this.tab = new Tab
+        nav = new Navigator();
+        tab = new TablatureManager();
     }
 
     const draw = p5 => {

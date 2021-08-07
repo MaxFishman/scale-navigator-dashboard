@@ -1,15 +1,18 @@
-const default_animation_curve = (x) => { return (1 / (1 + pow(x / (1 - x), -3))) };
+import Polygon from "./Polygon";
+
+const default_animation_curve = (x) => { return (1 / (1 + Math.pow(x / (1 - x), -3))) };
 
 class Navigator {
     constructor() {
-        this.main_polygon
+        this.main_polygon = undefined;
         this.neighbors = [];
-        this.old_main_polygon
-        this.old_neighbors;
-        this.last_clicked_polygon, this.actually_new_polygons;
-        this.preview_polygons = []
-        this.poly_size = 75
-        this.preview_polygons_ready = false
+        this.old_main_polygon = undefined;
+        this.old_neighbors = undefined;
+        this.last_clicked_polygon = undefined;
+        this.actually_new_polygons = undefined;;
+        this.preview_polygons = [];
+        this.poly_size = 75;
+        this.preview_polygons_ready = false;
 
         // create the initial polygons
         this.main_polygon = new Polygon(0.5, 0.5, this.poly_size, "c_diatonic")

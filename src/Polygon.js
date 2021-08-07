@@ -13,7 +13,6 @@ import default_animation_curve from './Navigator.js'
 
 class Polygon {
     constructor(x, y, size, scale) {
-
         this.x = x
         this.y = y
         this.radius = size;
@@ -45,98 +44,98 @@ class Polygon {
         this.name = `${Pfivesketch.note_names[this.data.root]} ${this.data.scale_class.replace("_", " ")}`;
     }
 
-    draw(p5) {
-        p5.push()
-        this.animation_lerp(p5);
+    draw() {
+        Pfivesketch.p5.push()
+        this.animation_lerp();
 
         // translate so we dont have to always write x and y
-        p5.translate(this.x * p5.width, this.y * p5.height)
+        Pfivesketch.p5.translate(this.x * Pfivesketch.p5.width, this.y * Pfivesketch.p5.height)
 
-        p5.noStroke();
-        var angle = p5.TWO_PI / this.points_count;
+        Pfivesketch.p5.noStroke();
+        var angle = Pfivesketch.p5.TWO_PI / this.points_count;
         var fontcolor;
-        p5.beginShape();
+        Pfivesketch.p5.beginShape();
 
         // set the color
         // we always have the color as an array of 3 numbers even if it's grey
         // we need that cuz we also push in the opacity (alpha channel) 
         if (this.data.scale_class == "whole_tone") {
-            fontcolor = Array(3).fill(p5.map(this.data.root % 2, 0, 1, 200, 150));
+            fontcolor = Array(3).fill(Pfivesketch.p5.map(this.data.root % 2, 0, 1, 200, 150));
         } else if (this.data.scale_class == "octatonic") {
-            fontcolor = Array(3).fill(p5.map(this.data.root % 3, 0, 2, 200, 133));
+            fontcolor = Array(3).fill(Pfivesketch.p5.map(this.data.root % 3, 0, 2, 200, 133));
         } else if (this.data.scale_class == "hexatonic") {
-            fontcolor = Array(3).fill(p5.map(this.data.root % 4, 0, 3, 200, 100));
+            fontcolor = Array(3).fill(Pfivesketch.p5.map(this.data.root % 4, 0, 3, 200, 100));
         } else {
-            fontcolor = hsvToRgb(p5.map((this.data.root * 7) % 12, 11, 0, 0, 1),
-                p5.map((this.data.root * 7) % 12, 0, 11, 0.1, 0.5),
+            fontcolor = hsvToRgb(Pfivesketch.p5.map((this.data.root * 7) % 12, 11, 0, 0, 1),
+                Pfivesketch.p5.map((this.data.root * 7) % 12, 0, 11, 0.1, 0.5),
                 1);
         }
 
 
         // add in the opacity
         fontcolor.push(255 * this.opacity);
-        p5.fill(fontcolor);
+        Pfivesketch.p5.fill(fontcolor);
 
         // draw the polygon
         // addaptation of your code to the object
         // add p5 to all relevant funcs
         if (this.points_count == 12) {
-            for (let a = 0; a < p5.TWO_PI; a += angle) {
-                let sx = Math.cos(a + (p5.TWO_PI / 24)) * this.radius;
-                let sy = Math.sin(a + (p5.TWO_PI / 24)) * this.radius;
-                p5.vertex(sx, sy);
+            for (let a = 0; a < Pfivesketch.p5.TWO_PI; a += angle) {
+                let sx = Math.cos(a + (Pfivesketch.p5.TWO_PI / 24)) * this.radius;
+                let sy = Math.sin(a + (Pfivesketch.p5.TWO_PI / 24)) * this.radius;
+                Pfivesketch.p5.vertex(sx, sy);
             }
         } else if (this.points_count == 6) {
             if (this.data.scale_class == "diatonic") {
-                for (let a = 0; a < p5.TWO_PI; a += angle) {
-                    let sx = Math.cos(a + (p5.TWO_PI / 12)) * this.radius;
-                    let sy = Math.sin(a + (p5.TWO_PI / 12)) * this.radius;
-                    p5.vertex(sx, sy);
+                for (let a = 0; a < Pfivesketch.p5.TWO_PI; a += angle) {
+                    let sx = Math.cos(a + (Pfivesketch.p5.TWO_PI / 12)) * this.radius;
+                    let sy = Math.sin(a + (Pfivesketch.p5.TWO_PI / 12)) * this.radius;
+                    Pfivesketch.p5.vertex(sx, sy);
                 }
             }
             if (this.data.scale_class == "acoustic") {
-                p5.vertex(this.radius, this.radius * 0.5);
-                p5.vertex(-this.radius, this.radius * 0.5);
-                p5.vertex(-this.radius, -this.radius * 0.5);
-                p5.vertex(this.radius, -this.radius * 0.5);
+                Pfivesketch.p5.vertex(this.radius, this.radius * 0.5);
+                Pfivesketch.p5.vertex(-this.radius, this.radius * 0.5);
+                Pfivesketch.p5.vertex(-this.radius, -this.radius * 0.5);
+                Pfivesketch.p5.vertex(this.radius, -this.radius * 0.5);
             }
             if (this.data.scale_class == "whole_tone") {
-                p5.vertex(-this.radius * 0.5, -this.radius);
-                p5.vertex(this.radius * 0.5, -this.radius);
-                p5.vertex(this.radius * 0.5, this.radius);
-                p5.vertex(-this.radius * 0.5, this.radius);
+                Pfivesketch.p5.vertex(-this.radius * 0.5, -this.radius);
+                Pfivesketch.p5.vertex(this.radius * 0.5, -this.radius);
+                Pfivesketch.p5.vertex(this.radius * 0.5, this.radius);
+                Pfivesketch.p5.vertex(-this.radius * 0.5, this.radius);
             }
             if (this.data.scale_class == "hexatonic") {
-                p5.vertex(this.radius * 0.65, this.radius);
-                p5.vertex(this.radius * 0.65, -this.radius);
-                p5.vertex(-this.radius, this.radius * 0.01);
+                Pfivesketch.p5.vertex(this.radius * 0.65, this.radius);
+                Pfivesketch.p5.vertex(this.radius * 0.65, -this.radius);
+                Pfivesketch.p5.vertex(-this.radius, this.radius * 0.01);
             }
             if (this.data.scale_class == "harmonic_major") {
-                p5.vertex(this.radius, this.radius * 0.25);
-                p5.vertex(-this.radius, this.radius * 1.25);
-                p5.vertex(-this.radius, -this.radius * 0.25);
-                p5.vertex(this.radius, -this.radius * 1.75);
+                Pfivesketch.p5.vertex(this.radius, this.radius * 0.25);
+                Pfivesketch.p5.vertex(-this.radius, this.radius * 1.25);
+                Pfivesketch.p5.vertex(-this.radius, -this.radius * 0.25);
+                Pfivesketch.p5.vertex(this.radius, -this.radius * 1.75);
             }
             if (this.data.scale_class == "harmonic_minor") {
-                p5.vertex(this.radius, this.radius * 1.25);
-                p5.vertex(-this.radius, this.radius * 0.25);
-                p5.vertex(-this.radius, -this.radius * 1.75);
-                p5.vertex(this.radius, -this.radius * 0.25);
+                Pfivesketch.p5.vertex(this.radius, this.radius * 1.25);
+                Pfivesketch.p5.vertex(-this.radius, this.radius * 0.25);
+                Pfivesketch.p5.vertex(-this.radius, -this.radius * 1.75);
+                Pfivesketch.p5.vertex(this.radius, -this.radius * 0.25);
             }
         }
-        p5.endShape(p5.CLOSE);
+        Pfivesketch.p5.endShape(Pfivesketch.p5.CLOSE);
 
         //write the text
-        p5.fill(80, 80, 80, 255 * this.opacity);
+        Pfivesketch.p5.fill(80, 80, 80, 255 * this.opacity);
         var font_size_2 = this.radius / 3;
         var scale_class = this.data.scale_class.replace("_", "\n");
-        p5.textSize(font_size_2);
-        p5.textAlign(p5.CENTER, p5.CENTER);
+        Pfivesketch.p5.textSize(font_size_2);
+        Pfivesketch.p5.textAlign(Pfivesketch.p5.CENTER, Pfivesketch.p5.CENTER);
 
-        p5.text(Pfivesketch.note_names[this.data.root], 0, -font_size_2 / 2);
+        Pfivesketch.p5.text(Pfivesketch.note_names[this.data.root], 0, -font_size_2 / 2);
         // the mess at the end of the line just checks if the text has 2 lines and then it offsets the text more if necessary
-        p5.text(scale_class, 0, (scale_class.split("\n").length > 1 ? font_size_2 : font_size_2 / 2)); //print out scale class
-        p5.pop()
+        Pfivesketch.p5.text(scale_class, 0, (scale_class.split("\n").length > 1 ? font_size_2 : font_size_2 / 2)); //print out scale class
+        Pfivesketch.p5.pop()
     }
 
     getNeighbors(neighbor_size = this.radius / 2, offset_radius = this.radius * 2.5, start_angle = 3.14159265358979323846 / 2, end_angle = 5 / 2 * 3.14159265358979323846) {
@@ -159,7 +158,7 @@ class Polygon {
         return neigh
     }
 
-    getNeighborPositions(x = this.x, y = this.y, size = this.radius, neighbor_size = undefined, offset_radius = undefined, start_angle = 3.14159265358979323846 / 2, end_angle = 5 / 2 * 3.14159265358979323846, total_neigh = this.data.adjacent_scales.length, p5) {
+    getNeighborPositions(x = this.x, y = this.y, size = this.radius, neighbor_size = undefined, offset_radius = undefined, start_angle = 3.14159265358979323846 / 2, end_angle = 5 / 2 * 3.14159265358979323846, total_neigh = this.data.adjacent_scales.length) {
         // this function just radially generates the positions and sizes for the neighbors
         // optional values can be passed in to generate positions for a state in which the object currently is not
         var neigh = []
@@ -169,8 +168,8 @@ class Polygon {
         for (var n = 0; n < total_neigh; n++) {
             var angle = (start_angle - end_angle) * -n / total_neigh + start_angle
             neigh.push({
-                x: x + Math.cos(angle) * offset_radius / p5.width,
-                y: y + Math.sin(angle) * offset_radius / p5.height,
+                x: x + Math.cos(angle) * offset_radius / Pfivesketch.p5.width,
+                y: y + Math.sin(angle) * offset_radius / Pfivesketch.p5.height,
                 size: neighbor_size
             })
         }
@@ -183,10 +182,10 @@ class Polygon {
         return other.name == this.name
     }
 
-    animation_lerp(p5) {
+    animation_lerp() {
         // lerp the animation of the object
         if (this.animation.active) {
-            var progress = (p5.frameCount - this.animation.start_frame) / (this.animation.end_frame - this.animation.start_frame);
+            var progress = (Pfivesketch.p5.frameCount - this.animation.start_frame) / (this.animation.end_frame - this.animation.start_frame);
             progress = this.animation.animation_curve(progress);
 
             if (progress > 1) {
@@ -194,22 +193,22 @@ class Polygon {
                 return
             }
 
-            this.x = p5.lerp(this.animation.start.x, this.animation.target.x, progress)
-            this.y = p5.lerp(this.animation.start.y, this.animation.target.y, progress)
-            this.radius = p5.lerp(this.animation.start.size, this.animation.target.size, progress)
-            this.opacity = p5.lerp(this.animation.start.opacity, this.animation.target.opacity, progress)
+            this.x = Pfivesketch.p5.lerp(this.animation.start.x, this.animation.target.x, progress)
+            this.y = Pfivesketch.p5.lerp(this.animation.start.y, this.animation.target.y, progress)
+            this.radius = Pfivesketch.p5.lerp(this.animation.start.size, this.animation.target.size, progress)
+            this.opacity = Pfivesketch.p5.lerp(this.animation.start.opacity, this.animation.target.opacity, progress)
         }
     }
 
-    move(target_x, target_y, duration_seconds = 1, target_size = this.radius, target_opacity = 1, p5) {
+    move(target_x, target_y, duration_seconds = 1, target_size = this.radius, target_opacity = 1) {
         // start the animation of an object
         var duration = Pfivesketch.fps * duration_seconds;
 
         this.animation = {
             active: true,
             animation_curve: default_animation_curve,
-            start_frame: p5.frameCount,
-            end_frame: p5.frameCount + duration,
+            start_frame: Pfivesketch.p5.frameCount,
+            end_frame: Pfivesketch.p5.frameCount + duration,
             duration: duration,
             target: {
                 size: target_size,
@@ -232,9 +231,9 @@ class Polygon {
         }
     }
 
-    click(x_in = p5.mouseX, y_in = mouseY, p5) {
+    click(x_in = Pfivesketch.p5.mouseX, y_in = Pfivesketch.p5.mouseY) {
         // check if the object has been clicked
-        return (p5.dist(x_in, y_in, this.x * p5.width, this.y * p5.height) < this.radius);
+        return (Pfivesketch.p5.dist(x_in, y_in, this.x * Pfivesketch.p5.width, this.y * Pfivesketch.p5.height) < this.radius);
     }
 }
 
