@@ -1,6 +1,11 @@
 import React from 'react'
 import Sketch from 'react-p5'
 
+//pass in p5 in the draw func, and only where its needed. 
+
+ // import Polygon from './Polygon'
+ // import Helper from './Helper'
+
 function Pfivesketch() {
 
   const fps = 30;
