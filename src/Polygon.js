@@ -7,9 +7,10 @@
 
 import React from 'react'
 import Sketch from 'react-p5'
-import Data from './Data'
+import data from "./Data";
 import Pfivesketch from './Pfivesketch'
 import default_animation_curve from './Navigator.js'
+import Helper from './Helper';
 
 class Polygon {
     constructor(x, y, size, scale) {
@@ -66,7 +67,7 @@ class Polygon {
         } else if (this.data.scale_class == "hexatonic") {
             fontcolor = Array(3).fill(Pfivesketch.p5.map(this.data.root % 4, 0, 3, 200, 100));
         } else {
-            fontcolor = hsvToRgb(Pfivesketch.p5.map((this.data.root * 7) % 12, 11, 0, 0, 1),
+            fontcolor = Helper.hsvToRgb(Pfivesketch.p5.map((this.data.root * 7) % 12, 11, 0, 0, 1),
                 Pfivesketch.p5.map((this.data.root * 7) % 12, 0, 11, 0.1, 0.5),
                 1);
         }
