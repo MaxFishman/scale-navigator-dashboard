@@ -13,7 +13,10 @@ function Pfivesketch() {
     var tab = undefined;
 
     const setup = (p5, canvasParentRef) => {
-        p5.createCanvas(500, 500).parent(canvasParentRef)
+        var canv = p5.createCanvas(500, 500).parent(canvasParentRef)
+        canv.elt.style.width = "100%"
+        canv.elt.style.height = "100%"
+
         p5.frameRate(fps)
 
         nav = new Navigator.Navigator(p5);
