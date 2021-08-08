@@ -27,8 +27,6 @@ function Navigator(p5) {
         intervalID: undefined
     }
 
-    this.init_autopilot()
-
     this.init = () => {
         this.triggerEvent()
     }
@@ -45,6 +43,8 @@ function Navigator(p5) {
             }
         }, this.autopilot_data.period)
     }
+
+    this.init_autopilot()
 
     this.toggle_autopilot = (forced_value = undefined) => {
         if (forced_value) {
@@ -68,19 +68,19 @@ function Navigator(p5) {
     }
 
     this.draw = () => {
-        Pfivesketch.p5.push()
-        Pfivesketch.p5.ellipseMode(Pfivesketch.p5.RADIUS);
+        this.p5.push()
+        this.p5.ellipseMode(this.p5.RADIUS);
 
         //background(255);
         var allPolygons = [this.main_polygon].concat(this.preview_polygons, this.old_neighbors)
-        allPolygons.Pfivesketch.p5.push(...this.neighbors)
-        allPolygons.Pfivesketch.p5.push(this.old_main_polygon)
+        allPolygons.push(...this.neighbors)
+        allPolygons.push(this.old_main_polygon)
 
         //draw all the polygons
         for (var p of allPolygons) {
             if (p) p.draw();
         }
-        Pfivesketch.p5.pop()
+        this.p5.pop()
     }
 
     this.mousePressed = () => {

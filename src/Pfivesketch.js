@@ -18,7 +18,6 @@ function Pfivesketch() {
     }
 
     const draw = (p5) => {
-        console.log("XD", nav, tab)
         p5.background(255);
         nav.draw()
     }
