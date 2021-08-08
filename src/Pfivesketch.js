@@ -10,7 +10,7 @@ const fps = 30
 
 function Pfivesketch() {
     var nav = undefined;
-    var tab = new TablatureManager();
+    var tab = undefined;
 
     const setup = (p5, canvasParentRef) => {
         p5.createCanvas(500, 500).parent(canvasParentRef)
@@ -18,6 +18,16 @@ function Pfivesketch() {
 
         nav = new Navigator.Navigator(p5);
         nav.init();
+
+        tab = new TablatureManager()
+
+        document.addEventListener("scaleChanged", (e) => {
+            try {
+                tab.setScale(e.detail)
+            } catch (error) {
+                console.log("SETTING SCALE FAILED", e, error)
+            }
+        })
     }
 
     const draw = (p5) => {

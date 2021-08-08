@@ -35,7 +35,7 @@ function TablatureManager() {
         });
     });
 
-    const setScale = (key = Pfivesketch.p5.random(Object.keys(Data.data["scales"]))) => {
+    this.setScale = (key = Pfivesketch.p5.random(Object.keys(Data.data["scales"]))) => {
         var keyData = Data.data["scales"][key]
 
         showPianoNotes(keyData.pitch_classes);
