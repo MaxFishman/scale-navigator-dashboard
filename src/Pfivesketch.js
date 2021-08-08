@@ -6,15 +6,13 @@ import Sketch from 'react-p5'
 import TablatureManager from './Tablature';
 import Navigator from './Navigator';
 
-var _p5;
-
 function Pfivesketch() {
-
     var fps = 30;
-    var nav = new Navigator.Navigator();
+    var nav = undefined;
     var tab = new TablatureManager();
 
     const setup = (p5, canvasParentRef) => {
+        nav = new Navigator.Navigator(p5);
         p5.createCanvas(500, 400).parent(canvasParentRef)
         p5.frameRate(fps)
     }

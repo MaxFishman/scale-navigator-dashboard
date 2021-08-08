@@ -3,7 +3,9 @@ import Polygon from "./Polygon";
 
 const default_animation_curve = (x) => { return (1 / (1 + Math.pow(x / (1 - x), -3))) };
 
-function Navigator() {
+function Navigator(p5) {
+    this.p5 = p5;
+
     this.main_polygon = undefined;
     this.neighbors = [];
     this.old_main_polygon = undefined;
@@ -15,7 +17,7 @@ function Navigator() {
     this.preview_polygons_ready = false;
 
     // create the initial polygons
-    this.main_polygon = new Polygon(0.5, 0.5, this.poly_size, "c_diatonic")
+    this.main_polygon = new Polygon(0.5, 0.5, this.poly_size, "c_diatonic", this)
     this.neighbors = this.main_polygon.getNeighbors();
 
     this.autopilot_data = {
