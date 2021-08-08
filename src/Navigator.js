@@ -1,8 +1,6 @@
 import Pfivesketch from "./Pfivesketch";
 import Polygon from "./Polygon";
 
-const default_animation_curve = (x) => { return (1 / (1 + Math.pow(x / (1 - x), -3))) };
-
 function Navigator(p5) {
     this.p5 = p5;
 
@@ -13,7 +11,7 @@ function Navigator(p5) {
     this.last_clicked_polygon = undefined;
     this.actually_new_polygons = undefined;;
     this.preview_polygons = [];
-    this.poly_size = 75;
+    this.poly_size = 50;
     this.preview_polygons_ready = false;
 
     // create the initial polygons
@@ -36,9 +34,9 @@ function Navigator(p5) {
 
         this.autopilot_data.intervalID = setInterval(() => {
             if (this.autopilot_data.active) {
-                var p = Pfivesketch.p5.random(this.neighbors)
+                var p = this.p5.random(this.neighbors)
 
-                this.changeMainScale(p, Pfivesketch.p5.min(1, this.autopilot_data.period / 1000))
+                this.changeMainScale(p, this.p5.min(1, this.autopilot_data.period / 1000))
                 return
             }
         }, this.autopilot_data.period)
@@ -131,8 +129,8 @@ function Navigator(p5) {
         // take care of the fanning out (not all the way around)
         var total_poly = this.neighbors.length;
         var ind = this.main_polygon.getNeighbors().findIndex(x => x.isMatching(p))
-            //var positions = p.getNeighborPositions(p.x, p.y, p.Pfivesketch.p5.RADIUS, undefined, undefined, Pfivesketch.p5.PI / 2 + (2 * Pfivesketch.p5.PI * (ind - 0.5)) / total_poly, Pfivesketch.p5.PI / 2 + (2 * Pfivesketch.p5.PI * (ind + 0.5)) / total_poly, this.actually_new_polygons.length)
-        var positions = p.getNeighborPositions(p.x, p.y, p.Pfivesketch.p5.RADIUS, undefined, undefined, Pfivesketch.p5.PI / 2, Pfivesketch.p5.PI / 2 + (2 * Pfivesketch.p5.PI), this.actually_new_polygons.length)
+            //var positions = p.getNeighborPositions(p.x, p.y, this.p5.RADIUS, undefined, undefined, this.p5.PI / 2 + (2 * this.p5.PI * (ind - 0.5)) / total_poly, this.p5.PI / 2 + (2 * this.p5.PI * (ind + 0.5)) / total_poly, this.actually_new_polygons.length)
+        var positions = p.getNeighborPositions(p.x, p.y, this.p5.RADIUS, undefined, undefined, this.p5.PI / 2, this.p5.PI / 2 + (2 * this.p5.PI), this.actually_new_polygons.length)
 
         /*
         //position them
@@ -157,7 +155,7 @@ function Navigator(p5) {
     this.finishChangeMainScale = (new_main, all_duration = 1) => {
         if (new_main === this.main_polygon) return
 
-        // Pfivesketch.p5.push the current polygons into old polygons
+        // this.p5.push the current polygons into old polygons
         this.old_neighbors = [...this.neighbors]
         this.old_main_polygon = this.main_polygon;
 
@@ -213,4 +211,4 @@ function Navigator(p5) {
     }
 }
 
-export default { Navigator, default_animation_curve }
+export default { Navigator }

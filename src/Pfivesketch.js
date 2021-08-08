@@ -13,7 +13,7 @@ function Pfivesketch() {
 
     const setup = (p5, canvasParentRef) => {
         nav = new Navigator.Navigator(p5);
-        p5.createCanvas(500, 400).parent(canvasParentRef)
+        p5.createCanvas(500, 500).parent(canvasParentRef)
         p5.frameRate(fps)
     }
 
@@ -22,8 +22,18 @@ function Pfivesketch() {
         nav.draw()
     }
 
+    const mousePressed = () => {
+        nav.mousePressed();
+    }
+
+    const mouseReleased = () => {
+        nav.mouseReleased();
+    }
+
     return <Sketch setup = { setup }
     draw = { draw }
+    mousePressed = { mousePressed }
+    mouseReleased = { mouseReleased }
     />
 }
 
