@@ -1,7 +1,7 @@
 function isSubsetOf(svg_name, scaleNotes) {
     var fluteNotes = svg_name.replace('.svg', '').split `-`.map(x => +x)
     for (let i = 0; i < fluteNotes.length; i++) {
-        if (scaleNotes.indexOf(fluteNotes[i]) == -1) {
+        if (scaleNotes.indexOf(fluteNotes[i]) === -1) {
             return false;
         }
     }

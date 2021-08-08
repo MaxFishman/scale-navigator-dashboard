@@ -7,45 +7,43 @@
 
 import React from 'react'
 import Sketch from 'react-p5'
-import data from "./Data";
+import Data from "./Data";
 import Pfivesketch from './Pfivesketch'
 import default_animation_curve from './Navigator.js'
 import Helper from './Helper';
 
-class Polygon {
-    constructor(x, y, size, scale) {
-        this.x = x
-        this.y = y
-        this.radius = size;
+function Polygon(x, y, size, scale) {
+    this.x = x
+    this.y = y
+    this.radius = size;
 
-        this.data = data.scales[scale]
-        this.points_count = this.data.adjacent_scales.length;
+    this.data = Data.data.scales[scale]
+    this.points_count = this.data.adjacent_scales.length;
 
-        this.animation = {
-            active: false,
-            animation_curve: default_animation_curve,
-            start_frame: 0,
-            end_frame: 1,
-            duration: 1,
-            target: {
-                size: this.radius,
-                x: this.x,
-                y: this.y
-            },
-            start: {
-                size: this.radius,
-                x: this.x,
-                y: this.y
-            }
+    this.animation = {
+        active: false,
+        animation_curve: default_animation_curve,
+        start_frame: 0,
+        end_frame: 1,
+        duration: 1,
+        target: {
+            size: this.radius,
+            x: this.x,
+            y: this.y
+        },
+        start: {
+            size: this.radius,
+            x: this.x,
+            y: this.y
         }
-
-        this.opacity = 1;
-
-        this.scale = scale;
-        this.name = `${Pfivesketch.note_names[this.data.root]} ${this.data.scale_class.replace("_", " ")}`;
     }
 
-    draw() {
+    this.opacity = 1;
+
+    this.scale = scale;
+    this.name = `${Pfivesketch.note_names[this.data.root]} ${this.data.scale_class.replace("_", " ")}`;
+
+    this.draw = () => {
         Pfivesketch.p5.push()
         this.animation_lerp();
 
@@ -60,11 +58,11 @@ class Polygon {
         // set the color
         // we always have the color as an array of 3 numbers even if it's grey
         // we need that cuz we also push in the opacity (alpha channel) 
-        if (this.data.scale_class == "whole_tone") {
+        if (this.data.scale_class === "whole_tone") {
             fontcolor = Array(3).fill(Pfivesketch.p5.map(this.data.root % 2, 0, 1, 200, 150));
-        } else if (this.data.scale_class == "octatonic") {
+        } else if (this.data.scale_class === "octatonic") {
             fontcolor = Array(3).fill(Pfivesketch.p5.map(this.data.root % 3, 0, 2, 200, 133));
-        } else if (this.data.scale_class == "hexatonic") {
+        } else if (this.data.scale_class === "hexatonic") {
             fontcolor = Array(3).fill(Pfivesketch.p5.map(this.data.root % 4, 0, 3, 200, 100));
         } else {
             fontcolor = Helper.hsvToRgb(Pfivesketch.p5.map((this.data.root * 7) % 12, 11, 0, 0, 1),
@@ -80,44 +78,44 @@ class Polygon {
         // draw the polygon
         // addaptation of your code to the object
         // add p5 to all relevant funcs
-        if (this.points_count == 12) {
+        if (this.points_count === 12) {
             for (let a = 0; a < Pfivesketch.p5.TWO_PI; a += angle) {
                 let sx = Math.cos(a + (Pfivesketch.p5.TWO_PI / 24)) * this.radius;
                 let sy = Math.sin(a + (Pfivesketch.p5.TWO_PI / 24)) * this.radius;
                 Pfivesketch.p5.vertex(sx, sy);
             }
-        } else if (this.points_count == 6) {
-            if (this.data.scale_class == "diatonic") {
+        } else if (this.points_count === 6) {
+            if (this.data.scale_class === "diatonic") {
                 for (let a = 0; a < Pfivesketch.p5.TWO_PI; a += angle) {
                     let sx = Math.cos(a + (Pfivesketch.p5.TWO_PI / 12)) * this.radius;
                     let sy = Math.sin(a + (Pfivesketch.p5.TWO_PI / 12)) * this.radius;
                     Pfivesketch.p5.vertex(sx, sy);
                 }
             }
-            if (this.data.scale_class == "acoustic") {
+            if (this.data.scale_class === "acoustic") {
                 Pfivesketch.p5.vertex(this.radius, this.radius * 0.5);
                 Pfivesketch.p5.vertex(-this.radius, this.radius * 0.5);
                 Pfivesketch.p5.vertex(-this.radius, -this.radius * 0.5);
                 Pfivesketch.p5.vertex(this.radius, -this.radius * 0.5);
             }
-            if (this.data.scale_class == "whole_tone") {
+            if (this.data.scale_class === "whole_tone") {
                 Pfivesketch.p5.vertex(-this.radius * 0.5, -this.radius);
                 Pfivesketch.p5.vertex(this.radius * 0.5, -this.radius);
                 Pfivesketch.p5.vertex(this.radius * 0.5, this.radius);
                 Pfivesketch.p5.vertex(-this.radius * 0.5, this.radius);
             }
-            if (this.data.scale_class == "hexatonic") {
+            if (this.data.scale_class === "hexatonic") {
                 Pfivesketch.p5.vertex(this.radius * 0.65, this.radius);
                 Pfivesketch.p5.vertex(this.radius * 0.65, -this.radius);
                 Pfivesketch.p5.vertex(-this.radius, this.radius * 0.01);
             }
-            if (this.data.scale_class == "harmonic_major") {
+            if (this.data.scale_class === "harmonic_major") {
                 Pfivesketch.p5.vertex(this.radius, this.radius * 0.25);
                 Pfivesketch.p5.vertex(-this.radius, this.radius * 1.25);
                 Pfivesketch.p5.vertex(-this.radius, -this.radius * 0.25);
                 Pfivesketch.p5.vertex(this.radius, -this.radius * 1.75);
             }
-            if (this.data.scale_class == "harmonic_minor") {
+            if (this.data.scale_class === "harmonic_minor") {
                 Pfivesketch.p5.vertex(this.radius, this.radius * 1.25);
                 Pfivesketch.p5.vertex(-this.radius, this.radius * 0.25);
                 Pfivesketch.p5.vertex(-this.radius, -this.radius * 1.75);
@@ -139,7 +137,7 @@ class Polygon {
         Pfivesketch.p5.pop()
     }
 
-    getNeighbors(neighbor_size = this.radius / 2, offset_radius = this.radius * 2.5, start_angle = 3.14159265358979323846 / 2, end_angle = 5 / 2 * 3.14159265358979323846) {
+    this.getNeighbors = (neighbor_size = this.radius / 2, offset_radius = this.radius * 2.5, start_angle = 3.14159265358979323846 / 2, end_angle = 5 / 2 * 3.14159265358979323846) => {
         var total_neigh = this.data.adjacent_scales.length;
         var neigh = []
 
@@ -159,7 +157,7 @@ class Polygon {
         return neigh
     }
 
-    getNeighborPositions(x = this.x, y = this.y, size = this.radius, neighbor_size = undefined, offset_radius = undefined, start_angle = 3.14159265358979323846 / 2, end_angle = 5 / 2 * 3.14159265358979323846, total_neigh = this.data.adjacent_scales.length) {
+    this.getNeighborPositions = (x = this.x, y = this.y, size = this.radius, neighbor_size = undefined, offset_radius = undefined, start_angle = 3.14159265358979323846 / 2, end_angle = 5 / 2 * 3.14159265358979323846, total_neigh = this.data.adjacent_scales.length) => {
         // this function just radially generates the positions and sizes for the neighbors
         // optional values can be passed in to generate positions for a state in which the object currently is not
         var neigh = []
@@ -178,12 +176,12 @@ class Polygon {
         return neigh
     }
 
-    isMatching(other) {
+    this.isMatching = (other) => {
         // check if two objects are matching in type
-        return other.name == this.name
+        return other.name === this.name
     }
 
-    animation_lerp() {
+    this.animation_lerp = () => {
         // lerp the animation of the object
         if (this.animation.active) {
             var progress = (Pfivesketch.p5.frameCount - this.animation.start_frame) / (this.animation.end_frame - this.animation.start_frame);
@@ -201,7 +199,7 @@ class Polygon {
         }
     }
 
-    move(target_x, target_y, duration_seconds = 1, target_size = this.radius, target_opacity = 1) {
+    this.move = (target_x, target_y, duration_seconds = 1, target_size = this.radius, target_opacity = 1) => {
         // start the animation of an object
         var duration = Pfivesketch.fps * duration_seconds;
 
@@ -226,13 +224,13 @@ class Polygon {
         }
     }
 
-    set(...[]) {
+    this.set = (...[]) => {
         for (var i = 0; i < arguments.length; i++) {
             this[arguments[i][0]] = arguments[i][1]
         }
     }
 
-    click(x_in = Pfivesketch.p5.mouseX, y_in = Pfivesketch.p5.mouseY) {
+    this.click = (x_in = Pfivesketch.p5.mouseX, y_in = Pfivesketch.p5.mouseY) => {
         // check if the object has been clicked
         return (Pfivesketch.p5.dist(x_in, y_in, this.x * Pfivesketch.p5.width, this.y * Pfivesketch.p5.height) < this.radius);
     }

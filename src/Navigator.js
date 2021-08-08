@@ -3,37 +3,35 @@ import Polygon from "./Polygon";
 
 const default_animation_curve = (x) => { return (1 / (1 + Math.pow(x / (1 - x), -3))) };
 
-class Navigator {
-    constructor() {
-        this.main_polygon = undefined;
-        this.neighbors = [];
-        this.old_main_polygon = undefined;
-        this.old_neighbors = undefined;
-        this.last_clicked_polygon = undefined;
-        this.actually_new_polygons = undefined;;
-        this.preview_polygons = [];
-        this.poly_size = 75;
-        this.preview_polygons_ready = false;
+function Navigator() {
+    this.main_polygon = undefined;
+    this.neighbors = [];
+    this.old_main_polygon = undefined;
+    this.old_neighbors = undefined;
+    this.last_clicked_polygon = undefined;
+    this.actually_new_polygons = undefined;;
+    this.preview_polygons = [];
+    this.poly_size = 75;
+    this.preview_polygons_ready = false;
 
-        // create the initial polygons
-        this.main_polygon = new Polygon(0.5, 0.5, this.poly_size, "c_diatonic")
-        this.neighbors = this.main_polygon.getNeighbors();
+    // create the initial polygons
+    this.main_polygon = new Polygon(0.5, 0.5, this.poly_size, "c_diatonic")
+    this.neighbors = this.main_polygon.getNeighbors();
 
-        this.autopilot_data = {
-            active: false,
-            default_period: 1000,
-            period: undefined,
-            intervalID: undefined
-        }
-
-        this.init_autopilot()
+    this.autopilot_data = {
+        active: false,
+        default_period: 1000,
+        period: undefined,
+        intervalID: undefined
     }
 
-    init() {
+    this.init_autopilot()
+
+    this.init = () => {
         this.triggerEvent()
     }
 
-    init_autopilot() {
+    this.init_autopilot = () => {
         if (!this.autopilot_data.period) this.autopilot_data.period = this.autopilot_data.default_period
 
         this.autopilot_data.intervalID = setInterval(() => {
@@ -46,7 +44,7 @@ class Navigator {
         }, this.autopilot_data.period)
     }
 
-    toggle_autopilot(forced_value = undefined) {
+    this.toggle_autopilot = (forced_value = undefined) => {
         if (forced_value) {
             this.autopilot_data.active = forced_value
         } else {
@@ -54,12 +52,12 @@ class Navigator {
         }
     }
 
-    reset_autopilot() {
+    this.reset_autopilot = () => {
         this.autopilot_data.active = false;
         this.set_autopilot_period(undefined)
     }
 
-    set_autopilot_period(new_period) {
+    this.set_autopilot_period = (new_period) => {
         this.autopilot_data.period = new_period;
 
         clearInterval(this.autopilot_data.intervalID)
@@ -67,7 +65,7 @@ class Navigator {
         this.init_autopilot();
     }
 
-    draw() {
+    this.draw = () => {
         Pfivesketch.p5.push()
         Pfivesketch.p5.ellipseMode(Pfivesketch.p5.RADIUS);
 
@@ -83,7 +81,7 @@ class Navigator {
         Pfivesketch.p5.pop()
     }
 
-    mousePressed() {
+    this.mousePressed = () => {
         // check for clicks on all polygons
         for (var p of this.neighbors) {
             if (p && p.click() && !p.animation.active) {
@@ -93,7 +91,7 @@ class Navigator {
         }
     }
 
-    mouseReleased() {
+    this.mouseReleased = () => {
         // check for clicks on all polygons
         for (var p of this.neighbors) {
             if (p && p.click() && !p.animation.active && this.preview_polygons_ready) {
@@ -103,7 +101,7 @@ class Navigator {
         }
     }
 
-    prepareChangeMainScale(p) {
+    this.prepareChangeMainScale = (p) => {
         this.preview_polygons = p.getNeighbors()
         this.last_clicked_polygon = p;
 
@@ -154,8 +152,8 @@ class Navigator {
         return
     }
 
-    finishChangeMainScale(new_main, all_duration = 1) {
-        if (new_main == this.main_polygon) return
+    this.finishChangeMainScale = (new_main, all_duration = 1) => {
+        if (new_main === this.main_polygon) return
 
         // Pfivesketch.p5.push the current polygons into old polygons
         this.old_neighbors = [...this.neighbors]
@@ -186,7 +184,7 @@ class Navigator {
 
         // Neighboring polygons animation
         for (var old of this.old_neighbors) {
-            if (this.neighbors.findIndex(x => old.isMatching(x)) == -1) {
+            if (this.neighbors.findIndex(x => old.isMatching(x)) === -1) {
                 old.move(this.old_main_polygon.animation.target.x, this.old_main_polygon.animation.target.y, all_duration, 0, 1)
             }
         }
@@ -203,12 +201,12 @@ class Navigator {
         this.triggerEvent();
     }
 
-    changeMainScale(new_main, all_duration = 1) {
+    this.changeMainScale = (new_main, all_duration = 1) => {
         this.prepareChangeMainScale(new_main)
         this.finishChangeMainScale(new_main, all_duration)
     }
 
-    triggerEvent() {
+    this.triggerEvent = () => {
         document.dispatchEvent(new CustomEvent("scaleChanged", { detail: this.main_polygon.scale }))
     }
 }

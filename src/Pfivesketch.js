@@ -5,34 +5,31 @@ import Sketch from 'react-p5'
 
 import TablatureManager from './Tablature';
 import Navigator from './Navigator';
-// import Polygon from './Polygon'
-// import Helper from './Helper'
+
+var _p5;
 
 function Pfivesketch() {
 
     var fps = 30;
-    var note_names = ["C", "D♭", "D", "E♭", "E", "F", "F#", "G", "A♭", "A", "B♭", "B"];
-
-    var nav = undefined;
-    var tab = undefined;
+    var nav = new Navigator.Navigator();
+    var tab = new TablatureManager();
 
     const setup = (p5, canvasParentRef) => {
         p5.createCanvas(500, 400).parent(canvasParentRef)
         p5.frameRate(fps)
-
-        nav = new Navigator();
-        tab = new TablatureManager();
     }
 
-    const draw = p5 => {
-        p5.background(255, 130, 20)
-        p5.ellipse(100, 100, 100)
-        p5.ellipse(300, 100, 100)
+    const draw = (p5) => {
+        console.log("XD", nav, tab)
+        p5.background(255);
+        nav.draw()
     }
 
     return <Sketch setup = { setup }
     draw = { draw }
     />
 }
+
+Pfivesketch.note_names = ["C", "D♭", "D", "E♭", "E", "F", "F#", "G", "A♭", "A", "B♭", "B"];
 
 export default Pfivesketch

@@ -4,7 +4,7 @@ function showCircleChords(chords) {
 
 
     var offChords = allChords.filter(function(val) {
-        return chords.indexOf(val) == -1;
+        return chords.indexOf(val) === -1;
     });
 
 

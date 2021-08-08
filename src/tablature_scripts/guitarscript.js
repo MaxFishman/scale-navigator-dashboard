@@ -4,7 +4,7 @@ function showGuitarNotes(notes) {
 
     var allNotes = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11];
     var offNotes = allNotes.filter(function(val) {
-        return notes.indexOf(val) == -1;
+        return notes.indexOf(val) === -1;
     });
 
 

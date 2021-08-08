@@ -15,27 +15,27 @@ function Helper() {
         var q = v * (1 - f * s);
         var t = v * (1 - (1 - f) * s);
 
-        if (i % 6 == 0) {
+        if (i % 6 === 0) {
             r = v;
             g = t;
             b = p;
-        } else if (i % 6 == 1) {
+        } else if (i % 6 === 1) {
             r = q;
             g = v;
             b = p;
-        } else if (i % 6 == 2) {
+        } else if (i % 6 === 2) {
             r = p;
             g = v;
             b = t;
-        } else if (i % 6 == 3) {
+        } else if (i % 6 === 3) {
             r = p;
             g = q;
             b = v;
-        } else if (i % 6 == 4) {
+        } else if (i % 6 === 4) {
             r = t;
             g = p;
             b = v;
-        } else if (i % 6 == 5) {
+        } else if (i % 6 === 5) {
             r = v;
             g = p;
             b = q;
