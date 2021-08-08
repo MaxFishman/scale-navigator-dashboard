@@ -139,7 +139,7 @@ function Polygon(x, y, size, scale, _parent) {
         this._parent.p5.pop()
     }
 
-    this.getNeighbors = (neighbor_size = this.radius / 2, offset_radius = this.radius * 0.75, start_angle = 3.14159265358979323846 / 2, end_angle = 5 / 2 * 3.14159265358979323846) => {
+    this.getNeighbors = (neighbor_size = this.radius / 2, offset_radius = this.radius * 2.5, start_angle = 3.14159265358979323846 / 2, end_angle = 5 / 2 * 3.14159265358979323846) => {
         var total_neigh = this.data.adjacent_scales.length;
         var neigh = []
 
@@ -164,7 +164,7 @@ function Polygon(x, y, size, scale, _parent) {
         // this function just radially generates the positions and sizes for the neighbors
         // optional values can be passed in to generate positions for a state in which the object currently is not
         var neigh = []
-        offset_radius = !offset_radius ? size * 0.75 : offset_radius
+        offset_radius = !offset_radius ? size * 2.5 : offset_radius
         neighbor_size = !neighbor_size ? size / 2 : neighbor_size
 
         for (var n = 0; n < total_neigh; n++) {

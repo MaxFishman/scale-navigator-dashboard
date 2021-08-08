@@ -6,15 +6,18 @@ import Sketch from 'react-p5'
 import TablatureManager from './Tablature';
 import Navigator from './Navigator';
 
+const fps = 30
+
 function Pfivesketch() {
-    var fps = 30;
     var nav = undefined;
     var tab = new TablatureManager();
 
     const setup = (p5, canvasParentRef) => {
-        nav = new Navigator.Navigator(p5);
         p5.createCanvas(500, 500).parent(canvasParentRef)
         p5.frameRate(fps)
+
+        nav = new Navigator.Navigator(p5);
+        nav.init();
     }
 
     const draw = (p5) => {
@@ -38,5 +41,6 @@ function Pfivesketch() {
 }
 
 Pfivesketch.note_names = ["C", "D♭", "D", "E♭", "E", "F", "F#", "G", "A♭", "A", "B♭", "B"];
+Pfivesketch.fps = fps;
 
 export default Pfivesketch

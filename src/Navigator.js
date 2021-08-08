@@ -11,12 +11,8 @@ function Navigator(p5) {
     this.last_clicked_polygon = undefined;
     this.actually_new_polygons = undefined;;
     this.preview_polygons = [];
-    this.poly_size = 50;
+    this.poly_size = 75;
     this.preview_polygons_ready = false;
-
-    // create the initial polygons
-    this.main_polygon = new Polygon(0.5, 0.5, this.poly_size, "c_diatonic", this)
-    this.neighbors = this.main_polygon.getNeighbors();
 
     this.autopilot_data = {
         active: false,
@@ -26,6 +22,12 @@ function Navigator(p5) {
     }
 
     this.init = () => {
+        this.init_autopilot()
+
+        // create the initial polygons
+        this.main_polygon = new Polygon(0.5, 0.5, this.poly_size, "c_diatonic", this)
+        this.neighbors = this.main_polygon.getNeighbors();
+
         this.triggerEvent()
     }
 
@@ -41,8 +43,6 @@ function Navigator(p5) {
             }
         }, this.autopilot_data.period)
     }
-
-    this.init_autopilot()
 
     this.toggle_autopilot = (forced_value = undefined) => {
         if (forced_value) {
@@ -153,7 +153,7 @@ function Navigator(p5) {
     }
 
     this.finishChangeMainScale = (new_main, all_duration = 1) => {
-        if (new_main === this.main_polygon) return
+        if (new_main == this.main_polygon) return
 
         // this.p5.push the current polygons into old polygons
         this.old_neighbors = [...this.neighbors]
