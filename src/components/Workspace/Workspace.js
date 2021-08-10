@@ -1,13 +1,14 @@
 import 'react-tabs/style/react-tabs.css';
 import { Tabs, Row, Col, Button } from 'antd';
 import About from './About/About'
+import Ensemble from './Ensemble/Ensemble'
 import React from 'react';
 
 const { TabPane } = Tabs;
 
 export default class Workspace extends React.Component {
   state = {
-    activeKey: '1'
+    activeKey: '0'
   }
 
   render() {
@@ -17,6 +18,9 @@ export default class Workspace extends React.Component {
             activeKey={this.state.activeKey}
             onChange={key => this.setState({ activeKey: key })}
           >
+            <TabPane tab="Ensemble" key="0">
+              <Ensemble />
+            </TabPane>
             <TabPane tab="Tablature" key="1">
               <p>Tablature Component</p>
             </TabPane>

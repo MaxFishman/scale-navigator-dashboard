@@ -1,4 +1,4 @@
-import Pfivesketch from "./Pfivesketch";
+
 import Polygon from "./Polygon";
 
 function Navigator(p5) {

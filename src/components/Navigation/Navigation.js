@@ -16,10 +16,6 @@ const Navigation = () => {
             <p>autopilot checkbox</p>
           </form>
         </div>
-        <div id="chatroom_container">
-          <p>create ensemble chatroom</p>
-          <p>select / join ensemble chatroom</p>
-        </div>
       </div>
     );
 }
