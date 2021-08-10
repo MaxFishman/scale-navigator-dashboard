@@ -6,28 +6,54 @@ import Sketch from 'react-p5'
 import TablatureManager from './Tablature';
 import Navigator from './Navigator';
 
+const fps = 30
+
 function Pfivesketch() {
-    var fps = 30;
     var nav = undefined;
-    var tab = new TablatureManager();
+    var tab = undefined;
 
     const setup = (p5, canvasParentRef) => {
-        nav = new Navigator.Navigator(p5);
-        p5.createCanvas(500, 400).parent(canvasParentRef)
+        var canv = p5.createCanvas(500, 500).parent(canvasParentRef)
+        canv.elt.style.width = "100%"
+        canv.elt.style.height = "100%"
+
         p5.frameRate(fps)
+
+        nav = new Navigator.Navigator(p5);
+        nav.init();
+
+        tab = new TablatureManager()
+
+        document.addEventListener("scaleChanged", (e) => {
+            try {
+                tab.setScale(e.detail)
+            } catch (error) {
+                console.log("SETTING SCALE FAILED", e, error)
+            }
+        })
     }
 
     const draw = (p5) => {
-        console.log("XD", nav, tab)
         p5.background(255);
         nav.draw()
     }
 
+    const mousePressed = () => {
+        nav.mousePressed();
+    }
+
+    const mouseReleased = () => {
+        nav.mouseReleased();
+    }
+
     return <Sketch setup = { setup }
     draw = { draw }
+    mousePressed = { mousePressed }
+    mouseReleased = { mouseReleased }
     />
 }
 
 Pfivesketch.note_names = ["C", "D♭", "D", "E♭", "E", "F", "F#", "G", "A♭", "A", "B♭", "B"];
+Pfivesketch.fps = fps;
 
 export default Pfivesketch
