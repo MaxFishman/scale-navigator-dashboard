@@ -1,4 +1,4 @@
-import Pfivesketch from './Pfivesketch';
+import Pfivesketch from './Navigator/Pfivesketch';
 
 const Navigation = () => {
   return(

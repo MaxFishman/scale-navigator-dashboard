@@ -1,5 +1,5 @@
-import Pfivesketch from "./Pfivesketch";
-import Data from "./Data";
+import Pfivesketch from "../../Navigation/Navigator/Pfivesketch";
+import Data from "../../../Data";
 
 import showPianoNotes from "./tablature_scripts/pianoscript"
 import displayFluteDiagrams from "./tablature_scripts/flutescript"
