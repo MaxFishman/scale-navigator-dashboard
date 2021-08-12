@@ -1,6 +1,7 @@
 import 'react-tabs/style/react-tabs.css';
 import { Tabs, Row, Col, Button } from 'antd';
 import About from './About/About'
+import Chords from './Chords/Chords'
 import Ensemble from './Ensemble/Ensemble'
 import React from 'react';
 
@@ -24,13 +25,16 @@ export default class Workspace extends React.Component {
             <TabPane tab="Tablature" key="1">
               <p>Tablature Component</p>
             </TabPane>
-            <TabPane tab="MIDI" key="2">
+            <TabPane tab="Chords" key="2">
+              <Chords />
+            </TabPane>
+            <TabPane tab="MIDI" key="3">
               <p>MIDI Component</p>
             </TabPane>
-            <TabPane tab="Notepad" key="3">
+            <TabPane tab="Notepad" key="4">
               <p>Notepad Component</p>
             </TabPane>
-            <TabPane tab="Scale Network" key="4">
+            <TabPane tab="Scale Network" key="5">
               <p>Scale Network Component</p>
             </TabPane>
             <TabPane tab="Account" key="6">
