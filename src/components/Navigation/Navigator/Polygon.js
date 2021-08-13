@@ -12,8 +12,8 @@ import Navigator from './Navigator.js';
 
 const default_animation_curve = (x) => { return (1 / (1 + Math.pow(x / (1 - x), -3))) };
 
-function Polygon(x, y, size, scale, _parent) {
-    this._parent = _parent;
+function Polygon(p5, x, y, size, scale) {
+    this.p5 = p5;
 
     this.x = x
     this.y = y
@@ -46,97 +46,97 @@ function Polygon(x, y, size, scale, _parent) {
     this.name = `${Pfivesketch.note_names[this.data.root]} ${this.data.scale_class.replace("_", " ")}`;
 
     this.draw = () => {
-        this._parent.p5.push()
+        this.p5.push()
         this.animation_lerp();
 
         // translate so we dont have to always write x and y
-        this._parent.p5.translate(this.x * this._parent.p5.width, this.y * this._parent.p5.height)
+        this.p5.translate(this.x * this.p5.width, this.y * this.p5.height)
 
-        this._parent.p5.noStroke();
-        var angle = this._parent.p5.TWO_PI / this.points_count;
+        this.p5.noStroke();
+        var angle = this.p5.TWO_PI / this.points_count;
         var fontcolor;
-        this._parent.p5.beginShape();
+        this.p5.beginShape();
 
         // set the color
         // we always have the color as an array of 3 numbers even if it's grey
         // we need that cuz we also push in the opacity (alpha channel) 
         if (this.data.scale_class === "whole_tone") {
-            fontcolor = Array(3).fill(this._parent.p5.map(this.data.root % 2, 0, 1, 200, 150));
+            fontcolor = Array(3).fill(this.p5.map(this.data.root % 2, 0, 1, 200, 150));
         } else if (this.data.scale_class === "octatonic") {
-            fontcolor = Array(3).fill(this._parent.p5.map(this.data.root % 3, 0, 2, 200, 133));
+            fontcolor = Array(3).fill(this.p5.map(this.data.root % 3, 0, 2, 200, 133));
         } else if (this.data.scale_class === "hexatonic") {
-            fontcolor = Array(3).fill(this._parent.p5.map(this.data.root % 4, 0, 3, 200, 100));
+            fontcolor = Array(3).fill(this.p5.map(this.data.root % 4, 0, 3, 200, 100));
         } else {
-            fontcolor = Helper.hsvToRgb(this._parent.p5.map((this.data.root * 7) % 12, 11, 0, 0, 1),
-                this._parent.p5.map((this.data.root * 7) % 12, 0, 11, 0.1, 0.5),
+            fontcolor = Helper.hsvToRgb(this.p5.map((this.data.root * 7) % 12, 11, 0, 0, 1),
+                this.p5.map((this.data.root * 7) % 12, 0, 11, 0.1, 0.5),
                 1);
         }
 
 
         // add in the opacity
         fontcolor.push(255 * this.opacity);
-        this._parent.p5.fill(fontcolor);
+        this.p5.fill(fontcolor);
 
         // draw the polygon
         // addaptation of your code to the object
         // add p5 to all relevant funcs
         if (this.points_count === 12) {
-            for (let a = 0; a < this._parent.p5.TWO_PI; a += angle) {
-                let sx = Math.cos(a + (this._parent.p5.TWO_PI / 24)) * this.radius;
-                let sy = Math.sin(a + (this._parent.p5.TWO_PI / 24)) * this.radius;
-                this._parent.p5.vertex(sx, sy);
+            for (let a = 0; a < this.p5.TWO_PI; a += angle) {
+                let sx = Math.cos(a + (this.p5.TWO_PI / 24)) * this.radius;
+                let sy = Math.sin(a + (this.p5.TWO_PI / 24)) * this.radius;
+                this.p5.vertex(sx, sy);
             }
         } else if (this.points_count === 6) {
             if (this.data.scale_class === "diatonic") {
-                for (let a = 0; a < this._parent.p5.TWO_PI; a += angle) {
-                    let sx = Math.cos(a + (this._parent.p5.TWO_PI / 12)) * this.radius;
-                    let sy = Math.sin(a + (this._parent.p5.TWO_PI / 12)) * this.radius;
-                    this._parent.p5.vertex(sx, sy);
+                for (let a = 0; a < this.p5.TWO_PI; a += angle) {
+                    let sx = Math.cos(a + (this.p5.TWO_PI / 12)) * this.radius;
+                    let sy = Math.sin(a + (this.p5.TWO_PI / 12)) * this.radius;
+                    this.p5.vertex(sx, sy);
                 }
             }
             if (this.data.scale_class === "acoustic") {
-                this._parent.p5.vertex(this.radius, this.radius * 0.5);
-                this._parent.p5.vertex(-this.radius, this.radius * 0.5);
-                this._parent.p5.vertex(-this.radius, -this.radius * 0.5);
-                this._parent.p5.vertex(this.radius, -this.radius * 0.5);
+                this.p5.vertex(this.radius, this.radius * 0.5);
+                this.p5.vertex(-this.radius, this.radius * 0.5);
+                this.p5.vertex(-this.radius, -this.radius * 0.5);
+                this.p5.vertex(this.radius, -this.radius * 0.5);
             }
             if (this.data.scale_class === "whole_tone") {
-                this._parent.p5.vertex(-this.radius * 0.5, -this.radius);
-                this._parent.p5.vertex(this.radius * 0.5, -this.radius);
-                this._parent.p5.vertex(this.radius * 0.5, this.radius);
-                this._parent.p5.vertex(-this.radius * 0.5, this.radius);
+                this.p5.vertex(-this.radius * 0.5, -this.radius);
+                this.p5.vertex(this.radius * 0.5, -this.radius);
+                this.p5.vertex(this.radius * 0.5, this.radius);
+                this.p5.vertex(-this.radius * 0.5, this.radius);
             }
             if (this.data.scale_class === "hexatonic") {
-                this._parent.p5.vertex(this.radius * 0.65, this.radius);
-                this._parent.p5.vertex(this.radius * 0.65, -this.radius);
-                this._parent.p5.vertex(-this.radius, this.radius * 0.01);
+                this.p5.vertex(this.radius * 0.65, this.radius);
+                this.p5.vertex(this.radius * 0.65, -this.radius);
+                this.p5.vertex(-this.radius, this.radius * 0.01);
             }
             if (this.data.scale_class === "harmonic_major") {
-                this._parent.p5.vertex(this.radius, this.radius * 0.25);
-                this._parent.p5.vertex(-this.radius, this.radius * 1.25);
-                this._parent.p5.vertex(-this.radius, -this.radius * 0.25);
-                this._parent.p5.vertex(this.radius, -this.radius * 1.75);
+                this.p5.vertex(this.radius, this.radius * 0.25);
+                this.p5.vertex(-this.radius, this.radius * 1.25);
+                this.p5.vertex(-this.radius, -this.radius * 0.25);
+                this.p5.vertex(this.radius, -this.radius * 1.75);
             }
             if (this.data.scale_class === "harmonic_minor") {
-                this._parent.p5.vertex(this.radius, this.radius * 1.25);
-                this._parent.p5.vertex(-this.radius, this.radius * 0.25);
-                this._parent.p5.vertex(-this.radius, -this.radius * 1.75);
-                this._parent.p5.vertex(this.radius, -this.radius * 0.25);
+                this.p5.vertex(this.radius, this.radius * 1.25);
+                this.p5.vertex(-this.radius, this.radius * 0.25);
+                this.p5.vertex(-this.radius, -this.radius * 1.75);
+                this.p5.vertex(this.radius, -this.radius * 0.25);
             }
         }
-        this._parent.p5.endShape(this._parent.p5.CLOSE);
+        this.p5.endShape(this.p5.CLOSE);
 
         //write the text
-        this._parent.p5.fill(80, 80, 80, 255 * this.opacity);
+        this.p5.fill(80, 80, 80, 255 * this.opacity);
         var font_size_2 = this.radius / 3;
         var scale_class = this.data.scale_class.replace("_", "\n");
-        this._parent.p5.textSize(font_size_2);
-        this._parent.p5.textAlign(this._parent.p5.CENTER, this._parent.p5.CENTER);
+        this.p5.textSize(font_size_2);
+        this.p5.textAlign(this.p5.CENTER, this.p5.CENTER);
 
-        this._parent.p5.text(Pfivesketch.note_names[this.data.root], 0, -font_size_2 / 2);
+        this.p5.text(Pfivesketch.note_names[this.data.root], 0, -font_size_2 / 2);
         // the mess at the end of the line just checks if the text has 2 lines and then it offsets the text more if necessary
-        this._parent.p5.text(scale_class, 0, (scale_class.split("\n").length > 1 ? font_size_2 : font_size_2 / 2)); //print out scale class
-        this._parent.p5.pop()
+        this.p5.text(scale_class, 0, (scale_class.split("\n").length > 1 ? font_size_2 : font_size_2 / 2)); //print out scale class
+        this.p5.pop()
     }
 
     this.getNeighbors = (neighbor_size = this.radius / 2, offset_radius = this.radius * 2.5, start_angle = 3.14159265358979323846 / 2, end_angle = 5 / 2 * 3.14159265358979323846) => {
@@ -148,11 +148,11 @@ function Polygon(x, y, size, scale, _parent) {
         for (var n = 0; n < total_neigh; n++) {
             neigh.push(
                 new Polygon(
+                    p5,
                     positions[n].x,
                     positions[n].y,
                     positions[n].size,
                     this.data.adjacent_scales[n],
-                    this._parent
                 )
             )
         }
@@ -170,8 +170,8 @@ function Polygon(x, y, size, scale, _parent) {
         for (var n = 0; n < total_neigh; n++) {
             var angle = (start_angle - end_angle) * -n / total_neigh + start_angle
             neigh.push({
-                x: x + Math.cos(angle) * offset_radius / this._parent.p5.width,
-                y: y + Math.sin(angle) * offset_radius / this._parent.p5.height,
+                x: x + Math.cos(angle) * offset_radius / this.p5.width,
+                y: y + Math.sin(angle) * offset_radius / this.p5.height,
                 size: neighbor_size
             })
         }
@@ -187,7 +187,7 @@ function Polygon(x, y, size, scale, _parent) {
     this.animation_lerp = () => {
         // lerp the animation of the object
         if (this.animation.active) {
-            var progress = (this._parent.p5.frameCount - this.animation.start_frame) / (this.animation.end_frame - this.animation.start_frame);
+            var progress = (this.p5.frameCount - this.animation.start_frame) / (this.animation.end_frame - this.animation.start_frame);
             progress = this.animation.animation_curve(progress);
 
             if (progress > 1) {
@@ -195,10 +195,10 @@ function Polygon(x, y, size, scale, _parent) {
                 return
             }
 
-            this.x = this._parent.p5.lerp(this.animation.start.x, this.animation.target.x, progress)
-            this.y = this._parent.p5.lerp(this.animation.start.y, this.animation.target.y, progress)
-            this.radius = this._parent.p5.lerp(this.animation.start.size, this.animation.target.size, progress)
-            this.opacity = this._parent.p5.lerp(this.animation.start.opacity, this.animation.target.opacity, progress)
+            this.x = this.p5.lerp(this.animation.start.x, this.animation.target.x, progress)
+            this.y = this.p5.lerp(this.animation.start.y, this.animation.target.y, progress)
+            this.radius = this.p5.lerp(this.animation.start.size, this.animation.target.size, progress)
+            this.opacity = this.p5.lerp(this.animation.start.opacity, this.animation.target.opacity, progress)
         }
     }
 
@@ -209,8 +209,8 @@ function Polygon(x, y, size, scale, _parent) {
         this.animation = {
             active: true,
             animation_curve: default_animation_curve,
-            start_frame: this._parent.p5.frameCount,
-            end_frame: this._parent.p5.frameCount + duration,
+            start_frame: this.p5.frameCount,
+            end_frame: this.p5.frameCount + duration,
             duration: duration,
             target: {
                 size: target_size,
@@ -233,9 +233,9 @@ function Polygon(x, y, size, scale, _parent) {
         }
     }
 
-    this.click = (x_in = this._parent.p5.mouseX, y_in = this._parent.p5.mouseY) => {
+    this.click = (x_in = this.p5.mouseX, y_in = this.p5.mouseY) => {
         // check if the object has been clicked
-        return (this._parent.p5.dist(x_in, y_in, this.x * this._parent.p5.width, this.y * this._parent.p5.height) < this.radius);
+        return (this.p5.dist(x_in, y_in, this.x * this.p5.width, this.y * this.p5.height) < this.radius);
     }
 }
 

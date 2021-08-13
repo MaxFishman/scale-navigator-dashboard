@@ -8,6 +8,11 @@ import React from 'react';
 const { TabPane } = Tabs;
 
 export default class Workspace extends React.Component {
+  constructor(properties) {
+    super(properties);
+    this.navigator = properties.navigator;
+  }
+
   state = {
     activeKey: '0'
   }
@@ -26,7 +31,7 @@ export default class Workspace extends React.Component {
               <p>Tablature Component</p>
             </TabPane>
             <TabPane tab="Chords" key="2">
-              <Chords />
+              <Chords navigator={ this.navigator } />
             </TabPane>
             <TabPane tab="MIDI" key="3">
               <p>MIDI Component</p>

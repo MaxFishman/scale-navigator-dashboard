@@ -5,13 +5,14 @@ import Pfivesketch from './components/Navigation/Navigator/Pfivesketch';
 import { Col, Row } from 'antd';
 
 function App() {
-  const p5Sketch = Pfivesketch();
+  const p5Sketch = new Pfivesketch();
+  const navigator = p5Sketch.props.navigator;
 
   return (
     <div className="App">
       <div id="grid">
           <Navigation p5Sketch={ p5Sketch } />
-          <Workspace />
+          <Workspace navigator={ navigator } />
       </div>
     </div>
   );
