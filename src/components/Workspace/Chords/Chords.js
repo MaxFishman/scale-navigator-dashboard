@@ -14,12 +14,14 @@ class Chords extends React.Component {
     this.state = {
       playing: false,
       rootMovement: [true, true, true, true, true, true, true],
+      voiceLeadingSmoothness: 100,
       scale: "c_diatonic",
       chord: "",
     };
     this.update();
 
     this.togglePlaying = this.togglePlaying.bind(this);
+    this.handleVoiceLeadingSmoothnessChange = this.handleVoiceLeadingSmoothnessChange.bind(this);
   }
 
   update() {
@@ -46,18 +48,28 @@ class Chords extends React.Component {
 
   handleRootMovementChange(i) {
     return () => {
-      console.log(i);
       this.setState((previousState) => {
         const rootMovement = previousState.rootMovement.slice();
         rootMovement[i] = !rootMovement[i];
+        this.props.navigator.chord_chooser.allowed_root_intervals[i] = (
+          rootMovement[i]
+        );
         return { rootMovement: rootMovement };
       });
     };
   }
 
+  handleVoiceLeadingSmoothnessChange(event) {
+    console.log(event.target.value);
+    this.props.navigator.chord_chooser.voice_leading_smoothness = event.target.value;
+    this.setState({
+      voiceLeadingSmoothness: event.target.value
+    });
+  }
+
   render() {
     const elements = [
-      "Unison", "m2 M7", "M2 m7", "m3 M6", "M3 m6", "P4 P5", "Tritone"
+      "Unison", "m2, M7", "M2, m7", "m3, M6", "M3, m6", "P4, P5", "Tritone"
     ].map((name, i) => {
       const id = "root-movement-" + i;
       return (
@@ -86,6 +98,17 @@ class Chords extends React.Component {
         <ul>
           { elements }
         </ul>
+        <p>
+          <label htmlFor="voice-leading-smoothness">Voice leading smoothness:</label>
+          <input
+            type="range"
+            id="voice-leading-smoothness"
+            min="0"
+            max="100"
+            value={ this.voiceLeadingSmoothness }
+            onChange={ this.handleVoiceLeadingSmoothnessChange }
+          />
+        </p>
       </div>
     );
   }
