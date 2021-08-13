@@ -45,6 +45,7 @@ export default class ChordChooser {
     this.slice_size = 1;
     this.last_chord_name = 'b_13#9-110';
     this.current_chord_name = 'b_13#9-110';
+    this.current_chord = CHORDS[this.current_chord_name];
   }
 
   is_valid_jazz_chord_progression(current_chord, next_chord) {
@@ -133,5 +134,6 @@ export default class ChordChooser {
       } else {
           this.current_chord_name = choose(chord_candidates.slice(slice_size));
       }
+      this.current_chord = CHORDS[this.current_chord_name];
   }
 }
