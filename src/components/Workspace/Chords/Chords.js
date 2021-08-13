@@ -159,7 +159,7 @@ class Chords extends React.Component {
 
   update() {
     let chord = null;
-    if (this.chordChooser && this.props.navigator) {
+    if (this.props.navigator.main_polygon) {
       chord = this.chordChooser.pickChord(
         this.props.navigator.main_polygon.scale
       );
