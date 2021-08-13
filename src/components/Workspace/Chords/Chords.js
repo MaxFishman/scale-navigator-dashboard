@@ -36,114 +36,110 @@ const choose = (array) => {
   return array[Math.floor(array.length * Math.random())];
 };
 
-
-function mod(a,b){
-    return((a%b)+b)%b;
+function mod(a, b){
+    return ((a % b) + b) % b;
 }
 
-var jazz_filtering_enabled = true;
+class ChordChooser {
+  constructor() {
+    this.jazz_filtering_enabled = true;
+    this.allowed_root_intervals = [true, true, true, true, true, true, true];
+    this.voice_leading_threshold = 9;
+    this.voice_leading_smoothness = 100;
+    this.slice_size = 1;
+    this.last_chord_name = 'b_13#9-110';
+  }
 
-function randomize_jazz_filter() {
-    jazz_filtering_enabled = Math.random() > 0.5;
-}
+  is_valid_jazz_chord_progression(current_chord, next_chord) {
+      if (!this.jazz_filtering_enabled){
+          return true;
+      }
 
-var allowed_root_intervals = [true, true, true, true, true, true, true];
-function is_valid_jazz_chord_progression(current_chord, next_chord){
-    if (!jazz_filtering_enabled){
-        return true
-    }
+      var root_interval = Math.abs(mod((CHORDS[next_chord]["root"]-CHORDS[current_chord]["root"]+6), 12)-6);
 
-    var root_interval =  Math.abs(mod((CHORDS[next_chord]["root"]-CHORDS[current_chord]["root"]+6), 12)-6);
+      if (!this.allowed_root_intervals[root_interval]) {
+          return false;
+      }
 
-    if (!allowed_root_intervals[root_interval]) {
-        return false;
-    }
+      var current_position = CHORD_TYPES[CHORDS[current_chord].chord_type].position;
+      var next_position = CHORD_TYPES[CHORDS[next_chord].chord_type].position;
 
-    var current_position = CHORD_TYPES[CHORDS[current_chord].chord_type].position;
-    var next_position = CHORD_TYPES[CHORDS[next_chord].chord_type].position;
+      if (root_interval <= 2) {
+          // root movements by whole-steps, half-steps or unison
+          return current_position === next_position;
+      }
+      if (root_interval === 3 || root_interval === 4) {
+          // root movements by minor thirds/ sixths, major thirds / sixths
+          return true;
+      }
+      if (root_interval === 5) {
+          // root movements by fourths or fifths
+          return current_position !== next_position;
+      }
+      if (root_interval === 6) {
+          // root movement by tritones, not allowed!!
+          return true;
+      }
+  }
 
-    if (root_interval <= 2) {
-        // root movements by whole-steps, half-steps or unison
-        return current_position === next_position;
-    }
-    if (root_interval === 3 || root_interval === 4) {
-        // root movements by minor thirds/ sixths, major thirds / sixths
-        return true;
-    }
-    if (root_interval === 5) {
-        // root movements by fourths or fifths
-        return current_position !== next_position;
-    }
-    if (root_interval === 6) {
-        // root movement by tritones, not allowed!!
-        return true;
-    }
-}
+  score_smooth_voice_leading(current_chord, next_chord) {
+      var current_pitches = CHORDS[current_chord].root_transposed_to_zero;
+      var next_pitches = CHORDS[next_chord].root_transposed_to_zero;
 
-var voice_leading_threshold = 9;
-function score_smooth_voice_leading(current_chord, next_chord){
-    var current_pitches = CHORDS[current_chord].root_transposed_to_zero;
-    var next_pitches = CHORDS[next_chord].root_transposed_to_zero;
+      var fitness_score = 0;
+      current_pitches.forEach(function(pitch, index) {
+          for(let interval = -2; interval <= 2; interval++){
+              if (next_pitches.indexOf(pitch + interval) !== -1) {
+                  if (interval === 0) {
+                      fitness_score += 2;
+                  } else {
+                      fitness_score += 1;
+                  }
+                  if (Math.max.apply(null, current_pitches) === pitch) {
+                      fitness_score += 2;
+                  }
+                  return;
+              }
+          }
+      })
+      return fitness_score;
+  }
 
-    var fitness_score = 0;
-    current_pitches.forEach(function(pitch, index) {
-        for(let interval = -2; interval <= 2; interval++){
-            if (next_pitches.indexOf(pitch + interval) !== -1) {
-                if (interval === 0) {
-                    fitness_score += 2;
-                } else {
-                    fitness_score += 1;
-                }
-                if (Math.max.apply(null, current_pitches) === pitch) {
-                    fitness_score += 2;
-                }
-                return;
-            }
-        }
-    })
-    return fitness_score;
-}
+  pickChord(scaleName) {
+      var chord_candidates = getChordsInScale(scaleName);
+      var before_chord_candidates_count = chord_candidates.length;
+      chord_candidates = chord_candidates.filter((candidate) => {
+          return this.is_valid_jazz_chord_progression(this.last_chord_name, candidate);
+      });
 
-var voice_leading_smoothness = 100;
+      chord_candidates = chord_candidates.sort((a, b) => {
+          var score_a = this.score_smooth_voice_leading(this.last_chord_name, a);
+          var score_b = this.score_smooth_voice_leading(this.last_chord_name, b);
 
-var slice_size = 1;
+          if (score_a === score_b) {
+              return 0;
+          } else if (score_a < score_b) {
+              return -1;
+          } else if (score_a > score_b) {
+              return 1;
+          }
 
-var last_chord_name = 'b_13#9-110';
+      });
 
-function pickChord(scaleName) {
-    var chord_candidates = getChordsInScale(scaleName);
-    var before_chord_candidates_count = chord_candidates.length;
-    chord_candidates = chord_candidates.filter(function(candidate){
-        return is_valid_jazz_chord_progression(last_chord_name, candidate);
-    });
-
-    chord_candidates = chord_candidates.sort(function (a, b) {
-        var score_a = score_smooth_voice_leading(last_chord_name, a);
-        var score_b = score_smooth_voice_leading(last_chord_name, b);
-
-        if (score_a === score_b) {
-            return 0;
-        } else if (score_a < score_b) {
-            return -1;
-        } else if (score_a > score_b) {
-            return 1;
-        }
-
-    });
-
-    var after_chord_candidates = chord_candidates.length;
-    slice_size = Math.floor(chord_candidates.length - chord_candidates.length*(voice_leading_smoothness/100));
-    if (slice_size === 0){
-        slice_size = 1;
-    }
-    var current_chord_name;
-    if (slice_size >= chord_candidates.length) {
-        current_chord_name = choose(chord_candidates);
-    } else {
-        current_chord_name = choose(chord_candidates.slice(slice_size));
-    }
-    var current_chord = CHORDS[current_chord_name];
-    return current_chord;
+      var after_chord_candidates = chord_candidates.length;
+      let slice_size = Math.floor(chord_candidates.length - chord_candidates.length*(this.voice_leading_smoothness/100));
+      if (slice_size === 0){
+          slice_size = 1;
+      }
+      var current_chord_name;
+      if (slice_size >= chord_candidates.length) {
+          current_chord_name = choose(chord_candidates);
+      } else {
+          current_chord_name = choose(chord_candidates.slice(slice_size));
+      }
+      var current_chord = CHORDS[current_chord_name];
+      return current_chord;
+  }
 }
 
 class Chords extends React.Component {
