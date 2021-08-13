@@ -12,10 +12,13 @@ class Chords extends React.Component {
     });
 
     this.state = {
+      playing: false,
       scale: "c_diatonic",
       chord: "",
     };
     this.update();
+
+    this.togglePlaying = this.togglePlaying.bind(this);
   }
 
   update() {
@@ -32,9 +35,22 @@ class Chords extends React.Component {
     this.forceUpdate();
   }
 
+  togglePlaying() {
+    this.setState((previousState) => ({
+      playing: !previousState.playing
+    }));
+    // TODO: Why the ! here?
+    this.props.chordPlayer.setPlaying(!this.state.playing);
+  }
+
   render() {
     return(
       <div id="Chords">
+        <p>
+          <button onClick={ this.togglePlaying }>
+            { this.state.playing ? "STOP" : "PLAY" }
+          </button>
+        </p>
         <p>Current scale: { this.state.scale }</p>
         <p>Pitch classes: { this.state.chord }</p>
       </div>

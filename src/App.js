@@ -9,13 +9,13 @@ function App() {
   const p5Sketch = new Pfivesketch();
   const navigator = p5Sketch.props.navigator;
 
-  new ChordPlayer(navigator);
+  const chordPlayer = new ChordPlayer(navigator);
 
   return (
     <div className="App">
       <div id="grid">
           <Navigation p5Sketch={ p5Sketch } />
-          <Workspace navigator={ navigator } />
+          <Workspace navigator={ navigator } chordPlayer={ chordPlayer } />
       </div>
     </div>
   );

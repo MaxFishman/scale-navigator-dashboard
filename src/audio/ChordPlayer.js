@@ -9,8 +9,21 @@ export default class ChordPlayer {
     this.synths = [];
     this.navigator = navigator;
     this.navigator.onChangeMainScale(() => {
-      this.play();
+      if (this.playing) {
+        this.play();
+      }
     });
+    this.playing = false;
+  }
+
+  setPlaying(playing) {
+    this.playing = playing;
+    console.log(playing);
+    if (playing) {
+      this.play();
+    } else {
+      this.stop();
+    }
   }
 
   stop() {

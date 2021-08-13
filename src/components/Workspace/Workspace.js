@@ -8,9 +8,8 @@ import React from 'react';
 const { TabPane } = Tabs;
 
 export default class Workspace extends React.Component {
-  constructor(properties) {
-    super(properties);
-    this.navigator = properties.navigator;
+  constructor(props) {
+    super(props);
   }
 
   state = {
@@ -31,7 +30,10 @@ export default class Workspace extends React.Component {
               <p>Tablature Component</p>
             </TabPane>
             <TabPane tab="Chords" key="2">
-              <Chords navigator={ this.navigator } />
+              <Chords
+                navigator={ this.props.navigator }
+                chordPlayer={ this.props.chordPlayer }
+              />
             </TabPane>
             <TabPane tab="MIDI" key="3">
               <p>MIDI Component</p>
