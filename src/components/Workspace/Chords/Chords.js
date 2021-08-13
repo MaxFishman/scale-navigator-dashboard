@@ -8,8 +8,6 @@ const SCALES = scalesJson.default;
 const CHORDS = chordsJson.default;
 const CHORD_TYPES = chordTypesJson.default;
 
-const edo = 12;
-
 const isSubset = (array1, array2) => {
   for (let x of array1) {
     if (array2.indexOf(x) === -1) {
@@ -137,8 +135,7 @@ class ChordChooser {
       } else {
           current_chord_name = choose(chord_candidates.slice(slice_size));
       }
-      var current_chord = CHORDS[current_chord_name];
-      return current_chord;
+      return current_chord_name;
   }
 }
 
@@ -151,23 +148,28 @@ class Chords extends React.Component {
       this.update();
     });
 
+    this.chordChooser = new ChordChooser();
+
     this.state = {
       scale: "c_diatonic",
-      chords: "",
+      chord: "",
     };
     this.update();
   }
 
   update() {
+    let chord = null;
+    if (this.chordChooser && this.props.navigator) {
+      chord = this.chordChooser.pickChord(
+        this.props.navigator.main_polygon.scale
+      );
+    }
     const scale = this.props.navigator.main_polygon ?
       this.props.navigator.main_polygon.scale
       : "none";
-    const chords = scale === "none" ?
-      ""
-      : getChordsInScale(scale).join(" ");
     this.setState({
       scale: scale,
-      chords: chords
+      chord: chord ? chord : ""
     });
     // FIXME: forceUpdate is a code smell
     // I'm sorry, I am bad at React and could not figure out how to avoid this
@@ -178,7 +180,7 @@ class Chords extends React.Component {
     return(
       <div id="Chords">
         <p>Current scale: { this.state.scale }</p>
-        <p>Pitch classes: { this.state.chords }</p>
+        <p>Pitch classes: { this.state.chord }</p>
       </div>
     );
   }
