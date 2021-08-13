@@ -44,6 +44,7 @@ export default class ChordChooser {
     this.voice_leading_smoothness = 100;
     this.slice_size = 1;
     this.last_chord_name = 'b_13#9-110';
+    this.current_chord_name = 'b_13#9-110';
   }
 
   is_valid_jazz_chord_progression(current_chord, next_chord) {
@@ -101,7 +102,7 @@ export default class ChordChooser {
       return fitness_score;
   }
 
-  pickChord(scaleName) {
+  tick(scaleName) {
       var chord_candidates = getChordsInScale(scaleName);
       var before_chord_candidates_count = chord_candidates.length;
       chord_candidates = chord_candidates.filter((candidate) => {
@@ -127,12 +128,10 @@ export default class ChordChooser {
       if (slice_size === 0){
           slice_size = 1;
       }
-      var current_chord_name;
       if (slice_size >= chord_candidates.length) {
-          current_chord_name = choose(chord_candidates);
+          this.current_chord_name = choose(chord_candidates);
       } else {
-          current_chord_name = choose(chord_candidates.slice(slice_size));
+          this.current_chord_name = choose(chord_candidates.slice(slice_size));
       }
-      return current_chord_name;
   }
 }

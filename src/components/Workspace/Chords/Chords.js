@@ -11,8 +11,6 @@ class Chords extends React.Component {
       this.update();
     });
 
-    this.chordChooser = new ChordChooser();
-
     this.state = {
       scale: "c_diatonic",
       chord: "",
@@ -21,18 +19,13 @@ class Chords extends React.Component {
   }
 
   update() {
-    let chord = null;
-    if (this.props.navigator.main_polygon) {
-      chord = this.chordChooser.pickChord(
-        this.props.navigator.main_polygon.scale
-      );
-    }
     const scale = this.props.navigator.main_polygon ?
       this.props.navigator.main_polygon.scale
       : "none";
+    const chord = this.props.navigator.chord_chooser.current_chord_name;
     this.setState({
       scale: scale,
-      chord: chord ? chord : ""
+      chord: chord
     });
     // FIXME: forceUpdate is a code smell
     // I'm sorry, I am bad at React and could not figure out how to avoid this

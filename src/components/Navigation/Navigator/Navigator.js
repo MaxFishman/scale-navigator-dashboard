@@ -1,4 +1,4 @@
-
+import ChordChooser from "./ChordChooser";
 import Polygon from "./Polygon";
 
 function Navigator() {
@@ -12,6 +12,8 @@ function Navigator() {
     this.preview_polygons = [];
     this.poly_size = 75;
     this.preview_polygons_ready = false;
+
+    this.chord_chooser = new ChordChooser();
 
     this.autopilot_data = {
         active: false,
@@ -202,6 +204,8 @@ function Navigator() {
 
         //this.preview_polygons = []
         this.preview_polygons_ready = false;
+
+        this.chord_chooser.tick(this.main_polygon.scale);
 
         this.triggerEvent();
     }
