@@ -13,6 +13,7 @@ class Chords extends React.Component {
 
     this.state = {
       playing: false,
+      rootMovement: [true, true, true, true, true, true, true],
       scale: "c_diatonic",
       chord: "",
     };
@@ -43,7 +44,35 @@ class Chords extends React.Component {
     this.props.chordPlayer.setPlaying(!this.state.playing);
   }
 
+  handleRootMovementChange(i) {
+    return () => {
+      console.log(i);
+      this.setState((previousState) => {
+        const rootMovement = previousState.rootMovement.slice();
+        rootMovement[i] = !rootMovement[i];
+        return { rootMovement: rootMovement };
+      });
+    };
+  }
+
   render() {
+    const elements = [
+      "Unison", "m2 M7", "M2 m7", "m3 M6", "M3 m6", "P4 P5", "Tritone"
+    ].map((name, i) => {
+      const id = "root-movement-" + i;
+      return (
+        <li key={ i }>
+          <input
+            id={ id }
+            type="checkbox"
+            checked={ this.state.rootMovement[i] }
+            onChange={ this.handleRootMovementChange(i) }
+          />
+          <label htmlFor={ i }>{ name }</label>
+        </li>
+      );
+    });
+
     return(
       <div id="Chords">
         <p>
@@ -52,7 +81,11 @@ class Chords extends React.Component {
           </button>
         </p>
         <p>Current scale: { this.state.scale }</p>
-        <p>Pitch classes: { this.state.chord }</p>
+        <p>Current chord: { this.state.chord }</p>
+        <p>Allowed root movements:</p>
+        <ul>
+          { elements }
+        </ul>
       </div>
     );
   }
