@@ -31,6 +31,10 @@ function Pfivesketch() {
     const draw = (p5) => {
         p5.background(255);
         nav.draw(p5)
+
+        if (document.getElementById("autopilot_checkbox").checked != nav.autopilot_data.active) {
+            nav.toggle_autopilot();
+        }
     }
 
     const mousePressed = (p5) => {
