@@ -14,8 +14,6 @@ function Pfivesketch() {
 
     const setup = (p5, canvasParentRef) => {
         var canv = p5.createCanvas(500, 500).parent(canvasParentRef)
-        canv.elt.style.width = "100%"
-        canv.elt.style.height = "100%"
 
         p5.frameRate(fps)
 
@@ -26,6 +24,8 @@ function Pfivesketch() {
         document.addEventListener("scaleChanged", (e) => {
             tab.setScale(e.detail)
         })
+
+        windowResized(p5)
     }
 
     const draw = (p5) => {
@@ -45,10 +45,16 @@ function Pfivesketch() {
         nav.mouseReleased(p5);
     }
 
+    const windowResized = (p5) => {
+        var p = document.getElementById("canv_container").getBoundingClientRect()
+        p5.resizeCanvas(p.width, p.height)
+    }
+
     return <Sketch setup = { setup }
     draw = { draw }
     mousePressed = { mousePressed }
     mouseReleased = { mouseReleased }
+    windowResized = { windowResized }
     navigator = { nav }
     />
 }

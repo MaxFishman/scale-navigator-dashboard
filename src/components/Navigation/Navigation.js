@@ -8,7 +8,7 @@ const Navigation = ({ p5Sketch }) => {
           <div id="logo">dashboard</div>
           <p id="author">by <a href="https://www.nathanturczan.com/">Nathan Turczan</a></p>
         </div>
-        <div className="scalenav_container">
+        <div className="scalenav_container" id="canv_container">
           { p5Sketch }
         </div>
         <div id="autopilot_container">
