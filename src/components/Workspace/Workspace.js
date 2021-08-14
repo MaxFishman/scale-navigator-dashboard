@@ -3,6 +3,7 @@ import { Tabs, Row, Col, Button } from 'antd';
 import About from './About/About'
 import Chords from './Chords/Chords'
 import Ensemble from './Ensemble/Ensemble'
+import Tablature from "../Tabs/Tablature"
 import React from 'react';
 
 const { TabPane } = Tabs;
@@ -27,7 +28,7 @@ export default class Workspace extends React.Component {
               <Ensemble />
             </TabPane>
             <TabPane tab="Tablature" key="1">
-              <p>Tablature Component</p>
+              <Tablature />
             </TabPane>
             <TabPane tab="Chords" key="2">
               <Chords
