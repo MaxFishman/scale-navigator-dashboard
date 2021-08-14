@@ -29,6 +29,7 @@ function Navigator() {
         this.main_polygon = new Polygon(p5, 0.5, 0.5, this.poly_size, "c_diatonic")
         this.neighbors = this.main_polygon.getNeighbors();
 
+        this.chord_chooser.tick(this.main_polygon.scale);
         this.triggerEvent()
     }
 

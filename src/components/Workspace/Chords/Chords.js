@@ -12,11 +12,11 @@ class Chords extends React.Component {
     });
 
     this.state = {
-      playing: false,
-      rootMovement: [true, true, true, true, true, true, true],
-      voiceLeadingSmoothness: 100,
-      scale: "c_diatonic",
-      chord: "",
+      playing: this.props.chordPlayer.playing,
+      rootMovement: this.props.navigator.chord_chooser.allowed_root_intervals,
+      voiceLeadingSmoothness: this.props.navigator.chord_chooser.voice_leading_smoothness,
+      scale: this.props.navigator.main_polygon.scale,
+      chord: this.props.navigator.chord_chooser.current_chord_name,
     };
     this.update();
 
