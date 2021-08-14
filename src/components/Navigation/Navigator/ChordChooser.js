@@ -43,9 +43,9 @@ export default class ChordChooser {
     this.voice_leading_threshold = 9;
     this.voice_leading_smoothness = 100;
     this.slice_size = 1;
-    this.last_chord_name = 'b_13#9-110';
-    this.current_chord_name = 'b_13#9-110';
-    this.current_chord = CHORDS[this.current_chord_name];
+    this.last_chord_name = null;
+    this.current_chord_name = null;
+    this.current_chord = null;
   }
 
   is_valid_jazz_chord_progression(current_chord, next_chord) {
@@ -104,36 +104,43 @@ export default class ChordChooser {
   }
 
   tick(scaleName) {
-      var chord_candidates = getChordsInScale(scaleName);
-      var before_chord_candidates_count = chord_candidates.length;
+    this.last_chord_name = this.current_chord_name;
+
+    let chord_candidates = getChordsInScale(scaleName);
+
+    if (!(this.last_chord_name === null || this.last_chord_name === "error")) {
       chord_candidates = chord_candidates.filter((candidate) => {
-          return this.is_valid_jazz_chord_progression(this.last_chord_name, candidate);
+        return this.is_valid_jazz_chord_progression(this.last_chord_name, candidate);
       });
-
       chord_candidates = chord_candidates.sort((a, b) => {
-          var score_a = this.score_smooth_voice_leading(this.last_chord_name, a);
-          var score_b = this.score_smooth_voice_leading(this.last_chord_name, b);
+        var score_a = this.score_smooth_voice_leading(this.last_chord_name, a);
+        var score_b = this.score_smooth_voice_leading(this.last_chord_name, b);
 
-          if (score_a === score_b) {
-              return 0;
-          } else if (score_a < score_b) {
-              return -1;
-          } else if (score_a > score_b) {
-              return 1;
-          }
-
+        if (score_a === score_b) {
+          return 0;
+        } else if (score_a < score_b) {
+          return -1;
+        } else if (score_a > score_b) {
+          return 1;
+        }
       });
-
-      var after_chord_candidates = chord_candidates.length;
+      let after_chord_candidates = chord_candidates.length;
       let slice_size = Math.floor(chord_candidates.length - chord_candidates.length*(this.voice_leading_smoothness/100));
-      if (slice_size === 0){
-          slice_size = 1;
+      if (slice_size === 0) {
+        slice_size = 1;
       }
-      if (slice_size >= chord_candidates.length) {
-          this.current_chord_name = choose(chord_candidates);
-      } else {
-          this.current_chord_name = choose(chord_candidates.slice(slice_size));
+      if (slice_size < chord_candidates.length) {
+        chord_candidates = chord_candidates.slice(slice_size);
       }
-      this.current_chord = CHORDS[this.current_chord_name];
+    }
+
+    if (chord_candidates.length === 0) {
+      this.current_chord_name = "error";
+      this.current_chord = null;
+      return;
+    }
+
+    this.current_chord_name = choose(chord_candidates);
+    this.current_chord = CHORDS[this.current_chord_name];
   }
 }

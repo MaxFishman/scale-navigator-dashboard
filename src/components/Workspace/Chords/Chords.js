@@ -93,7 +93,15 @@ class Chords extends React.Component {
           </button>
         </p>
         <p>Current scale: { this.state.scale }</p>
-        <p>Current chord: { this.state.chord }</p>
+        <p>
+          Current chord: {
+            this.state.chord === null
+              ? "none"
+              : this.state.chord === "error"
+                ? "Error -- couldn't find a chord fitting these constraints. Try checking more boxes."
+                : this.state.chord
+          }
+        </p>
         <p>Allowed root movements:</p>
         <ul>
           { elements }
