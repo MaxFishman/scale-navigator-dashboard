@@ -1,6 +1,6 @@
 import Pfivesketch from './Navigator/Pfivesketch';
 
-const Navigation = () => {
+const Navigation = ({ p5Sketch }) => {
   return(
       <div id="Navigation">
         <div>
@@ -9,7 +9,7 @@ const Navigation = () => {
           <p id="author">by <a href="https://www.nathanturczan.com/">Nathan Turczan</a></p>
         </div>
         <div className="scalenav_container">
-          <Pfivesketch />
+          { p5Sketch }
         </div>
         <div id="autopilot_container">
           <form>

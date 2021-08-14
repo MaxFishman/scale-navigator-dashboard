@@ -9,7 +9,7 @@ import Navigator from './Navigator';
 const fps = 30
 
 function Pfivesketch() {
-    var nav = undefined;
+    var nav = new Navigator.Navigator();
     var tab = undefined;
 
     const setup = (p5, canvasParentRef) => {
@@ -19,8 +19,7 @@ function Pfivesketch() {
 
         p5.frameRate(fps)
 
-        nav = new Navigator.Navigator(p5);
-        nav.init();
+        nav.init(p5);
 
         tab = new TablatureManager()
 
@@ -35,21 +34,22 @@ function Pfivesketch() {
 
     const draw = (p5) => {
         p5.background(255);
-        nav.draw()
+        nav.draw(p5)
     }
 
-    const mousePressed = () => {
-        nav.mousePressed();
+    const mousePressed = (p5) => {
+        nav.mousePressed(p5);
     }
 
-    const mouseReleased = () => {
-        nav.mouseReleased();
+    const mouseReleased = (p5) => {
+        nav.mouseReleased(p5);
     }
 
     return <Sketch setup = { setup }
     draw = { draw }
     mousePressed = { mousePressed }
     mouseReleased = { mouseReleased }
+    navigator = { nav }
     />
 }
 

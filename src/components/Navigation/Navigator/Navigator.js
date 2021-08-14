@@ -1,9 +1,8 @@
-
+import ChordChooser from "./ChordChooser";
 import Polygon from "./Polygon";
 
-function Navigator(p5) {
-    this.p5 = p5;
-
+function Navigator() {
+    this.scale = "c_diatonic";
     this.main_polygon = undefined;
     this.neighbors = [];
     this.old_main_polygon = undefined;
@@ -14,6 +13,8 @@ function Navigator(p5) {
     this.poly_size = 75;
     this.preview_polygons_ready = false;
 
+    this.chord_chooser = new ChordChooser();
+
     this.autopilot_data = {
         active: false,
         default_period: 1000,
@@ -21,24 +22,25 @@ function Navigator(p5) {
         intervalID: undefined
     }
 
-    this.init = () => {
+    this.init = (p5) => {
         this.init_autopilot()
 
         // create the initial polygons
-        this.main_polygon = new Polygon(0.5, 0.5, this.poly_size, "c_diatonic", this)
+        this.main_polygon = new Polygon(p5, 0.5, 0.5, this.poly_size, "c_diatonic")
         this.neighbors = this.main_polygon.getNeighbors();
 
+        this.chord_chooser.tick(this.main_polygon.scale);
         this.triggerEvent()
     }
 
-    this.init_autopilot = () => {
+    this.init_autopilot = (p5) => {
         if (!this.autopilot_data.period) this.autopilot_data.period = this.autopilot_data.default_period
 
         this.autopilot_data.intervalID = setInterval(() => {
             if (this.autopilot_data.active) {
-                var p = this.p5.random(this.neighbors)
+                var p = p5.random(this.neighbors)
 
-                this.changeMainScale(p, this.p5.min(1, this.autopilot_data.period / 1000))
+                this.changeMainScale(p5, p, p5.min(1, this.autopilot_data.period / 1000))
                 return
             }
         }, this.autopilot_data.period)
@@ -65,9 +67,9 @@ function Navigator(p5) {
         this.init_autopilot();
     }
 
-    this.draw = () => {
-        this.p5.push()
-        this.p5.ellipseMode(this.p5.RADIUS);
+    this.draw = (p5) => {
+        p5.push()
+        p5.ellipseMode(p5.RADIUS);
 
         //background(255);
         var allPolygons = [this.main_polygon].concat(this.preview_polygons, this.old_neighbors)
@@ -78,20 +80,20 @@ function Navigator(p5) {
         for (var p of allPolygons) {
             if (p) p.draw();
         }
-        this.p5.pop()
+        p5.pop()
     }
 
-    this.mousePressed = () => {
+    this.mousePressed = (p5) => {
         // check for clicks on all polygons
         for (var p of this.neighbors) {
             if (p && p.click() && !p.animation.active) {
-                this.prepareChangeMainScale(p);
+                this.prepareChangeMainScale(p5, p);
                 return
             }
         }
     }
 
-    this.mouseReleased = () => {
+    this.mouseReleased = (p5) => {
         // check for clicks on all polygons
         for (var p of this.neighbors) {
             if (p && p.click() && !p.animation.active && this.preview_polygons_ready) {
@@ -101,7 +103,12 @@ function Navigator(p5) {
         }
     }
 
-    this.prepareChangeMainScale = (p) => {
+    this.changeMainScaleCallbacks = [];
+    this.onChangeMainScale = (callback) => {
+        this.changeMainScaleCallbacks.push(callback);
+    };
+
+    this.prepareChangeMainScale = (p5, p) => {
         this.preview_polygons = p.getNeighbors()
         this.last_clicked_polygon = p;
 
@@ -129,8 +136,8 @@ function Navigator(p5) {
         // take care of the fanning out (not all the way around)
         var total_poly = this.neighbors.length;
         var ind = this.main_polygon.getNeighbors().findIndex(x => x.isMatching(p))
-            //var positions = p.getNeighborPositions(p.x, p.y, this.p5.RADIUS, undefined, undefined, this.p5.PI / 2 + (2 * this.p5.PI * (ind - 0.5)) / total_poly, this.p5.PI / 2 + (2 * this.p5.PI * (ind + 0.5)) / total_poly, this.actually_new_polygons.length)
-        var positions = p.getNeighborPositions(p.x, p.y, this.p5.RADIUS, undefined, undefined, this.p5.PI / 2, this.p5.PI / 2 + (2 * this.p5.PI), this.actually_new_polygons.length)
+            //var positions = p.getNeighborPositions(p.x, p.y, p5.RADIUS, undefined, undefined, p5.PI / 2 + (2 * p5.PI * (ind - 0.5)) / total_poly, p5.PI / 2 + (2 * p5.PI * (ind + 0.5)) / total_poly, this.actually_new_polygons.length)
+        var positions = p.getNeighborPositions(p.x, p.y, p5.RADIUS, undefined, undefined, p5.PI / 2, p5.PI / 2 + (2 * p5.PI), this.actually_new_polygons.length)
 
         /*
         //position them
@@ -149,13 +156,14 @@ function Navigator(p5) {
         }
 
         this.preview_polygons_ready = true;
+
         return
     }
 
     this.finishChangeMainScale = (new_main, all_duration = 1) => {
         if (new_main == this.main_polygon) return
 
-        // this.p5.push the current polygons into old polygons
+        // p5.push the current polygons into old polygons
         this.old_neighbors = [...this.neighbors]
         this.old_main_polygon = this.main_polygon;
 
@@ -198,16 +206,22 @@ function Navigator(p5) {
         //this.preview_polygons = []
         this.preview_polygons_ready = false;
 
+        this.chord_chooser.tick(this.main_polygon.scale);
+
         this.triggerEvent();
     }
 
-    this.changeMainScale = (new_main, all_duration = 1) => {
-        this.prepareChangeMainScale(new_main)
+    this.changeMainScale = (p5, new_main, all_duration = 1) => {
+        this.prepareChangeMainScale(p5, new_main)
         this.finishChangeMainScale(new_main, all_duration)
     }
 
     this.triggerEvent = () => {
         document.dispatchEvent(new CustomEvent("scaleChanged", { detail: this.main_polygon.scale }))
+
+        for (let callback of this.changeMainScaleCallbacks) {
+            callback();
+        }
     }
 }
 
