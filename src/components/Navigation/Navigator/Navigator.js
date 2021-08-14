@@ -24,7 +24,7 @@ function Navigator() {
     }
 
     this.init = (p5) => {
-        this.init_autopilot()
+        this.init_autopilot(p5)
 
         // create the initial polygons
         this.main_polygon = new Polygon(p5, 0.5, 0.5, this.poly_size, "c_diatonic")
@@ -37,14 +37,14 @@ function Navigator() {
     this.init_autopilot = (p5) => {
         if (!this.autopilot_data.period) this.autopilot_data.period = this.autopilot_data.default_period
 
-        this.autopilot_data.intervalID = setInterval(() => {
+        this.autopilot_data.intervalID = setInterval((p5) => {
             if (this.autopilot_data.active) {
                 var p = p5.random(this.neighbors)
 
                 this.changeMainScale(p5, p, p5.min(1, this.autopilot_data.period / 1000))
                 return
             }
-        }, this.autopilot_data.period)
+        }, this.autopilot_data.period, p5)
     }
 
     this.toggle_autopilot = (forced_value = undefined) => {
@@ -98,7 +98,7 @@ function Navigator() {
         // check for clicks on all polygons
         for (var p of this.neighbors) {
             if (p && p.click() && !p.animation.active && this.preview_polygons_ready) {
-                this.finishChangeMainScale(p)
+                this.finishChangeMainScale(p5, p)
                 return
             }
         }
@@ -161,7 +161,7 @@ function Navigator() {
         return
     }
 
-    this.finishChangeMainScale = (new_main, all_duration = Helper.default_animation_duration) => {
+    this.finishChangeMainScale = (p5, new_main, all_duration = Helper.default_animation_duration) => {
         if (new_main == this.main_polygon) return
 
         // p5.push the current polygons into old polygons
@@ -212,9 +212,9 @@ function Navigator() {
         this.triggerEvent();
     }
 
-    this.changeMainScale = (new_main, all_duration = Helper.default_animation_duration) => {
-        this.prepareChangeMainScale(new_main)
-        this.finishChangeMainScale(new_main, all_duration)
+    this.changeMainScale = (p5, new_main, all_duration = Helper.default_animation_duration) => {
+        this.prepareChangeMainScale(p5, new_main)
+        this.finishChangeMainScale(p5, new_main, all_duration)
     }
 
     this.triggerEvent = () => {

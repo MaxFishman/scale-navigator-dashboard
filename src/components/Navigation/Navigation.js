@@ -13,7 +13,8 @@ const Navigation = ({ p5Sketch }) => {
         </div>
         <div id="autopilot_container">
           <form>
-            <p>autopilot checkbox</p>
+            <label>Autopilot</label>
+            <input type="checkbox" autoComplete="off" id="autopilot_checkbox"></input>
           </form>
         </div>
       </div>

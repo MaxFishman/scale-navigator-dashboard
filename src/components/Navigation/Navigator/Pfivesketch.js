@@ -24,11 +24,7 @@ function Pfivesketch() {
         tab = new TablatureManager()
 
         document.addEventListener("scaleChanged", (e) => {
-            try {
-                tab.setScale(e.detail)
-            } catch (error) {
-                console.log("SETTING SCALE FAILED", e, error)
-            }
+            tab.setScale(e.detail)
         })
     }
 
