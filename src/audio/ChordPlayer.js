@@ -39,7 +39,7 @@ export default class ChordPlayer {
     const chord = this.navigator.chord_chooser.current_chord;
     const notes = chord.original_voicing;
     for (let note of notes) {
-      const synth = new Tone.Synth().toDestination();
+      const synth = new Tone.Synth({ volume: -20 }).toDestination();
       synth.triggerAttack(midiToHz(note), "8n");
       this.synths.push(synth);
     }
