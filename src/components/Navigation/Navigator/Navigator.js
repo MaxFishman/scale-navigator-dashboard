@@ -1,5 +1,6 @@
 import ChordChooser from "./ChordChooser";
 import Polygon from "./Polygon";
+import Helper from "./Helper";
 
 function Navigator() {
     this.scale = "c_diatonic";
@@ -160,7 +161,7 @@ function Navigator() {
         return
     }
 
-    this.finishChangeMainScale = (new_main, all_duration = 1) => {
+    this.finishChangeMainScale = (new_main, all_duration = Helper.default_animation_duration) => {
         if (new_main == this.main_polygon) return
 
         // p5.push the current polygons into old polygons
@@ -211,8 +212,8 @@ function Navigator() {
         this.triggerEvent();
     }
 
-    this.changeMainScale = (p5, new_main, all_duration = 1) => {
-        this.prepareChangeMainScale(p5, new_main)
+    this.changeMainScale = (new_main, all_duration = Helper.default_animation_duration) => {
+        this.prepareChangeMainScale(new_main)
         this.finishChangeMainScale(new_main, all_duration)
     }
 

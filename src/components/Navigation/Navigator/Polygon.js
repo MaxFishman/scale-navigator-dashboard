@@ -202,7 +202,7 @@ function Polygon(p5, x, y, size, scale) {
         }
     }
 
-    this.move = (target_x, target_y, duration_seconds = 1, target_size = this.radius, target_opacity = 1) => {
+    this.move = (target_x, target_y, duration_seconds = Helper.default_animation_duration, target_size = this.radius, target_opacity = 1) => {
         // start the animation of an object
         var duration = Pfivesketch.fps * duration_seconds;
 
