@@ -46,5 +46,7 @@ Helper.hsvToRgb = (h, s, v) => {
     return [r * 255, g * 255, b * 255];
 }
 
+Helper.default_animation_duration = 1;
+
 
 export default Helper

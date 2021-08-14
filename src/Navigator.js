@@ -1,5 +1,6 @@
 import Pfivesketch from "./Pfivesketch";
 import Polygon from "./Polygon";
+import Helper from "./Helper";
 
 function Navigator(p5) {
     this.p5 = p5;
@@ -152,7 +153,7 @@ function Navigator(p5) {
         return
     }
 
-    this.finishChangeMainScale = (new_main, all_duration = 1) => {
+    this.finishChangeMainScale = (new_main, all_duration = Helper.default_animation_duration) => {
         if (new_main == this.main_polygon) return
 
         // this.p5.push the current polygons into old polygons
@@ -201,7 +202,7 @@ function Navigator(p5) {
         this.triggerEvent();
     }
 
-    this.changeMainScale = (new_main, all_duration = 1) => {
+    this.changeMainScale = (new_main, all_duration = Helper.default_animation_duration) => {
         this.prepareChangeMainScale(new_main)
         this.finishChangeMainScale(new_main, all_duration)
     }
