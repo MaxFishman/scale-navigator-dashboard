@@ -95,10 +95,16 @@ function Navigator() {
     }
 
     this.mouseReleased = (p5) => {
+        if (this.main_polygon.click()) {
+            console.log("main polygon clicked");
+            this.chord_chooser.tick(this.main_polygon.scale);
+            return
+        }
         // check for clicks on all polygons
         for (var p of this.neighbors) {
             if (p && p.click() && !p.animation.active && this.preview_polygons_ready) {
-                this.finishChangeMainScale(p5, p)
+                this.finishChangeMainScale(p5, p);
+                this.chord_chooser.tick(this.main_polygon.scale);
                 return
             }
         }
@@ -207,7 +213,7 @@ function Navigator() {
         //this.preview_polygons = []
         this.preview_polygons_ready = false;
 
-        this.chord_chooser.tick(this.main_polygon.scale);
+        // this.chord_chooser.tick(this.main_polygon.scale);
 
         this.triggerEvent();
     }
