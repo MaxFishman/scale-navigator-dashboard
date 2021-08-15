@@ -85,26 +85,26 @@ function Navigator() {
     }
 
     this.mousePressed = (p5) => {
+        if (this.main_polygon.click()) {
+            this.chord_chooser.tick(this.main_polygon.scale)
+            this.triggerEvent();
+            return
+        }
         // check for clicks on all polygons
         for (var p of this.neighbors) {
             if (p && p.click() && !p.animation.active) {
                 this.prepareChangeMainScale(p5, p);
+                this.chord_chooser.tick(this.main_polygon.scale)
                 return
             }
         }
     }
 
     this.mouseReleased = (p5) => {
-        if (this.main_polygon.click()) {
-            console.log("main polygon clicked");
-            this.chord_chooser.tick(this.main_polygon.scale);
-            return
-        }
         // check for clicks on all polygons
         for (var p of this.neighbors) {
             if (p && p.click() && !p.animation.active && this.preview_polygons_ready) {
                 this.finishChangeMainScale(p5, p);
-                this.chord_chooser.tick(this.main_polygon.scale);
                 return
             }
         }
@@ -115,30 +115,17 @@ function Navigator() {
         this.changeMainScaleCallbacks.push(callback);
     };
 
+    this.third_gen_hover = (p5, p) => {
+
+    }
+
     this.prepareChangeMainScale = (p5, p) => {
-        this.preview_polygons = p.getNeighbors()
         this.last_clicked_polygon = p;
 
-        // duplicates between this.neighbors
-        var all_current = this.neighbors.concat([this.main_polygon])
-        this.actually_new_polygons = new Set();
-        for (var n = 0; n < all_current.length; n++) {
-            for (var pre = 0; pre < this.preview_polygons.length; pre++) {
-                if (all_current[n].isMatching(this.preview_polygons[pre])) {
-                    this.preview_polygons[pre] = all_current[n];
-                }
-            }
-        }
-
-        // find polygons which are actually new
-        for (var pre = 0; pre < this.preview_polygons.length; pre++) {
-            if (!all_current.includes(this.preview_polygons[pre])) {
-                this.actually_new_polygons.add(this.preview_polygons[pre])
-            }
-        }
-
         // convert to array
-        this.actually_new_polygons = Array.from(this.actually_new_polygons)
+        var pl = this.get_new_neighbors(p5, p);
+        this.actually_new_polygons = pl.new
+        this.preview_polygons = pl.preview
 
         // take care of the fanning out (not all the way around)
         var total_poly = this.neighbors.length;
@@ -165,6 +152,33 @@ function Navigator() {
         this.preview_polygons_ready = true;
 
         return
+    }
+
+    this.get_new_neighbors = (p5, p) => {
+        var prev_poly = p.getNeighbors()
+
+        // duplicates between this.neighbors
+        var all_current = this.neighbors.concat([this.main_polygon])
+        var acc_new_poly = new Set();
+        for (var n = 0; n < all_current.length; n++) {
+            for (var pre = 0; pre < prev_poly.length; pre++) {
+                if (all_current[n].isMatching(prev_poly[pre])) {
+                    prev_poly[pre] = all_current[n];
+                }
+            }
+        }
+
+        // find polygons which are actually new
+        for (var pre = 0; pre < prev_poly.length; pre++) {
+            if (!all_current.includes(prev_poly[pre])) {
+                acc_new_poly.add(prev_poly[pre])
+            }
+        }
+
+        return {
+            new: Array.from(acc_new_poly),
+            preview: prev_poly
+        }
     }
 
     this.finishChangeMainScale = (p5, new_main, all_duration = Helper.default_animation_duration) => {
@@ -212,8 +226,6 @@ function Navigator() {
 
         //this.preview_polygons = []
         this.preview_polygons_ready = false;
-
-        // this.chord_chooser.tick(this.main_polygon.scale);
 
         this.triggerEvent();
     }
