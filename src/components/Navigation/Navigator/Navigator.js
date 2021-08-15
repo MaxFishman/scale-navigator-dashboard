@@ -12,7 +12,7 @@ function Navigator() {
     this.actually_new_polygons = undefined;
     this.hover_polygons = [];
     this.preview_polygons = [];
-    this.poly_size = 75;
+    this.poly_size = 61;
     this.preview_polygons_ready = false;
 
     this.chord_chooser = new ChordChooser();
@@ -106,7 +106,6 @@ function Navigator() {
         for (var p of this.neighbors) {
             if (p && p.click() && !p.animation.active) {
                 this.prepareChangeMainScale(p5, p);
-                this.chord_chooser.tick(this.main_polygon.scale)
                 return
             }
         }
@@ -152,6 +151,7 @@ function Navigator() {
                             var _h = this.hover_polygons[h];
                             _h.move(n.x, n.y, Helper.default_animation_duration / 2, _h.radius, 1, () => {
                                 this.hover_polygons.splice(this.hover_polygons.indexOf(_h), 1)
+                                h--
                             })
                         }
                     }
@@ -272,6 +272,7 @@ function Navigator() {
         //this.preview_polygons = []
         this.preview_polygons_ready = false;
 
+        this.chord_chooser.tick(this.main_polygon.scale)
         this.triggerEvent();
     }
 
