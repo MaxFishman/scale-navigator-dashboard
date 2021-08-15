@@ -9,7 +9,8 @@ function Navigator() {
     this.old_main_polygon = undefined;
     this.old_neighbors = undefined;
     this.last_clicked_polygon = undefined;
-    this.actually_new_polygons = undefined;;
+    this.actually_new_polygons = undefined;
+    this.hover_polygons = [];
     this.preview_polygons = [];
     this.poly_size = 75;
     this.preview_polygons_ready = false;
@@ -20,7 +21,8 @@ function Navigator() {
         active: false,
         default_period: 1000,
         period: undefined,
-        intervalID: undefined
+        intervalID: undefined,
+        animate: true
     }
 
     this.init = (p5) => {
@@ -41,7 +43,7 @@ function Navigator() {
             if (this.autopilot_data.active) {
                 var p = p5.random(this.neighbors)
 
-                this.changeMainScale(p5, p, p5.min(1, this.autopilot_data.period / 1000))
+                this.changeMainScale(p5, p, p5.min(1, this.autopilot_data.period / 1000), this.autopilot_data.animate)
                 return
             }
         }, this.autopilot_data.period, p5)
@@ -68,12 +70,20 @@ function Navigator() {
         this.init_autopilot();
     }
 
+    this.toggle_autopilot_animation = (forced_value = undefined) => {
+        if (forced_value) {
+            this.autopilot_data.animate = forced_value
+        } else {
+            this.autopilot_data.animate = !this.autopilot_data.active
+        }
+    }
+
     this.draw = (p5) => {
         p5.push()
         p5.ellipseMode(p5.RADIUS);
 
         //background(255);
-        var allPolygons = [this.main_polygon].concat(this.preview_polygons, this.old_neighbors)
+        var allPolygons = [this.main_polygon].concat(this.hover_polygons, this.preview_polygons, this.old_neighbors)
         allPolygons.push(...this.neighbors)
         allPolygons.push(this.old_main_polygon)
 
@@ -81,6 +91,8 @@ function Navigator() {
         for (var p of allPolygons) {
             if (p) p.draw();
         }
+
+        this.third_gen_hover(p5)
         p5.pop()
     }
 
@@ -115,12 +127,43 @@ function Navigator() {
         this.changeMainScaleCallbacks.push(callback);
     };
 
-    this.third_gen_hover = (p5, p) => {
+    this.third_gen_hover = (p5) => {
+        for (var n of this.neighbors) {
+            var clickData = n.click(p5.mouseX, p5.mouseY, true)
+            if (clickData.start && !n.animation.active) {
+                var add = this.get_new_neighbors(p5, n).new;
+                var pos = add.map(p => {
+                    return {
+                        x: p.x,
+                        y: p.y
+                    }
+                })
 
+                for (var p = 0; p < add.length; p++) {
+                    add[p].set(["x", n.x], ["y", n.y])
+                    add[p].move(pos[p].x, pos[p].y, Helper.default_animation_duration / 2)
+                }
+
+                this.hover_polygons.push(...add)
+            } else if (clickData.end) {
+                for (var p of this.get_new_neighbors(p5, n).preview) {
+                    for (var h = 0; h < this.hover_polygons.length; h++) {
+                        if (this.hover_polygons[h].isMatching(p)) {
+                            var _h = this.hover_polygons[h];
+                            _h.move(n.x, n.y, Helper.default_animation_duration / 2, _h.radius, 1, () => {
+                                this.hover_polygons.splice(this.hover_polygons.indexOf(_h), 1)
+                            })
+                        }
+                    }
+                }
+            }
+        }
     }
 
-    this.prepareChangeMainScale = (p5, p) => {
+    this.prepareChangeMainScale = (p5, p, animation = false) => {
         this.last_clicked_polygon = p;
+
+        this.hover_polygons = [];
 
         // convert to array
         var pl = this.get_new_neighbors(p5, p);
@@ -141,12 +184,14 @@ function Navigator() {
             pol.set(["x", positions[a_n].x], ["y", positions[a_n].y], ["size", positions[a_n].size])
         }*/
 
-        for (var prev of this.actually_new_polygons) {
-            var oldx = prev.x;
-            var oldy = prev.y;
+        if (animation) {
+            for (var prev of this.actually_new_polygons) {
+                var oldx = prev.x;
+                var oldy = prev.y;
 
-            prev.set(["x", p.x], ["y", p.y])
-            prev.move(oldx, oldy, prev.size)
+                prev.set(["x", p.x], ["y", p.y])
+                prev.move(oldx, oldy, prev.size)
+            }
         }
 
         this.preview_polygons_ready = true;
@@ -230,8 +275,8 @@ function Navigator() {
         this.triggerEvent();
     }
 
-    this.changeMainScale = (p5, new_main, all_duration = Helper.default_animation_duration) => {
-        this.prepareChangeMainScale(p5, new_main)
+    this.changeMainScale = (p5, new_main, all_duration = Helper.default_animation_duration, animation = false) => {
+        this.prepareChangeMainScale(p5, new_main, animation)
         this.finishChangeMainScale(p5, new_main, all_duration)
     }
 
