@@ -5,6 +5,7 @@ import Chords from './Chords/Chords'
 import Ensemble from './Ensemble/Ensemble'
 import Tablature from "../Tabs/Tablature"
 import React from 'react';
+import { app } from '../../config/base';
 
 const { TabPane } = Tabs;
 
@@ -19,10 +20,11 @@ export default class Workspace extends React.Component {
 
   render() {
     return (
+        <>
           <Tabs
             id="workspace"
             activeKey={this.state.activeKey}
-            onChange={key => this.setState({ activeKey: key })}
+            onChange={key => this.setState({activeKey: key})}
           >
             <TabPane tab="Ensemble" key="0">
               <Ensemble />
@@ -52,6 +54,7 @@ export default class Workspace extends React.Component {
               <About />
             </TabPane>
           </Tabs>
+        </>
     );
 
   }
