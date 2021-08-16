@@ -27,6 +27,7 @@ export default class Polygon {
             active: false,
             animation_curve: default_animation_curve,
             callback: () => {},
+            callback_args: [],
             start_frame: 0,
             end_frame: 1,
             duration: 1,
@@ -196,7 +197,7 @@ export default class Polygon {
 
                 if (progress > 1) {
                     this.animation.active = false;
-                    this.animation.callback();
+                    this.animation.callback(...this.animation.callback_args);
                     return;
                 }
 
@@ -207,7 +208,7 @@ export default class Polygon {
             }
         };
 
-        this.move = (target_x, target_y, duration_seconds = Helper.default_animation_duration, target_size = this.radius, target_opacity = 1, callback = () => {}) => {
+        this.move = (target_x, target_y, duration_seconds = Helper.default_animation_duration, target_size = this.radius, target_opacity = 1, callback = () => {}, callback_args = []) => {
             // start the animation of an object
             var duration = Pfivesketch.fps * duration_seconds;
 
@@ -215,6 +216,7 @@ export default class Polygon {
                 active: true,
                 animation_curve: default_animation_curve,
                 callback: callback,
+                callback_args: callback_args,
                 start_frame: this.p5.frameCount,
                 end_frame: this.p5.frameCount + duration,
                 duration: duration,

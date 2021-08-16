@@ -11,6 +11,7 @@ function Navigator() {
     this.last_clicked_polygon = undefined;
     this.actually_new_polygons = undefined;
     this.hover_polygons = [];
+    this.hover_polygons_to_be_removed = [];
     this.preview_polygons = [];
     this.poly_size = 61;
     this.preview_polygons_ready = false;
@@ -82,8 +83,13 @@ function Navigator() {
         p5.push()
         p5.ellipseMode(p5.RADIUS);
 
+        //console.log(this.hover_polygons.length)
+        for (var h = 0; h < this.hover_polygons.length; h++) {
+            this.hover_polygons[h].draw();
+        }
+
         //background(255);
-        var allPolygons = [this.main_polygon].concat(this.hover_polygons, this.preview_polygons, this.old_neighbors)
+        var allPolygons = [this.main_polygon].concat(this.preview_polygons, this.old_neighbors)
         allPolygons.push(...this.neighbors)
         allPolygons.push(this.old_main_polygon)
 
@@ -93,6 +99,7 @@ function Navigator() {
         }
 
         this.third_gen_hover(p5)
+
         p5.pop()
     }
 
@@ -127,6 +134,13 @@ function Navigator() {
     };
 
     this.third_gen_hover = (p5) => {
+        for (var h = 0; h < this.hover_polygons_to_be_removed.length; h++) {
+            this.hover_polygons.splice(this.hover_polygons_to_be_removed[h], 1)
+            this.hover_polygons_to_be_removed.splice(this.hover_polygons_to_be_removed.indexOf(h), 1)
+            this.hover_polygons_to_be_removed = this.hover_polygons_to_be_removed.map(x => x - 1)
+            h--;
+        }
+
         for (var n of this.neighbors) {
             var clickData = n.click(p5.mouseX, p5.mouseY, true)
             if (clickData.start && !n.animation.active) {
@@ -139,20 +153,20 @@ function Navigator() {
                 })
 
                 for (var p = 0; p < add.length; p++) {
-                    add[p].set(["x", n.x], ["y", n.y])
+                    add[p].set(["x", n.x], ["y", n.y], ["generated_from", n])
                     add[p].move(pos[p].x, pos[p].y, Helper.default_animation_duration / 2)
                 }
 
                 this.hover_polygons.push(...add)
             } else if (clickData.end) {
-                for (var p of this.get_new_neighbors(p5, n).preview) {
+                for (var p of this.get_new_neighbors(p5, n).new) {
                     for (var h = 0; h < this.hover_polygons.length; h++) {
-                        if (this.hover_polygons[h].isMatching(p)) {
+                        if (this.hover_polygons[h].isMatching(p) && this.hover_polygons[h].generated_from == n) {
                             var _h = this.hover_polygons[h];
-                            _h.move(n.x, n.y, Helper.default_animation_duration / 2, _h.radius, 1, () => {
-                                this.hover_polygons.splice(this.hover_polygons.indexOf(_h), 1)
-                                h--
-                            })
+
+                            _h.move(n.x, n.y, Helper.default_animation_duration / 2, _h.radius, 1, (id) => {
+                                this.hover_polygons_to_be_removed.push(id)
+                            }, [h])
                         }
                     }
                 }
