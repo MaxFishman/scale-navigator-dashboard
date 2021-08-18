@@ -3,7 +3,7 @@ import Sketch from 'react-p5'
 
 //pass in p5 in the draw func, and only where its needed. 
 
-import TablatureManager from '../../Workspace/Tablature/Tablature';
+import TablatureManager from '../../Workspace/Tablature/TablatureManager';
 import Navigator from './Navigator';
 
 const fps = 30

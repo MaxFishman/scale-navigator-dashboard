@@ -3,7 +3,7 @@ import { Tabs, Row, Col, Button } from 'antd';
 import About from './About/About'
 import Chords from './Chords/Chords'
 import Ensemble from './Ensemble/Ensemble'
-import Tablature from "../Tabs/Tablature"
+import Tablature from "./Tablature/Tablature"
 import React from 'react';
 import { app } from '../../config/base';
 

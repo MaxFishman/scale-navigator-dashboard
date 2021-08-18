@@ -1,4 +1,7 @@
 import Pfivesketch from './Navigator/Pfivesketch';
+import React, { useEffect } from "react";
+
+
 
 const Navigation = ({ p5Sketch }) => {
   return(
