@@ -1,4 +1,4 @@
-import * as Tone from "tone"
+import * as Tone from "tone";
 
 const midiToHz = (midiNote) => {
   return 440 * Math.pow(2, (midiNote - 69) / 12);
@@ -45,4 +45,3 @@ export default class ChordPlayer {
     }
   }
 }
-

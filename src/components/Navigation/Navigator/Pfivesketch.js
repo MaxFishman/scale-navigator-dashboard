@@ -1,65 +1,84 @@
-import React from 'react'
-import Sketch from 'react-p5'
+import React from "react";
+import Sketch from "react-p5";
 
-//pass in p5 in the draw func, and only where its needed. 
+//pass in p5 in the draw func, and only where its needed.
 
-import TablatureManager from '../../Workspace/Tablature/TablatureManager';
-import Navigator from './Navigator';
+import TablatureManager from "../../Workspace/Tablature/TablatureManager";
+import Navigator from "./Navigator";
 
-const fps = 30
+const fps = 30;
 
 function Pfivesketch() {
-    var nav = new Navigator.Navigator();
-    var tab = undefined;
+  var nav = new Navigator.Navigator();
+  var tab = undefined;
 
-    const setup = (p5, canvasParentRef) => {
-        var canv = p5.createCanvas(500, 500).parent(canvasParentRef)
+  const setup = (p5, canvasParentRef) => {
+    var canv = p5.createCanvas(500, 500).parent(canvasParentRef);
 
-        p5.frameRate(fps)
+    p5.frameRate(fps);
 
-        nav.init(p5);
+    nav.init(p5);
 
-        tab = new TablatureManager()
+    tab = new TablatureManager();
 
-        document.addEventListener("scaleChanged", (e) => {
-            tab.setScale(e.detail)
-        })
+    document.addEventListener("scaleChanged", (e) => {
+      tab.setScale(e.detail);
+    });
 
-        windowResized(p5)
+    windowResized(p5);
+  };
+
+  const draw = (p5) => {
+    p5.background(255);
+    nav.draw(p5);
+
+    if (
+      document.getElementById("autopilot_checkbox").checked !=
+      nav.autopilot_data.active
+    ) {
+      nav.toggle_autopilot();
     }
+  };
 
-    const draw = (p5) => {
-        p5.background(255);
-        nav.draw(p5)
+  const mousePressed = (p5) => {
+    nav.mousePressed(p5);
+  };
 
-        if (document.getElementById("autopilot_checkbox").checked != nav.autopilot_data.active) {
-            nav.toggle_autopilot();
-        }
-    }
+  const mouseReleased = (p5) => {
+    nav.mouseReleased(p5);
+  };
 
-    const mousePressed = (p5) => {
-        nav.mousePressed(p5);
-    }
+  const windowResized = (p5) => {
+    var p = document.getElementById("canv_container").getBoundingClientRect();
+    p5.resizeCanvas(p.width, p.height);
+  };
 
-    const mouseReleased = (p5) => {
-        nav.mouseReleased(p5);
-    }
-
-    const windowResized = (p5) => {
-        var p = document.getElementById("canv_container").getBoundingClientRect()
-        p5.resizeCanvas(p.width, p.height)
-    }
-
-    return <Sketch setup = { setup }
-    draw = { draw }
-    mousePressed = { mousePressed }
-    mouseReleased = { mouseReleased }
-    windowResized = { windowResized }
-    navigator = { nav }
+  return (
+    <Sketch
+      setup={setup}
+      draw={draw}
+      mousePressed={mousePressed}
+      mouseReleased={mouseReleased}
+      windowResized={windowResized}
+      navigator={nav}
     />
+  );
 }
 
-Pfivesketch.note_names = ["C", "D♭", "D", "E♭", "E", "F", "F#", "G", "A♭", "A", "B♭", "B"];
+Pfivesketch.note_names = [
+  "C",
+  "D♭",
+  "D",
+  "E♭",
+  "E",
+  "F",
+  "F#",
+  "G",
+  "A♭",
+  "A",
+  "B♭",
+  "B",
+];
 Pfivesketch.fps = fps;
 
-export default Pfivesketch
+export default Pfivesketch;
