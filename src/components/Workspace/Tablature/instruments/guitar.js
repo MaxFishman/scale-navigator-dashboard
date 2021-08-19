@@ -2,10 +2,7 @@ import React from "react";
 export default class Main extends React.Component {
   render() {
     return (
-      <div
-        id="guitar_container"
-        style={{ position: "relative" }}
-      >
+      <div id="guitar_container" style={{ position: "relative" }}>
         <svg
           xmlns="http://www.w3.org/2000/svg"
           version="1.1"
@@ -244,7 +241,13 @@ export default class Main extends React.Component {
           >
             C
           </text>
-          <circle className="C#" cx="675.0" cy="60" fill="rgb(82,164,229)" r="20" />
+          <circle
+            className="C#"
+            cx="675.0"
+            cy="60"
+            fill="rgb(82,164,229)"
+            r="20"
+          />
           <text
             className="C#"
             dy="0.3em"
@@ -255,7 +258,13 @@ export default class Main extends React.Component {
           >
             C#
           </text>
-          <circle className="D" cx="745.0" cy="60" fill="rgb(82,164,229)" r="20" />
+          <circle
+            className="D"
+            cx="745.0"
+            cy="60"
+            fill="rgb(82,164,229)"
+            r="20"
+          />
           <text
             className="D"
             dy="0.3em"
@@ -266,7 +275,13 @@ export default class Main extends React.Component {
           >
             D
           </text>
-          <circle className="E♭" cx="815.0" cy="60" fill="rgb(82,164,229)" r="20" />
+          <circle
+            className="E♭"
+            cx="815.0"
+            cy="60"
+            fill="rgb(82,164,229)"
+            r="20"
+          />
           <text
             className="E♭"
             dy="0.3em"
@@ -303,7 +318,13 @@ export default class Main extends React.Component {
           >
             E
           </text>
-          <circle className="F" cx="115.0" cy="60" fill="rgb(82,164,229)" r="20" />
+          <circle
+            className="F"
+            cx="115.0"
+            cy="60"
+            fill="rgb(82,164,229)"
+            r="20"
+          />
           <text
             className="F"
             dy="0.3em"
@@ -314,7 +335,13 @@ export default class Main extends React.Component {
           >
             F
           </text>
-          <circle className="F#" cx="185.0" cy="60" fill="rgb(82,164,229)" r="20" />
+          <circle
+            className="F#"
+            cx="185.0"
+            cy="60"
+            fill="rgb(82,164,229)"
+            r="20"
+          />
           <text
             className="F#"
             dy="0.3em"
@@ -325,7 +352,13 @@ export default class Main extends React.Component {
           >
             F#
           </text>
-          <circle className="G" cx="255.0" cy="60" fill="rgb(82,164,229)" r="20" />
+          <circle
+            className="G"
+            cx="255.0"
+            cy="60"
+            fill="rgb(82,164,229)"
+            r="20"
+          />
           <text
             className="G"
             dy="0.3em"
@@ -336,7 +369,13 @@ export default class Main extends React.Component {
           >
             G
           </text>
-          <circle className="A♭" cx="325.0" cy="60" fill="rgb(82,164,229)" r="20" />
+          <circle
+            className="A♭"
+            cx="325.0"
+            cy="60"
+            fill="rgb(82,164,229)"
+            r="20"
+          />
           <text
             className="A♭"
             dy="0.3em"
@@ -347,7 +386,13 @@ export default class Main extends React.Component {
           >
             A♭
           </text>
-          <circle className="A" cx="395.0" cy="60" fill="rgb(82,164,229)" r="20" />
+          <circle
+            className="A"
+            cx="395.0"
+            cy="60"
+            fill="rgb(82,164,229)"
+            r="20"
+          />
           <text
             className="A"
             dy="0.3em"
@@ -358,7 +403,13 @@ export default class Main extends React.Component {
           >
             A
           </text>
-          <circle className="B♭" cx="465.0" cy="60" fill="rgb(82,164,229)" r="20" />
+          <circle
+            className="B♭"
+            cx="465.0"
+            cy="60"
+            fill="rgb(82,164,229)"
+            r="20"
+          />
           <text
             className="B♭"
             dy="0.3em"
@@ -369,7 +420,13 @@ export default class Main extends React.Component {
           >
             B♭
           </text>
-          <circle className="B" cx="535.0" cy="60" fill="rgb(82,164,229)" r="20" />
+          <circle
+            className="B"
+            cx="535.0"
+            cy="60"
+            fill="rgb(82,164,229)"
+            r="20"
+          />
           <text
             className="B"
             dy="0.3em"
@@ -380,7 +437,13 @@ export default class Main extends React.Component {
           >
             B
           </text>
-          <circle className="C" cx="115.0" cy="110" fill="rgb(82,164,229)" r="20" />
+          <circle
+            className="C"
+            cx="115.0"
+            cy="110"
+            fill="rgb(82,164,229)"
+            r="20"
+          />
           <text
             className="C"
             dy="0.3em"
@@ -408,7 +471,13 @@ export default class Main extends React.Component {
           >
             C#
           </text>
-          <circle className="D" cx="255.0" cy="110" fill="rgb(82,164,229)" r="20" />
+          <circle
+            className="D"
+            cx="255.0"
+            cy="110"
+            fill="rgb(82,164,229)"
+            r="20"
+          />
           <text
             className="D"
             dy="0.3em"
@@ -436,7 +505,13 @@ export default class Main extends React.Component {
           >
             E♭
           </text>
-          <circle className="E" cx="395.0" cy="110" fill="rgb(82,164,229)" r="20" />
+          <circle
+            className="E"
+            cx="395.0"
+            cy="110"
+            fill="rgb(82,164,229)"
+            r="20"
+          />
           <text
             className="E"
             dy="0.3em"
@@ -447,7 +522,13 @@ export default class Main extends React.Component {
           >
             E
           </text>
-          <circle className="F" cx="465.0" cy="110" fill="rgb(82,164,229)" r="20" />
+          <circle
+            className="F"
+            cx="465.0"
+            cy="110"
+            fill="rgb(82,164,229)"
+            r="20"
+          />
           <text
             className="F"
             dy="0.3em"
@@ -475,7 +556,13 @@ export default class Main extends React.Component {
           >
             F#
           </text>
-          <circle className="G" cx="605.0" cy="110" fill="rgb(82,164,229)" r="20" />
+          <circle
+            className="G"
+            cx="605.0"
+            cy="110"
+            fill="rgb(82,164,229)"
+            r="20"
+          />
           <text
             className="G"
             dy="0.3em"
@@ -503,7 +590,13 @@ export default class Main extends React.Component {
           >
             A♭
           </text>
-          <circle className="A" cx="745.0" cy="110" fill="rgb(82,164,229)" r="20" />
+          <circle
+            className="A"
+            cx="745.0"
+            cy="110"
+            fill="rgb(82,164,229)"
+            r="20"
+          />
           <text
             className="A"
             dy="0.3em"
@@ -557,7 +650,13 @@ export default class Main extends React.Component {
           >
             B
           </text>
-          <circle className="C" cx="395.0" cy="160" fill="rgb(82,164,229)" r="20" />
+          <circle
+            className="C"
+            cx="395.0"
+            cy="160"
+            fill="rgb(82,164,229)"
+            r="20"
+          />
           <text
             className="C"
             dy="0.3em"
@@ -585,7 +684,13 @@ export default class Main extends React.Component {
           >
             C#
           </text>
-          <circle className="D" cx="535.0" cy="160" fill="rgb(82,164,229)" r="20" />
+          <circle
+            className="D"
+            cx="535.0"
+            cy="160"
+            fill="rgb(82,164,229)"
+            r="20"
+          />
           <text
             className="D"
             dy="0.3em"
@@ -613,7 +718,13 @@ export default class Main extends React.Component {
           >
             E♭
           </text>
-          <circle className="E" cx="675.0" cy="160" fill="rgb(82,164,229)" r="20" />
+          <circle
+            className="E"
+            cx="675.0"
+            cy="160"
+            fill="rgb(82,164,229)"
+            r="20"
+          />
           <text
             className="E"
             dy="0.3em"
@@ -624,7 +735,13 @@ export default class Main extends React.Component {
           >
             E
           </text>
-          <circle className="F" cx="745.0" cy="160" fill="rgb(82,164,229)" r="20" />
+          <circle
+            className="F"
+            cx="745.0"
+            cy="160"
+            fill="rgb(82,164,229)"
+            r="20"
+          />
           <text
             className="F"
             dy="0.3em"
@@ -695,7 +812,13 @@ export default class Main extends React.Component {
           >
             A♭
           </text>
-          <circle className="A" cx="185.0" cy="160" fill="rgb(82,164,229)" r="20" />
+          <circle
+            className="A"
+            cx="185.0"
+            cy="160"
+            fill="rgb(82,164,229)"
+            r="20"
+          />
           <text
             className="A"
             dy="0.3em"
@@ -723,7 +846,13 @@ export default class Main extends React.Component {
           >
             B♭
           </text>
-          <circle className="B" cx="325.0" cy="160" fill="rgb(82,164,229)" r="20" />
+          <circle
+            className="B"
+            cx="325.0"
+            cy="160"
+            fill="rgb(82,164,229)"
+            r="20"
+          />
           <text
             className="B"
             dy="0.3em"
@@ -734,7 +863,13 @@ export default class Main extends React.Component {
           >
             B
           </text>
-          <circle className="C" cx="745.0" cy="210" fill="rgb(82,164,229)" r="20" />
+          <circle
+            className="C"
+            cx="745.0"
+            cy="210"
+            fill="rgb(82,164,229)"
+            r="20"
+          />
           <text
             className="C"
             dy="0.3em"
@@ -805,7 +940,13 @@ export default class Main extends React.Component {
           >
             E♭
           </text>
-          <circle className="E" cx="185.0" cy="210" fill="rgb(82,164,229)" r="20" />
+          <circle
+            className="E"
+            cx="185.0"
+            cy="210"
+            fill="rgb(82,164,229)"
+            r="20"
+          />
           <text
             className="E"
             dy="0.3em"
@@ -816,7 +957,13 @@ export default class Main extends React.Component {
           >
             E
           </text>
-          <circle className="F" cx="255.0" cy="210" fill="rgb(82,164,229)" r="20" />
+          <circle
+            className="F"
+            cx="255.0"
+            cy="210"
+            fill="rgb(82,164,229)"
+            r="20"
+          />
           <text
             className="F"
             dy="0.3em"
@@ -844,7 +991,13 @@ export default class Main extends React.Component {
           >
             F#
           </text>
-          <circle className="G" cx="395.0" cy="210" fill="rgb(82,164,229)" r="20" />
+          <circle
+            className="G"
+            cx="395.0"
+            cy="210"
+            fill="rgb(82,164,229)"
+            r="20"
+          />
           <text
             className="G"
             dy="0.3em"
@@ -872,7 +1025,13 @@ export default class Main extends React.Component {
           >
             A♭
           </text>
-          <circle className="A" cx="535.0" cy="210" fill="rgb(82,164,229)" r="20" />
+          <circle
+            className="A"
+            cx="535.0"
+            cy="210"
+            fill="rgb(82,164,229)"
+            r="20"
+          />
           <text
             className="A"
             dy="0.3em"
@@ -900,7 +1059,13 @@ export default class Main extends React.Component {
           >
             B♭
           </text>
-          <circle className="B" cx="675.0" cy="210" fill="rgb(82,164,229)" r="20" />
+          <circle
+            className="B"
+            cx="675.0"
+            cy="210"
+            fill="rgb(82,164,229)"
+            r="20"
+          />
           <text
             className="B"
             dy="0.3em"
@@ -911,7 +1076,13 @@ export default class Main extends React.Component {
           >
             B
           </text>
-          <circle className="C" cx="255.0" cy="260" fill="rgb(82,164,229)" r="20" />
+          <circle
+            className="C"
+            cx="255.0"
+            cy="260"
+            fill="rgb(82,164,229)"
+            r="20"
+          />
           <text
             className="C"
             dy="0.3em"
@@ -939,7 +1110,13 @@ export default class Main extends React.Component {
           >
             C#
           </text>
-          <circle className="D" cx="395.0" cy="260" fill="rgb(82,164,229)" r="20" />
+          <circle
+            className="D"
+            cx="395.0"
+            cy="260"
+            fill="rgb(82,164,229)"
+            r="20"
+          />
           <text
             className="D"
             dy="0.3em"
@@ -967,7 +1144,13 @@ export default class Main extends React.Component {
           >
             E♭
           </text>
-          <circle className="E" cx="535.0" cy="260" fill="rgb(82,164,229)" r="20" />
+          <circle
+            className="E"
+            cx="535.0"
+            cy="260"
+            fill="rgb(82,164,229)"
+            r="20"
+          />
           <text
             className="E"
             dy="0.3em"
@@ -978,7 +1161,13 @@ export default class Main extends React.Component {
           >
             E
           </text>
-          <circle className="F" cx="605.0" cy="260" fill="rgb(82,164,229)" r="20" />
+          <circle
+            className="F"
+            cx="605.0"
+            cy="260"
+            fill="rgb(82,164,229)"
+            r="20"
+          />
           <text
             className="F"
             dy="0.3em"
@@ -1006,7 +1195,13 @@ export default class Main extends React.Component {
           >
             F#
           </text>
-          <circle className="G" cx="745.0" cy="260" fill="rgb(82,164,229)" r="20" />
+          <circle
+            className="G"
+            cx="745.0"
+            cy="260"
+            fill="rgb(82,164,229)"
+            r="20"
+          />
           <text
             className="G"
             dy="0.3em"
@@ -1077,7 +1272,13 @@ export default class Main extends React.Component {
           >
             B♭
           </text>
-          <circle className="B" cx="185.0" cy="260" fill="rgb(82,164,229)" r="20" />
+          <circle
+            className="B"
+            cx="185.0"
+            cy="260"
+            fill="rgb(82,164,229)"
+            r="20"
+          />
           <text
             className="B"
             dy="0.3em"
@@ -1088,7 +1289,13 @@ export default class Main extends React.Component {
           >
             B
           </text>
-          <circle className="C" cx="605.0" cy="310" fill="rgb(82,164,229)" r="20" />
+          <circle
+            className="C"
+            cx="605.0"
+            cy="310"
+            fill="rgb(82,164,229)"
+            r="20"
+          />
           <text
             className="C"
             dy="0.3em"
@@ -1116,7 +1323,13 @@ export default class Main extends React.Component {
           >
             C#
           </text>
-          <circle className="D" cx="745.0" cy="310" fill="rgb(82,164,229)" r="20" />
+          <circle
+            className="D"
+            cx="745.0"
+            cy="310"
+            fill="rgb(82,164,229)"
+            r="20"
+          />
           <text
             className="D"
             dy="0.3em"
@@ -1170,7 +1383,13 @@ export default class Main extends React.Component {
           >
             E
           </text>
-          <circle className="F" cx="115.0" cy="310" fill="rgb(82,164,229)" r="20" />
+          <circle
+            className="F"
+            cx="115.0"
+            cy="310"
+            fill="rgb(82,164,229)"
+            r="20"
+          />
           <text
             className="F"
             dy="0.3em"
@@ -1198,7 +1417,13 @@ export default class Main extends React.Component {
           >
             F#
           </text>
-          <circle className="G" cx="255.0" cy="310" fill="rgb(82,164,229)" r="20" />
+          <circle
+            className="G"
+            cx="255.0"
+            cy="310"
+            fill="rgb(82,164,229)"
+            r="20"
+          />
           <text
             className="G"
             dy="0.3em"
@@ -1226,7 +1451,13 @@ export default class Main extends React.Component {
           >
             A♭
           </text>
-          <circle className="A" cx="395.0" cy="310" fill="rgb(82,164,229)" r="20" />
+          <circle
+            className="A"
+            cx="395.0"
+            cy="310"
+            fill="rgb(82,164,229)"
+            r="20"
+          />
           <text
             className="A"
             dy="0.3em"
@@ -1254,7 +1485,13 @@ export default class Main extends React.Component {
           >
             B♭
           </text>
-          <circle className="B" cx="535.0" cy="310" fill="rgb(82,164,229)" r="20" />
+          <circle
+            className="B"
+            cx="535.0"
+            cy="310"
+            fill="rgb(82,164,229)"
+            r="20"
+          />
           <text
             className="B"
             dy="0.3em"
@@ -1265,7 +1502,13 @@ export default class Main extends React.Component {
           >
             B
           </text>
-          <circle className="E" cx="885.0" cy="60" fill="rgb(82,164,229)" r="20" />
+          <circle
+            className="E"
+            cx="885.0"
+            cy="60"
+            fill="rgb(82,164,229)"
+            r="20"
+          />
           <text
             className="E"
             dy="0.3em"
@@ -1276,7 +1519,13 @@ export default class Main extends React.Component {
           >
             E
           </text>
-          <circle className="B" cx="885.0" cy="110" fill="rgb(82,164,229)" r="20" />
+          <circle
+            className="B"
+            cx="885.0"
+            cy="110"
+            fill="rgb(82,164,229)"
+            r="20"
+          />
           <text
             className="B"
             dy="0.3em"
@@ -1287,7 +1536,13 @@ export default class Main extends React.Component {
           >
             B
           </text>
-          <circle className="G" cx="885.0" cy="160" fill="rgb(82,164,229)" r="20" />
+          <circle
+            className="G"
+            cx="885.0"
+            cy="160"
+            fill="rgb(82,164,229)"
+            r="20"
+          />
           <text
             className="G"
             dy="0.3em"
@@ -1298,7 +1553,13 @@ export default class Main extends React.Component {
           >
             G
           </text>
-          <circle className="D" cx="885.0" cy="210" fill="rgb(82,164,229)" r="20" />
+          <circle
+            className="D"
+            cx="885.0"
+            cy="210"
+            fill="rgb(82,164,229)"
+            r="20"
+          />
           <text
             className="D"
             dy="0.3em"
@@ -1309,7 +1570,13 @@ export default class Main extends React.Component {
           >
             D
           </text>
-          <circle className="A" cx="885.0" cy="260" fill="rgb(82,164,229)" r="20" />
+          <circle
+            className="A"
+            cx="885.0"
+            cy="260"
+            fill="rgb(82,164,229)"
+            r="20"
+          />
           <text
             className="A"
             dy="0.3em"
@@ -1320,7 +1587,13 @@ export default class Main extends React.Component {
           >
             A
           </text>
-          <circle className="E" cx="885.0" cy="310" fill="rgb(82,164,229)" r="20" />
+          <circle
+            className="E"
+            cx="885.0"
+            cy="310"
+            fill="rgb(82,164,229)"
+            r="20"
+          />
           <text
             className="E"
             dy="0.3em"
@@ -1334,5 +1607,5 @@ export default class Main extends React.Component {
         </svg>
       </div>
     );
-}
+  }
 }

@@ -1,10 +1,9 @@
-
 import React from "react";
 import Multiselect from "multiselect-react-dropdown";
 import "../../../App.css";
-import Mandolin from "./instruments/mandolin"
-import Guitar from "./instruments/guitar"
-import TablatureManager from './TablatureManager';
+import Mandolin from "./instruments/mandolin";
+import Guitar from "./instruments/guitar";
+import TablatureManager from "./TablatureManager";
 
 export default class Tab extends React.Component {
   constructor(props) {
@@ -64,7 +63,6 @@ export default class Tab extends React.Component {
       this.setState({ autoharp: true });
     }
   }
-
 
   render() {
     let {
