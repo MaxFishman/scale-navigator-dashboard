@@ -3,6 +3,7 @@ import Multiselect from "multiselect-react-dropdown";
 import "../../../App.css";
 import Mandolin from "./instruments/strings/Mandolin";
 import Guitar from "./instruments/strings/Guitar";
+import Banjo from "./instruments/strings/Banjo";
 import TablatureManager from "./TablatureManager";
 import Data from "../../../Data";
 import { ScaleContext } from "../../Context/ScaleContext";
@@ -98,7 +99,7 @@ export default class Tab extends React.Component {
               <div>
                 {mandolin && <Mandolin keyData={keyData} />}
                 {guitar && <Guitar keyData={keyData} />}
-                {banjo && <h3>Banjo SVG</h3>}
+                {banjo && <Banjo keyData={keyData} />}
                 {ukelele && <h3>Ukelele SVG</h3>}
                 {flute && <h3>Flute SVG</h3>}
                 {piano && <h3>Piano SVG</h3>}

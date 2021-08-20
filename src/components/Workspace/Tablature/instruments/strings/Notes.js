@@ -13,7 +13,9 @@ function Note({ children, className, note, x, y }) {
   );
 }
 
-export default function Notes({ markers, noteMappings, keyData }) {
+export default function Notes({ markers, noteMappings, keyData, openFn }) {
+  const defaultIsOpen = (x, y) => x === FRET_POS[0];
+  const isOpen = openFn || defaultIsOpen;
   return (
     <>
       {markers.map((marker) => {
@@ -37,8 +39,8 @@ export default function Notes({ markers, noteMappings, keyData }) {
                   x={l.x}
                   y={l.y}
                   className={classNames(pc.note, "strings__note", {
-                    "strings__note--open": l.x === FRET_POS[0],
-                    "strings__note--fingered": l.x !== FRET_POS[0],
+                    "strings__note--open": isOpen(l.x, l.y),
+                    "strings__note--fingered": !isOpen(l.x, l.y),
                     "strings__note--off": !keyData.pitch_classes.includes(i),
                   })}
                 >
