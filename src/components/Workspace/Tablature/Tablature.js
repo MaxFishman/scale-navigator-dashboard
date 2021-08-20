@@ -4,6 +4,7 @@ import "../../../App.css";
 import Mandolin from "./instruments/strings/Mandolin";
 import Guitar from "./instruments/strings/Guitar";
 import Banjo from "./instruments/strings/Banjo";
+import Ukulele from "./instruments/strings/Ukulele";
 import TablatureManager from "./TablatureManager";
 import Data from "../../../Data";
 import { ScaleContext } from "../../Context/ScaleContext";
@@ -100,7 +101,7 @@ export default class Tab extends React.Component {
                 {mandolin && <Mandolin keyData={keyData} />}
                 {guitar && <Guitar keyData={keyData} />}
                 {banjo && <Banjo keyData={keyData} />}
-                {ukelele && <h3>Ukelele SVG</h3>}
+                {ukelele && <Ukulele keyData={keyData} />}
                 {flute && <h3>Flute SVG</h3>}
                 {piano && <h3>Piano SVG</h3>}
                 {treble && <h3>Treble Staff SVG</h3>}
