@@ -4,6 +4,8 @@ import "../../../App.css";
 import Mandolin from "./instruments/strings/Mandolin";
 import Guitar from "./instruments/strings/Guitar";
 import TablatureManager from "./TablatureManager";
+import Data from "../../../Data";
+import { ScaleContext } from "../../Context/ScaleContext";
 
 export default class Tab extends React.Component {
   constructor(props) {
@@ -78,30 +80,37 @@ export default class Tab extends React.Component {
       autoharp,
     } = this.state;
     return (
-      <div>
-        <div style={{ margin: "3vh" }}>
-          <Multiselect
-            options={this.state.instruments}
-            selectedValues={this.state.selectedValues}
-            onSelect={this.onSelect}
-            onRemove={this.onRemove}
-            displayValue="name"
-            placeholder="Select instrument"
-          />
-        </div>
-        <div>
-          {mandolin && <Mandolin />}
-          {guitar && <Guitar />}
-          {banjo && <h3>Banjo SVG</h3>}
-          {ukelele && <h3>Ukelele SVG</h3>}
-          {flute && <h3>Flute SVG</h3>}
-          {piano && <h3>Piano SVG</h3>}
-          {treble && <h3>Treble Staff SVG</h3>}
-          {triads && <h3>Triads SVG</h3>}
-          {circle && <h3>Triads Circle SVG</h3>}
-          {autoharp && <h3>Autoharp SVG</h3>}
-        </div>
-      </div>
+      <ScaleContext.Consumer>
+        {({ scale, chord, navigator }) => {
+          const keyData = Data.data["scales"][scale];
+          return (
+            <div>
+              <div style={{ margin: "3vh" }}>
+                <Multiselect
+                  options={this.state.instruments}
+                  selectedValues={this.state.selectedValues}
+                  onSelect={this.onSelect}
+                  onRemove={this.onRemove}
+                  displayValue="name"
+                  placeholder="Select instrument"
+                />
+              </div>
+              <div>
+                {mandolin && <Mandolin keyData={keyData} />}
+                {guitar && <Guitar keyData={keyData} />}
+                {banjo && <h3>Banjo SVG</h3>}
+                {ukelele && <h3>Ukelele SVG</h3>}
+                {flute && <h3>Flute SVG</h3>}
+                {piano && <h3>Piano SVG</h3>}
+                {treble && <h3>Treble Staff SVG</h3>}
+                {triads && <h3>Triads SVG</h3>}
+                {circle && <h3>Triads Circle SVG</h3>}
+                {autoharp && <h3>Autoharp SVG</h3>}
+              </div>
+            </div>
+          );
+        }}
+      </ScaleContext.Consumer>
     );
   }
 }

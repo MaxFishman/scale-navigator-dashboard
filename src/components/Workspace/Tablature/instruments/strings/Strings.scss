@@ -27,6 +27,14 @@
       font-weight: bold;
     }
 
+    &--off {
+      opacity: 0;
+
+      & + text {
+        opacity: 0;
+      }
+    }
+
     &--open {
       fill: white;
       stroke: black;

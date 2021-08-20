@@ -1,7 +1,8 @@
 import React from "react";
 import "./Strings.scss";
-import { FRETS, FRET_POS, STRINGS, STRING_POS } from "./Board";
+import { FRETS, FRET_POS, STRINGS, STRING_POS } from "./BoardData";
 import Note from "./Note";
+import classNames from "classnames";
 
 const pitchClassMapping = [
   {
@@ -214,28 +215,30 @@ export default class Main extends React.Component {
               </Note>
             );
           })}
-          {pitchClassMapping.map((pc) => {
-            return (
-              <>
-                {pc.locations.map((l) => {
-                  return (
-                    <Note
-                      note={pc.note}
-                      x={l.x}
-                      y={l.y}
-                      className={`${pc.note} strings__note ${
-                        l.x === FRET_POS[0]
-                          ? "strings__note--open"
-                          : "strings__note--fingered"
-                      }`}
-                    >
-                      {pc.note}
-                    </Note>
-                  );
-                })}
-              </>
-            );
-          })}
+          {pitchClassMapping
+            .map((pc, i) => {
+              return (
+                <>
+                  {pc.locations.map((l) => {
+                    return (
+                      <Note
+                        note={pc.note}
+                        x={l.x}
+                        y={l.y}
+                        className={classNames(pc.note, "strings__note", {
+                          "strings__note--open": l.x === FRET_POS[0],
+                          "strings__note--fingered": l.x !== FRET_POS[0],
+                          "strings__note--off":
+                            !this.props.keyData.pitch_classes.includes(i),
+                        })}
+                      >
+                        {pc.note}
+                      </Note>
+                    );
+                  })}
+                </>
+              );
+            })}
         </svg>
       </div>
     );

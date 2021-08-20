@@ -1,7 +1,8 @@
 import React from "react";
 import "./Strings.scss";
-import { FRETS, FRET_POS, STRINGS, STRING_POS } from "./Board";
+import { FRETS, FRET_POS, STRINGS, STRING_POS } from "./BoardData";
 import Note from "./Note";
+import classNames from "classnames";
 import { ScaleContext } from "../../../../Context/ScaleContext";
 
 const pitchClassMapping = [
@@ -196,14 +197,9 @@ const markers = [
   },
 ];
 
-export default function Guitar(props) {
+export default function Guitar({ keyData }) {
   return (
     <div id="guitar_container" style={{ position: "relative" }}>
-      <ScaleContext.Consumer>
-        {({ scale }) => {
-          return <div>{scale}</div>;
-        }}
-      </ScaleContext.Consumer>
       <svg
         xmlns="http://www.w3.org/2000/svg"
         version="1.1"
@@ -244,28 +240,29 @@ export default function Guitar(props) {
             </Note>
           );
         })}
-        {pitchClassMapping.map((pc) => {
-          return (
-            <>
-              {pc.locations.map((l) => {
-                return (
-                  <Note
-                    note={pc.note}
-                    x={l.x}
-                    y={l.y}
-                    className={`${pc.note} strings__note ${
-                      l.x === FRET_POS[0]
-                        ? "strings__note--open"
-                        : "strings__note--fingered"
-                    }`}
-                  >
-                    {pc.note}
-                  </Note>
-                );
-              })}
-            </>
-          );
-        })}
+        {pitchClassMapping
+          .map((pc, i) => {
+            return (
+              <>
+                {pc.locations.map((l) => {
+                  return (
+                    <Note
+                      note={pc.note}
+                      x={l.x}
+                      y={l.y}
+                      className={classNames(pc.note, "strings__note", {
+                        "strings__note--open": l.x === FRET_POS[0],
+                        "strings__note--fingered": l.x !== FRET_POS[0],
+                        "strings__note--off": !keyData.pitch_classes.includes(i),
+                      })}
+                    >
+                      {pc.note}
+                    </Note>
+                  );
+                })}
+              </>
+            );
+          })}
       </svg>
     </div>
   );
