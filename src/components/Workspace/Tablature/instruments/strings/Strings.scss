@@ -1,0 +1,56 @@
+.strings {
+
+  &__string {
+    stroke: black;
+
+    @for $i from 1 through 6 {
+      &--#{$i} {
+        stroke-width: #{1.5 + .25 * $i};
+      }
+    }
+  }
+
+  &__fret {
+    stroke-width: 3;
+    stroke: rgb(150,150,150);
+
+    &--nut {
+      stroke-width: 7;
+      stroke: black;
+    }
+  }
+
+  &__note {
+    & + text {
+      text-anchor: middle;
+      font-size: 20px;
+      font-weight: bold;
+    }
+
+    &--off {
+      opacity: 0;
+
+      & + text {
+        opacity: 0;
+      }
+    }
+
+    &--open {
+      fill: white;
+      stroke: black;
+      stroke-width: 3;
+    }
+
+    &--fingered {
+      fill: rgb(82, 164, 229);
+
+      & + text {
+        fill: rgb(255, 255, 255);
+      }
+    }
+
+    &--marker {
+      fill: rgb(200, 200, 200);
+    }
+  }
+}

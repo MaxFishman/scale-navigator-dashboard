@@ -14,7 +14,7 @@ function TablatureManager() {
       var keyData = Data.data["scales"][key];
 
       console.log("keyData.pitch_classes :", keyData.pitch_classes);
-      new showGuitarNotes(keyData.pitch_classes);
+      // new showGuitarNotes(keyData.pitch_classes);
       //   new showPianoNotes(keyData.pitch_classes);
       //   new displayFluteDiagrams(keyData.pitch_classes);
       //   new showCircleChords(keyData.chords);

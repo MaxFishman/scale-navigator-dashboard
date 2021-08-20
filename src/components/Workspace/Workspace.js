@@ -6,6 +6,7 @@ import Ensemble from "./Ensemble/Ensemble";
 import Tablature from "./Tablature/Tablature";
 import React from "react";
 import { app } from "../../config/base";
+import { ScaleContext } from "../Context/ScaleContext";
 
 const { TabPane } = Tabs;
 
@@ -15,7 +16,7 @@ export default class Workspace extends React.Component {
   }
 
   state = {
-    activeKey: "0",
+    activeTab: "0",
   };
 
   render() {
@@ -23,8 +24,8 @@ export default class Workspace extends React.Component {
       <>
         <Tabs
           id="workspace"
-          activeKey={this.state.activeKey}
-          onChange={(key) => this.setState({ activeKey: key })}
+          activeKey={this.state.activeTab}
+          onChange={(tab) => this.setState({ activeTab: tab })}
         >
           <TabPane tab="Ensemble" key="0">
             <Ensemble />
@@ -33,10 +34,18 @@ export default class Workspace extends React.Component {
             <Tablature />
           </TabPane>
           <TabPane tab="Chords" key="2">
-            <Chords
-              navigator={this.props.navigator}
-              chordPlayer={this.props.chordPlayer}
-            />
+            <ScaleContext.Consumer>
+              {({ scale, chord, navigator }) => {
+                return (
+                  <Chords
+                    scale={scale}
+                    chord={chord}
+                    navigator={navigator}
+                    chordPlayer={this.props.chordPlayer}
+                  />
+                );
+              }}
+            </ScaleContext.Consumer>
           </TabPane>
           <TabPane tab="MIDI" key="3">
             <p>MIDI Component</p>

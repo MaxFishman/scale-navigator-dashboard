@@ -1,7 +1,8 @@
 import Pfivesketch from "./Navigator/Pfivesketch";
 import React, { useEffect } from "react";
+import { ScaleContext } from "../Context/ScaleContext";
 
-const Navigation = ({ p5Sketch }) => {
+const Navigation = () => {
   return (
     <div id="Navigation">
       <div>
@@ -12,7 +13,11 @@ const Navigation = ({ p5Sketch }) => {
         </p>
       </div>
       <div className="scalenav_container" id="canv_container">
-        {p5Sketch}
+        <ScaleContext.Consumer>
+          {({ navigator }) => {
+            return <Pfivesketch nav={navigator}></Pfivesketch>;
+          }}
+        </ScaleContext.Consumer>
       </div>
       <div id="autopilot_container">
         <form>

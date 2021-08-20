@@ -1,21 +1,31 @@
 import "./App.css";
 import Navigation from "./components/Navigation/Navigation";
 import Workspace from "./components/Workspace/Workspace";
-import Pfivesketch from "./components/Navigation/Navigator/Pfivesketch";
-import ChordPlayer from "./audio/ChordPlayer";
-import { Col, Row } from "antd";
+import { ScaleContext } from "./components/Context/ScaleContext";
+import Navigator from "./components/Navigation/Navigator/Navigator";
+import React, { useState, useRef } from "react";
 
 function App() {
-  const p5Sketch = new Pfivesketch();
-  const navigator = p5Sketch.props.navigator;
-
-  const chordPlayer = new ChordPlayer(navigator);
+  const [scaleData, setScaleData] = useState({
+    scale: "c_diatonic",
+  });
+  // TODO(mjmaurer): I think ideally workspace shouldn't have to know
+  // about the navigator, but right now it's surface is pretty large.
+  const navRef = useRef(new Navigator.Navigator(setScaleData));
+  navRef.current.scaleDataCallback(setScaleData);
 
   return (
     <div className="App">
       <div id="grid">
-        <Navigation p5Sketch={p5Sketch} />
-        <Workspace navigator={navigator} chordPlayer={chordPlayer} />
+        <ScaleContext.Provider
+          value={{
+            ...scaleData,
+            navigator: navRef.current,
+          }}
+        >
+          <Navigation />
+          <Workspace />
+        </ScaleContext.Provider>
       </div>
     </div>
   );
