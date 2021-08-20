@@ -1,8 +1,8 @@
 import React from "react";
 import Multiselect from "multiselect-react-dropdown";
 import "../../../App.css";
-import Mandolin from "./instruments/mandolin";
-import Guitar from "./instruments/guitar";
+import Mandolin from "./instruments/strings/Mandolin";
+import Guitar from "./instruments/strings/Guitar";
 import TablatureManager from "./TablatureManager";
 
 export default class Tab extends React.Component {
