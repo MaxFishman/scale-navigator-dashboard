@@ -3,25 +3,15 @@ import Sketch from "react-p5";
 
 //pass in p5 in the draw func, and only where its needed.
 
-import TablatureManager from "../../Workspace/Tablature/TablatureManager";
-
 const fps = 30;
 
 function Pfivesketch({ nav }) {
-  var tab = undefined;
 
   const setup = (p5, canvasParentRef) => {
-    var canv = p5.createCanvas(500, 500).parent(canvasParentRef);
-
+    p5.createCanvas(500, 500).parent(canvasParentRef);
     p5.frameRate(fps);
 
     nav.init(p5);
-
-    tab = new TablatureManager();
-
-    document.addEventListener("scaleChanged", (e) => {
-      tab.setScale(e.detail);
-    });
 
     windowResized(p5);
   };

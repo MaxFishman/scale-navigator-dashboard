@@ -5,7 +5,6 @@ import Mandolin from "./instruments/strings/Mandolin";
 import Guitar from "./instruments/strings/Guitar";
 import Banjo from "./instruments/strings/Banjo";
 import Ukulele from "./instruments/strings/Ukulele";
-import TablatureManager from "./TablatureManager";
 import Data from "../../../Data";
 import { ScaleContext } from "../../Context/ScaleContext";
 
@@ -29,19 +28,6 @@ export default class Tab extends React.Component {
         { name: "Autoharp", id: 10 },
       ],
     };
-  }
-
-  componentDidUpdate() {
-    this.initialize();
-  }
-
-  initialize() {
-    var tab = new TablatureManager();
-    try {
-      tab.setScale("c_diatonic");
-    } catch (error) {
-      console.log(error);
-    }
   }
 
   onSelect(selectedValues, selectedItem) {
