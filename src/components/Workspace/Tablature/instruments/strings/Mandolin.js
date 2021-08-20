@@ -1,8 +1,7 @@
 import React from "react";
 import "./Strings.scss";
 import { FRETS, FRET_POS, STRINGS, STRING_POS } from "./BoardData";
-import Note from "./Note";
-import classNames from "classnames";
+import Notes from "./Notes";
 
 const pitchClassMapping = [
   {
@@ -204,41 +203,11 @@ export default class Main extends React.Component {
               />
             );
           })}
-          {markers.map((marker) => {
-            return (
-              <Note
-                x={marker.location.x}
-                y={marker.location.y}
-                className="strings__note strings__note--marker"
-              >
-                {marker.fret}
-              </Note>
-            );
-          })}
-          {pitchClassMapping
-            .map((pc, i) => {
-              return (
-                <>
-                  {pc.locations.map((l) => {
-                    return (
-                      <Note
-                        note={pc.note}
-                        x={l.x}
-                        y={l.y}
-                        className={classNames(pc.note, "strings__note", {
-                          "strings__note--open": l.x === FRET_POS[0],
-                          "strings__note--fingered": l.x !== FRET_POS[0],
-                          "strings__note--off":
-                            !this.props.keyData.pitch_classes.includes(i),
-                        })}
-                      >
-                        {pc.note}
-                      </Note>
-                    );
-                  })}
-                </>
-              );
-            })}
+          <Notes
+            markers={markers}
+            noteMappings={pitchClassMapping}
+            keyData={this.props.keyData}
+          />
         </svg>
       </div>
     );
