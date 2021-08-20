@@ -2,6 +2,7 @@ import React from "react";
 import "./Strings.scss";
 import { FRETS, FRET_POS, STRINGS, STRING_POS } from "./Board";
 import Note from "./Note";
+import { ScaleContext } from "../../../../Context/ScaleContext";
 
 const pitchClassMapping = [
   {
@@ -198,6 +199,11 @@ const markers = [
 export default function Guitar(props) {
   return (
     <div id="guitar_container" style={{ position: "relative" }}>
+      <ScaleContext.Consumer>
+        {({ scale }) => {
+          return <div>{scale}</div>;
+        }}
+      </ScaleContext.Consumer>
       <svg
         xmlns="http://www.w3.org/2000/svg"
         version="1.1"

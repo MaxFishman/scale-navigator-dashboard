@@ -1,51 +1,27 @@
 import "./ChordStyle.css";
 import React from "react";
-import ChordChooser from "../../Navigation/Navigator/ChordChooser";
+import * as Tone from "tone";
+
+const midiToHz = (midiNote) => {
+  return 440 * Math.pow(2, (midiNote - 69) / 12);
+};
 
 class Chords extends React.Component {
   constructor(props) {
     super(props);
     this.props = props;
-
-    this.props.navigator.onChangeMainScale(() => {
-      this.update();
-    });
+    this.synths = [];
 
     this.state = {
-      playing: this.props.chordPlayer.playing,
+      playing: false,
       rootMovement: this.props.navigator.chord_chooser.allowed_root_intervals,
       voiceLeadingSmoothness:
         this.props.navigator.chord_chooser.voice_leading_smoothness,
-      scale: this.props.navigator.main_polygon.scale,
-      chord: this.props.navigator.chord_chooser.current_chord_name,
     };
-    this.update();
 
     this.togglePlaying = this.togglePlaying.bind(this);
     this.handleVoiceLeadingSmoothnessChange =
       this.handleVoiceLeadingSmoothnessChange.bind(this);
-  }
-
-  update() {
-    const scale = this.props.navigator.main_polygon
-      ? this.props.navigator.main_polygon.scale
-      : "none";
-    const chord = this.props.navigator.chord_chooser.current_chord_name;
-    this.setState({
-      scale: scale,
-      chord: chord,
-    });
-    // FIXME: forceUpdate is a code smell
-    // I'm sorry, I am bad at React and could not figure out how to avoid this
-    this.forceUpdate();
-  }
-
-  togglePlaying() {
-    this.setState((previousState) => ({
-      playing: !previousState.playing,
-    }));
-    // TODO: Why the ! here?
-    this.props.chordPlayer.setPlaying(!this.state.playing);
   }
 
   handleRootMovementChange(i) {
@@ -67,6 +43,48 @@ class Chords extends React.Component {
     this.setState({
       voiceLeadingSmoothness: event.target.value,
     });
+  }
+
+  togglePlaying() {
+    this.setPlaying(!this.state.playing);
+    this.setState((previousState) => ({
+      playing: !previousState.playing,
+    }));
+  }
+
+  setPlaying(playing) {
+    if (playing) {
+      this.play();
+    } else {
+      this.stop();
+    }
+  }
+
+  stop() {
+    for (let synth of this.synths) {
+      synth.triggerRelease();
+    }
+    this.synths = [];
+  }
+
+  play() {
+    this.stop();
+
+    const chord = this.props.navigator.chord_chooser.current_chord;
+    const notes = chord === null ? [] : chord.original_voicing;
+    for (let note of notes) {
+      const synth = new Tone.Synth({ volume: -20 }).toDestination();
+      synth.triggerAttack(midiToHz(note), "8n");
+      this.synths.push(synth);
+    }
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    if (prevProps.scale !== this.props.scale) {
+      if (this.state.playing) {
+        this.play();
+      }
+    }
   }
 
   render() {
@@ -100,14 +118,14 @@ class Chords extends React.Component {
             {this.state.playing ? "STOP" : "PLAY"}
           </button>
         </p>
-        <p>Current scale: {this.state.scale}</p>
+        <p>Current scale: {this.props.scale}</p>
         <p>
           Current chord:{" "}
-          {this.state.chord === null
+          {this.props.chord === null
             ? "none"
-            : this.state.chord === "error"
+            : this.props.chord === "error"
             ? "Error -- couldn't find a chord fitting these constraints. Try checking more boxes."
-            : this.state.chord}
+            : this.props.chord}
         </p>
         <p>Allowed root movements:</p>
         <ul>{elements}</ul>

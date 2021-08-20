@@ -2,7 +2,7 @@ import ChordChooser from "./ChordChooser";
 import Polygon from "./Polygon";
 import Helper from "./Helper";
 
-function Navigator() {
+function Navigator(setScaleData) {
   this.scale = "c_diatonic";
   this.main_polygon = undefined;
   this.neighbors = [];
@@ -15,6 +15,7 @@ function Navigator() {
   this.preview_polygons = [];
   this.poly_size = 61;
   this.preview_polygons_ready = false;
+  this.setScaleData = setScaleData;
 
   this.chord_chooser = new ChordChooser();
 
@@ -24,6 +25,10 @@ function Navigator() {
     period: undefined,
     intervalID: undefined,
     animate: true,
+  };
+
+  this.scaleDataCallback = (setScaleData) => {
+    this.setScaleData = setScaleData;
   };
 
   this.init = (p5) => {
@@ -385,6 +390,10 @@ function Navigator() {
     for (let callback of this.changeMainScaleCallbacks) {
       callback();
     }
+    this.setScaleData({
+      scale: this.main_polygon.scale,
+      chord: this.chord_chooser.current_chord_name,
+    });
   };
 }
 

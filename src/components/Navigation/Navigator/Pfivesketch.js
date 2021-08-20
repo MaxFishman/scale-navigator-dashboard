@@ -1,15 +1,13 @@
-import React from "react";
+import React, { useRef } from "react";
 import Sketch from "react-p5";
 
 //pass in p5 in the draw func, and only where its needed.
 
 import TablatureManager from "../../Workspace/Tablature/TablatureManager";
-import Navigator from "./Navigator";
 
 const fps = 30;
 
-function Pfivesketch() {
-  var nav = new Navigator.Navigator();
+function Pfivesketch({ nav }) {
   var tab = undefined;
 
   const setup = (p5, canvasParentRef) => {
@@ -33,7 +31,7 @@ function Pfivesketch() {
     nav.draw(p5);
 
     if (
-      document.getElementById("autopilot_checkbox").checked !=
+      document.getElementById("autopilot_checkbox").checked !==
       nav.autopilot_data.active
     ) {
       nav.toggle_autopilot();
