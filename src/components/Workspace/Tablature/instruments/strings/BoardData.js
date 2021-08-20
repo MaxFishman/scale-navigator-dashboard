@@ -12,20 +12,20 @@ const STRINGS = [
   { start: { x: 78.5, y: 310 }, end: { x: 921.5, y: 310 } },
 ];
 
-const FRETS = (end) => [
-  { start: { x: 80, y: 59.25 }, end: { x: 80, y: end + 1.5 } },
-  { start: { x: 150, y: 60 }, end: { x: 150, y: end } },
-  { start: { x: 220, y: 60 }, end: { x: 220, y: end } },
-  { start: { x: 290, y: 60 }, end: { x: 290, y: end } },
-  { start: { x: 360, y: 60 }, end: { x: 360, y: end } },
-  { start: { x: 430, y: 60 }, end: { x: 430, y: end } },
-  { start: { x: 500, y: 60 }, end: { x: 500, y: end } },
-  { start: { x: 570, y: 60 }, end: { x: 570, y: end } },
-  { start: { x: 640, y: 60 }, end: { x: 640, y: end } },
-  { start: { x: 710, y: 60 }, end: { x: 710, y: end } },
-  { start: { x: 780, y: 60 }, end: { x: 780, y: end } },
-  { start: { x: 850, y: 60 }, end: { x: 850, y: end } },
-  { start: { x: 920, y: 60 }, end: { x: 920, y: end } },
+const FRETS = (endString) => [
+  { start: { x: 80, y: 59.25 }, end: { x: 80, y: STRING_POS[endString] + 1.5 } },
+  { start: { x: 150, y: 60 }, end: { x: 150, y: STRING_POS[endString] } },
+  { start: { x: 220, y: 60 }, end: { x: 220, y: STRING_POS[endString] } },
+  { start: { x: 290, y: 60 }, end: { x: 290, y: STRING_POS[endString] } },
+  { start: { x: 360, y: 60 }, end: { x: 360, y: STRING_POS[endString] } },
+  { start: { x: 430, y: 60 }, end: { x: 430, y: STRING_POS[endString] } },
+  { start: { x: 500, y: 60 }, end: { x: 500, y: STRING_POS[endString] } },
+  { start: { x: 570, y: 60 }, end: { x: 570, y: STRING_POS[endString] } },
+  { start: { x: 640, y: 60 }, end: { x: 640, y: STRING_POS[endString] } },
+  { start: { x: 710, y: 60 }, end: { x: 710, y: STRING_POS[endString] } },
+  { start: { x: 780, y: 60 }, end: { x: 780, y: STRING_POS[endString] } },
+  { start: { x: 850, y: 60 }, end: { x: 850, y: STRING_POS[endString] } },
+  { start: { x: 920, y: 60 }, end: { x: 920, y: STRING_POS[endString] } },
 ];
 
 export { STRINGS, FRETS, STRING_POS, FRET_POS };

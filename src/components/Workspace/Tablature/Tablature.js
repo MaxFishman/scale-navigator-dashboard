@@ -3,7 +3,8 @@ import Multiselect from "multiselect-react-dropdown";
 import "../../../App.css";
 import Mandolin from "./instruments/strings/Mandolin";
 import Guitar from "./instruments/strings/Guitar";
-import TablatureManager from "./TablatureManager";
+import Banjo from "./instruments/strings/Banjo";
+import Ukulele from "./instruments/strings/Ukulele";
 import Data from "../../../Data";
 import { ScaleContext } from "../../Context/ScaleContext";
 
@@ -27,19 +28,6 @@ export default class Tab extends React.Component {
         { name: "Autoharp", id: 10 },
       ],
     };
-  }
-
-  componentDidUpdate() {
-    this.initialize();
-  }
-
-  initialize() {
-    var tab = new TablatureManager();
-    try {
-      tab.setScale("c_diatonic");
-    } catch (error) {
-      console.log(error);
-    }
   }
 
   onSelect(selectedValues, selectedItem) {
@@ -98,8 +86,8 @@ export default class Tab extends React.Component {
               <div>
                 {mandolin && <Mandolin keyData={keyData} />}
                 {guitar && <Guitar keyData={keyData} />}
-                {banjo && <h3>Banjo SVG</h3>}
-                {ukelele && <h3>Ukelele SVG</h3>}
+                {banjo && <Banjo keyData={keyData} />}
+                {ukelele && <Ukulele keyData={keyData} />}
                 {flute && <h3>Flute SVG</h3>}
                 {piano && <h3>Piano SVG</h3>}
                 {treble && <h3>Treble Staff SVG</h3>}
