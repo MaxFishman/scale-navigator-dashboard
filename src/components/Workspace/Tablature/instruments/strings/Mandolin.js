@@ -180,7 +180,7 @@ export default class Main extends React.Component {
           width="100%"
           viewBox="0 0 980 232"
         >
-          {FRETS.map((fret, i) => {
+          {FRETS(210).map((fret, i) => {
             return (
               <line
                 className={`strings__fret${

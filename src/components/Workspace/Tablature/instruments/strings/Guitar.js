@@ -207,7 +207,7 @@ export default function Guitar({ keyData }) {
         width="100%"
         viewBox="0 0 980 332"
       >
-        {FRETS.map((fret, i) => {
+        {FRETS(310).map((fret, i) => {
           return (
             <line
               className={`strings__fret${i === 0 ? " strings__fret--nut" : ""}`}
