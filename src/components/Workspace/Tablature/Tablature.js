@@ -1,12 +1,13 @@
 import React from "react";
 import Multiselect from "multiselect-react-dropdown";
-import "../../../App.css";
+import "App.css";
 import Mandolin from "./instruments/strings/Mandolin";
 import Guitar from "./instruments/strings/Guitar";
 import Banjo from "./instruments/strings/Banjo";
 import Ukulele from "./instruments/strings/Ukulele";
-import Data from "../../../Data";
-import { ScaleContext } from "../../Context/ScaleContext";
+import ScaleData from "common/ScaleData";
+import { ScaleContext } from "components/Context/ScaleContext";
+// import Flute from "./instruments/flute/Flute";
 
 export default class Tab extends React.Component {
   constructor(props) {
@@ -70,7 +71,7 @@ export default class Tab extends React.Component {
     return (
       <ScaleContext.Consumer>
         {({ scale, chord, navigator }) => {
-          const keyData = Data.data["scales"][scale];
+          const keyData = ScaleData[scale];
           return (
             <div>
               <div style={{ margin: "3vh" }}>
@@ -88,7 +89,7 @@ export default class Tab extends React.Component {
                 {guitar && <Guitar keyData={keyData} />}
                 {banjo && <Banjo keyData={keyData} />}
                 {ukelele && <Ukulele keyData={keyData} />}
-                {flute && <h3>Flute SVG</h3>}
+                {/* {flute && <Flute keyData={keyData} />} */}
                 {piano && <h3>Piano SVG</h3>}
                 {treble && <h3>Treble Staff SVG</h3>}
                 {triads && <h3>Triads SVG</h3>}

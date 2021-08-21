@@ -4,10 +4,7 @@ import { FRETS, FRET_POS, STRINGS, STRING_POS } from "./BoardData";
 import Notes from "./Notes";
 
 const pitchClassMapping = [
-  {
-    note: "C",
-    sharp: "C",
-    flat: "C",
+  { // 0
     locations: [
       { x: FRET_POS[10], y: STRING_POS[1] },
       { x: FRET_POS[1], y: STRING_POS[2] },
@@ -16,10 +13,7 @@ const pitchClassMapping = [
       { x: FRET_POS[10], y: STRING_POS[5] },
     ],
   },
-  {
-    note: "C#",
-    sharp: "C#",
-    flat: "D♭",
+  { // 1
     locations: [
       { x: FRET_POS[11], y: STRING_POS[1] },
       { x: FRET_POS[2], y: STRING_POS[2] },
@@ -28,10 +22,7 @@ const pitchClassMapping = [
       { x: FRET_POS[11], y: STRING_POS[5] },
     ],
   },
-  {
-    note: "D",
-    sharp: "D",
-    flat: "D",
+  { // 2
     locations: [
       { x: FRET_POS[12], y: STRING_POS[1] },
       { x: FRET_POS[0], y: STRING_POS[1] },
@@ -42,10 +33,7 @@ const pitchClassMapping = [
       { x: FRET_POS[12], y: STRING_POS[5] },
     ],
   },
-  {
-    note: "E♭",
-    sharp: "D#",
-    flat: "E♭",
+  { // 3
     locations: [
       { x: FRET_POS[1], y: STRING_POS[1] },
       { x: FRET_POS[4], y: STRING_POS[2] },
@@ -53,10 +41,7 @@ const pitchClassMapping = [
       { x: FRET_POS[1], y: STRING_POS[4] },
     ],
   },
-  {
-    note: "E",
-    sharp: "E",
-    flat: "E",
+  { // 4
     locations: [
       { x: FRET_POS[2], y: STRING_POS[1] },
       { x: FRET_POS[5], y: STRING_POS[2] },
@@ -64,10 +49,7 @@ const pitchClassMapping = [
       { x: FRET_POS[2], y: STRING_POS[4] },
     ],
   },
-  {
-    note: "F",
-    sharp: "F",
-    flat: "F",
+  { // 5
     locations: [
       { x: FRET_POS[3], y: STRING_POS[1] },
       { x: FRET_POS[6], y: STRING_POS[2] },
@@ -75,10 +57,7 @@ const pitchClassMapping = [
       { x: FRET_POS[3], y: STRING_POS[4] },
     ],
   },
-  {
-    note: "F#",
-    sharp: "F#",
-    flat: "G♭",
+  { // 6
     locations: [
       { x: FRET_POS[4], y: STRING_POS[1] },
       { x: FRET_POS[7], y: STRING_POS[2] },
@@ -86,10 +65,7 @@ const pitchClassMapping = [
       { x: FRET_POS[4], y: STRING_POS[4] },
     ],
   },
-  {
-    note: "G",
-    sharp: "G",
-    flat: "G",
+  { // 7
     locations: [
       { x: FRET_POS[5], y: STRING_POS[1] },
       { x: FRET_POS[8], y: STRING_POS[2] },
@@ -99,10 +75,7 @@ const pitchClassMapping = [
       { x: FRET_POS[5], y: STRING_POS[5] },
     ],
   },
-  {
-    note: "A♭",
-    sharp: "G#",
-    flat: "A♭",
+  { // 8
     locations: [
       { x: FRET_POS[6], y: STRING_POS[1] },
       { x: FRET_POS[9], y: STRING_POS[2] },
@@ -111,10 +84,7 @@ const pitchClassMapping = [
       { x: FRET_POS[6], y: STRING_POS[5] },
     ],
   },
-  {
-    note: "A",
-    sharp: "A",
-    flat: "A",
+  { // 9
     locations: [
       { x: FRET_POS[7], y: STRING_POS[1] },
       { x: FRET_POS[10], y: STRING_POS[2] },
@@ -123,10 +93,7 @@ const pitchClassMapping = [
       { x: FRET_POS[7], y: STRING_POS[5] },
     ],
   },
-  {
-    note: "B♭",
-    sharp: "A#",
-    flat: "B♭",
+  { // 10
     locations: [
       { x: FRET_POS[8], y: STRING_POS[1] },
       { x: FRET_POS[11], y: STRING_POS[2] },
@@ -135,10 +102,7 @@ const pitchClassMapping = [
       { x: FRET_POS[8], y: STRING_POS[5] },
     ],
   },
-  {
-    note: "B",
-    sharp: "B",
-    flat: "B",
+  { // 11
     locations: [
       { x: FRET_POS[9], y: STRING_POS[1] },
       { x: FRET_POS[12], y: STRING_POS[2] },
