@@ -1,0 +1,32 @@
+.flutecontainer {
+  display: grid;
+  justify-items: center;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.trill {
+  grid-column: span 1;
+  border: 1px black solid;
+  height: 4rem;
+  width: 100%;
+  padding: .5rem;
+  display: flex;
+  justify-content: center;
+
+  & svg {
+    max-height: 100%;
+    max-width: 100%;
+  }
+
+  &__note {
+    fill: none;
+
+    &--fingered {
+      fill: black;
+    }
+
+    &--trilled {
+      fill: red;
+    }
+  }
+}

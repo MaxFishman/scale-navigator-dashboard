@@ -1,105 +1,101 @@
-import React from "react";
-import Multiselect from "multiselect-react-dropdown";
+import React, { useState } from "react";
 import "App.css";
+import "./Tablature.scss";
 import Mandolin from "./instruments/strings/Mandolin";
 import Guitar from "./instruments/strings/Guitar";
 import Banjo from "./instruments/strings/Banjo";
 import Ukulele from "./instruments/strings/Ukulele";
 import ScaleData from "common/ScaleData";
 import { ScaleContext } from "components/Context/ScaleContext";
-// import Flute from "./instruments/flute/Flute";
+import Flute from "./instruments/flute/Flute";
+import Select from "react-select";
 
-export default class Tab extends React.Component {
-  constructor(props) {
-    super(props);
-    this.onSelect = this.onSelect.bind(this);
-    this.state = {
-      selectedItem: null,
-      selectedValues: [],
-      instruments: [
-        { name: "Mandolin", id: 1 },
-        { name: "Guitar", id: 2 },
-        { name: "Banjo", id: 3 },
-        { name: "Ukelele", id: 4 },
-        { name: "Flute", id: 5 },
-        { name: "Piano", id: 6 },
-        { name: "Treble Staff", id: 7 },
-        { name: "Triads", id: 8 },
-        { name: "Triads Circle", id: 9 },
-        { name: "Autoharp", id: 10 },
+const INST = {
+  GUITAR: {
+    name: "GUITAR",
+    Fn: Guitar,
+  },
+  BANJO: {
+    name: "BANJO",
+    Fn: Banjo,
+  },
+  MANDOLIN: {
+    name: "MANDOLIN",
+    Fn: Mandolin,
+  },
+  UKULELE: {
+    name: "UKULELE",
+    Fn: Ukulele,
+  },
+  FLUTE: {
+    name: "FLUTE",
+    Fn: Flute,
+  },
+};
+
+export default function Tablature() {
+  const [selected, setSelected] = useState([]);
+
+  const options = [
+    {
+      label: "Fretted Instruments",
+      options: [
+        { label: "Guitar", value: INST.GUITAR.name },
+        { label: "Banjo", value: INST.BANJO.name },
+        { label: "Mandolin", value: INST.MANDOLIN.name },
+        { label: "Ukulele", value: INST.UKULELE.name },
       ],
+    },
+    {
+      label: "Aerophones",
+      options: [{ label: "Flute", value: INST.FLUTE.name }],
+    },
+  ];
+
+  const onChange = (selectedValues, s) => {
+    setSelected(selectedValues);
+  };
+
+  const makeCloseFn = (name) => {
+    return () => {
+      const newSelected = selected.filter((s) => s.value !== name);
+      setSelected(newSelected);
     };
-  }
-
-  onSelect(selectedValues, selectedItem) {
-    if (selectedItem.id === 1) {
-      this.setState({ mandolin: true });
-    } else if (selectedItem.id === 2) {
-      this.setState({ guitar: true });
-    } else if (selectedItem.id === 3) {
-      this.setState({ banjo: true });
-    } else if (selectedItem.id === 4) {
-      this.setState({ ukelele: true });
-    } else if (selectedItem.id === 5) {
-      this.setState({ flute: true });
-    } else if (selectedItem.id === 6) {
-      this.setState({ piano: true });
-    } else if (selectedItem.id === 7) {
-      this.setState({ treble: true });
-    } else if (selectedItem.id === 8) {
-      this.setState({ triads: true });
-    } else if (selectedItem.id === 9) {
-      this.setState({ circle: true });
-    } else if (selectedItem.id === 10) {
-      this.setState({ autoharp: true });
-    }
-  }
-
-  render() {
-    let {
-      mandolin,
-      guitar,
-      banjo,
-      ukelele,
-      flute,
-      piano,
-      treble,
-      triads,
-      circle,
-      autoharp,
-    } = this.state;
-    return (
-      <ScaleContext.Consumer>
-        {({ scale, chord, navigator }) => {
-          const keyData = ScaleData[scale];
-          return (
-            <div>
-              <div style={{ margin: "3vh" }}>
-                <Multiselect
-                  options={this.state.instruments}
-                  selectedValues={this.state.selectedValues}
-                  onSelect={this.onSelect}
-                  onRemove={this.onRemove}
-                  displayValue="name"
-                  placeholder="Select instrument"
-                />
-              </div>
-              <div>
-                {mandolin && <Mandolin keyData={keyData} />}
-                {guitar && <Guitar keyData={keyData} />}
-                {banjo && <Banjo keyData={keyData} />}
-                {ukelele && <Ukulele keyData={keyData} />}
-                {/* {flute && <Flute keyData={keyData} />} */}
-                {piano && <h3>Piano SVG</h3>}
-                {treble && <h3>Treble Staff SVG</h3>}
-                {triads && <h3>Triads SVG</h3>}
-                {circle && <h3>Triads Circle SVG</h3>}
-                {autoharp && <h3>Autoharp SVG</h3>}
-              </div>
+  };
+  return (
+    <ScaleContext.Consumer>
+      {({ scale }) => {
+        const keyData = ScaleData[scale];
+        return (
+          <div>
+            <div style={{ margin: "3vh" }}>
+              <Select
+                isMulti
+                name="Tablature"
+                onChange={onChange}
+                options={options}
+                value={selected}
+                className="basic-multi-select"
+                classNamePrefix="select"
+              />
             </div>
-          );
-        }}
-      </ScaleContext.Consumer>
-    );
-  }
+            <ol class="alltabscontainer">
+              {selected.map((selection) => {
+                if (INST[selection.value]) {
+                  const Inst = INST[selection.value];
+                  return (
+                    <Inst.Fn
+                      keyData={keyData}
+                      onClose={makeCloseFn(Inst.name)}
+                    />
+                  );
+                }
+                return <></>;
+              })}
+            </ol>
+          </div>
+        );
+      }}
+    </ScaleContext.Consumer>
+  );
 }

@@ -2,9 +2,11 @@ import React from "react";
 import "./Strings.scss";
 import { FRETS, FRET_POS, STRINGS, STRING_POS } from "./BoardData";
 import Notes from "./Notes";
+import TabContainer from "../../TabContainer";
 
 const pitchClassMapping = [
-  { // 0
+  {
+    // 0
     locations: [
       { x: FRET_POS[8], y: STRING_POS[1] },
       { x: FRET_POS[1], y: STRING_POS[2] },
@@ -14,7 +16,8 @@ const pitchClassMapping = [
       { x: FRET_POS[8], y: STRING_POS[6] },
     ],
   },
-  { // 1
+  {
+    // 1
     locations: [
       { x: FRET_POS[9], y: STRING_POS[1] },
       { x: FRET_POS[2], y: STRING_POS[2] },
@@ -24,7 +27,8 @@ const pitchClassMapping = [
       { x: FRET_POS[9], y: STRING_POS[6] },
     ],
   },
-  { // 2
+  {
+    // 2
     locations: [
       { x: FRET_POS[10], y: STRING_POS[1] },
       { x: FRET_POS[3], y: STRING_POS[2] },
@@ -35,7 +39,8 @@ const pitchClassMapping = [
       { x: FRET_POS[10], y: STRING_POS[6] },
     ],
   },
-  { // 3
+  {
+    // 3
     locations: [
       { x: FRET_POS[11], y: STRING_POS[1] },
       { x: FRET_POS[4], y: STRING_POS[2] },
@@ -45,7 +50,8 @@ const pitchClassMapping = [
       { x: FRET_POS[11], y: STRING_POS[6] },
     ],
   },
-  { // 4
+  {
+    // 4
     locations: [
       { x: FRET_POS[12], y: STRING_POS[1] },
       { x: FRET_POS[0], y: STRING_POS[1] },
@@ -57,7 +63,8 @@ const pitchClassMapping = [
       { x: FRET_POS[0], y: STRING_POS[6] },
     ],
   },
-  { // 5
+  {
+    // 5
     locations: [
       { x: FRET_POS[1], y: STRING_POS[1] },
       { x: FRET_POS[6], y: STRING_POS[2] },
@@ -67,7 +74,8 @@ const pitchClassMapping = [
       { x: FRET_POS[1], y: STRING_POS[6] },
     ],
   },
-  { // 6
+  {
+    // 6
     locations: [
       { x: FRET_POS[2], y: STRING_POS[1] },
       { x: FRET_POS[7], y: STRING_POS[2] },
@@ -77,7 +85,8 @@ const pitchClassMapping = [
       { x: FRET_POS[2], y: STRING_POS[6] },
     ],
   },
-  { // 7
+  {
+    // 7
     locations: [
       { x: FRET_POS[3], y: STRING_POS[1] },
       { x: FRET_POS[8], y: STRING_POS[2] },
@@ -88,7 +97,8 @@ const pitchClassMapping = [
       { x: FRET_POS[3], y: STRING_POS[6] },
     ],
   },
-  { // 8
+  {
+    // 8
     locations: [
       { x: FRET_POS[4], y: STRING_POS[1] },
       { x: FRET_POS[9], y: STRING_POS[2] },
@@ -98,7 +108,8 @@ const pitchClassMapping = [
       { x: FRET_POS[4], y: STRING_POS[6] },
     ],
   },
-  { // 9
+  {
+    // 9
     locations: [
       { x: FRET_POS[5], y: STRING_POS[1] },
       { x: FRET_POS[10], y: STRING_POS[2] },
@@ -109,7 +120,8 @@ const pitchClassMapping = [
       { x: FRET_POS[5], y: STRING_POS[6] },
     ],
   },
-  { // 10
+  {
+    // 10
     locations: [
       { x: FRET_POS[6], y: STRING_POS[1] },
       { x: FRET_POS[11], y: STRING_POS[2] },
@@ -119,7 +131,8 @@ const pitchClassMapping = [
       { x: FRET_POS[6], y: STRING_POS[6] },
     ],
   },
-  { // 11
+  {
+    // 11
     locations: [
       { x: FRET_POS[7], y: STRING_POS[1] },
       { x: FRET_POS[12], y: STRING_POS[2] },
@@ -159,9 +172,9 @@ const markers = [
   },
 ];
 
-export default function Guitar({ keyData }) {
+export default function Guitar({ keyData, onClose }) {
   return (
-    <div id="guitar_container" style={{ position: "relative" }}>
+    <TabContainer onClose={onClose}>
       <svg
         xmlns="http://www.w3.org/2000/svg"
         version="1.1"
@@ -197,6 +210,6 @@ export default function Guitar({ keyData }) {
           keyData={keyData}
         />
       </svg>
-    </div>
+    </TabContainer>
   );
 }
