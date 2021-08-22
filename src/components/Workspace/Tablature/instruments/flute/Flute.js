@@ -211,12 +211,12 @@ export default function Flute({ keyData, onClose }) {
 
   return (
     <TabContainer onClose={onClose}>
-      <div className="flutecontainer">
-        {trills.map((trill) => {
+      <div className="trillcontainer">
+        {trills.map((trill, i) => {
           return isSubsetOf(keyData.pitch_classes, trill.pitchClasses) ? (
-            <Trill trill={trill}></Trill>
+            <Trill key={i} trill={trill}></Trill>
           ) : (
-            <BlankTrill></BlankTrill>
+            <BlankTrill key={i}></BlankTrill>
           );
         })}
       </div>

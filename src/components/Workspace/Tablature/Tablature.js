@@ -9,6 +9,7 @@ import ScaleData from "common/ScaleData";
 import { ScaleContext } from "components/Context/ScaleContext";
 import Flute from "./instruments/flute/Flute";
 import Select from "react-select";
+import Piano from "./instruments/keyboard/Piano";
 
 const INST = {
   GUITAR: {
@@ -31,6 +32,10 @@ const INST = {
     name: "FLUTE",
     Fn: Flute,
   },
+  PIANO: {
+    name: "PIANO",
+    Fn: Piano,
+  },
 };
 
 export default function Tablature() {
@@ -49,6 +54,14 @@ export default function Tablature() {
     {
       label: "Aerophones",
       options: [{ label: "Flute", value: INST.FLUTE.name }],
+    },
+    {
+      label: "Keyboard",
+      options: [{ label: "Piano", value: INST.PIANO.name }],
+    },
+    {
+      label: "Staff Notation",
+      options: [{ label: "Treble Staff", value: INST.PIANO.name }],
     },
   ];
 
@@ -80,11 +93,12 @@ export default function Tablature() {
               />
             </div>
             <ol class="alltabscontainer">
-              {selected.map((selection) => {
+              {selected.map((selection, i) => {
                 if (INST[selection.value]) {
                   const Inst = INST[selection.value];
                   return (
                     <Inst.Fn
+                      key={i}
                       keyData={keyData}
                       onClose={makeCloseFn(Inst.name)}
                     />
