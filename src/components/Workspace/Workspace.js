@@ -23,7 +23,7 @@ export default class Workspace extends React.Component {
     return (
       <>
         <Tabs
-          id="workspace"
+          className="workspace"
           activeKey={this.state.activeTab}
           onChange={(tab) => this.setState({ activeTab: tab })}
         >

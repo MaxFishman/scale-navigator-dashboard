@@ -1,10 +1,11 @@
 import Pfivesketch from "./Navigator/Pfivesketch";
 import React, { useEffect } from "react";
 import { ScaleContext } from "../Context/ScaleContext";
+import "./Navigation.scss";
 
 const Navigation = () => {
   return (
-    <div id="Navigation">
+    <div className="navigation">
       <div>
         <div id="title_container">scale navigator</div>
         <div id="logo">dashboard</div>

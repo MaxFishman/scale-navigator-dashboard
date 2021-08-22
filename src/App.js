@@ -1,4 +1,4 @@
-import "./App.css";
+import "./App.scss";
 import Navigation from "./components/Navigation/Navigation";
 import Workspace from "./components/Workspace/Workspace";
 import { ScaleContext } from "./components/Context/ScaleContext";
@@ -15,8 +15,7 @@ function App() {
   navRef.current.scaleDataCallback(setScaleData);
 
   return (
-    <div className="App">
-      <div id="grid">
+    <div className="appcontainer">
         <ScaleContext.Provider
           value={{
             ...scaleData,
@@ -26,7 +25,6 @@ function App() {
           <Navigation />
           <Workspace />
         </ScaleContext.Provider>
-      </div>
     </div>
   );
 }

@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import "App.css";
 import "./Tablature.scss";
 import Mandolin from "./instruments/strings/Mandolin";
 import Guitar from "./instruments/strings/Guitar";
