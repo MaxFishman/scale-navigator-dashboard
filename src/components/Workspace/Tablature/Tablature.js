@@ -11,6 +11,8 @@ import Flute from "./instruments/flute/Flute";
 import Select from "react-select";
 import Piano from "./instruments/keyboard/Piano";
 import Treble from "./instruments/notation/TrebleStaff";
+import Triads from "./instruments/chords/Triads";
+import TriadCircle from "./instruments/chords/TriadCircle";
 
 const INST = {
   GUITAR: {
@@ -41,6 +43,14 @@ const INST = {
     name: "TREBLESTAFF",
     Fn: Treble,
   },
+  TRIADS: {
+    name: "TRIADS",
+    Fn: Triads,
+  },
+  TRIADCIRCLE: {
+    name: "TRIADCIRCLE",
+    Fn: TriadCircle,
+  },
 };
 
 export default function Tablature() {
@@ -67,6 +77,16 @@ export default function Tablature() {
     {
       label: "Staff Notation",
       options: [{ label: "Treble Staff", value: INST.TREBLESTAFF.name }],
+    },
+    {
+      label: "Chords",
+      options: [
+        { label: "Triads", value: INST.TRIADS.name },
+        {
+          label: "Circle of Major and Minor Triads",
+          value: INST.TRIADCIRCLE.name,
+        },
+      ],
     },
   ];
 
