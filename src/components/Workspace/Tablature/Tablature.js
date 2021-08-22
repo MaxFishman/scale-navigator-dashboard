@@ -10,6 +10,7 @@ import { ScaleContext } from "components/Context/ScaleContext";
 import Flute from "./instruments/flute/Flute";
 import Select from "react-select";
 import Piano from "./instruments/keyboard/Piano";
+import Treble from "./instruments/notation/TrebleStaff";
 
 const INST = {
   GUITAR: {
@@ -36,6 +37,10 @@ const INST = {
     name: "PIANO",
     Fn: Piano,
   },
+  TREBLESTAFF: {
+    name: "TREBLESTAFF",
+    Fn: Treble,
+  },
 };
 
 export default function Tablature() {
@@ -61,7 +66,7 @@ export default function Tablature() {
     },
     {
       label: "Staff Notation",
-      options: [{ label: "Treble Staff", value: INST.PIANO.name }],
+      options: [{ label: "Treble Staff", value: INST.TREBLESTAFF.name }],
     },
   ];
 
