@@ -13,6 +13,9 @@ import Piano from "./instruments/keyboard/Piano";
 import Treble from "./instruments/notation/TrebleStaff";
 import Triads from "./instruments/chords/Triads";
 import TriadCircle from "./instruments/chords/TriadCircle";
+import { SortableContainer, SortableElement } from "react-sortable-hoc";
+import Autoharp from "./instruments/autoharp/Autoharp";
+import { arrayMoveImmutable } from "array-move";
 
 const INST = {
   GUITAR: {
@@ -51,6 +54,10 @@ const INST = {
     name: "TRIADCIRCLE",
     Fn: TriadCircle,
   },
+  AUTOHARP: {
+    name: "AUTOHARP",
+    Fn: Autoharp,
+  },
 };
 
 export default function Tablature() {
@@ -72,7 +79,10 @@ export default function Tablature() {
     },
     {
       label: "Keyboard",
-      options: [{ label: "Piano", value: INST.PIANO.name }],
+      options: [
+        { label: "Piano", value: INST.PIANO.name },
+        { label: "Autoharp", value: INST.AUTOHARP.name },
+      ],
     },
     {
       label: "Staff Notation",
@@ -90,8 +100,13 @@ export default function Tablature() {
     },
   ];
 
-  const onChange = (selectedValues, s) => {
-    setSelected(selectedValues);
+  const onChange = (newSelected, s) => {
+    setSelected(newSelected);
+  };
+
+  const onSortEnd = ({ oldIndex, newIndex }) => {
+    const newSelected = arrayMoveImmutable(selected, oldIndex, newIndex);
+    onChange(newSelected);
   };
 
   const makeCloseFn = (name) => {
@@ -100,6 +115,32 @@ export default function Tablature() {
       setSelected(newSelected);
     };
   };
+
+  const SortableTabsList = SortableContainer(({ keyData, curSelected }) => {
+    return (
+      <ul class="alltabscontainer">
+        {curSelected.map((selection, i) => {
+          if (INST[selection.value]) {
+            const Inst = INST[selection.value];
+            const SortableTab = SortableElement(({ keyData, onClose }) => {
+              return (
+                <Inst.Fn keyData={keyData} onClose={makeCloseFn(Inst.name)} />
+              );
+            });
+            return (
+              <SortableTab
+                key={i}
+                index={i}
+                keyData={keyData}
+                onClose={makeCloseFn(Inst.name)}
+              ></SortableTab>
+            );
+          }
+          return <></>;
+        })}
+      </ul>
+    );
+  });
   return (
     <ScaleContext.Consumer>
       {({ scale }) => {
@@ -117,21 +158,11 @@ export default function Tablature() {
                 classNamePrefix="select"
               />
             </div>
-            <ol class="alltabscontainer">
-              {selected.map((selection, i) => {
-                if (INST[selection.value]) {
-                  const Inst = INST[selection.value];
-                  return (
-                    <Inst.Fn
-                      key={i}
-                      keyData={keyData}
-                      onClose={makeCloseFn(Inst.name)}
-                    />
-                  );
-                }
-                return <></>;
-              })}
-            </ol>
+            <SortableTabsList
+              onSortEnd={onSortEnd}
+              keyData={keyData}
+              curSelected={selected}
+            ></SortableTabsList>
           </div>
         );
       }}
