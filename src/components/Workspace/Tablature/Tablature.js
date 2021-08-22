@@ -16,6 +16,7 @@ import TriadCircle from "./instruments/chords/TriadCircle";
 import { SortableContainer, SortableElement } from "react-sortable-hoc";
 import Autoharp from "./instruments/autoharp/Autoharp";
 import { arrayMoveImmutable } from "array-move";
+import TabContainer from "./TabContainer";
 
 const INST = {
   GUITAR: {
@@ -124,7 +125,9 @@ export default function Tablature() {
             const Inst = INST[selection.value];
             const SortableTab = SortableElement(({ keyData, onClose }) => {
               return (
-                <Inst.Fn keyData={keyData} onClose={makeCloseFn(Inst.name)} />
+                <TabContainer onClose={onClose}>
+                  <Inst.Fn keyData={keyData} onClose={makeCloseFn(Inst.name)} />
+                </TabContainer>
               );
             });
             return (

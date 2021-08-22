@@ -1,9 +1,8 @@
 import React, { useEffect } from "react";
 import PitchClassData from "common/PitchClassData";
-import TabContainer from "../../TabContainer";
 import Vex from "vexflow";
 
-export default function Treble({ keyData, onClose }) {
+export default function Treble({ keyData }) {
   useEffect(() => {
     const VF = Vex.Flow;
 
@@ -57,9 +56,5 @@ export default function Treble({ keyData, onClose }) {
     };
   }, [keyData]);
 
-  return (
-    <TabContainer onClose={onClose}>
-      <div id="treblestaff" class="treblestaff"></div>
-    </TabContainer>
-  );
+  return <div id="treblestaff" class="treblestaff"></div>;
 }
