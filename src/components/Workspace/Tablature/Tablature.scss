@@ -1,0 +1,19 @@
+.tabcontainer {
+  position: relative;
+  width: 100%;
+
+  &__close {
+    position: absolute;
+    right: .25rem;
+    top: .25rem;
+    cursor: pointer;
+    text-decoration: none;
+    border: none;
+    background: transparent;
+  }
+}
+
+.alltabscontainer {
+  list-style-type: none;
+  padding: 0;
+}

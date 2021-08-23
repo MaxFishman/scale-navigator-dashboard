@@ -5,10 +5,9 @@
 // once enough is properly converted, add in other behavioral classes
 // ...
 
-import Data from "./Data";
+import ScaleData from "common/ScaleData";
 import Pfivesketch from "./Pfivesketch";
 import Helper from "./Helper";
-import Navigator from "./Navigator.js";
 
 const default_animation_curve = (x) => {
   return 1 / (1 + Math.pow(x / (1 - x), -3));
@@ -22,7 +21,7 @@ export default class Polygon {
     this.y = y;
     this.radius = size;
 
-    this.data = Data.data.scales[scale];
+    this.data = ScaleData[scale];
     this.points_count = this.data.adjacent_scales.length;
 
     this.animation = {
