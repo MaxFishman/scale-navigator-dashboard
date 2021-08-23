@@ -193,12 +193,18 @@ function Navigator(setScaleData) {
             var clickData = n.click(p5.mouseX, p5.mouseY, true);
             if (clickData.start && !n.animation.active) {
                 var add = this.get_new_neighbors(p5, n).new;
-                var pos = add.map((p) => {
-                    return {
-                        x: p.x,
-                        y: p.y,
-                    };
-                });
+
+                var total_poly = this.neighbors.length;
+                var ind = this.main_polygon.getNeighbors().findIndex((x) => x.isMatching(n));
+                var pos = n.getNeighborPositions(n.x, n.y, n.radius, undefined, undefined, p5.PI / 2 + (2 * p5.PI * (ind - 1)) / total_poly, p5.PI / 2 + (2 * p5.PI * (ind + 1)) / total_poly, add.length)
+
+                // var pos = add.map((p) => {
+                //     return {
+                //         x: p.x,
+                //         y: p.y,
+                //     };
+                // });
+                // console.log(pos, positions)
 
                 for (var p = 0; p < add.length; p++) {
                     add[p].set(["x", n.x], ["y", n.y], ["generated_from", n]);
@@ -251,25 +257,24 @@ function Navigator(setScaleData) {
         var ind = this.main_polygon
             .getNeighbors()
             .findIndex((x) => x.isMatching(p));
-        //var positions = p.getNeighborPositions(p.x, p.y, p5.RADIUS, undefined, undefined, p5.PI / 2 + (2 * p5.PI * (ind - 0.5)) / total_poly, p5.PI / 2 + (2 * p5.PI * (ind + 0.5)) / total_poly, this.actually_new_polygons.length)
-        var positions = p.getNeighborPositions(
-            p.x,
-            p.y,
-            p5.RADIUS,
-            undefined,
-            undefined,
-            p5.PI / 2,
-            p5.PI / 2 + 2 * p5.PI,
-            this.actually_new_polygons.length
-        );
+        var positions = p.getNeighborPositions(p.x, p.y, p.radius, undefined, undefined, p5.PI / 2 + (2 * p5.PI * (ind - 1)) / total_poly, p5.PI / 2 + (2 * p5.PI * (ind + 1)) / total_poly, this.actually_new_polygons.length)
+            // var positions = p.getNeighborPositions(
+            //     p.x,
+            //     p.y,
+            //     p5.RADIUS,
+            //     undefined,
+            //     undefined,
+            //     p5.PI / 2,
+            //     p5.PI / 2 + 2 * p5.PI,
+            //     this.actually_new_polygons.length
+            // );
 
-        /*
-            //position them
-            for (var a_n = 0; a_n < this.actually_new_polygons.length; a_n++) {
-                var pol = this.preview_polygons.find(x => this.actually_new_polygons[a_n].isMatching(x))
+        //position them
+        for (var a_n = 0; a_n < this.actually_new_polygons.length; a_n++) {
+            var pol = this.preview_polygons.find(x => this.actually_new_polygons[a_n].isMatching(x))
 
-                pol.set(["x", positions[a_n].x], ["y", positions[a_n].y], ["size", positions[a_n].size])
-            }*/
+            pol.set(["x", positions[a_n].x], ["y", positions[a_n].y], ["size", positions[a_n].size])
+        }
 
         if (animation) {
             for (var prev of this.actually_new_polygons) {
