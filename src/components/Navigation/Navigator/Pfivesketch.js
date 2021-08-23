@@ -6,7 +6,6 @@ import Sketch from "react-p5";
 const fps = 30;
 
 function Pfivesketch({ nav }) {
-
   const setup = (p5, canvasParentRef) => {
     p5.createCanvas(500, 500).parent(canvasParentRef);
     p5.frameRate(fps);
@@ -17,7 +16,7 @@ function Pfivesketch({ nav }) {
   };
 
   const draw = (p5) => {
-    p5.background(255);
+    p5.clear();
     nav.draw(p5);
 
     if (

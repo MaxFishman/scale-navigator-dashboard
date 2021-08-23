@@ -1,4 +1,5 @@
 @import "styles/_media.scss";
+@import "styles/_variables.scss";
 
 body {
   font-family: arial, sans-serif;
@@ -13,15 +14,41 @@ body {
     url("resources/Wild Wolf.woff") format("woff");
 }
 
+@font-face {
+  font-family: "Glow Better";
+  font-style: normal;
+  font-weight: normal;
+  src: local("resources/Glow Better Serif"),
+    url("resources/Glow Better Serif.ttf") format("truetype");
+}
+
 .appcontainer {
+  width: 100%;
+  padding: 0.75rem;
+  background-color: $accent-medium;
+  height: auto;
+
+  @include md {
+    height: 100vh;
+  }
+}
+
+.contentcontainer {
+  height: 100%;
   display: grid;
   grid-template-rows: auto auto;
   grid-template-columns: 100%;
   gap: 2rem;
-  width: 100%;
+  background: radial-gradient(
+    99.75% 315.26% at 0% 0%,
+    #f799bf 0%,
+    #bd79f1 100%
+  );
+  border-radius: 40px;
+  padding: 1.25rem;
+  padding-top: 1.75rem;
 
   @include md {
-    height: 100vh;
     grid-template-rows: auto;
     grid-template-columns: 40% 1fr;
   }

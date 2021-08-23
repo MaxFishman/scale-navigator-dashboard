@@ -4,6 +4,7 @@ import Workspace from "./components/Workspace/Workspace";
 import { ScaleContext } from "./components/Context/ScaleContext";
 import Navigator from "./components/Navigation/Navigator/Navigator";
 import React, { useState, useRef } from "react";
+import { BrowserRouter as Router } from "react-router-dom";
 
 function App() {
   const [scaleData, setScaleData] = useState({
@@ -16,15 +17,19 @@ function App() {
 
   return (
     <div className="appcontainer">
-        <ScaleContext.Provider
-          value={{
-            ...scaleData,
-            navigator: navRef.current,
-          }}
-        >
-          <Navigation />
-          <Workspace />
-        </ScaleContext.Provider>
+      <div className="contentcontainer">
+        <Router>
+          <ScaleContext.Provider
+            value={{
+              ...scaleData,
+              navigator: navRef.current,
+            }}
+          >
+            <Navigation />
+            <Workspace />
+          </ScaleContext.Provider>
+        </Router>
+      </div>
     </div>
   );
 }

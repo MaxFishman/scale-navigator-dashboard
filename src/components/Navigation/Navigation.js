@@ -7,11 +7,8 @@ const Navigation = () => {
   return (
     <div className="navigation">
       <div>
-        <div id="title_container">scale navigator</div>
-        <div id="logo">dashboard</div>
-        <p id="author">
-          by <a href="https://www.nathanturczan.com/">Nathan Turczan</a>
-        </p>
+        <h1 className="navigation__logo">SCALE NAVIGATOR</h1>
+        <h2 className="navigation__sublogo">DASHBOARD</h2>
       </div>
       <div className="scalenav_container" id="canv_container">
         <ScaleContext.Consumer>
