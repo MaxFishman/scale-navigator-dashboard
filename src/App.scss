@@ -4,6 +4,7 @@
 body {
   font-family: arial, sans-serif;
   overscroll-behavior-y: none;
+  overflow: hidden;
 }
 
 @font-face {
@@ -49,7 +50,7 @@ body {
   padding-top: 1.75rem;
 
   @include md {
-    grid-template-rows: auto;
+    grid-template-rows: 100%;
     grid-template-columns: 40% 1fr;
   }
 }

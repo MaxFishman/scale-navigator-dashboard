@@ -148,18 +148,16 @@ export default function Tablature() {
       {({ scale }) => {
         const keyData = ScaleData[scale];
         return (
-          <div>
-            <div style={{ margin: "3vh" }}>
-              <Select
-                isMulti
-                name="Tablature"
-                onChange={onChange}
-                options={options}
-                value={selected}
-                className="basic-multi-select"
-                classNamePrefix="select"
-              />
-            </div>
+          <div className="tabsectioncontainer">
+            <Select
+              isMulti
+              name="Tablature"
+              onChange={onChange}
+              options={options}
+              value={selected}
+              className="tabsectioncontainer__select"
+              classNamePrefix="select"
+            />
             <SortableTabsList
               onSortEnd={onSortEnd}
               keyData={keyData}

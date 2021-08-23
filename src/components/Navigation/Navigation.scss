@@ -13,6 +13,10 @@
     max-height: 100%;
   }
 
+  &__logowrap {
+    flex: 0 0 auto;
+  }
+
   &__logo {
     flex: 0 0 auto;
     font-family: "Glow Better";
@@ -45,9 +49,14 @@
   }
 }
 
+.p5Canvas {
+  display: block;
+}
+
 .navinfo {
+  flex: 0 0 auto;
   display: grid;
-  grid-template-columns: auto auto;
+  grid-template-columns: minmax(0, 2fr) minmax(0, 3fr);
   grid-template-rows: auto auto;
   color: white;
 

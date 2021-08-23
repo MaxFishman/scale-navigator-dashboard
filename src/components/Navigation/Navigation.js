@@ -11,7 +11,7 @@ const Navigation = () => {
       {({ navigator, scale }) => {
         return (
           <div className="navigation">
-            <div>
+            <div className="navigation__logowrap">
               <h1 className="navigation__logo">SCALE NAVIGATOR</h1>
               <h2 className="navigation__sublogo">DASHBOARD</h2>
             </div>
