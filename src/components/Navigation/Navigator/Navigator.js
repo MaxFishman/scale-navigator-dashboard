@@ -26,6 +26,8 @@ function Navigator(setScaleData) {
         chosen: undefined,
         intervalID: undefined,
         animate: true,
+        max_visited: 10,
+        visited: []
     };
 
     this.scaleDataCallback = (setScaleData) => {
@@ -53,7 +55,18 @@ function Navigator(setScaleData) {
             (p5) => {
                 if (this.autopilot_data.active) {
                     var p = p5.random(this.neighbors.concat(this.main_polygon));
+                    var passes = 0
+                    while (this.autopilot_data.visited.includes(p) && passes < 100) {
+                        p = p5.random(this.neighbors.concat(this.main_polygon));
+                        passes++
+                    }
+
                     this.autopilot_data.chosen = p5.random(this.autopilot_data.period)
+
+                    if (this.autopilot_data.visited.length >= this.autopilot_data.max_visited) {
+                        this.autopilot_data.visited.pop()
+                    }
+                    this.autopilot_data.visited.unshift(p)
 
                     this.changeMainScale(
                         p5,
@@ -81,6 +94,7 @@ function Navigator(setScaleData) {
 
     this.reset_autopilot = () => {
         this.autopilot_data.active = false;
+        this.autopilot_data.visited = []
         this.set_autopilot_period(undefined);
     };
 
