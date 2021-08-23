@@ -120,7 +120,7 @@ function Navigator(setScaleData) {
 
         //console.log(this.hover_polygons.length)
         for (var h = 0; h < this.hover_polygons.length; h++) {
-            this.hover_polygons[h].draw();
+            this.hover_polygons[h].draw(false);
         }
 
         //background(255);
@@ -133,7 +133,7 @@ function Navigator(setScaleData) {
 
         //draw all the polygons
         for (var p of allPolygons) {
-            if (p) p.draw();
+            if (p) p.draw(document.getElementById("labels_checkbox").checked);
         }
 
         this.third_gen_hover(p5);
