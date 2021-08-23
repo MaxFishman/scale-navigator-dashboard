@@ -1,0 +1,127 @@
+@import "styles/_variables.scss";
+@import "styles/_media.scss";
+
+.navigation {
+  width: 100%;
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: space-between;
+  align-content: space-around;
+
+  @include md {
+    height: 100%;
+    max-height: 100%;
+  }
+
+  &__logowrap {
+    flex: 0 0 auto;
+  }
+
+  &__logo {
+    flex: 0 0 auto;
+    font-family: "Glow Better";
+    font-weight: normal;
+    text-align: left;
+    font-size: 9vw;
+    margin: 0;
+    line-height: 1;
+    color: $accent-medium;
+    text-shadow: 0px 4px 13px $main-light, 0px 4px 24px $main-light,
+      0px 0px 6px $main-light;
+
+    @include md {
+      font-size: 4vw;
+    }
+  }
+
+  &__sublogo {
+    flex: 0 0 auto;
+    font-family: "Wild Wolf Regular";
+    font-weight: normal;
+    text-align: right;
+    font-size: 6vw;
+    line-height: 1;
+    color: $accent-medium;
+    margin: 0;
+    text-shadow: -2px 1px 7px $main-light, 0px 4px 24px $main-light,
+      0px 0px 6px $main-light;
+
+    @include md {
+      font-size: 2.5vw;
+    }
+  }
+
+  &__scalenav {
+    height: 100%;
+    flex: 0 1 auto;
+  }
+}
+
+.p5Canvas {
+  display: block;
+}
+
+.navinfo {
+  flex: 0 0 auto;
+  display: grid;
+  grid-template-columns: minmax(0, 2fr) minmax(0, 3fr);
+  grid-template-rows: auto auto;
+  color: white;
+
+  &__note,
+  &__scale {
+    position: relative;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    & > h5 {
+      position: absolute;
+      margin: 0;
+      font-weight: normal;
+      color: white;
+      font-size: 0.5rem;
+      top: 0.1rem;
+      left: 0.25rem;
+    }
+  }
+
+  &__note {
+    background-color: $accent-medium;
+    border-top: 3px solid $accent-medium;
+    border-left: 3px solid $accent-medium;
+    border-radius: 9px 0 0 0;
+    font-size: 1.5rem;
+  }
+
+  &__scale {
+    border-top: 3px solid $accent-medium;
+    border-right: 3px solid $accent-medium;
+    border-radius: 0 9px 0 0;
+    font-size: 1rem;
+
+    & > h5 {
+      color: $accent-medium;
+    }
+  }
+
+  &__options {
+    grid-column: span 2;
+    display: flex;
+    justify-content: space-around;
+    border: 3px solid $accent-medium;
+    border-radius: 0 0 9px 30px;
+    padding: 0.5rem 0;
+  }
+
+  &__option {
+    & > label {
+      padding-left: 0.5rem;
+      font-size: 1rem;
+    }
+    & > * {
+      display: inline-block;
+    }
+  }
+}

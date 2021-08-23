@@ -1,5 +1,4 @@
 import "react-tabs/style/react-tabs.css";
-import { Tabs, Row, Col, Button } from "antd";
 import About from "./About/About";
 import Chords from "./Chords/Chords";
 import Ensemble from "./Ensemble/Ensemble";
@@ -7,63 +6,77 @@ import Tablature from "./Tablature/Tablature";
 import React from "react";
 import { app } from "../../config/base";
 import { ScaleContext } from "../Context/ScaleContext";
+import { Switch, Route, Link, Redirect, useLocation } from "react-router-dom";
+import ROUTES from "common/Routes";
+import "./Workspace.scss";
+import classNames from "classnames";
 
-const { TabPane } = Tabs;
-
-export default class Workspace extends React.Component {
-  constructor(props) {
-    super(props);
-  }
-
-  state = {
-    activeTab: "0",
+export default function Workspace() {
+  const location = useLocation();
+  const routes = {
+    Ensemble: ROUTES.ENSEMBLE,
+    Tablature: ROUTES.TABLATURE,
+    Chords: ROUTES.CHORDS,
+    MIDI: ROUTES.MIDI,
+    Notepad: ROUTES.NOTEPAD,
+    Visualization: ROUTES.SCALENET,
+    About: ROUTES.ABOUT,
+    Account: ROUTES.ACCOUNT,
   };
-
-  render() {
-    return (
-      <>
-        <Tabs
-          id="workspace"
-          activeKey={this.state.activeTab}
-          onChange={(tab) => this.setState({ activeTab: tab })}
-        >
-          <TabPane tab="Ensemble" key="0">
-            <Ensemble />
-          </TabPane>
-          <TabPane tab="Tablature" key="1">
-            <Tablature />
-          </TabPane>
-          <TabPane tab="Chords" key="2">
+  return (
+    <div className="workspace">
+      <nav className="workspace__navwrap">
+        <ol className="workspace__nav">
+          {Object.entries(routes).map((nameroute) => {
+            return (
+              <li
+                className={classNames("workspace__navitem", {
+                  "workspace__navitem--on": location.pathname === nameroute[1],
+                })}
+              >
+                <Link to={nameroute[1]}>{nameroute[0]}</Link>
+              </li>
+            );
+          })}
+        </ol>
+      </nav>
+      <div className="workspace__content">
+        <Switch>
+          <Route exact path="/">
+            <Redirect to={ROUTES.ABOUT} />
+          </Route>
+          <Route path={ROUTES.ENSEMBLE}>
+            <Ensemble></Ensemble>
+          </Route>
+          <Route path={ROUTES.TABLATURE}>
+            <Tablature></Tablature>
+          </Route>
+          <Route path={ROUTES.CHORDS}>
             <ScaleContext.Consumer>
               {({ scale, chord, navigator }) => {
                 return (
-                  <Chords
-                    scale={scale}
-                    chord={chord}
-                    navigator={navigator}
-                    chordPlayer={this.props.chordPlayer}
-                  />
+                  <Chords scale={scale} chord={chord} navigator={navigator} />
                 );
               }}
             </ScaleContext.Consumer>
-          </TabPane>
-          <TabPane tab="MIDI" key="3">
+          </Route>
+          <Route path={ROUTES.MIDI}>
             <p>MIDI Component</p>
-          </TabPane>
-          <TabPane tab="Notepad" key="4">
+          </Route>
+          <Route path={ROUTES.NOTEPAD}>
             <p>Notepad Component</p>
-          </TabPane>
-          <TabPane tab="Scale Network" key="5">
+          </Route>
+          <Route path={ROUTES.SCALENET}>
             <p>Scale Network Component</p>
-          </TabPane>
-          <TabPane tab="Account" key="6">
-            <p>Account component</p>
-          </TabPane>
-          <TabPane tab="About" key="7">
-            <About />
-          </TabPane>
-        </Tabs>
-      </>
-    );
-  }
+          </Route>
+          <Route path={ROUTES.ACCOUNT}>
+            <p>Account Component</p>
+          </Route>
+          <Route path={ROUTES.ABOUT}>
+            <About></About>
+          </Route>
+        </Switch>
+      </div>
+    </div>
+  );
 }
