@@ -4,7 +4,11 @@
 body {
   font-family: arial, sans-serif;
   overscroll-behavior-y: none;
-  overflow: hidden;
+  overflow-x: hidden;
+
+  @include md {
+    overflow: hidden;
+  }
 }
 
 @font-face {

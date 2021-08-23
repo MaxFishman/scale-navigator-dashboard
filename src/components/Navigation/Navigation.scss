@@ -22,12 +22,16 @@
     font-family: "Glow Better";
     font-weight: normal;
     text-align: left;
-    font-size: 4vw;
+    font-size: 9vw;
     margin: 0;
     line-height: 1;
     color: $accent-medium;
     text-shadow: 0px 4px 13px $main-light, 0px 4px 24px $main-light,
       0px 0px 6px $main-light;
+
+    @include md {
+      font-size: 4vw;
+    }
   }
 
   &__sublogo {
@@ -35,12 +39,16 @@
     font-family: "Wild Wolf Regular";
     font-weight: normal;
     text-align: right;
-    font-size: 2.5vw;
+    font-size: 6vw;
     line-height: 1;
     color: $accent-medium;
     margin: 0;
     text-shadow: -2px 1px 7px $main-light, 0px 4px 24px $main-light,
       0px 0px 6px $main-light;
+
+    @include md {
+      font-size: 2.5vw;
+    }
   }
 
   &__scalenav {

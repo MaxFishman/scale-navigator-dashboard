@@ -17,20 +17,28 @@
     margin: 0;
     padding: 0;
     display: flex;
-    flex-wrap: nowrap;
+    flex-wrap: wrap;
     justify-content: space-between;
+
+    @include md {
+      flex-wrap: nowrap;
+    }
   }
 
   &__navitem {
     flex: 0 1 100%;
     padding: 0.25rem 0;
     border: 2px solid $accent-medium;
-    border-radius: 20px 20px 0px 0px;
     font-size: 0.75rem;
     transition: background-color 0.25s ease;
-    // filter: drop-shadow(0px 5px 13px rgba(250, 204, 104, 0.58))
-    //   drop-shadow(0px 4px 24px rgba(255, 255, 255, 0.5))
-    //   drop-shadow(0px 0px 6px #ffffff);
+
+    @include md {
+      border-radius: 20px 20px 0px 0px;
+    }
+
+    &:first-child {
+      border-radius: 20px 20px 0px 0px;
+    }
 
     & > a {
       color: white;
