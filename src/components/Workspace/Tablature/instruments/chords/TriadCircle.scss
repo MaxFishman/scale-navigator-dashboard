@@ -1,0 +1,29 @@
+.triadcircle {
+  width: 50%;
+
+  &__circle {
+    stroke: #000000;
+    fill: none;
+    stroke-width: 1.6666666;
+    stroke-opacity: 0.8;
+  }
+
+  &__chord {
+    fill: #ff007f;
+
+    &--off {
+      opacity: 0;
+    }
+  }
+
+  &__chordtext {
+    fill: white;
+    font-size: 4rem;
+    font-weight: bold;
+    text-anchor: middle;
+
+    &--off {
+      opacity: 0;
+    }
+  }
+}

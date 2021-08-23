@@ -2,7 +2,6 @@ import React from "react";
 import "./Strings.scss";
 import { FRETS, FRET_POS, STRINGS, STRING_POS } from "./BoardData";
 import Notes from "./Notes";
-import TabContainer from "../../TabContainer";
 
 const pitchClassMapping = [
   {
@@ -172,44 +171,42 @@ const markers = [
   },
 ];
 
-export default function Guitar({ keyData, onClose }) {
+export default function Guitar({ keyData }) {
   return (
-    <TabContainer onClose={onClose}>
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        version="1.1"
-        baseProfile="full"
-        width="100%"
-        viewBox="0 0 980 332"
-      >
-        {FRETS(6).map((fret, i) => {
-          return (
-            <line
-              className={`strings__fret${i === 0 ? " strings__fret--nut" : ""}`}
-              x1={fret.start.x}
-              y1={fret.start.y}
-              x2={fret.end.x}
-              y2={fret.end.y}
-            />
-          );
-        })}
-        {STRINGS.slice(0, 6).map((string, i) => {
-          return (
-            <line
-              className={`strings__string strings__string--${i + 1}`}
-              x1={string.start.x}
-              y1={string.start.y}
-              x2={string.end.x}
-              y2={string.end.y}
-            />
-          );
-        })}
-        <Notes
-          markers={markers}
-          noteMappings={pitchClassMapping}
-          keyData={keyData}
-        />
-      </svg>
-    </TabContainer>
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      version="1.1"
+      baseProfile="full"
+      width="100%"
+      viewBox="0 0 980 332"
+    >
+      {FRETS(6).map((fret, i) => {
+        return (
+          <line
+            className={`strings__fret${i === 0 ? " strings__fret--nut" : ""}`}
+            x1={fret.start.x}
+            y1={fret.start.y}
+            x2={fret.end.x}
+            y2={fret.end.y}
+          />
+        );
+      })}
+      {STRINGS.slice(0, 6).map((string, i) => {
+        return (
+          <line
+            className={`strings__string strings__string--${i + 1}`}
+            x1={string.start.x}
+            y1={string.start.y}
+            x2={string.end.x}
+            y2={string.end.y}
+          />
+        );
+      })}
+      <Notes
+        markers={markers}
+        noteMappings={pitchClassMapping}
+        keyData={keyData}
+      />
+    </svg>
   );
 }
