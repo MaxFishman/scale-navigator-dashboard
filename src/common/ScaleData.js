@@ -863,7 +863,7 @@ const ScaleData = {
     pitch_classes: [1, 2, 5, 6, 9, 10],
     chords: ["Dm", "D", "F#m", "F#", "B♭m", "B♭"],
     scale_class: "hexatonic",
-    spelling: ["cs", "d", "f", "gf", "a", "as"],
+    spelling: ["cs", "d", "f", "gf", "a", "bf"],
   },
   hexatonic_3: {
     root: 3,
