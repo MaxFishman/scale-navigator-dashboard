@@ -1,6 +1,7 @@
 import "./ChordStyle.css";
 import React from "react";
 import * as Tone from "tone";
+import Vex from "vexflow";
 
 const midiToHz = (midiNote) => {
   return 440 * Math.pow(2, (midiNote - 69) / 12);
@@ -79,12 +80,59 @@ class Chords extends React.Component {
     }
   }
 
+  componentDidMount() {
+    this.updateNotation();
+  }
+
   componentDidUpdate(prevProps, prevState) {
+    this.updateNotation();
     if (prevProps.scale !== this.props.scale) {
       if (this.state.playing) {
         this.play();
       }
     }
+  }
+
+  updateNotation() {
+    const container = document.getElementById("chords-notation-ctr");
+    while (container.hasChildNodes()) {
+      container.removeChild(container.lastChild);
+    }
+
+    const chordObject = this.props.navigator.chord_chooser.current_chord;
+    if (chordObject === null) {
+      return;
+    }
+    const chord = chordObject.original_voicing;
+
+    const VF = Vex.Flow;
+
+    const renderer = new VF.Renderer(container, VF.Renderer.Backends.SVG);
+    renderer.resize(100, 300);
+    const context = renderer.getContext();
+
+    const stave = new VF.Stave(0, 0, 100);
+    stave.addClef("treble");
+    stave.setContext(context);
+
+    const keys = chord.map((midiNote) => {
+      const noteNames = ["C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#", "B"];
+      let vexflowString = noteNames[midiNote % 12] + "/" + (Math.floor(midiNote / 12) - 1);
+      return vexflowString;
+    });
+    const note = new VF.StaveNote({
+      clef: "treble", keys: keys, duration: "q"
+    });
+
+    const voice = new VF.Voice({
+      num_beats: 1,
+      beat_value: 4,
+    });
+    voice.addTickables([note]);
+    new VF.Formatter().joinVoices([voice]).format([voice], 100);
+
+    stave.draw();
+    voice.draw(context, stave);
   }
 
   render() {
@@ -142,6 +190,7 @@ class Chords extends React.Component {
             onChange={this.handleVoiceLeadingSmoothnessChange}
           />
         </p>
+        <div id="chords-notation-ctr"></div>
       </div>
     );
   }
