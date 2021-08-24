@@ -19,19 +19,35 @@ export default function Treble({ keyData }) {
     stave.addClef("treble");
     stave.setContext(context);
 
-    const notes = keyData.pitch_classes.map((pc) => {
-      console.log(PitchClassData[pc].vexflow);
-      const vfNote = PitchClassData[pc].vexflow;
-      let note = new VF.StaveNote({
-        clef: "treble",
-        keys: [vfNote + "/4"],
-        duration: "q",
-      });
-      if (vfNote.length > 1) {
-        note = note.addAccidental(0, new VF.Accidental(vfNote[1]));
+    var notes = [];
+    const convert_inflection = {"s": "#", "ss": "##", "f": "b", "ff": "bb", "": "n"}
+    const convert_octavation = {"''": "/6", "'": "/5", "": "/4" };
+
+    keyData.spelling.forEach(function(element) {
+      var re_lilypond_note = /^([a-g])(s|ss|f|ff|)('|''|)$/
+      //match returns an array pf what it matched: whats the note, acidental and octave??
+      //pass gi2567756bg3h45g : match_obj will be NULL
+      var match_obj = element.match(re_lilypond_note);
+
+      if (match_obj === null) {
+        return [];
+
       }
-      return note;
+
+      var base_note_name = match_obj[1];
+      var inflection = match_obj[2];
+      var octavation = match_obj[3];
+
+      if (inflection == ""){
+        notes.push(new VF.StaveNote({clef: "treble", keys: [base_note_name + convert_octavation[octavation]], duration: "q" }))
+      }
+      else {
+        notes.push(new VF.StaveNote({clef: "treble", keys: [base_note_name + convert_octavation[octavation]], duration: "q" }).
+        addAccidental(0, new VF.Accidental(convert_inflection[inflection])));
+      }  
     });
+    console.log("notes: ",notes);
+
 
     const voice = new VF.Voice({
       num_beats: keyData.pitch_classes.length,
