@@ -895,7 +895,7 @@ const ScaleData = {
     pitch_classes: [0, 3, 4, 7, 8, 11],
     chords: ["Em", "E", "A♭m", "A♭", "Cm", "C"],
     scale_class: "hexatonic",
-    spelling: ["c", "ds", "e", "g", "gs", "b"],
+    spelling: ["c", "ds", "e", "g", "af", "b"],
   },
   whole_tone_1: {
     root: 0,

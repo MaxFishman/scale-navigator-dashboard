@@ -214,7 +214,7 @@ export default class Polygon {
                 var angle =
                     ((start_angle - end_angle) * -n) / total_neigh + start_angle;
                 neigh.push({
-                    x: x + (Math.cos(angle) * offset_radius) / 800,
+                    x: x + (Math.cos(angle) * offset_radius) / 550,
                     y: y + (Math.sin(angle) * offset_radius) / 600,
                     size: neighbor_size,
                 });
