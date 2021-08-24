@@ -875,3 +875,4 @@ const ScaleData = {
 };
 
 export default ScaleData;
+
