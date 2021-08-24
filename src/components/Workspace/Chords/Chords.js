@@ -115,13 +115,26 @@ class Chords extends React.Component {
     stave.addClef("treble");
     stave.setContext(context);
 
+    const accidentals = [];
     const keys = chord.map((midiNote) => {
       const noteNames = ["C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#", "B"];
-      let vexflowString = noteNames[midiNote % 12] + "/" + (Math.floor(midiNote / 12) - 1);
+      const noteName = noteNames[midiNote % 12];
+      let vexflowString = noteName + "/" + (Math.floor(midiNote / 12) - 1);
+      if (noteName.endsWith("#")) {
+        accidentals.push("#");
+      } else {
+        accidentals.push(null);
+      }
       return vexflowString;
     });
-    const note = new VF.StaveNote({
+    let note = new VF.StaveNote({
       clef: "treble", keys: keys, duration: "q"
+    });
+    accidentals.forEach((accidentalString, i) => {
+      if (accidentalString === null) {
+        return;
+      }
+      note.addAccidental(i, new VF.Accidental(accidentalString));
     });
 
     const voice = new VF.Voice({
