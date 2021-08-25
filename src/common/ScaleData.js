@@ -13,6 +13,7 @@ const ScaleData = {
     pitch_classes: [1, 3, 4, 6, 7, 9, 11],
     chords: ["A", "B", "Em", "F#m"],
     scale_class: "acoustic",
+    spelling: ["cs", "ds", "e", "fs", "g", "a", "b"],
   },
   a_diatonic: {
     root: 9,
@@ -28,6 +29,7 @@ const ScaleData = {
     pitch_classes: [1, 2, 4, 6, 8, 9, 11],
     chords: ["A", "Bm", "C#m", "D", "E", "F#m"],
     scale_class: "diatonic",
+    spelling: ["cs", "d", "e", "fs", "gs", "a", "b"],
   },
   a_harmonic_major: {
     root: 9,
@@ -43,6 +45,7 @@ const ScaleData = {
     pitch_classes: [1, 2, 4, 5, 8, 9, 11],
     chords: ["A", "C#m", "C#", "Dm", "E"],
     scale_class: "harmonic_major",
+    spelling: ["cs", "d", "e", "f", "gs", "a", "b"],
   },
   a_harmonic_minor: {
     root: 9,
@@ -58,6 +61,7 @@ const ScaleData = {
     pitch_classes: [0, 2, 4, 5, 8, 9, 11],
     chords: ["Am", "Dm", "E", "Fm", "F"],
     scale_class: "harmonic_minor",
+    spelling: ["c", "d", "e", "f", "gs", "a", "b"],
   },
   as_acoustic: {
     root: 10,
@@ -73,6 +77,7 @@ const ScaleData = {
     pitch_classes: [0, 2, 4, 5, 7, 8, 10],
     chords: ["B♭", "C", "Fm", "Gm"],
     scale_class: "acoustic",
+    spelling: ["c", "d", "e", "f", "g", "af", "bf"],
   },
   as_diatonic: {
     root: 10,
@@ -88,6 +93,7 @@ const ScaleData = {
     pitch_classes: [0, 2, 3, 5, 7, 9, 10],
     chords: ["B♭", "Cm", "Dm", "E♭", "F", "Gm"],
     scale_class: "diatonic",
+    spelling: ["c", "d", "ef", "f", "g", "a", "bf"],
   },
   as_harmonic_major: {
     root: 10,
@@ -103,6 +109,7 @@ const ScaleData = {
     pitch_classes: [0, 2, 3, 5, 6, 9, 10],
     chords: ["B♭", "Dm", "D", "E♭m", "F"],
     scale_class: "harmonic_major",
+    spelling: ["c", "d", "ef", "f", "gf", "a", "bf"],
   },
   as_harmonic_minor: {
     root: 10,
@@ -118,6 +125,7 @@ const ScaleData = {
     pitch_classes: [0, 1, 3, 5, 6, 9, 10],
     chords: ["B♭m", "E♭m", "F", "G♭m", "G♭"],
     scale_class: "harmonic_minor",
+    spelling: ["c", "df", "ef", "f", "gf", "a", "bf"],
   },
   b_acoustic: {
     root: 11,
@@ -133,6 +141,7 @@ const ScaleData = {
     pitch_classes: [1, 3, 5, 6, 8, 9, 11],
     chords: ["B", "C#", "F#m", "G#m"],
     scale_class: "acoustic",
+    spelling: ["cs", "ds", "es", "fs", "gs", "a", "b"],
   },
   b_diatonic: {
     root: 11,
@@ -148,6 +157,7 @@ const ScaleData = {
     pitch_classes: [1, 3, 4, 6, 8, 10, 11],
     chords: ["B", "C#m", "D#m", "E", "F#", "G#m"],
     scale_class: "diatonic",
+    spelling: ["cs", "ds", "e", "fs", "gs", "as", "b"],
   },
   b_harmonic_major: {
     root: 11,
@@ -163,6 +173,7 @@ const ScaleData = {
     pitch_classes: [1, 3, 4, 6, 7, 10, 11],
     chords: ["B", "D#m", "D#", "Em", "F#"],
     scale_class: "harmonic_major",
+    spelling: ["cs", "ds", "e", "fs", "g", "as", "b"],
   },
   b_harmonic_minor: {
     root: 11,
@@ -178,6 +189,7 @@ const ScaleData = {
     pitch_classes: [1, 2, 4, 6, 7, 10, 11],
     chords: ["Bm", "Em", "F#", "Gm", "G"],
     scale_class: "harmonic_minor",
+    spelling: ["cs", "d", "e", "fs", "g", "as", "b"],
   },
   c_acoustic: {
     root: 0,
@@ -193,6 +205,7 @@ const ScaleData = {
     pitch_classes: [0, 2, 4, 6, 7, 9, 10],
     chords: ["C", "D", "Gm", "Am"],
     scale_class: "acoustic",
+    spelling: ["c", "d", "e", "fs", "g", "a", "bf"],
   },
   c_diatonic: {
     root: 0,
@@ -208,6 +221,7 @@ const ScaleData = {
     pitch_classes: [0, 2, 4, 5, 7, 9, 11],
     chords: ["C", "Dm", "Em", "F", "G", "Am"],
     scale_class: "diatonic",
+    spelling: ["c", "d", "e", "f", "g", "a", "b"],
   },
   c_harmonic_major: {
     root: 0,
@@ -223,6 +237,7 @@ const ScaleData = {
     pitch_classes: [0, 2, 4, 5, 7, 8, 11],
     chords: ["C", "Em", "E", "Fm", "G"],
     scale_class: "harmonic_major",
+    spelling: ["c", "d", "e", "f", "g", "af", "b"],
   },
   c_harmonic_minor: {
     root: 0,
@@ -238,6 +253,7 @@ const ScaleData = {
     pitch_classes: [0, 2, 3, 5, 7, 8, 11],
     chords: ["Cm", "Fm", "G", "A♭m", "A♭"],
     scale_class: "harmonic_minor",
+    spelling: ["c", "d", "ef", "f", "g", "af", "b"],
   },
   cs_acoustic: {
     root: 1,
@@ -253,6 +269,7 @@ const ScaleData = {
     pitch_classes: [1, 3, 5, 7, 8, 10, 11],
     chords: ["D♭", "E♭", "A♭m", "B♭m"],
     scale_class: "acoustic",
+    spelling: ["cf", "df", "ef", "f", "g", "af", "bf"],
   },
   cs_diatonic: {
     root: 1,
@@ -268,6 +285,7 @@ const ScaleData = {
     pitch_classes: [0, 1, 3, 5, 6, 8, 10],
     chords: ["D♭", "E♭m", "Fm", "G♭", "A♭", "B♭m"],
     scale_class: "diatonic",
+    spelling: ["c", "df", "ef", "f", "gf", "af", "bf"],
   },
   cs_harmonic_major: {
     root: 1,
@@ -283,6 +301,7 @@ const ScaleData = {
     pitch_classes: [0, 1, 3, 5, 6, 8, 9],
     chords: ["D♭", "Fm", "F", "G♭m", "A♭"],
     scale_class: "harmonic_major",
+    spelling: ["c", "df", "ef", "f", "gf", "af", "bff"],
   },
   cs_harmonic_minor: {
     root: 1,
@@ -298,6 +317,7 @@ const ScaleData = {
     pitch_classes: [0, 1, 3, 4, 6, 8, 9],
     chords: ["D♭m", "G♭m", "A♭", "Am", "A"],
     scale_class: "harmonic_minor",
+    spelling: ["c", "df", "ef", "ff", "gf", "af", "bff"],
   },
   d_acoustic: {
     root: 2,
@@ -313,6 +333,7 @@ const ScaleData = {
     pitch_classes: [0, 2, 4, 6, 8, 9, 11],
     chords: ["D", "E", "Am", "Bm"],
     scale_class: "acoustic",
+    spelling: ["c", "d", "e", "fs", "gs", "a", "b"], 
   },
   d_diatonic: {
     root: 2,
@@ -328,6 +349,7 @@ const ScaleData = {
     pitch_classes: [1, 2, 4, 6, 7, 9, 11],
     chords: ["D", "Em", "F#m", "G", "A", "Bm"],
     scale_class: "diatonic",
+    spelling: ["cs", "d", "e", "fs", "g", "a", "b"],
   },
   d_harmonic_major: {
     root: 2,
@@ -343,6 +365,7 @@ const ScaleData = {
     pitch_classes: [1, 2, 4, 6, 7, 9, 10],
     chords: ["D", "F#m", "F#", "Gm", "A"],
     scale_class: "harmonic_major",
+    spelling: ["cs", "d", "e", "fs", "g", "a", "bf"],
   },
   d_harmonic_minor: {
     root: 2,
@@ -358,6 +381,7 @@ const ScaleData = {
     pitch_classes: [1, 2, 4, 5, 7, 9, 10],
     chords: ["Dm", "Gm", "A", "B♭m", "B♭"],
     scale_class: "harmonic_minor",
+    spelling: ["cs", "d", "e", "f", "g", "a", "bf"],
   },
   ds_acoustic: {
     root: 3,
@@ -373,6 +397,7 @@ const ScaleData = {
     pitch_classes: [0, 1, 3, 5, 7, 9, 10],
     chords: ["E♭", "F", "B♭m", "Cm"],
     scale_class: "acoustic",
+    spelling: ["c", "df", "ef", "f", "g", "a", "bf"],
   },
   ds_diatonic: {
     root: 3,
@@ -388,6 +413,7 @@ const ScaleData = {
     pitch_classes: [0, 2, 3, 5, 7, 8, 10],
     chords: ["E♭", "Fm", "Gm", "A♭", "B♭", "Cm"],
     scale_class: "diatonic",
+    spelling: ["c", "d", "ef", "f", "g", "af", "bf"],
   },
   ds_harmonic_major: {
     root: 3,
@@ -403,6 +429,7 @@ const ScaleData = {
     pitch_classes: [2, 3, 5, 7, 8, 10, 11],
     chords: ["E♭", "Gm", "G", "A♭m", "B♭"],
     scale_class: "harmonic_major",
+    spelling: ["cf", "d", "ef", "f", "g", "af", "bf"],
   },
   ds_harmonic_minor: {
     root: 3,
@@ -418,6 +445,7 @@ const ScaleData = {
     pitch_classes: [2, 3, 5, 6, 8, 10, 11],
     chords: ["E♭m", "A♭m", "B♭", "Bm", "B"],
     scale_class: "harmonic_minor",
+    spelling: ["cf", "d", "ef", "f", "gf", "af", "bf"],
   },
   e_acoustic: {
     root: 4,
@@ -433,6 +461,7 @@ const ScaleData = {
     pitch_classes: [1, 2, 4, 6, 8, 10, 11],
     chords: ["E", "F#", "Bm", "C#m"],
     scale_class: "acoustic",
+    spelling: ["cs", "d", "e", "fs", "gs", "as", "b"],
   },
   e_diatonic: {
     root: 4,
@@ -448,6 +477,7 @@ const ScaleData = {
     pitch_classes: [1, 3, 4, 6, 8, 9, 11],
     chords: ["E", "F#m", "G#m", "A", "B", "C#m"],
     scale_class: "diatonic",
+    spelling: ["cs", "ds", "e", "fs", "gs", "a", "b"],
   },
   e_harmonic_major: {
     root: 4,
@@ -463,6 +493,7 @@ const ScaleData = {
     pitch_classes: [0, 3, 4, 6, 8, 9, 11],
     chords: ["E", "G#m", "G", "Am", "B"],
     scale_class: "harmonic_major",
+    spelling: ["c", "ds", "e", "fs", "gs", "a", "b"],
   },
   e_harmonic_minor: {
     root: 4,
@@ -478,6 +509,7 @@ const ScaleData = {
     pitch_classes: [0, 3, 4, 6, 7, 9, 11],
     chords: ["Em", "Am", "B", "Cm", "C"],
     scale_class: "harmonic_minor",
+    spelling: ["c", "ds", "e", "fs", "g", "a", "b"],
   },
   f_acoustic: {
     root: 5,
@@ -493,6 +525,7 @@ const ScaleData = {
     pitch_classes: [0, 2, 3, 5, 7, 9, 11],
     chords: ["F", "G", "Cm", "Dm"],
     scale_class: "acoustic",
+    spelling: ["c", "d", "ef", "f", "g", "a", "b"],
   },
   f_diatonic: {
     root: 5,
@@ -508,6 +541,7 @@ const ScaleData = {
     pitch_classes: [0, 2, 4, 5, 7, 9, 10],
     chords: ["F", "Gm", "Am", "B♭", "C", "Dm"],
     scale_class: "diatonic",
+    spelling: ["c", "d", "e", "f", "g", "a", "bf"],
   },
   f_harmonic_major: {
     root: 5,
@@ -523,6 +557,7 @@ const ScaleData = {
     pitch_classes: [0, 1, 4, 5, 7, 9, 10],
     chords: ["F", "Am", "A", "B♭m", "C"],
     scale_class: "harmonic_major",
+    spelling: ["c", "df", "e", "f", "g", "a", "bf"],
   },
   f_harmonic_minor: {
     root: 5,
@@ -538,6 +573,7 @@ const ScaleData = {
     pitch_classes: [0, 1, 4, 5, 7, 8, 10],
     chords: ["Fm", "B♭m", "C", "D♭m", "D♭"],
     scale_class: "harmonic_minor",
+    spelling: ["c", "df", "e", "f", "g", "af", "bf"],
   },
   fs_acoustic: {
     root: 6,
@@ -553,6 +589,7 @@ const ScaleData = {
     pitch_classes: [0, 1, 3, 4, 6, 8, 10],
     chords: ["F#", "G#", "C#m", "D#m"],
     scale_class: "acoustic",
+    spelling: ["cs", "ds", "e", "fs", "gs", "as", "bs"],
   },
   fs_diatonic: {
     root: 6,
@@ -568,6 +605,7 @@ const ScaleData = {
     pitch_classes: [1, 3, 5, 6, 8, 10, 11],
     chords: ["F#", "G#m", "A#m", "B", "C#", "D#m"],
     scale_class: "diatonic",
+    spelling: ["cs", "ds", "es", "fs", "gs", "as", "b"],
   },
   fs_harmonic_major: {
     root: 6,
@@ -583,6 +621,7 @@ const ScaleData = {
     pitch_classes: [1, 2, 5, 6, 8, 10, 11],
     chords: ["F#", "B♭m", "B♭", "Bm", "C#"],
     scale_class: "harmonic_major",
+    spelling: ["cs", "d", "es", "fs", "gs", "as", "b"],
   },
   fs_harmonic_minor: {
     root: 6,
@@ -598,6 +637,7 @@ const ScaleData = {
     pitch_classes: [1, 2, 5, 6, 8, 9, 11],
     chords: ["F#m", "Bm", "C#", "Dm", "D"],
     scale_class: "harmonic_minor",
+    spelling: ["cs", "d", "es", "fs", "gs", "a", "b"],
   },
   g_acoustic: {
     root: 7,
@@ -613,6 +653,7 @@ const ScaleData = {
     pitch_classes: [1, 2, 4, 5, 7, 9, 11],
     chords: ["G", "A", "Dm", "Em"],
     scale_class: "acoustic",
+    spelling: ["cs", "d", "e", "f", "g", "a", "b"],
   },
   g_diatonic: {
     root: 7,
@@ -628,6 +669,7 @@ const ScaleData = {
     pitch_classes: [0, 2, 4, 6, 7, 9, 11],
     chords: ["G", "Am", "Bm", "C", "D", "Em"],
     scale_class: "diatonic",
+    spelling: ["c", "d", "e", "fs", "g", "a", "b"],
   },
   g_harmonic_major: {
     root: 7,
@@ -643,6 +685,7 @@ const ScaleData = {
     pitch_classes: [0, 2, 3, 6, 7, 9, 11],
     chords: ["G", "Bm", "B", "Cm", "D"],
     scale_class: "harmonic_major",
+    spelling: ["c", "d", "ef", "fs", "g", "a", "b"],
   },
   g_harmonic_minor: {
     root: 7,
@@ -658,6 +701,7 @@ const ScaleData = {
     pitch_classes: [0, 2, 3, 6, 7, 9, 10],
     chords: ["Gm", "Cm", "D", "E♭m", "E♭"],
     scale_class: "harmonic_minor",
+    spelling: ["c", "d", "ef", "fs", "g", "a", "bf"],
   },
   gs_acoustic: {
     root: 8,
@@ -673,6 +717,7 @@ const ScaleData = {
     pitch_classes: [0, 2, 3, 5, 6, 8, 10],
     chords: ["A♭", "B♭", "E♭m", "Fm"],
     scale_class: "acoustic",
+    spelling: ["c", "d", "ef", "f", "gf", "af", "bf"],
   },
   gs_diatonic: {
     root: 8,
@@ -688,6 +733,7 @@ const ScaleData = {
     pitch_classes: [0, 1, 3, 5, 7, 8, 10],
     chords: ["A♭", "B♭m", "Cm", "D♭", "E♭", "Fm"],
     scale_class: "diatonic",
+    spelling: ["c", "df", "ef", "f", "g", "af", "bf"],
   },
   gs_harmonic_major: {
     root: 8,
@@ -703,6 +749,7 @@ const ScaleData = {
     pitch_classes: [0, 1, 3, 4, 7, 8, 10],
     chords: ["A♭", "Cm", "C", "D♭m", "E♭"],
     scale_class: "harmonic_major",
+    spelling: ["c", "df", "ef", "ff", "g", "af", "bf"],
   },
   gs_harmonic_minor: {
     root: 8,
@@ -718,6 +765,7 @@ const ScaleData = {
     pitch_classes: [1, 3, 4, 7, 8, 10, 11],
     chords: ["A♭m", "D♭m", "E♭", "Em", "E"],
     scale_class: "harmonic_minor",
+    spelling: ["cf", "df", "ef", "ff", "g", "af", "bf"],
   },
   octatonic_1: {
     root: 0,
@@ -739,6 +787,7 @@ const ScaleData = {
     pitch_classes: [0, 1, 3, 4, 6, 7, 9, 10],
     chords: ["Cm", "C", "E♭m", "E♭", "F#m", "F#", "Am", "A"],
     scale_class: "octatonic",
+    spelling: ["c", "cs", "ds", "e", "fs", "g", "a", "bf"],
   },
   octatonic_2: {
     root: 1,
@@ -760,6 +809,7 @@ const ScaleData = {
     pitch_classes: [1, 2, 4, 5, 7, 8, 10, 11],
     chords: ["C#m", "C#", "Em", "E", "Gm", "G", "B♭m", "B♭"],
     scale_class: "octatonic",
+    spelling: ["cs", "d", "e", "f", "g", "gs", "as", "b"],
   },
   octatonic_3: {
     root: 2,
@@ -781,6 +831,7 @@ const ScaleData = {
     pitch_classes: [0, 2, 3, 5, 6, 8, 9, 11],
     chords: ["Dm", "D", "Fm", "F", "A♭m", "A♭", "Bm", "B"],
     scale_class: "octatonic",
+    spelling: ["c", "d", "ef", "f", "fs", "gs", "a", "b"],
   },
   hexatonic_1: {
     root: 1,
@@ -796,6 +847,7 @@ const ScaleData = {
     pitch_classes: [0, 1, 4, 5, 8, 9],
     chords: ["C#m", "C#", "Fm", "F", "Am", "A"],
     scale_class: "hexatonic",
+    spelling: ["c", "df", "e", "f", "gs", "a"],
   },
   hexatonic_2: {
     root: 2,
@@ -811,6 +863,7 @@ const ScaleData = {
     pitch_classes: [1, 2, 5, 6, 9, 10],
     chords: ["Dm", "D", "F#m", "F#", "B♭m", "B♭"],
     scale_class: "hexatonic",
+    spelling: ["cs", "d", "f", "gf", "a", "bf"],
   },
   hexatonic_3: {
     root: 3,
@@ -826,6 +879,7 @@ const ScaleData = {
     pitch_classes: [2, 3, 6, 7, 10, 11],
     chords: ["E♭m", "E♭", "Gm", "G", "Bm", "B"],
     scale_class: "hexatonic",
+    spelling: ["d", "ef", "fs", "g", "as", "b"],
   },
   hexatonic_4: {
     root: 4,
@@ -841,6 +895,7 @@ const ScaleData = {
     pitch_classes: [0, 3, 4, 7, 8, 11],
     chords: ["Em", "E", "A♭m", "A♭", "Cm", "C"],
     scale_class: "hexatonic",
+    spelling: ["c", "ds", "e", "g", "af", "b"],
   },
   whole_tone_1: {
     root: 0,
@@ -856,6 +911,7 @@ const ScaleData = {
     pitch_classes: [0, 2, 4, 6, 8, 10],
     chords: [],
     scale_class: "whole_tone",
+    spelling: ["c", "d", "e", "fs", "gs", "as"],
   },
   whole_tone_2: {
     root: 1,
@@ -871,8 +927,8 @@ const ScaleData = {
     pitch_classes: [1, 3, 5, 7, 9, 11],
     chords: [],
     scale_class: "whole_tone",
+    spelling: ["df", "ef", "f", "g", "a", "b"],
   },
 };
 
 export default ScaleData;
-
