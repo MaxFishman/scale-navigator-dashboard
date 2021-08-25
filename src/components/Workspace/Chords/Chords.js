@@ -2,6 +2,7 @@ import "./ChordStyle.css";
 import React from "react";
 import * as Tone from "tone";
 import Vex from "vexflow";
+import ScaleData from "common/ScaleData";
 
 const midiToHz = (midiNote) => {
   return 440 * Math.pow(2, (midiNote - 69) / 12);
