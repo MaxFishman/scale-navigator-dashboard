@@ -73,7 +73,6 @@ class Chords extends React.Component {
   }
 
   handleVoiceLeadingSmoothnessChange(event) {
-    console.log(event.target.value);
     this.props.navigator.chord_chooser.voice_leading_smoothness =
       event.target.value;
     this.setState({
@@ -197,16 +196,18 @@ class Chords extends React.Component {
       keys[hand].push(vexflowString);
     });
 
-    keys.bass.push(pitchClassToNoteName[chordObject.root % 12] + "/3");
-    accidentals.bass.push(null);
+    if (pitchClassToNoteName[chordObject.root] !== undefined) {
+      keys.bass.push(pitchClassToNoteName[chordObject.root] + "/3");
+      accidentals.bass.push(null);
+    }
 
     for (let hand of ["left", "right", "bass"]) {
       staves[hand].draw();
-      const voice = new VF.Voice({
-        num_beats: 4,
-        beat_value: 4,
-      });
       if (keys[hand].length !== 0) {
+        const voice = new VF.Voice({
+          num_beats: 4,
+          beat_value: 4
+        });
         const chord = new VF.StaveNote({
           clef: clefs[hand], keys: keys[hand], duration: "w"
         });
