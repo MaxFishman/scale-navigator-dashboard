@@ -66,7 +66,7 @@ export default function Treble({ keyData }) {
 
     return () => {
       const staff = document.getElementById("treblestaff");
-      while (staff.hasChildNodes()) {
+      while (staff && staff.hasChildNodes()) {
         staff.removeChild(staff.lastChild);
       }
     };
