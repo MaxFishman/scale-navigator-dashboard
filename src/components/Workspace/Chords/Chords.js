@@ -111,41 +111,63 @@ class Chords extends React.Component {
     renderer.resize(100, 300);
     const context = renderer.getContext();
 
-    const stave = new VF.Stave(0, 0, 100);
-    stave.addClef("treble");
-    stave.setContext(context);
+    const clefs = {
+      left: "bass",
+      right: "treble"
+    };
 
-    const accidentals = [];
-    const keys = chord.map((midiNote) => {
+    const rightStave = new VF.Stave(0, 0, 100);
+    rightStave.addClef(clefs.right);
+    rightStave.setContext(context);
+
+    const leftStave = new VF.Stave(0, 100, 100);
+    leftStave.addClef(clefs.left);
+    leftStave.setContext(context);
+
+    const staves = { left: leftStave, right: rightStave };
+
+    const brace = new VF.StaveConnector(rightStave, leftStave).setType(3);
+
+    const accidentals = { left: [], right: [] };
+    const keys = { left: [], right: [] };
+    chord.forEach((midiNote) => {
       const noteNames = ["C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#", "B"];
       const noteName = noteNames[midiNote % 12];
+      const hand = midiNote >= 60 ? "right" : "left";
       let vexflowString = noteName + "/" + (Math.floor(midiNote / 12) - 1);
       if (noteName.endsWith("#")) {
-        accidentals.push("#");
+        accidentals[hand].push("#");
       } else {
-        accidentals.push(null);
+        accidentals[hand].push(null);
       }
-      return vexflowString;
-    });
-    let note = new VF.StaveNote({
-      clef: "treble", keys: keys, duration: "q"
-    });
-    accidentals.forEach((accidentalString, i) => {
-      if (accidentalString === null) {
-        return;
-      }
-      note.addAccidental(i, new VF.Accidental(accidentalString));
+      keys[hand].push(vexflowString);
     });
 
-    const voice = new VF.Voice({
-      num_beats: 1,
-      beat_value: 4,
-    });
-    voice.addTickables([note]);
-    new VF.Formatter().joinVoices([voice]).format([voice], 100);
+    for (let hand of ["left", "right"]) {
+      if (keys[hand].length === 0) {
+        continue;
+      }
+      const chord = new VF.StaveNote({
+        clef: clefs[hand], keys: keys[hand], duration: "w"
+      });
+      accidentals[hand].forEach((accidentalString, i) => {
+        if (accidentalString === null) {
+          return;
+        }
+        chord.addAccidental(i, new VF.Accidental(accidentalString));
+      });
 
-    stave.draw();
-    voice.draw(context, stave);
+      const voice = new VF.Voice({
+        num_beats: 4,
+        beat_value: 4,
+      });
+      voice.addTickables([chord]);
+      new VF.Formatter().joinVoices([voice]).format([voice], 100);
+
+      staves[hand].draw();
+      voice.draw(context, staves[hand]);
+    }
+    brace.setContext(context).draw();
   }
 
   render() {
