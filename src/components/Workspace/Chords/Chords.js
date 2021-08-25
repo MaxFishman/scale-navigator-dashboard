@@ -8,6 +8,40 @@ const midiToHz = (midiNote) => {
   return 440 * Math.pow(2, (midiNote - 69) / 12);
 };
 
+const mod = (a, b) => {
+  return ((a % b) + b) % b;
+};
+
+const lilypondToVexflow = (note) => {
+  if (note.length === 1) {
+    return note;
+  }
+  return note[0] + { s: "#", f: "b" }[note[1]];
+};
+
+const NOTE_NAME_TO_PITCH_CLASS = {
+  c: 0,
+  d: 2,
+  e: 4,
+  f: 5,
+  g: 7,
+  a: 9,
+  b: 11
+};
+
+const lilypondToPitchClass = (note) => {
+  const baseNoteName = note[0];
+  let result = NOTE_NAME_TO_PITCH_CLASS[baseNoteName];
+  return result + lilypondToInflection(note);
+};
+
+const lilypondToInflection = (note) => {
+  if (note.length === 1) {
+    return 0;
+  }
+  return { s: 1, f: -1 }[note[1]];
+};
+
 class Chords extends React.Component {
   constructor(props) {
     super(props);
@@ -108,8 +142,10 @@ class Chords extends React.Component {
 
     const VF = Vex.Flow;
 
+    const width = 150;
+
     const renderer = new VF.Renderer(container, VF.Renderer.Backends.SVG);
-    renderer.resize(100, 300);
+    renderer.resize(width, 300);
     const context = renderer.getContext();
 
     const clefs = {
@@ -117,11 +153,13 @@ class Chords extends React.Component {
       right: "treble"
     };
 
-    const rightStave = new VF.Stave(0, 0, 100);
+    const staveOptions = { fill_style: "#000000" };
+
+    const rightStave = new VF.Stave(0, 0, width, staveOptions);
     rightStave.addClef(clefs.right);
     rightStave.setContext(context);
 
-    const leftStave = new VF.Stave(0, 100, 100);
+    const leftStave = new VF.Stave(0, 100, width, staveOptions);
     leftStave.addClef(clefs.left);
     leftStave.setContext(context);
 
@@ -129,15 +167,26 @@ class Chords extends React.Component {
 
     const brace = new VF.StaveConnector(rightStave, leftStave).setType(3);
 
+    const spelling = ScaleData[this.props.scale].spelling;
+    const pitchClassToNoteName = {};
+    const pitchClassToInflection = {};
+    for (let note of spelling) {
+      const pitchClass = lilypondToPitchClass(note);
+      pitchClassToNoteName[mod(pitchClass, 12)] = lilypondToVexflow(note);
+      pitchClassToInflection[mod(pitchClass, 12)] = lilypondToInflection(note);
+    }
+    console.log(pitchClassToNoteName);
+
     const accidentals = { left: [], right: [] };
     const keys = { left: [], right: [] };
     chord.forEach((midiNote) => {
-      const noteNames = ["C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#", "B"];
-      const noteName = noteNames[midiNote % 12];
-      const hand = midiNote >= 60 ? "right" : "left";
-      let vexflowString = noteName + "/" + (Math.floor(midiNote / 12) - 1);
-      if (noteName.endsWith("#")) {
-        accidentals[hand].push("#");
+      const noteName = pitchClassToNoteName[midiNote % 12];
+      const inflection = pitchClassToInflection[midiNote % 12];
+      const baseMidiNote = midiNote - inflection;
+      const hand = baseMidiNote >= 60 ? "right" : "left";
+      let vexflowString = noteName + "/" + (Math.floor(baseMidiNote / 12) - 1);
+      if (noteName.length === 2) {
+        accidentals[hand].push(noteName[1]);
       } else {
         accidentals[hand].push(null);
       }
@@ -163,7 +212,7 @@ class Chords extends React.Component {
         beat_value: 4,
       });
       voice.addTickables([chord]);
-      new VF.Formatter().joinVoices([voice]).format([voice], 100);
+      new VF.Formatter().joinVoices([voice]).format([voice], width);
 
       staves[hand].draw();
       voice.draw(context, staves[hand]);
