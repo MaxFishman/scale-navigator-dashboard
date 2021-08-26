@@ -1,5 +1,6 @@
 import React from "react";
 import "./About.css";
+import * as img from './assets'
 
 export default class About extends React.Component {
   render() {
