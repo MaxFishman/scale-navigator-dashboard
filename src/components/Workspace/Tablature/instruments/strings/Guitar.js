@@ -179,6 +179,7 @@ export default function Guitar({ keyData }) {
       baseProfile="full"
       width="100%"
       viewBox="0 0 980 332"
+      className="strings"
     >
       {FRETS(6).map((fret, i) => {
         return (

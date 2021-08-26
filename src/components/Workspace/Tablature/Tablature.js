@@ -20,42 +20,52 @@ import TabContainer from "./TabContainer";
 const INST = {
   GUITAR: {
     name: "GUITAR",
+    display: "Guitar",
     Fn: Guitar,
   },
   BANJO: {
     name: "BANJO",
+    display: "Banjo",
     Fn: Banjo,
   },
   MANDOLIN: {
     name: "MANDOLIN",
+    display: "Mandolin",
     Fn: Mandolin,
   },
   UKULELE: {
     name: "UKULELE",
+    display: "Ukulele",
     Fn: Ukulele,
   },
   FLUTE: {
     name: "FLUTE",
+    display: "Flute",
     Fn: Flute,
   },
   PIANO: {
     name: "PIANO",
+    display: "Piano",
     Fn: Piano,
   },
   TREBLESTAFF: {
     name: "TREBLESTAFF",
+    display: "Treble Staff",
     Fn: Treble,
   },
   TRIADS: {
     name: "TRIADS",
+    display: "Triads",
     Fn: Triads,
   },
   TRIADCIRCLE: {
     name: "TRIADCIRCLE",
+    display: "Circle of Triads",
     Fn: TriadCircle,
   },
   AUTOHARP: {
     name: "AUTOHARP",
+    display: "Autoharp",
     Fn: Autoharp,
   },
 };
@@ -122,21 +132,17 @@ export default function Tablature() {
         {curSelected.map((selection, i) => {
           if (INST[selection.value]) {
             const Inst = INST[selection.value];
-            const SortableTab = SortableElement(({ keyData, onClose }) => {
+            const SortableTab = SortableElement(() => {
               return (
-                <TabContainer onClose={onClose}>
-                  <Inst.Fn keyData={keyData} onClose={makeCloseFn(Inst.name)} />
+                <TabContainer
+                  onClose={makeCloseFn(Inst.name)}
+                  instrumentName={Inst.display}
+                >
+                  <Inst.Fn keyData={keyData} />
                 </TabContainer>
               );
             });
-            return (
-              <SortableTab
-                key={i}
-                index={i}
-                keyData={keyData}
-                onClose={makeCloseFn(Inst.name)}
-              ></SortableTab>
-            );
+            return <SortableTab key={i} index={i}></SortableTab>;
           }
           return <></>;
         })}
@@ -149,6 +155,7 @@ export default function Tablature() {
         const keyData = ScaleData[scale];
         return (
           <div className="tabsectioncontainer">
+            <h2 className="tabsectioncontainer__title">Instruments</h2>
             <Select
               isMulti
               name="Tablature"
@@ -157,6 +164,7 @@ export default function Tablature() {
               value={selected}
               className="tabsectioncontainer__select"
               classNamePrefix="select"
+              placeholder="add instrument..."
             />
             <SortableTabsList
               onSortEnd={onSortEnd}
