@@ -46,6 +46,7 @@ const Navigation = () => {
                     autoComplete="off"
                     name="labels"
                     id="labels_checkbox"
+                    defaultChecked="false"
                     
                   ></input>
                   <label for="labels">Labels</label>
