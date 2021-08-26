@@ -168,6 +168,7 @@ export default class Main extends React.Component {
         baseProfile="full"
         width="100%"
         viewBox="0 0 980 285"
+        className="strings"
       >
         {FRETS(4)
           .slice(0, 6)

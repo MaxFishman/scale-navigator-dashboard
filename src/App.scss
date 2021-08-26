@@ -1,30 +1,16 @@
 @import "styles/_media.scss";
 @import "styles/_variables.scss";
+@import "styles/_fonts.scss";
 
 body {
   font-family: arial, sans-serif;
   overscroll-behavior-y: none;
   overflow-x: hidden;
+  font-family: "Mulish";
 
   @include md {
     overflow: hidden;
   }
-}
-
-@font-face {
-  font-family: "Wild Wolf Regular";
-  font-style: normal;
-  font-weight: normal;
-  src: local("resources/Wild Wolf Regular"),
-    url("resources/Wild Wolf.woff") format("woff");
-}
-
-@font-face {
-  font-family: "Glow Better";
-  font-style: normal;
-  font-weight: normal;
-  src: local("resources/Glow Better Serif"),
-    url("resources/Glow Better Serif.ttf") format("truetype");
 }
 
 .appcontainer {
