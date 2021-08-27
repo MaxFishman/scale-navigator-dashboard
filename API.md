@@ -20,11 +20,35 @@ Example Request:
 ```json
 {
 	"roomid": "33123ASDFKJ",
-	"operation": "create",
+	"userid": "33123ASDFKJ",
+	"operation": "create"
 }
 ```
 
 Expected Return: `200 OK` 
+
+### Destroys an Ensemble 
+
+Destroys a room 
+
+Route: `/room` 
+
+Method: `POST` 
+
+Expected Return: `200 OK`
+
+Example Request:
+
+```json
+{
+	"roomid": "33123ASDFKJ",
+	"userid": "33123ASDFKJ",
+	"operation": "destroy"
+}
+```
+
+This request will kick back a `403` if the room host does not match the request sender's id 
+
 
 TODO: 
 use headers to confirm authentication
