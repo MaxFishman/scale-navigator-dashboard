@@ -30,3 +30,4 @@ package-lock.json
 #env 
 src/server/env
 src/server/__pycache__
+src/server/roomlog.json
