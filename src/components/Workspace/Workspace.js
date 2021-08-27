@@ -10,6 +10,7 @@ import { Switch, Route, Link, Redirect, useLocation } from "react-router-dom";
 import ROUTES from "common/Routes";
 import "./Workspace.scss";
 import classNames from "classnames";
+import { ChordContext } from "components/Context/ChordContext";
 
 export default function Workspace() {
   const location = useLocation();
@@ -52,13 +53,25 @@ export default function Workspace() {
             <Tablature></Tablature>
           </Route>
           <Route path={ROUTES.CHORDS}>
-            <ScaleContext.Consumer>
-              {({ scale, chord, navigator }) => {
+            <ChordContext.Consumer>
+              {({ setChordData, chordData }) => {
                 return (
-                  <Chords scale={scale} chord={chord} navigator={navigator} />
+                  <ScaleContext.Consumer>
+                    {({ scale, chord, navigator }) => {
+                      return (
+                        <Chords
+                          scale={scale}
+                          chord={chord}
+                          chordData={chordData}
+                          setChordData={setChordData}
+                          navigator={navigator}
+                        />
+                      );
+                    }}
+                  </ScaleContext.Consumer>
                 );
               }}
-            </ScaleContext.Consumer>
+            </ChordContext.Consumer>
           </Route>
           <Route path={ROUTES.MIDI}>
             <p>MIDI Component</p>

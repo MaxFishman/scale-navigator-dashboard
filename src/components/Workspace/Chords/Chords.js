@@ -26,7 +26,7 @@ const NOTE_NAME_TO_PITCH_CLASS = {
   f: 5,
   g: 7,
   a: 9,
-  b: 11
+  b: 11,
 };
 
 const lilypondToPitchClass = (note) => {
@@ -46,10 +46,8 @@ class Chords extends React.Component {
   constructor(props) {
     super(props);
     this.props = props;
-    this.synths = [];
 
     this.state = {
-      playing: false,
       rootMovement: this.props.navigator.chord_chooser.allowed_root_intervals,
       voiceLeadingSmoothness:
         this.props.navigator.chord_chooser.voice_leading_smoothness,
@@ -81,37 +79,7 @@ class Chords extends React.Component {
   }
 
   togglePlaying() {
-    this.setPlaying(!this.state.playing);
-    this.setState((previousState) => ({
-      playing: !previousState.playing,
-    }));
-  }
-
-  setPlaying(playing) {
-    if (playing) {
-      this.play();
-    } else {
-      this.stop();
-    }
-  }
-
-  stop() {
-    for (let synth of this.synths) {
-      synth.triggerRelease();
-    }
-    this.synths = [];
-  }
-
-  play() {
-    this.stop();
-
-    const chord = this.props.navigator.chord_chooser.current_chord;
-    const notes = chord === null ? [] : chord.original_voicing;
-    for (let note of notes) {
-      const synth = new Tone.Synth({ volume: -20 }).toDestination();
-      synth.triggerAttack(midiToHz(note), "8n");
-      this.synths.push(synth);
-    }
+    this.props.setChordData({ playing: !this.props.chordData.playing });
   }
 
   componentDidMount() {
@@ -120,11 +88,6 @@ class Chords extends React.Component {
 
   componentDidUpdate(prevProps, prevState) {
     this.updateNotation();
-    if (prevProps.scale !== this.props.scale) {
-      if (this.state.playing) {
-        this.play();
-      }
-    }
   }
 
   updateNotation() {
@@ -150,7 +113,7 @@ class Chords extends React.Component {
     const clefs = {
       right: "treble",
       left: "bass",
-      bass: "bass"
+      bass: "bass",
     };
 
     const staveOptions = { fill_style: "#000000" };
@@ -206,10 +169,12 @@ class Chords extends React.Component {
       if (keys[hand].length !== 0) {
         const voice = new VF.Voice({
           num_beats: 4,
-          beat_value: 4
+          beat_value: 4,
         });
         const chord = new VF.StaveNote({
-          clef: clefs[hand], keys: keys[hand], duration: "w"
+          clef: clefs[hand],
+          keys: keys[hand],
+          duration: "w",
         });
         accidentals[hand].forEach((accidentalString, i) => {
           if (accidentalString === null) {
@@ -253,7 +218,7 @@ class Chords extends React.Component {
       <div id="Chords">
         <p>
           <button onClick={this.togglePlaying}>
-            {this.state.playing ? "STOP" : "PLAY"}
+            {this.props.chordData.playing ? "STOP" : "PLAY"}
           </button>
         </p>
         <p>Current scale: {this.props.scale}</p>
