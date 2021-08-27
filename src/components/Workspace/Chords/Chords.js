@@ -216,6 +216,10 @@ class Chords extends React.Component {
     return scales;
   }
 
+  modulate(scale) {
+    this.props.navigator.jumpToScale(scale);
+  }
+
   render() {
     const elements = [
       "Unison",
@@ -240,8 +244,10 @@ class Chords extends React.Component {
       );
     });
 
+    const modulate = (scale) => () => this.modulate(scale);
+
     const pivotModulationButtons = this.getPivotModulations().map((scale) => {
-      return <button>{scale}</button>;
+      return <button onClick={modulate(scale)}>{scale}</button>;
     });
 
     return (
