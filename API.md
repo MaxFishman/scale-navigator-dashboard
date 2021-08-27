@@ -27,7 +27,7 @@ Example Request:
 
 Expected Return: `200 OK` 
 
-### Destroys an Ensemble 
+### Destroy an Ensemble 
 
 Destroys a room 
 
@@ -48,6 +48,55 @@ Example Request:
 ```
 
 This request will kick back a `403` if the room host does not match the request sender's id 
+
+### Ensemble Host Change 
+
+Destroys a room 
+
+Route: `/room` 
+
+Method: `POST` 
+
+Expected Return: `200 OK`
+
+Example Request:
+
+```json
+{
+	"origin": "33123ASDFKJ",
+	"userid": "33123ASDFKJ",
+	"operation": "change"
+}
+```
+
+The origin parameter is the user in which triggers the switch host command (also the room id), while 
+userid is the userid of the new room host 
+
+### Get All Rooms
+
+Route: `/getrooms` 
+
+Method: `GET` 
+
+Expected Return: `200 OK`
+
+
+### Get Room Members
+
+Route: `/getmembers` 
+
+Method: `GET` 
+
+Example Request:
+
+```json
+{
+	"room": "33111AA2kADF"
+}
+```
+
+Expected Return: `200 OK`
+
 
 
 TODO: 
