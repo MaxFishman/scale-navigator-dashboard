@@ -6,12 +6,8 @@ article {
   float: left;
   padding: 20px;
   width: 100%;
-  background-color: #f1f1f1;
-
+  background-color: #f1f1f1bd;
 }
-
-
-
 
 .iframe-container{
   position: relative;

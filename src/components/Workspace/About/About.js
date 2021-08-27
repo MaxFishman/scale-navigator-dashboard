@@ -14,6 +14,8 @@ export default class About extends React.Component {
 
         <p>In the summer of 2018, I came across <a href="https://dmitri.mycpanel.princeton.edu/files/publications/debussy.pdf">Scale Networks and Debussy</a>, a paper by Dmitri Tymoczko that describes Claude Debussy's harmonic language as as a crystalline lattice of interlocking scales, or "scale network" (Figure 1). I was excited about the idea of creating a graphical interface that could allow users to interact directly with the scale network to explore Debussian harmony, and so the <a href="https://www.nathanturczan.com/apps/">Scale Navigator</a> (Figure 2) was born.</p>
 
+        <img src={img.network} alt="figure 1" />
+
         <p>The basics of the interface are as follows: each scale in the Scale Navigator is represented by a clickable polygonal-shaped node. The selected scale is in the center, radially surrounded by adjacent neighbor scales. Clicking on an adjacent scale selects a new scale. A <a href="https://www.vexflow.com/">VexFlow</a> display in the upper left corner shows the notes of the selected scale on a treble staff.</p>
 
         <p>As a multimedia artist, I am interested in synesthesia and the idea that sound, color, shape, and direction can have meaningful and persistent relationships among one another. I decided to keep synesthesia in my mind as a guiding design principle while working on the Scale Navigator, determining that the scale's class (whether it be Diatonic, Acoustic, Harmonic Major, Harmonic Minor, Octatonic, Heptatonic or Whole Tone) should govern the shape of the scale node, and the scale's root should dictate the scale node's color.</p>
