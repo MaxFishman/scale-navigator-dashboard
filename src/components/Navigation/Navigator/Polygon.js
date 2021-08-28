@@ -91,6 +91,7 @@ export default class Polygon {
             // add in the opacity
             fontcolor.push(255 * this.opacity);
             this.p5.fill(fontcolor);
+            this.p5.textFont("Mulish")
 
             // draw the polygon
             // addaptation of your code to the object
