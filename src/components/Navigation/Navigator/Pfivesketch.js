@@ -1,11 +1,15 @@
 import React, { useRef } from "react";
 import Sketch from "react-p5";
+import './../../../resources/Mulish/Mulish-Regular.ttf';
 
 //pass in p5 in the draw func, and only where its needed.
 
 const fps = 30;
+var font;
 
 function Pfivesketch({ nav }) {
+    const preload = (p5) => {}
+
     const setup = (p5, canvasParentRef) => {
         var p = document.getElementById("canv_container").getBoundingClientRect();
         p5.createCanvas(p.width, Math.max(p.height, document.body.getBoundingClientRect().height / 2)).parent(canvasParentRef);
@@ -43,6 +47,7 @@ function Pfivesketch({ nav }) {
 
     return ( <
         Sketch setup = { setup }
+        preload = { preload }
         draw = { draw }
         mousePressed = { mousePressed }
         mouseReleased = { mouseReleased }

@@ -6,22 +6,17 @@ function Navigator(setScaleData) {
     this.scale = "c_diatonic";
     this.main_polygon = undefined;
     this.neighbors = [];
-    this.old_main_polygon = undefined;
-    this.old_neighbors = undefined;
-    this.last_clicked_polygon = undefined;
-    this.actually_new_polygons = undefined;
-    this.hover_polygons = [];
-    this.hover_polygons_to_be_removed = [];
-    this.preview_polygons = [];
     this.poly_size = 61;
     this.preview_polygons_ready = false;
     this.setScaleData = setScaleData;
+
+    this.p5 = null;
 
     this.chord_chooser = new ChordChooser();
 
     this.autopilot_data = {
         active: false,
-        default_period: [8000, 12000, 16000],
+        default_period: [1000, 2000, 3000, 4000],
         period: undefined,
         chosen: undefined,
         intervalID: undefined,
@@ -35,14 +30,25 @@ function Navigator(setScaleData) {
     };
 
     this.init = (p5) => {
+        this.p5 = p5;
         this.init_autopilot(p5);
 
-        // create the initial polygons
-        this.main_polygon = new Polygon(p5, 0.5, 0.5, this.poly_size, "c_diatonic");
-        this.neighbors = this.main_polygon.getNeighbors();
+        this.initPolygons();
 
-        this.chord_chooser.tick(this.main_polygon.scale);
+        this.chord_chooser.tick(this.scale);
         this.triggerEvent();
+    };
+
+    this.initPolygons = () => {
+        this.main_polygon = new Polygon(this.p5, 0.5, 0.5, this.poly_size, this.scale);
+        this.neighbors = this.main_polygon.getNeighbors();
+        this.old_main_polygon = undefined;
+        this.old_neighbors = undefined;
+        this.last_clicked_polygon = undefined;
+        this.actually_new_polygons = undefined;
+        this.hover_polygons = [];
+        this.hover_polygons_to_be_removed = [];
+        this.preview_polygons = [];
     };
 
     this.init_autopilot = (p5) => {
@@ -61,7 +67,7 @@ function Navigator(setScaleData) {
                         passes++
                     }
 
-                    this.autopilot_data.chosen = p5.random(this.autopilot_data.period)
+                    this.autopilot_data.chosen = p5.random(this.autopilot_data.period.map(x=>x*document.getElementById("autopilot_interval").value))
 
                     if (this.autopilot_data.visited.length >= this.autopilot_data.max_visited) {
                         this.autopilot_data.visited.pop()
@@ -143,7 +149,7 @@ function Navigator(setScaleData) {
 
     this.mousePressed = (p5) => {
         if (this.main_polygon.click()) {
-            this.chord_chooser.tick(this.main_polygon.scale);
+            this.chord_chooser.tick(this.scale);
             this.triggerEvent();
             return;
         }
@@ -324,7 +330,7 @@ function Navigator(setScaleData) {
         all_duration = Helper.default_animation_duration
     ) => {
         if (new_main == this.main_polygon) {
-            this.chord_chooser.tick(this.main_polygon.scale);
+            this.chord_chooser.tick(this.scale);
             this.triggerEvent();
             return;
         }
@@ -396,7 +402,9 @@ function Navigator(setScaleData) {
         //this.preview_polygons = []
         this.preview_polygons_ready = false;
 
-        this.chord_chooser.tick(this.main_polygon.scale);
+        this.scale = this.main_polygon.scale;
+
+        this.chord_chooser.tick(this.scale);
         this.triggerEvent();
     };
 
@@ -410,16 +418,24 @@ function Navigator(setScaleData) {
         this.finishChangeMainScale(p5, new_main, all_duration);
     };
 
+    this.jumpToScale = (newScale) => {
+        this.scale = newScale;
+        this.initPolygons();
+
+        this.chord_chooser.tick(this.scale);
+        this.triggerEvent();
+    };
+
     this.triggerEvent = () => {
         document.dispatchEvent(
-            new CustomEvent("scaleChanged", { detail: this.main_polygon.scale })
+            new CustomEvent("scaleChanged", { detail: this.scale })
         );
 
         for (let callback of this.changeMainScaleCallbacks) {
             callback();
         }
         this.setScaleData({
-            scale: this.main_polygon.scale,
+            scale: this.scale,
             chord: this.chord_chooser.current_chord_name,
         });
     };

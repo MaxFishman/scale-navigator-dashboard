@@ -47,9 +47,20 @@ const Navigation = () => {
                     name="labels"
                     id="labels_checkbox"
                     defaultChecked="false"
-                    
                   ></input>
                   <label for="labels">Labels</label>
+                </div>
+                <div className="navinfo__option">
+                  <input
+                    type="range"
+                    autoComplete="off"
+                    name="autopilot_interval"
+                    id="autopilot_interval"
+                    min="1"
+                    max="4"
+                    step="0.01"
+                  ></input>
+                  <label for="labels">Interval</label>
                 </div>
               </div>
             </div>
