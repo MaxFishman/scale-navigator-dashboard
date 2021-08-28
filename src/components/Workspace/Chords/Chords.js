@@ -12,6 +12,15 @@ const mod = (a, b) => {
   return ((a % b) + b) % b;
 };
 
+const isSubset = (a, b) => {
+  for (let x of a) {
+    if (b.indexOf(x) === -1) {
+      return false;
+    }
+  }
+  return true;
+};
+
 const lilypondToVexflow = (note) => {
   if (note.length === 1) {
     return note;
@@ -190,6 +199,27 @@ class Chords extends React.Component {
     brace.setContext(context).draw();
   }
 
+  getPivotModulations() {
+    const chordObject = this.props.navigator.chord_chooser.current_chord;
+    if (chordObject === null) {
+      return [];
+    }
+    const chordPitchClasses = chordObject.prime_form_kinda;
+    const scales = [];
+    for (let scaleName of Object.keys(ScaleData)) {
+      const scale = ScaleData[scaleName];
+      const scalePitchClasses = scale.pitch_classes;
+      if (isSubset(chordPitchClasses, scalePitchClasses)) {
+        scales.push(scaleName);
+      }
+    }
+    return scales;
+  }
+
+  modulate(scale) {
+    this.props.navigator.jumpToScale(scale);
+  }
+
   render() {
     const elements = [
       "Unison",
@@ -214,6 +244,12 @@ class Chords extends React.Component {
       );
     });
 
+    const modulate = (scale) => () => this.modulate(scale);
+
+    const pivotModulationButtons = this.getPivotModulations().map((scale) => {
+      return <button onClick={modulate(scale)}>{scale}</button>;
+    });
+
     return (
       <div id="Chords">
         <p>
@@ -230,6 +266,7 @@ class Chords extends React.Component {
             ? "Error -- couldn't find a chord fitting these constraints. Try checking more boxes."
             : this.props.chord}
         </p>
+        <p>Pivot modulations: {pivotModulationButtons}</p>
         <p>Allowed root movements:</p>
         <ul>{elements}</ul>
         <p>
