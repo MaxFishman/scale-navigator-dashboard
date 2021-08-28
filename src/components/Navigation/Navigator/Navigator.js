@@ -21,7 +21,7 @@ function Navigator(setScaleData) {
 
     this.autopilot_data = {
         active: false,
-        default_period: [8000, 12000, 16000],
+        default_period: [1000, 2000, 3000, 4000],
         period: undefined,
         chosen: undefined,
         intervalID: undefined,
@@ -61,7 +61,7 @@ function Navigator(setScaleData) {
                         passes++
                     }
 
-                    this.autopilot_data.chosen = p5.random(this.autopilot_data.period)
+                    this.autopilot_data.chosen = p5.random(this.autopilot_data.period.map(x=>x*document.getElementById("autopilot_interval").value))
 
                     if (this.autopilot_data.visited.length >= this.autopilot_data.max_visited) {
                         this.autopilot_data.visited.pop()
