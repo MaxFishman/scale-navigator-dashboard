@@ -67,7 +67,9 @@ function Navigator(setScaleData) {
                         passes++
                     }
 
-                    this.autopilot_data.chosen = p5.random(this.autopilot_data.period.map(x=>x*document.getElementById("autopilot_interval").value))
+                    var k = 1;
+                    if (document.getElementById("autopilot_interval") != null && document.getElementById("autopilot_interval")) k = document.getElementById("autopilot_interval").value
+                    this.autopilot_data.chosen = p5.random(this.autopilot_data.period.map(x => x))
 
                     if (this.autopilot_data.visited.length >= this.autopilot_data.max_visited) {
                         this.autopilot_data.visited.pop()
