@@ -37,15 +37,20 @@ function mod(a, b) {
 }
 
 export default class ChordChooser {
-  constructor() {
+  constructor(chordData, setChordData, scale) {
     this.jazz_filtering_enabled = true;
-    this.allowed_root_intervals = [true, true, true, true, true, true, true];
-    this.voice_leading_threshold = 9;
-    this.voice_leading_smoothness = 100;
     this.slice_size = 1;
     this.last_chord_name = null;
     this.current_chord_name = null;
     this.current_chord = null;
+    this.setChordData = setChordData;
+    this.chordData = chordData;
+    this.voice_leading_threshold = 9;
+  }
+
+  setChordDataContext(chordData, setChordData) {
+    this.setChordData = setChordData;
+    this.chordData = chordData;
   }
 
   is_valid_jazz_chord_progression(current_chord, next_chord) {
@@ -58,7 +63,7 @@ export default class ChordChooser {
         6
     );
 
-    if (!this.allowed_root_intervals[root_interval]) {
+    if (!this.chordData.allowedRootIntervals[root_interval]) {
       return false;
     }
 
@@ -134,7 +139,8 @@ export default class ChordChooser {
       let after_chord_candidates = chord_candidates.length;
       let slice_size = Math.floor(
         chord_candidates.length -
-          chord_candidates.length * (this.voice_leading_smoothness / 100)
+          chord_candidates.length *
+            (this.chordData.voiceLeadingSmoothness / 100)
       );
       if (slice_size === 0) {
         slice_size = 1;
@@ -152,5 +158,10 @@ export default class ChordChooser {
 
     this.current_chord_name = choose(chord_candidates);
     this.current_chord = CHORDS[this.current_chord_name];
+
+    this.setChordData({
+      chordName: this.current_chord_name,
+      chord: this.current_chord,
+    });
   }
 }

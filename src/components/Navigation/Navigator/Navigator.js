@@ -1,4 +1,4 @@
-import ChordChooser from "./ChordChooser";
+import ChordChooser from "../../ToneJS/ChordChooser";
 import Polygon from "./Polygon";
 import Helper from "./Helper";
 
@@ -11,8 +11,6 @@ function Navigator(setScaleData) {
     this.setScaleData = setScaleData;
 
     this.p5 = null;
-
-    this.chord_chooser = new ChordChooser();
 
     this.autopilot_data = {
         active: false,
@@ -34,9 +32,6 @@ function Navigator(setScaleData) {
         this.init_autopilot(p5);
 
         this.initPolygons();
-
-        this.chord_chooser.tick(this.scale);
-        this.triggerEvent();
     };
 
     this.initPolygons = () => {
@@ -155,8 +150,6 @@ function Navigator(setScaleData) {
 
     this.mousePressed = (p5) => {
         if (this.main_polygon.click()) {
-            this.chord_chooser.tick(this.scale);
-            this.triggerEvent();
             return;
         }
         // check for clicks on all polygons
@@ -181,11 +174,6 @@ function Navigator(setScaleData) {
                 return;
             }
         }
-    };
-
-    this.changeMainScaleCallbacks = [];
-    this.onChangeMainScale = (callback) => {
-        this.changeMainScaleCallbacks.push(callback);
     };
 
     this.third_gen_hover = (p5) => {
@@ -335,12 +323,6 @@ function Navigator(setScaleData) {
         new_main,
         all_duration = Helper.default_animation_duration
     ) => {
-        if (new_main == this.main_polygon) {
-            this.chord_chooser.tick(this.scale);
-            this.triggerEvent();
-            return;
-        }
-
         // p5.push the current polygons into old polygons
         this.old_neighbors = [...this.neighbors];
         this.old_main_polygon = this.main_polygon;
@@ -408,10 +390,7 @@ function Navigator(setScaleData) {
         //this.preview_polygons = []
         this.preview_polygons_ready = false;
 
-        this.scale = this.main_polygon.scale;
-
-        this.chord_chooser.tick(this.scale);
-        this.triggerEvent();
+        this.updateScaleState(this.main_polygon.scale);
     };
 
     this.changeMainScale = (
@@ -424,26 +403,17 @@ function Navigator(setScaleData) {
         this.finishChangeMainScale(p5, new_main, all_duration);
     };
 
-    this.jumpToScale = (newScale) => {
+    this.updateScaleState = (newScale) => {
         this.scale = newScale;
-        this.initPolygons();
 
-        this.chord_chooser.tick(this.scale);
-        this.triggerEvent();
-    };
-
-    this.triggerEvent = () => {
-        document.dispatchEvent(
-            new CustomEvent("scaleChanged", { detail: this.scale })
-        );
-
-        for (let callback of this.changeMainScaleCallbacks) {
-            callback();
-        }
         this.setScaleData({
-            scale: this.scale,
-            chord: this.chord_chooser.current_chord_name,
+            scale: newScale,
         });
+    }
+
+    this.jumpToScale = (newScale) => {
+        this.updateScaleState(newScale);
+        this.initPolygons();
     };
 }
 

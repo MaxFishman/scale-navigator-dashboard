@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import "./Tablature.scss";
 import Mandolin from "./instruments/strings/Mandolin";
 import Guitar from "./instruments/strings/Guitar";
@@ -72,6 +72,7 @@ const INST = {
 
 export default function Tablature() {
   const [selected, setSelected] = useState([]);
+  const { scaleData } = useContext(ScaleContext);
 
   const options = [
     {
@@ -149,31 +150,25 @@ export default function Tablature() {
       </ul>
     );
   });
+  const keyData = ScaleData[scaleData.scale];
   return (
-    <ScaleContext.Consumer>
-      {({ scale }) => {
-        const keyData = ScaleData[scale];
-        return (
-          <div className="tabsectioncontainer">
-            <h2 className="tabsectioncontainer__title">Instruments</h2>
-            <Select
-              isMulti
-              name="Tablature"
-              onChange={onChange}
-              options={options}
-              value={selected}
-              className="tabsectioncontainer__select"
-              classNamePrefix="select"
-              placeholder="add instrument..."
-            />
-            <SortableTabsList
-              onSortEnd={onSortEnd}
-              keyData={keyData}
-              curSelected={selected}
-            ></SortableTabsList>
-          </div>
-        );
-      }}
-    </ScaleContext.Consumer>
+    <div className="tabsectioncontainer">
+      <h2 className="tabsectioncontainer__title">Instruments</h2>
+      <Select
+        isMulti
+        name="Tablature"
+        onChange={onChange}
+        options={options}
+        value={selected}
+        className="tabsectioncontainer__select"
+        classNamePrefix="select"
+        placeholder="add instrument..."
+      />
+      <SortableTabsList
+        onSortEnd={onSortEnd}
+        keyData={keyData}
+        curSelected={selected}
+      ></SortableTabsList>
+    </div>
   );
 }
