@@ -16,7 +16,7 @@ function Navigator(setScaleData) {
 
     this.autopilot_data = {
         active: false,
-        default_period: [1000, 2000, 3000, 4000],
+        default_period: [1000],
         period: undefined,
         chosen: undefined,
         intervalID: undefined,
@@ -55,7 +55,9 @@ function Navigator(setScaleData) {
         if (!this.autopilot_data.period)
             this.autopilot_data.period = this.autopilot_data.default_period;
 
-        this.autopilot_data.chosen = p5.random(this.autopilot_data.period)
+        var k = 1;
+        if (document.getElementById("autopilot_interval") != null && document.getElementById("autopilot_interval")) k = document.getElementById("autopilot_interval").value
+        this.autopilot_data.chosen = p5.random(this.autopilot_data.period.map(x => x * k))
 
         this.autopilot_data.intervalID = setInterval(
             (p5) => {
@@ -70,6 +72,8 @@ function Navigator(setScaleData) {
                     var k = 1;
                     if (document.getElementById("autopilot_interval") != null && document.getElementById("autopilot_interval")) k = document.getElementById("autopilot_interval").value
                     this.autopilot_data.chosen = p5.random(this.autopilot_data.period.map(x => x * k))
+
+                    console.log(this.autopilot_data.chosen)
 
                     if (this.autopilot_data.visited.length >= this.autopilot_data.max_visited) {
                         this.autopilot_data.visited.pop()
