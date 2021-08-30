@@ -16,7 +16,7 @@ function Navigator(setScaleData) {
 
     this.autopilot_data = {
         active: false,
-        default_period: [1000],
+        default_period: [1000, 2000, 3000, 4000],
         period: undefined,
         chosen: undefined,
         intervalID: undefined,

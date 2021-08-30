@@ -40,16 +40,7 @@ const Navigation = () => {
                   ></input>
                   <label for="autopilot">Autopilot</label>
                 </div>
-                <div className="navinfo__option">
-                  <input
-                    type="checkbox"
-                    autoComplete="off"
-                    name="labels"
-                    id="labels_checkbox"
-                    defaultChecked="false"
-                  ></input>
-                  <label for="labels">Labels</label>
-                </div>
+               
                 <div className="navinfo__option">
                   <input
                     type="range"
@@ -60,9 +51,20 @@ const Navigation = () => {
                     max="4"
                     step="0.01"
                   ></input>
-                  <label for="labels">Interval</label>
+                  <label for="labels">Tempo</label>
                 </div>
               </div>
+              <div className="navinfo__option">
+                  <input
+                    type="checkbox"
+                    autoComplete="off"
+                    name="labels"
+                    id="labels_checkbox"
+                    defaultChecked="false"
+                    style={{visibility:'hidden'}}
+                  ></input>
+                  {/* <label for="labels">Labels</label> */}
+                </div>
             </div>
           </div>
         );
