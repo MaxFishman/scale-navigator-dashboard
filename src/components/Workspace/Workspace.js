@@ -3,7 +3,7 @@ import About from "./About/About";
 import Chords from "./Chords/Chords";
 import Ensemble from "./Ensemble/Ensemble";
 import Tablature from "./Tablature/Tablature";
-import React from "react";
+import React, { useContext } from "react";
 import { app } from "../../config/base";
 import { ScaleContext } from "../Context/ScaleContext";
 import { Switch, Route, Link, Redirect, useLocation } from "react-router-dom";
@@ -13,6 +13,8 @@ import classNames from "classnames";
 import { ChordContext } from "components/Context/ChordContext";
 
 export default function Workspace() {
+  const { scaleData, setScaleData } = useContext(ScaleContext);
+  const { chordData, setChordData } = useContext(ChordContext);
   const location = useLocation();
   const routes = {
     Ensemble: ROUTES.ENSEMBLE,
@@ -53,25 +55,12 @@ export default function Workspace() {
             <Tablature></Tablature>
           </Route>
           <Route path={ROUTES.CHORDS}>
-            <ChordContext.Consumer>
-              {({ setChordData, chordData }) => {
-                return (
-                  <ScaleContext.Consumer>
-                    {({ scale, chord, navigator }) => {
-                      return (
-                        <Chords
-                          scale={scale}
-                          chord={chord}
-                          chordData={chordData}
-                          setChordData={setChordData}
-                          navigator={navigator}
-                        />
-                      );
-                    }}
-                  </ScaleContext.Consumer>
-                );
-              }}
-            </ChordContext.Consumer>
+            <Chords
+              scaleData={scaleData}
+              setScaleData={setScaleData}
+              chordData={chordData}
+              setChordData={setChordData}
+            />
           </Route>
           <Route path={ROUTES.MIDI}>
             <p>MIDI Component</p>

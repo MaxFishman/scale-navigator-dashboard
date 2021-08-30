@@ -3,7 +3,6 @@ import Navigation from "./components/Navigation/Navigation";
 import Workspace from "./components/Workspace/Workspace";
 import { ScaleContext } from "./components/Context/ScaleContext";
 import { ChordContext } from "./components/Context/ChordContext";
-import Navigator from "./components/Navigation/Navigator/Navigator";
 import React, { useState, useRef } from "react";
 import { BrowserRouter as Router } from "react-router-dom";
 import Chords from "components/ToneJS/Chord";
@@ -14,38 +13,55 @@ function App() {
   });
   const [chordData, setChordData] = useState({
     playing: false,
+    voiceLeadingSmoothness: 100,
+    chord: null,
+    chordName: null,
+    prevoiusChord: null,
+    allowedRootIntervals: [true, true, true, true, true, true, true],
   });
-  // TODO(mjmaurer): I think ideally workspace shouldn't have to know
-  // about the navigator, but right now it's surface is pretty large.
-  const navRef = useRef(new Navigator.Navigator(setScaleData));
-  navRef.current.scaleDataCallback(setScaleData);
 
   return (
     <div className="appcontainer">
       <div className="contentcontainer">
-        <Chords
-          navigator={navRef.current}
-          scaleData={scaleData}
-          chordData={chordData}
-        ></Chords>
-        <Router>
-          <ChordContext.Provider
+        <ChordContext.Provider
+          value={{
+            chordData,
+            setChordData: (newChordData) => {
+              const previousProps = {};
+              if (newChordData.chord) {
+                previousProps.previousChord = chordData.chord;
+              }
+              setChordData({
+                ...chordData,
+                ...newChordData,
+                ...previousProps,
+              });
+            },
+          }}
+        >
+          <ScaleContext.Provider
             value={{
-              chordData,
-              setChordData,
+              scaleData,
+              setScaleData: (newScaleData) => {
+                const previousProps = {};
+                if (newScaleData.scale) {
+                  previousProps.previousScale = scaleData.scale;
+                }
+                setScaleData({
+                  ...scaleData,
+                  ...newScaleData,
+                  ...previousProps,
+                });
+              },
             }}
           >
-            <ScaleContext.Provider
-              value={{
-                ...scaleData,
-                navigator: navRef.current,
-              }}
-            >
+            <Chords></Chords>
+            <Router>
               <Navigation />
               <Workspace />
-            </ScaleContext.Provider>
-          </ChordContext.Provider>
-        </Router>
+            </Router>
+          </ScaleContext.Provider>
+        </ChordContext.Provider>
       </div>
     </div>
   );

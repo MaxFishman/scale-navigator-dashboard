@@ -1,12 +1,7 @@
 import "./ChordStyle.css";
 import React from "react";
-import * as Tone from "tone";
 import Vex from "vexflow";
 import ScaleData from "common/ScaleData";
-
-const midiToHz = (midiNote) => {
-  return 440 * Math.pow(2, (midiNote - 69) / 12);
-};
 
 const mod = (a, b) => {
   return ((a % b) + b) % b;
@@ -56,12 +51,6 @@ class Chords extends React.Component {
     super(props);
     this.props = props;
 
-    this.state = {
-      rootMovement: this.props.navigator.chord_chooser.allowed_root_intervals,
-      voiceLeadingSmoothness:
-        this.props.navigator.chord_chooser.voice_leading_smoothness,
-    };
-
     this.togglePlaying = this.togglePlaying.bind(this);
     this.handleVoiceLeadingSmoothnessChange =
       this.handleVoiceLeadingSmoothnessChange.bind(this);
@@ -69,19 +58,16 @@ class Chords extends React.Component {
 
   handleRootMovementChange(i) {
     return () => {
-      this.setState((previousState) => {
-        const rootMovement = previousState.rootMovement.slice();
-        rootMovement[i] = !rootMovement[i];
-        this.props.navigator.chord_chooser.allowed_root_intervals[i] =
-          rootMovement[i];
-        return { rootMovement: rootMovement };
+      const updatedAllowedIntervals =
+        this.props.chordData.allowedRootIntervals.slice();
+      updatedAllowedIntervals[i] = !updatedAllowedIntervals[i];
+      this.props.setChordData({
+        allowedRootIntervals: updatedAllowedIntervals,
       });
     };
   }
 
   handleVoiceLeadingSmoothnessChange(event) {
-    this.props.navigator.chord_chooser.voice_leading_smoothness =
-      event.target.value;
     this.setState({
       voiceLeadingSmoothness: event.target.value,
     });
@@ -96,7 +82,9 @@ class Chords extends React.Component {
   }
 
   componentDidUpdate(prevProps, prevState) {
-    this.updateNotation();
+    if (this.props.chordData.chord !== prevProps.chordData.chord) {
+      this.updateNotation();
+    }
   }
 
   updateNotation() {
@@ -105,8 +93,8 @@ class Chords extends React.Component {
       container.removeChild(container.lastChild);
     }
 
-    const chordObject = this.props.navigator.chord_chooser.current_chord;
-    if (chordObject === null) {
+    const chordObject = this.props.chordData.chord;
+    if (!chordObject) {
       return;
     }
     const chord = chordObject.original_voicing;
@@ -143,7 +131,7 @@ class Chords extends React.Component {
 
     const brace = new VF.StaveConnector(rightStave, leftStave).setType(3);
 
-    const spelling = ScaleData[this.props.scale].spelling;
+    const spelling = ScaleData[this.props.scaleData.scale].spelling;
     const pitchClassToNoteName = {};
     const pitchClassToInflection = {};
     for (let note of spelling) {
@@ -160,6 +148,11 @@ class Chords extends React.Component {
       const baseMidiNote = midiNote - inflection;
       const hand = baseMidiNote >= 60 ? "right" : "left";
       let vexflowString = noteName + "/" + (Math.floor(baseMidiNote / 12) - 1);
+      if (!noteName) {
+        console.log(chordObject);
+        console.log(this.props.scaleData);
+        console.log(this.props.chordData.chordName);
+      }
       if (noteName.length === 2) {
         accidentals[hand].push(noteName[1]);
       } else {
@@ -200,7 +193,7 @@ class Chords extends React.Component {
   }
 
   getPivotModulations() {
-    const chordObject = this.props.navigator.chord_chooser.current_chord;
+    const chordObject = this.props.chordData.chord;
     if (chordObject === null) {
       return [];
     }
@@ -217,7 +210,9 @@ class Chords extends React.Component {
   }
 
   modulate(scale) {
-    this.props.navigator.jumpToScale(scale);
+    this.props.setScaleData({
+      scale: scale,
+    });
   }
 
   render() {
@@ -236,7 +231,7 @@ class Chords extends React.Component {
           <input
             id={id}
             type="checkbox"
-            checked={this.state.rootMovement[i]}
+            checked={this.props.chordData.allowedRootIntervals[i]}
             onChange={this.handleRootMovementChange(i)}
           />
           <label htmlFor={i}>{name}</label>
@@ -257,14 +252,14 @@ class Chords extends React.Component {
             {this.props.chordData.playing ? "STOP" : "PLAY"}
           </button>
         </p>
-        <p>Current scale: {this.props.scale}</p>
+        <p>Current scale: {this.props.scaleData.scale}</p>
         <p>
           Current chord:{" "}
-          {this.props.chord === null
+          {this.props.chordData.chordName === null
             ? "none"
-            : this.props.chord === "error"
+            : this.props.chordData.chordName === "error"
             ? "Error -- couldn't find a chord fitting these constraints. Try checking more boxes."
-            : this.props.chord}
+            : this.props.chordData.chordName}
         </p>
         <p>Pivot modulations: {pivotModulationButtons}</p>
         <p>Allowed root movements:</p>

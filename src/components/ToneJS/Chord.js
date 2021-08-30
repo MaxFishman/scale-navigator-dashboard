@@ -1,31 +1,55 @@
-import React, { useEffect } from "react";
+import { ChordContext } from "components/Context/ChordContext";
+import { ScaleContext } from "components/Context/ScaleContext";
+import React, { useContext, useEffect, useRef } from "react";
 import * as Tone from "tone";
+import ChordChooser from "./ChordChooser";
 
 const midiToHz = (midiNote) => {
   return 440 * Math.pow(2, (midiNote - 69) / 12);
 };
 
-function Chords({ scaleData, chordData, navigator }) {
-  useEffect(() => {
-    const { playing } = chordData;
-    const synths = [];
+function Chords() {
+  const { chordData, setChordData } = useContext(ChordContext);
+  const { scaleData } = useContext(ScaleContext);
+  const { scale } = scaleData;
 
-    if (playing) {
-      const chord = navigator.chord_chooser.current_chord;
-      const notes = chord === null ? [] : chord.original_voicing;
-      for (let note of notes) {
-        const synth = new Tone.Synth({ volume: -20 }).toDestination();
-        synth.triggerAttack(midiToHz(note), "8n");
-        synths.push(synth);
-      }
+  const chordChooserRef = useRef(null);
+  const synthRef = useRef(null);
+
+  useEffect(() => {
+    chordChooserRef.current = new ChordChooser(
+      chordData,
+      setChordData,
+      scaleData.scale
+    );
+    synthRef.current = new Tone.PolySynth({ volume: -20 }).toDestination();
+  }, []);
+
+  useEffect(() => {
+    chordChooserRef.current.setChordDataContext(chordData, setChordData);
+  }, [chordData, setChordData]);
+
+  useEffect(() => {
+    chordChooserRef.current.tick(scale);
+  }, [scale]);
+
+  useEffect(() => {
+    const { playing, chord, previousChord } = chordData;
+
+    const isNewChord =
+      !previousChord ||
+      previousChord.root !== chord.root ||
+      previousChord.chord_type !== chord.chord_type;
+
+    const notes = chord === null ? [] : chord.original_voicing.map(midiToHz);
+    if (playing && isNewChord) {
+      synthRef.current.triggerAttack(notes);
     }
 
     return () => {
-      for (let synth of synths) {
-        synth.triggerRelease();
-      }
+      synthRef.current.triggerRelease(notes);
     };
-  }, [scaleData, chordData, navigator]);
+  }, [chordData]);
 
   return <></>;
 }
