@@ -412,8 +412,10 @@ function Navigator(setScaleData) {
     }
 
     this.jumpToScale = (newScale) => {
-        this.updateScaleState(newScale);
-        this.initPolygons();
+        if (newScale !== this.scale) {
+            this.updateScaleState(newScale);
+            this.initPolygons();
+        }
     };
 }
 
