@@ -20,8 +20,6 @@ export default function Workspace() {
     Ensemble: ROUTES.ENSEMBLE,
     Tablature: ROUTES.TABLATURE,
     Chords: ROUTES.CHORDS,
-    MIDI: ROUTES.MIDI,
-    Notepad: ROUTES.NOTEPAD,
     Visualization: ROUTES.SCALENET,
     About: ROUTES.ABOUT,
     Account: ROUTES.ACCOUNT,
@@ -61,12 +59,6 @@ export default function Workspace() {
               chordData={chordData}
               setChordData={setChordData}
             />
-          </Route>
-          <Route path={ROUTES.MIDI}>
-            <p>MIDI Component</p>
-          </Route>
-          <Route path={ROUTES.NOTEPAD}>
-            <p>Notepad Component</p>
           </Route>
           <Route path={ROUTES.SCALENET}>
             <p>Scale Network Component</p>
