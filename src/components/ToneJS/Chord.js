@@ -11,7 +11,7 @@ const midiToHz = (midiNote) => {
 function Chords() {
   const { chordData, setChordData } = useContext(ChordContext);
   const { scaleData } = useContext(ScaleContext);
-  const { scale } = scaleData;
+  const { scale, scaleIndex } = scaleData;
 
   const chordChooserRef = useRef(null);
   const synthRef = useRef(null);
@@ -31,7 +31,7 @@ function Chords() {
 
   useEffect(() => {
     chordChooserRef.current.tick(scale);
-  }, [scale]);
+  }, [scale, scaleIndex]);
 
   useEffect(() => {
     const { playing, chord, previousChord } = chordData;
