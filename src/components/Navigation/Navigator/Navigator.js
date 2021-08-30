@@ -150,6 +150,8 @@ function Navigator(setScaleData) {
 
     this.mousePressed = (p5) => {
         if (this.main_polygon.click()) {
+            // Need to indicate to Chord player to change Chords
+            this.updateScaleState(this.scale);
             return;
         }
         // check for clicks on all polygons

@@ -10,6 +10,7 @@ import Chords from "components/ToneJS/Chord";
 function App() {
   const [scaleData, setScaleData] = useState({
     scale: "c_diatonic",
+    scaleIndex: 0,
   });
   const [chordData, setChordData] = useState({
     playing: false,
@@ -46,6 +47,7 @@ function App() {
                 const previousProps = {};
                 if (newScaleData.scale) {
                   previousProps.previousScale = scaleData.scale;
+                  previousProps.scaleIndex = scaleData.scaleIndex + 1;
                 }
                 setScaleData({
                   ...scaleData,
