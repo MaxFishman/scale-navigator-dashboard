@@ -140,7 +140,8 @@ function Navigator(setScaleData) {
 
         //draw all the polygons
         for (var p of allPolygons) {
-            if (p) p.draw(document.getElementById("labels_checkbox").checked);
+            if (p) p.draw(true);
+            // document.getElementById("labels_checkbox").checked
         }
 
         this.third_gen_hover(p5);

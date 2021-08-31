@@ -3,6 +3,7 @@
 
 .navigation {
   width: 100%;
+  height: 90vh;
   display: flex;
   flex-flow: column nowrap;
   justify-content: space-between;
@@ -57,6 +58,16 @@
   }
 }
 
+.canvas-wrapper {
+  width: 100%;
+  max-height: 80vh;
+
+  canvas {
+      width: 100%;
+      height: 100%;
+  }
+}
+
 .p5Canvas {
   display: block;
 }
@@ -69,6 +80,7 @@
   color: white;
   font-family: "Karla";
   font-weight: bold;
+  margin-bottom: 12px;
 
   &__note,
   &__scale {
@@ -110,15 +122,19 @@
   &__options {
     grid-column: span 2;
     display: flex;
+    align-items: center;
     justify-content: space-around;
     border: 3px solid $accent-medium;
     border-radius: 0 0 9px 30px;
-    padding: 0.5rem 0;
+    padding: 2px 0;
   }
 
   &__option {
+    padding: 3px;
+    display: flex;
+    align-items: center;
+
     & > label {
-      padding-left: 0.5rem;
       font-size: 1.2rem;
     }
     & > * {

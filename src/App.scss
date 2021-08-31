@@ -13,11 +13,15 @@ body {
   }
 }
 
+#root {
+  min-height: 100vh;
+}
+
 .appcontainer {
   width: 100%;
+  min-height: 100vh;
   padding: 0.75rem;
   background-color: $accent-medium;
-  height: auto;
 
   @include md {
     height: 100vh;
@@ -103,7 +107,7 @@ label {
   border: 1px solid DimGray;
 }
 
-/*tab + div { } 
+/*tab + div { }
 tab + select { padding-top: 50px; } */
 
 /* Style the buttons inside the tab */
@@ -388,4 +392,8 @@ select {
     text-align: center;
     padding-bottom: 1px;
   }
+}
+
+ul {
+  list-style-type: none;
 }

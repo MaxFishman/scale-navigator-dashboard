@@ -45,7 +45,7 @@ function Pfivesketch({ nav }) {
         p5.resizeCanvas(p.width, Math.max(p.height, document.body.getBoundingClientRect().height / 2));
     };
 
-    return ( <
+    return (<
         Sketch setup = { setup }
         preload = { preload }
         draw = { draw }

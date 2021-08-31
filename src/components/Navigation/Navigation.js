@@ -3,8 +3,10 @@ import React, { useContext, useEffect, useRef } from "react";
 import { ScaleContext } from "../Context/ScaleContext";
 import ScaleData from "common/ScaleData";
 import PitchClassData from "common/PitchClassData";
-import "./Navigation.scss";
 import Navigator from "./Navigator/Navigator";
+import Tabs from "components/Tabs";
+
+import "./Navigation.scss";
 
 const Navigation = () => {
   const { scaleData, setScaleData } = useContext(ScaleContext);
@@ -30,9 +32,11 @@ const Navigation = () => {
         <h1 className="navigation__logo">Scale Navigator</h1>
         <h2 className="navigation__sublogo">DASHBOARD</h2>
       </div>
-      <div className="navigation__scalenav" id="canv_container">
-        <Pfivesketch nav={navRef.current}></Pfivesketch>
+
+      <div className="navigation__scalenav canvas-wrapper" id="canv_container">
+        <Pfivesketch nav={navRef.current}/>
       </div>
+
       <div className="navinfo">
         <div className="navinfo__note">
           <h5>NOTE</h5>
@@ -55,7 +59,8 @@ const Navigation = () => {
             ></input>
             <label for="autopilot">Autopilot</label>
           </div>
-          <div className="navinfo__option">
+
+          {/* <div className="navinfo__option">
             <input
               type="checkbox"
               autoComplete="off"
@@ -64,7 +69,8 @@ const Navigation = () => {
               defaultChecked="false"
             ></input>
             <label for="labels">Labels</label>
-          </div>
+          </div> */}
+
           <div className="navinfo__option">
             <input
               type="range"
@@ -75,10 +81,11 @@ const Navigation = () => {
               max="4"
               step="0.01"
             ></input>
-            <label for="labels">Interval</label>
           </div>
         </div>
       </div>
+
+      <Tabs className="mobile-tabs"/>
     </div>
   );
 };
