@@ -10,12 +10,27 @@ export default function Treble({ keyData }) {
       document.getElementById("treblestaff"),
       VF.Renderer.Backends.SVG
     );
-    renderer.resize(600, 100);
+
+    var stave_width;
+
+    console.log("staffwide ", window.innerWidth);
+
+    if (window.innerWidth <= 600){
+      stave_width = 300;
+    } else if (window.innerWidth <= 960 && window.innerWidth > 600) {
+      stave_width = 400;
+    } else if (window.innerWidth <= 1280 && window.innerWidth > 960) {
+      stave_width = 500;
+    } else if (window.innerWidth > 1280) {
+      stave_width = 600;
+    }
+
+    renderer.resize(stave_width, 100);
 
     var context = renderer.getContext();
     context.setFont("Arial", 10, "");
 
-    var stave = new VF.Stave(0, 0, 600);
+    var stave = new VF.Stave(0, 0, stave_width);
     stave.addClef("treble");
     stave.setContext(context);
 
@@ -54,7 +69,7 @@ export default function Treble({ keyData }) {
       beat_value: 4,
     });
     voice.addTickables(notes);
-    new VF.Formatter().joinVoices([voice]).format([voice], 600);
+    new VF.Formatter().joinVoices([voice]).format([voice], stave_width);
 
     // const group = context.openGroup();
     stave.draw();
