@@ -16,7 +16,7 @@ export default function Treble({ keyData }) {
     console.log("staffwide ", window.innerWidth);
 
     if (window.innerWidth <= 600){
-      stave_width = 300;
+      stave_width = 350;
     } else if (window.innerWidth <= 960 && window.innerWidth > 600) {
       stave_width = 400;
     } else if (window.innerWidth <= 1280 && window.innerWidth > 960) {
