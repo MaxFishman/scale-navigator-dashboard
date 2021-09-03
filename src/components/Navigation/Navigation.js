@@ -38,11 +38,11 @@ const Navigation = () => {
       </div>
 
       <div className="navinfo">
-        <div className="navinfo__note">
+        <div className="navinfo__root">
           <h5>NOTE</h5>
           {PitchClassData[ScaleData[scale].root].note}
         </div>
-        <div className="navinfo__scale">
+        <div className="navinfo__scaleclass">
           <h5>SCALE</h5>
           {ScaleData[scale].scale_class
             .split("_")
