@@ -491,7 +491,7 @@ const ScaleData = {
       "hexatonic_4",
     ],
     pitch_classes: [0, 3, 4, 6, 8, 9, 11],
-    chords: ["E", "G#m", "G", "Am", "B"],
+    chords: ["E", "G#m", "G#", "Am", "B"],
     scale_class: "harmonic_major",
     spelling: ["c", "ds", "e", "fs", "gs", "a", "b"],
   },
