@@ -39,11 +39,11 @@ const Navigation = () => {
 
       <div className="navinfo">
         <div className="navinfo__root">
-          <h5>NOTE</h5>
+          <h5>ROOT</h5>
           {PitchClassData[ScaleData[scale].root].note}
         </div>
         <div className="navinfo__scaleclass">
-          <h5>SCALE</h5>
+          <h5>SCALE CLASS</h5>
           {ScaleData[scale].scale_class
             .split("_")
             .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
