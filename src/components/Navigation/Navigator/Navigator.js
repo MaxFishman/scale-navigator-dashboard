@@ -20,7 +20,8 @@ function Navigator(setScaleData) {
         intervalID: undefined,
         animate: true,
         max_visited: 10,
-        visited: []
+        visited: [],
+        chordClicks: 0
     };
 
     this.scaleDataCallback = (setScaleData) => {
@@ -58,6 +59,7 @@ function Navigator(setScaleData) {
             (p5) => {
                 if (this.autopilot_data.active) {
                     var p = p5.random(this.neighbors.concat(this.main_polygon));
+
                     var passes = 0
                     while (this.autopilot_data.visited.includes(p) && passes < 100) {
                         p = p5.random(this.neighbors.concat(this.main_polygon));
@@ -68,12 +70,18 @@ function Navigator(setScaleData) {
                     if (document.getElementById("autopilot_interval") != null && document.getElementById("autopilot_interval")) k = document.getElementById("autopilot_interval").value
                     this.autopilot_data.chosen = p5.random(this.autopilot_data.period.map(x => x * k))
 
-                    console.log(this.autopilot_data.chosen)
+                    if (this.autopilot_data.chordClicks > p5.random(4, 8)) {
+                        if (this.autopilot_data.visited.length >= this.autopilot_data.max_visited) {
+                            this.autopilot_data.visited.pop()
+                        }
+                        this.autopilot_data.visited.unshift(p)
 
-                    if (this.autopilot_data.visited.length >= this.autopilot_data.max_visited) {
-                        this.autopilot_data.visited.pop()
+                        this.autopilot_data.chordClicks = 0
+                    } else {
+                        p = this.main_polygon;
+                        this.autopilot_data.chordClicks++;
+                        this.autopilot_data.chosen = Math.sqrt(this.autopilot_data.chosen / 500) * 500;
                     }
-                    this.autopilot_data.visited.unshift(p)
 
                     this.changeMainScale(
                         p5,
@@ -102,6 +110,7 @@ function Navigator(setScaleData) {
     this.reset_autopilot = () => {
         this.autopilot_data.active = false;
         this.autopilot_data.visited = []
+        this.autopilot_data.chordClicks = 0;
         this.set_autopilot_period(undefined);
     };
 
