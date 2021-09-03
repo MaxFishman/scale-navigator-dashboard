@@ -82,8 +82,8 @@
   font-weight: bold;
   margin-bottom: 12px;
 
-  &__note,
-  &__scale {
+  &__root,
+  &__scaleclass {
     position: relative;
     text-align: center;
     display: flex;
@@ -93,14 +93,15 @@
     & > h5 {
       position: absolute;
       margin: 0;
-      color: white;
+      color: #BD79F1;
       font-size: 0.5rem;
       top: 0.1rem;
       left: 0.25rem;
     }
   }
 
-  &__note {
+  &__root {
+    color: #BD79F1;
     background-color: $accent-medium;
     border-top: 3px solid $accent-medium;
     border-left: 3px solid $accent-medium;
@@ -108,7 +109,7 @@
     font-size: 1.5rem;
   }
 
-  &__scale {
+  &__scaleclass {
     border-top: 3px solid $accent-medium;
     border-right: 3px solid $accent-medium;
     border-radius: 0 9px 0 0;
