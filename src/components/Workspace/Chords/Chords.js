@@ -3,6 +3,8 @@ import React from "react";
 import Vex from "vexflow";
 import ScaleData from "common/ScaleData";
 
+const DEFAULT_SPELLINGS = ["c", "cs", "d", "ef", "e", "f", "fs", "g", "af", "a", "bf", "b"];
+
 const mod = (a, b) => {
   return ((a % b) + b) % b;
 };
@@ -131,7 +133,9 @@ class Chords extends React.Component {
 
     const brace = new VF.StaveConnector(rightStave, leftStave).setType(3);
 
-    const spelling = ScaleData[this.props.scaleData.scale].spelling;
+    const spelling = DEFAULT_SPELLINGS.concat(
+      ScaleData[this.props.scaleData.scale].spelling
+    );
     const pitchClassToNoteName = {};
     const pitchClassToInflection = {};
     for (let note of spelling) {
