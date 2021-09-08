@@ -7,11 +7,15 @@ from flask import Flask, jsonify
 from datetime import datetime as dt  
 import os
 import json
+from flask_cors import CORS
+
 
 sio = socketio.AsyncServer()
 
 app = Flask(__name__) 
 app.wsgi_app = socketio.WSGIApp(sio, app.wsgi_app)
+
+CORS(app)
 
 rooms = []
 
@@ -99,11 +103,15 @@ def get_rooms():
 
 
 @app.route('/getmembers', methods=['GET'])
-def get_rooms():
+def get_members():
 	room_index = rooms.index([i for i in rooms if i.id == request.json()['room']][0])
 	return jsonify(rooms[room_index].get_members())
 
 
 
 if __name__ == "__main__":
+	try:
+		load_state_from_file()
+	except Exception as e: 
+		print("Startup exception", e)
 	app.run()
