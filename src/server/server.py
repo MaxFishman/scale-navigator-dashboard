@@ -65,12 +65,12 @@ def joinroom(sid, room): #allow a user to enter the room
 @app.route('/room', methods=['POST']) #creates a room and saves the json
 def create_room(): 
 	global rooms 
-	response_data = request.json() 
+	response_data = request.json
 	if response_data['operation'] == 'create':
 		if response_data['roomid'] in rooms: 
 			return "400"
 		else: 
-			rooms.append(Room(response_data['roomid']))
+			rooms.append(Room(response_data['roomid'], response_data['name']))
 			for room in rooms:
 				room.save_room_to_file()
 	
@@ -98,7 +98,7 @@ def create_room():
 
 @app.route('/getrooms', methods=['GET'])
 def get_rooms():
-	parsed_data = [{'host': i._host, 'id': i.id} for i in rooms] 
+	parsed_data = [{'host': i._host, 'id': i.id, 'name': i.name} for i in rooms] 
 	return jsonify(parsed_data)
 
 
@@ -114,4 +114,4 @@ if __name__ == "__main__":
 		load_state_from_file()
 	except Exception as e: 
 		print("Startup exception", e)
-	app.run()
+	app.run(debug=True)

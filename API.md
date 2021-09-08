@@ -21,7 +21,8 @@ Example Request:
 {
 	"roomid": "33123ASDFKJ",
 	"userid": "33123ASDFKJ",
-	"operation": "create"
+	"operation": "create",
+	"name": "My room name"
 }
 ```
 
