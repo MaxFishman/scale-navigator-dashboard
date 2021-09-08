@@ -14,7 +14,15 @@ const firebaseConfig = {
   measurementId: "G-5G2C3541ZY",
 };
 
+const live = false; 
+
 const app = firebase.initializeApp(firebaseConfig);
 let db = app.firestore();
+let host; 
+if(live) {
+  host = 'myvpsip.com'
+} else {
+  host = 'http://localhost:5000';
+}
 
-export { app, db };
+export { app, db, host };
