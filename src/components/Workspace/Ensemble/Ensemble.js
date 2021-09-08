@@ -1,7 +1,8 @@
 import React from "react";
-import { Card, Avatar, Input, message } from "antd";
-import { app } from "../../../config/base";
+import { Card, Avatar, Input, message, Button } from "antd";
+import { app, host } from "../../../config/base";
 import Auth from "../../Authentication/AuthenticationModal";
+import axios from 'axios';
 const { Search } = Input;
 const { Meta } = Card;
 
@@ -10,7 +11,7 @@ class EnsembleInfo extends React.Component {
     return (
       <Card
         style={{ width: 300 }}
-        onClick={() => message.info("trying to join!")}
+        onClick={() => this.props.onSelect()}
       >
         <Meta
           avatar={
@@ -26,28 +27,74 @@ class EnsembleInfo extends React.Component {
 }
 
 export default class Ensemble extends React.Component {
+  state = {
+    rooms: [],
+    activeRoom: null
+  }
+  
   handleLogin = () => {
     console.log(app.auth().currentUser);
     console.log("signed in");
   };
 
+  updateRooms = () => {
+    axios.get(host + '/getrooms').then(response => this.setState({rooms: response.data}))
+  }
+
+  componentDidMount() {
+    this.updateRooms()
+  }
+
+  handleRoomSelect = id => {
+    this.state.rooms.forEach(room => {
+      if(room.id === id) {
+        this.setState({activeRoom: room})
+      }
+    })
+  }
+
   render() {
     return (
       <>
-        {console.log(app.auth().currentUser)}
         {app.auth().currentUser === null ? (
           <Auth onMasterClose={this.handleLogin} />
         ) : (
           <>
-            <div style={{ background: "#ECECEC", padding: "30px" }}>
-              <Search
-                placeholder="input new ensemble name"
-                enterButton="Create Ensemble"
-                size="large"
-              />
-              <h1>join an ensemble</h1>
-              <EnsembleInfo host={"Steve"} title={"My Cool Room"} members={3} />
-            </div>
+            {this.state.activeRoom === null ? 
+              <div style={{ background: "#ECECEC", padding: "30px" }}>
+                <Search
+                  placeholder="input new ensemble name"
+                  enterButton="Create Ensemble"
+                  size="large"
+                  value={this.state.input}
+                  onChange={e => this.setState({input: e.target.value})}
+                  onSearch={() => {
+                    axios.post(host + '/room', {
+                      "roomid": app.auth().currentUser.uid,
+                      "userid": app.auth().currentUser.uid,
+                      "name": this.state.input,
+                      "operation": "create"
+                    }).then(response => {
+                        this.updateRooms()
+                    })
+                  }}
+                />
+                <h1>join an ensemble</h1>
+                {this.state.rooms.length === 0 ? <p>No rooms, create one!</p> : <div>
+                  {this.state.rooms.map(i => (
+                    <EnsembleInfo host={"TBD"} title={i.name} members={0} onSelect={() => this.handleRoomSelect(i.id)} />
+                  ))}
+                </div>}
+              </div> : 
+              <div>
+                <h1>Current Room: {this.state.activeRoom.name}</h1>
+                <Button onClick={() => this.setState({activeRoom: null})}>Exit Room</Button>
+                <Button onClick={() => {}}>Send Message</Button>
+
+                <div style={{marginTop: 50}}>
+                  <h2>Messages</h2>
+                </div>
+              </div>}
           </>
         )}
       </>
