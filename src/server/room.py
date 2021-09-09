@@ -1,10 +1,11 @@
 import json
 
 class Room:
-	def __init__(self, creator_id: str):
+	def __init__(self, creator_id: str, name: str):
 		self.id = creator_id
 		self._host = creator_id
 		self.members = []
+		self.name = name
 
 	def set_host(self, newhost) -> None: 
 		self._host=  newhost 

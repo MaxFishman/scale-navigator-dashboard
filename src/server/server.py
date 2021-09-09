@@ -7,11 +7,16 @@ from flask import Flask, jsonify
 from datetime import datetime as dt  
 import os
 import json
+from flask_cors import CORS
 
-sio = socketio.AsyncServer()
+
+sio = socketio.Server(cors_allowed_origins='*')
 
 app = Flask(__name__) 
 app.wsgi_app = socketio.WSGIApp(sio, app.wsgi_app)
+
+
+CORS(app)
 
 rooms = []
 
@@ -22,7 +27,7 @@ def fetch_UTC() -> int:
 
 
 def load_state_from_file(): 
-	if 'roomlog.json' in os.listdir():
+	if 'roomlog.json' in os.listdir('./server'):
 		with open('roomlong.json', 'r') as f:
 			data = json.loads(f.read())
 		
@@ -56,17 +61,20 @@ def joinroom(sid, room): #allow a user to enter the room
 	@sio.event
 	def message(sid, message: dict):
 		sio.emit('message', message, room=room, skip_sid=sid) #send to all users except the current user 
-
+@sio.event
+def message(sid, message: dict):
+	print("MESSAGE!", message)
+	sio.emit('message', message)
 
 @app.route('/room', methods=['POST']) #creates a room and saves the json
 def create_room(): 
 	global rooms 
-	response_data = request.json() 
+	response_data = request.json
 	if response_data['operation'] == 'create':
 		if response_data['roomid'] in rooms: 
 			return "400"
 		else: 
-			rooms.append(Room(response_data['roomid']))
+			rooms.append(Room(response_data['roomid'], response_data['name']))
 			for room in rooms:
 				room.save_room_to_file()
 	
@@ -94,16 +102,20 @@ def create_room():
 
 @app.route('/getrooms', methods=['GET'])
 def get_rooms():
-	parsed_data = [{'host': i._host, 'id': i.id} for i in rooms] 
+	parsed_data = [{'host': i._host, 'id': i.id, 'name': i.name} for i in rooms] 
 	return jsonify(parsed_data)
 
 
 @app.route('/getmembers', methods=['GET'])
-def get_rooms():
+def get_members():
 	room_index = rooms.index([i for i in rooms if i.id == request.json()['room']][0])
 	return jsonify(rooms[room_index].get_members())
 
 
 
 if __name__ == "__main__":
-	app.run()
+	try:
+		load_state_from_file()
+	except Exception as e: 
+		print("Startup exception", e)
+	app.run(debug=True)
