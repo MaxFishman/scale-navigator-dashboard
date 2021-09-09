@@ -10,10 +10,11 @@ import json
 from flask_cors import CORS
 
 
-sio = socketio.AsyncServer()
+sio = socketio.Server(cors_allowed_origins='*')
 
 app = Flask(__name__) 
 app.wsgi_app = socketio.WSGIApp(sio, app.wsgi_app)
+
 
 CORS(app)
 
@@ -26,7 +27,7 @@ def fetch_UTC() -> int:
 
 
 def load_state_from_file(): 
-	if 'roomlog.json' in os.listdir():
+	if 'roomlog.json' in os.listdir('./server'):
 		with open('roomlong.json', 'r') as f:
 			data = json.loads(f.read())
 		
@@ -60,7 +61,10 @@ def joinroom(sid, room): #allow a user to enter the room
 	@sio.event
 	def message(sid, message: dict):
 		sio.emit('message', message, room=room, skip_sid=sid) #send to all users except the current user 
-
+@sio.event
+def message(sid, message: dict):
+	print("MESSAGE!", message)
+	sio.emit('message', message)
 
 @app.route('/room', methods=['POST']) #creates a room and saves the json
 def create_room(): 

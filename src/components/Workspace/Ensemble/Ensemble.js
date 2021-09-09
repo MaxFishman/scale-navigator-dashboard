@@ -1,8 +1,9 @@
-import React from "react";
+import React, {useState, useEffect} from "react";
 import { Card, Avatar, Input, message, Button } from "antd";
 import { app, host } from "../../../config/base";
 import Auth from "../../Authentication/AuthenticationModal";
 import axios from 'axios';
+import io from 'socket.io-client';
 const { Search } = Input;
 const { Meta } = Card;
 
@@ -26,10 +27,25 @@ class EnsembleInfo extends React.Component {
   }
 }
 
+function subscribeToMessages(cb) {
+  const socket = io(host); 
+  socket.on("message", data => cb(data));
+}
+
 export default class Ensemble extends React.Component {
-  state = {
-    rooms: [],
-    activeRoom: null
+  constructor(props) {
+    super(props);
+    this.state = {
+      rooms: [],
+      activeRoom: null,
+      messages: []
+    }
+
+    subscribeToMessages(data => this.handleMessage(data));
+  }
+
+  handleMessage = data => { //very important!!!!!!!!!!!
+    this.setState({messages: this.state.messages.concat(data)});
   }
   
   handleLogin = () => {
@@ -48,7 +64,9 @@ export default class Ensemble extends React.Component {
   handleRoomSelect = id => {
     this.state.rooms.forEach(room => {
       if(room.id === id) {
-        this.setState({activeRoom: room})
+        this.setState({
+          activeRoom: room,
+        })
       }
     })
   }
@@ -82,17 +100,22 @@ export default class Ensemble extends React.Component {
                 <h1>join an ensemble</h1>
                 {this.state.rooms.length === 0 ? <p>No rooms, create one!</p> : <div>
                   {this.state.rooms.map(i => (
-                    <EnsembleInfo host={"TBD"} title={i.name} members={0} onSelect={() => this.handleRoomSelect(i.id)} />
+                    <EnsembleInfo host={"TBD"} title={i.name} members={'tbd'} onSelect={() => this.handleRoomSelect(i.id)} />
                   ))}
                 </div>}
               </div> : 
               <div>
                 <h1>Current Room: {this.state.activeRoom.name}</h1>
                 <Button onClick={() => this.setState({activeRoom: null})}>Exit Room</Button>
-                <Button onClick={() => {}}>Send Message</Button>
+                <Button onClick={() => {
+                  const socket = io(host);
+                  socket.emit("message", {"data": "hello"})
+                }}>Send Message</Button>
+                <Button onClick={() => this.setState({messages: []})}>Clear</Button>
 
                 <div style={{marginTop: 50}}>
                   <h2>Messages</h2>
+                  {this.state.messages.map(item => <p>message</p>)}
                 </div>
               </div>}
           </>
