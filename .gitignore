@@ -31,3 +31,4 @@ package-lock.json
 src/server/env
 src/server/__pycache__
 src/server/roomlog.json
+src/roomlog.json

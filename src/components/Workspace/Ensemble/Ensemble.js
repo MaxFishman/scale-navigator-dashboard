@@ -60,6 +60,9 @@ export default class Ensemble extends React.Component {
 
   componentDidMount() {
     this.updateRooms()
+    if(app.auth().currentUser) {
+      this.setState({ready: true})
+    }
   }
 
   handleRoomSelect = id => {
