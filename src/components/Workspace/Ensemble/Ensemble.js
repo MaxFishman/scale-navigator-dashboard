@@ -38,7 +38,8 @@ export default class Ensemble extends React.Component {
     this.state = {
       rooms: [],
       activeRoom: null,
-      messages: []
+      messages: [],
+      ready: false
     }
 
     subscribeToMessages(data => this.handleMessage(data));
@@ -50,7 +51,7 @@ export default class Ensemble extends React.Component {
   
   handleLogin = () => {
     console.log(app.auth().currentUser);
-    console.log("signed in");
+    this.setState({ready: true})
   };
 
   updateRooms = () => {
@@ -74,8 +75,8 @@ export default class Ensemble extends React.Component {
   render() {
     return (
       <>
-        {app.auth().currentUser === null ? (
-          <Auth onMasterClose={this.handleLogin} />
+        {!this.state.ready ? (
+          <Auth onMasterClose={this.handleLogin}/>
         ) : (
           <>
             {this.state.activeRoom === null ? 
