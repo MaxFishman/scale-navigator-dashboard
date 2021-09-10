@@ -19,7 +19,9 @@
       display: none;
 
       @include sm {
+
         display: flex;
+
       }
     }
 
@@ -33,9 +35,11 @@
   }
 
   &__nav {
-    width: 100%;
-    list-style-type: none;
 
+    width: 100%;
+    padding-left: 0;
+    list-style-type: none;
+    margin:0;
     display: flex;
     justify-content: space-between;
 
@@ -45,12 +49,14 @@
   }
 
   &__navitem {
-    flex: 0 1 100%;
+
+    background-color: white;
+    flex: auto;
     padding: 0.25rem 0;
     font-size: 0.75rem;
     transition: background-color 0.25s ease;
     text-align: center;
-    border: 1px solid #ffde6a;
+
     border-radius: 15px;
 
     @include md {
@@ -58,11 +64,11 @@
     }
 
     &:first-child {
-      // border-radius: 20px 20px 0px 0px;
+      border-radius: 20px 20px 0px 0px;
     }
 
     & > a {
-      color: white;
+      color: black;
     }
 
     &--on {
@@ -71,6 +77,7 @@
   }
 
   &__content {
+
     border-top: 8px solid $accent-medium;
 
     box-sizing: border-box;
@@ -83,7 +90,7 @@
       
       border: 8px solid $accent-medium;
       box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-      border-radius: 0px 0px 40px 40px;
+      border-radius: 0px 0px 40px 0px;
     }
 
 

@@ -26,9 +26,8 @@
     font-size: 9vw;
     margin: 0;
     line-height: 1;
-    color: $accent-medium;
-    text-shadow: 0px 4px 13px $main-light, 0px 4px 24px $main-light,
-      0px 0px 6px $main-light;
+    color: white;
+
 
     @include md {
       font-size: 4vw;
@@ -37,15 +36,13 @@
 
   &__sublogo {
     flex: 0 0 auto;
-    font-family: "Wild Wolf Regular";
+    font-family: "Glow Better Script";
     font-weight: normal;
     text-align: right;
     font-size: 6vw;
     line-height: 1;
     color: $accent-medium;
-    margin: 0;
-    text-shadow: -2px 1px 7px $main-light, 0px 4px 24px $main-light,
-      0px 0px 6px $main-light;
+    margin-right: 8%;
 
     @include md {
       font-size: 2.5vw;
@@ -72,6 +69,7 @@
   display: block;
 }
 
+
 .navinfo {
   flex: 0 0 auto;
   display: grid;
@@ -93,7 +91,7 @@
     & > h5 {
       position: absolute;
       margin: 0;
-      color: #BD79F1;
+      color: black;
       font-size: 0.5rem;
       top: 0.1rem;
       left: 0.25rem;
@@ -101,22 +99,22 @@
   }
 
   &__root {
-    color: #BD79F1;
-    background-color: $accent-medium;
-    border-top: 3px solid $accent-medium;
-    border-left: 3px solid $accent-medium;
+    color: black;
+    background-color: white;
+    border-top: 3px solid white;
+    border-left: 3px solid white;
     border-radius: 9px 0 0 0;
     font-size: 1.5rem;
   }
 
   &__scaleclass {
-    border-top: 3px solid $accent-medium;
-    border-right: 3px solid $accent-medium;
+    border-top: 3px solid white;
+    border-right: 3px solid white;
     border-radius: 0 9px 0 0;
     font-size: 1.2rem;
 
     & > h5 {
-      color: $accent-medium;
+      color: white;
     }
   }
 
@@ -125,10 +123,11 @@
     display: flex;
     align-items: center;
     justify-content: space-around;
-    border: 3px solid $accent-medium;
+    border: 3px solid white;
     border-radius: 0 0 9px 30px;
     padding: 2px 0;
   }
+
 
   &__option {
     padding: 3px;
@@ -143,3 +142,5 @@
     }
   }
 }
+
+

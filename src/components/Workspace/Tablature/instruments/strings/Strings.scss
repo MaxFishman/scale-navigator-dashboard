@@ -24,7 +24,7 @@
   }
 
   &__note {
-    fill: rgb(82, 164, 229);
+    fill: #ffde6a;
 
     & + text {
       text-anchor: middle;
@@ -43,7 +43,7 @@
 
     &--fingered {
       & + text {
-        fill: white;
+        fill: black;
       }
 
       &.strings__note--off {

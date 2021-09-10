@@ -1,0 +1,95 @@
+@import "styles/_variables.scss";
+@import "styles/_media.scss";
+
+
+a:link {
+  color: #FFDE6A;
+}
+
+/* visited link */
+a:visited {
+  color: #F616F7;
+}
+
+/* mouse over link */
+a:hover {
+  color: #F7CC2F;
+}
+
+/* selected link */
+a:active {
+  color: #48F7DC;
+}
+
+h3{
+	color: white;
+}
+
+p{
+	color: #FFDE6A;
+}
+
+li{
+	color: #FFDE6A;
+}
+
+#this_scale{
+	display: flex;
+	flex-direction: column;
+
+	justify-content: flex-start;
+	flex-grow: 1; /* default 0 */
+	
+}
+
+#this_chord{
+
+	flex-grow: 3; /* default 0 */
+
+}
+
+#controls{
+
+	flex-grow: 1; /* default 0 */
+
+}
+
+#chord_controls_container{
+	display: flex;
+}
+
+#play{
+	height: 96px;
+	width: 33%;
+	margin:6%;
+	font-size: 3em;
+	font-weight: bolder;
+	background-color: #FFDE6A;
+	border: none;
+	border-radius: 12px;
+
+}
+
+.supersets {
+
+    background-color: Transparent;
+    background-repeat:no-repeat;
+    border: none;
+    cursor:pointer;
+    overflow: hidden;
+    outline:none;
+    display: block; 
+    text-align: center;
+}
+
+#chords-notation-ctr{
+
+	background-color: white;
+	width: 2px;
+
+	margin: auto;
+	width: 50%;
+	padding: 10px;
+	border-radius: 40px;
+
+}

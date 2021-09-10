@@ -6,7 +6,11 @@ article {
   float: left;
   padding: 20px;
   width: 100%;
-  background-color: #f1f1f1bd;
+
+}
+
+article > p {
+  color: white;
 }
 
 .iframe-container{

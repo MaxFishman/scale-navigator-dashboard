@@ -145,7 +145,7 @@ export default class Polygon {
             this.p5.endShape(this.p5.CLOSE);
 
             //write the text
-            this.p5.fill(80, 80, 80, 255 * this.opacity);
+            this.p5.fill(0, 0, 0, 255 * this.opacity);
             var font_size_2 = this.radius / 3;
             var scale_class = this.data.scale_class.replace("_", "\n");
             this.p5.textSize(font_size_2);
