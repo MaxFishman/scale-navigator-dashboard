@@ -28,3 +28,21 @@ article > p {
   height: 100%;
 }
 
+a:link {
+  color: #FFDE6A;
+}
+
+/* visited link */
+a:visited {
+  color: #FFDE6A;
+}
+
+/* mouse over link */
+a:hover {
+  color: #F7CC2F;
+}
+
+/* selected link */
+a:active {
+  color: #FFDE6A;
+}
