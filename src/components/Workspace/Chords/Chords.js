@@ -1,9 +1,22 @@
-import "./ChordStyle.css";
+import "./Chords.scss";
 import React from "react";
 import Vex from "vexflow";
 import ScaleData from "common/ScaleData";
 
-const DEFAULT_SPELLINGS = ["c", "cs", "d", "ef", "e", "f", "fs", "g", "af", "a", "bf", "b"];
+const DEFAULT_SPELLINGS = [
+  "c",
+  "cs",
+  "d",
+  "ef",
+  "e",
+  "f",
+  "fs",
+  "g",
+  "af",
+  "a",
+  "bf",
+  "b",
+];
 
 const mod = (a, b) => {
   return ((a % b) + b) % b;
@@ -246,42 +259,61 @@ class Chords extends React.Component {
     const modulate = (scale) => () => this.modulate(scale);
 
     const pivotModulationButtons = this.getPivotModulations().map((scale) => {
-      return <button onClick={modulate(scale)}>{scale}</button>;
+      return (
+        <button class="supersets" onClick={modulate(scale)}>
+          {scale}
+        </button>
+      );
     });
 
     return (
       <div id="Chords">
-        <p>
-          <button onClick={this.togglePlaying}>
-            {this.props.chordData.playing ? "STOP" : "PLAY"}
-          </button>
-        </p>
-        <p>Current scale: {this.props.scaleData.scale}</p>
-        <p>
-          Current chord:{" "}
-          {this.props.chordData.chordName === null
-            ? "none"
-            : this.props.chordData.chordName === "error"
-            ? "Error -- couldn't find a chord fitting these constraints. Try checking more boxes."
-            : this.props.chordData.chordName}
-        </p>
-        <p>Pivot modulations: {pivotModulationButtons}</p>
-        <p>Allowed root movements:</p>
-        <ul>{elements}</ul>
-        <p>
-          <label htmlFor="voice-leading-smoothness">
-            Voice leading smoothness:
-          </label>
-          <input
-            type="range"
-            id="voice-leading-smoothness"
-            min="0"
-            max="100"
-            value={this.voiceLeadingSmoothness}
-            onChange={this.handleVoiceLeadingSmoothnessChange}
-          />
-        </p>
-        <div id="chords-notation-ctr"></div>
+        <button id="play" onClick={this.togglePlaying}>
+          {this.props.chordData.playing ? "STOP" : "PLAY"}
+        </button>
+
+        <div id="chord_controls_container">
+          <div id="this_scale">
+            <div>
+              <h3>Current scale:</h3>
+              <p>{this.props.scaleData.scale}</p>
+            </div>
+            <div>
+              <h3>Pivot modulations:</h3>
+              <p>{pivotModulationButtons}</p>
+            </div>
+          </div>
+
+          <div id="this_chord">
+            <h3>Current chord: </h3>
+            <p>
+              {this.props.chordData.chordName === null
+                ? "none"
+                : this.props.chordData.chordName === "error"
+                ? "Error -- couldn't find a chord fitting these constraints. Try checking more boxes."
+                : this.props.chordData.chordName}
+            </p>
+            <div id="chords-notation-ctr"></div>
+          </div>
+
+          <div id="controls">
+            <h3>Allowed root movements:</h3>
+            <ul>{elements}</ul>
+            <p>
+              <label htmlFor="voice-leading-smoothness">
+                Voice leading smoothness:
+              </label>
+              <input
+                type="range"
+                id="voice-leading-smoothness"
+                min="0"
+                max="100"
+                value={this.voiceLeadingSmoothness}
+                onChange={this.handleVoiceLeadingSmoothnessChange}
+              />
+            </p>
+          </div>
+        </div>
       </div>
     );
   }

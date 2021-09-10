@@ -12,8 +12,8 @@ $blackKey_Offset: calc(#{- ($blackKey_Width / 2)} - #{$border_Width});
 
 $whiteKey_Color: white;
 $blackKey_Color: white;
-$blackKey_BorderColor: #aaaaaa;
-$whiteKey_BorderColor: #aaaaaa;
+$blackKey_BorderColor: black;
+$whiteKey_BorderColor: black;
 
 .piano {
   padding-bottom: $keyboard_Height;
@@ -42,7 +42,10 @@ $whiteKey_BorderColor: #aaaaaa;
       border-top: $border_Width solid $whiteKey_BorderColor;
       border-bottom: $border_Width solid $whiteKey_BorderColor;
       border-left: $border_Width solid $whiteKey_BorderColor;
+
       background-color: $whiteKey_Color;
+      border-bottom-left-radius: 5px;
+      border-bottom-right-radius: 5px;
     }
 
     &--black {
@@ -52,10 +55,12 @@ $whiteKey_BorderColor: #aaaaaa;
       border: 2px solid $blackKey_BorderColor;
       background-color: $blackKey_Color;
       margin: 0 0 0 $blackKey_Offset;
+      border-bottom-left-radius: 10px;
+      border-bottom-right-radius: 10px;
     }
 
     &--on {
-      background-color: red;
+      background-color: #ffde6a;
     }
   }
 }

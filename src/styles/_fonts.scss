@@ -1,4 +1,11 @@
 @font-face {
+  font-family: "Chewy";
+  font-style: normal;
+  font-weight: normal;
+  src: url("../resources/Chewy/Chewy-Regular.ttf") format("truetype");
+}
+
+@font-face {
   font-family: "Karla";
   font-style: normal;
   font-weight: normal;
@@ -40,4 +47,12 @@
   font-weight: normal;
   src: local("../resources/Glow Better Serif"),
     url("../resources/Glow Better Serif.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "Glow Better Script";
+  font-style: normal;
+  font-weight: normal;
+  src: local("../resources/Glow Better Script"),
+    url("../resources/Glow Better Script.otf") format("truetype");
 }

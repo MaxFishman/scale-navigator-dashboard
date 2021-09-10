@@ -30,7 +30,7 @@ const Navigation = () => {
     <div className="navigation">
       <div className="navigation__logowrap">
         <h1 className="navigation__logo">Scale Navigator</h1>
-        <h2 className="navigation__sublogo">DASHBOARD</h2>
+        <h2 className="navigation__sublogo">Dashboard</h2>
       </div>
 
       <div className="navigation__scalenav canvas-wrapper" id="canv_container">
@@ -46,7 +46,7 @@ const Navigation = () => {
           <h5>SCALE CLASS</h5>
           {ScaleData[scale].scale_class
             .split("_")
-            .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+            .map((word) => word.charAt(0) + word.slice(1))
             .join(" ")}
         </div>
         <div className="navinfo__options">
@@ -57,7 +57,7 @@ const Navigation = () => {
               name="autopilot"
               id="autopilot_checkbox"
             ></input>
-            <label for="autopilot">Autopilot</label>
+            <label for="autopilot">autopilot</label>
           </div>
 
           {/* <div className="navinfo__option">
@@ -72,13 +72,15 @@ const Navigation = () => {
           </div> */}
 
           <div className="navinfo__option">
-            <input
+            <input 
+              style={{direction: "rtl"}}
               type="range"
               autoComplete="off"
               name="autopilot_interval"
               id="autopilot_interval"
               min="1"
               max="4"
+              
               step="0.01"
             ></input>
           </div>
