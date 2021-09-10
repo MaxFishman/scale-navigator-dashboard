@@ -53,7 +53,7 @@ export default class Polygon {
 
         this.lastHover = false;
 
-        this.draw = (drawText = true) => {
+        this.draw = (drawText = true, isNeigh = false, neighOffset = { x: 0, y: 0 }) => {
             this.p5.push();
             this.animation_lerp();
 
@@ -145,19 +145,21 @@ export default class Polygon {
             this.p5.endShape(this.p5.CLOSE);
 
             //write the text
-            this.p5.fill(0, 0, 0, 255 * this.opacity);
+            this.p5.noStroke();
+            this.p5.fill(isNeigh ? 255 : 0, 255 * this.opacity);
             var font_size_2 = this.radius / 3;
             var scale_class = this.data.scale_class.replace("_", "\n");
             this.p5.textSize(font_size_2);
             this.p5.textAlign(this.p5.CENTER, this.p5.CENTER);
 
             if (drawText) {
-                this.p5.text(Pfivesketch.note_names[this.data.root], 0, -font_size_2 / 2);
+                this.p5.text(Pfivesketch.note_names[this.data.root],
+                    neighOffset.x * this.p5.width, -font_size_2 / 2 + neighOffset.y * this.p5.height);
                 // the mess at the end of the line just checks if the text has 2 lines and then it offsets the text more if necessary
                 this.p5.text(
                     scale_class,
-                    0,
-                    scale_class.split("\n").length > 1 ? font_size_2 : font_size_2 / 2
+                    neighOffset.x * this.p5.width,
+                    (scale_class.split("\n").length > 1 ? font_size_2 : font_size_2 / 2) + neighOffset.y * this.p5.height
                 ); //print out scale class
             }
             this.p5.pop();
