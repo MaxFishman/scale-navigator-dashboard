@@ -2,6 +2,25 @@
 @import "styles/_media.scss";
 
 
+a:link {
+  color: #FFDE6A;
+}
+
+/* visited link */
+a:visited {
+  color: #F616F7;
+}
+
+/* mouse over link */
+a:hover {
+  color: #F7CC2F;
+}
+
+/* selected link */
+a:active {
+  color: #48F7DC;
+}
+
 h3{
 	color: white;
 }
@@ -17,17 +36,15 @@ li{
 #this_scale{
 	display: flex;
 	flex-direction: column;
-	justify-content: space-between;
-	align-items: center;
-	justify-content: center;
+
+	justify-content: flex-start;
 	flex-grow: 1; /* default 0 */
-	border: 1px solid white;
 	
 }
 
 #this_chord{
 
-	flex-grow: 2; /* default 0 */
+	flex-grow: 3; /* default 0 */
 
 }
 

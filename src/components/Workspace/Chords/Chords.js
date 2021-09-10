@@ -274,14 +274,13 @@ class Chords extends React.Component {
 
         <div id="chord_controls_container">
           <div id="this_scale">
-            <div>
+
               <h3>Current scale:</h3>
               <p>{this.props.scaleData.scale}</p>
-            </div>
-            <div>
+
               <h3>Pivot modulations:</h3>
               <p>{pivotModulationButtons}</p>
-            </div>
+
           </div>
 
           <div id="this_chord">
