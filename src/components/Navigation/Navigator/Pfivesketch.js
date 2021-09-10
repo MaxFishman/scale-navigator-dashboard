@@ -32,12 +32,12 @@ function Pfivesketch({ nav }) {
         }
     };
 
-    const mousePressed = (p5) => {
-        nav.mousePressed(p5);
+    const mousePressed = (p5, event) => {
+        nav.mousePressed(p5, event);
     };
 
-    const mouseReleased = (p5) => {
-        nav.mouseReleased(p5);
+    const mouseReleased = (p5, event) => {
+        nav.mouseReleased(p5, event);
     };
 
     const windowResized = (p5) => {
@@ -45,11 +45,14 @@ function Pfivesketch({ nav }) {
         p5.resizeCanvas(p.width, Math.max(p.height, document.body.getBoundingClientRect().height / 2));
     };
 
-    return (<
+    const touchStarted = mousePressed;
+
+    return ( <
         Sketch setup = { setup }
         preload = { preload }
         draw = { draw }
         mousePressed = { mousePressed }
+        //touchStarted = { touchStarted }
         mouseReleased = { mouseReleased }
         windowResized = { windowResized }
         navigator = { nav }

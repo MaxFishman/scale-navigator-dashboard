@@ -164,32 +164,36 @@ function Navigator(setScaleData) {
         p5.pop();
     };
 
-    this.mousePressed = (p5) => {
-        if (this.main_polygon.click()) {
-            // Need to indicate to Chord player to change Chords
-            this.updateScaleState(this.scale);
-            return;
-        }
-        // check for clicks on all polygons
-        for (var p of this.neighbors) {
-            if (p && p.click() && !p.animation.active) {
-                this.prepareChangeMainScale(p5, p);
+    this.mousePressed = (p5, event) => {
+        if (event.type == "mousedown") {
+            if (this.main_polygon.click()) {
+                // Need to indicate to Chord player to change Chords
+                this.updateScaleState(this.scale);
                 return;
+            }
+            // check for clicks on all polygons
+            for (var p of this.neighbors) {
+                if (p && p.click() && !p.animation.active) {
+                    this.prepareChangeMainScale(p5, p);
+                    return;
+                }
             }
         }
     };
 
-    this.mouseReleased = (p5) => {
-        // check for clicks on all polygons
-        for (var p of this.neighbors) {
-            if (
-                p &&
-                p.click() &&
-                !p.animation.active &&
-                this.preview_polygons_ready
-            ) {
-                this.finishChangeMainScale(p5, p);
-                return;
+    this.mouseReleased = (p5, event) => {
+        if (event.type == "mouseup") {
+            // check for clicks on all polygons
+            for (var p of this.neighbors) {
+                if (
+                    p &&
+                    p.click() &&
+                    !p.animation.active &&
+                    this.preview_polygons_ready
+                ) {
+                    this.finishChangeMainScale(p5, p);
+                    return;
+                }
             }
         }
     };
