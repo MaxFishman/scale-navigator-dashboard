@@ -251,7 +251,7 @@ class Chords extends React.Component {
             checked={this.props.chordData.allowedRootIntervals[i]}
             onChange={this.handleRootMovementChange(i)}
           />
-          <label htmlFor={i}>{name}</label>
+          <span htmlFor={i}>{name}</span>
         </li>
       );
     });

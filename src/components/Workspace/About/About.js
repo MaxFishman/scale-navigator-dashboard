@@ -2,6 +2,14 @@ import React from "react";
 import "./About.scss";
 import * as img from "./assets";
 
+import network from './assets/2dnetwork.png';
+import fifths from './assets/circleoffifths.png';
+import debussy from './assets/debussy_analysis.png';
+import pressingcircle from './assets/pressing_circle.png';
+import scales from './assets/scales.png';
+import intersects from './assets/seven_note_intersects.png';
+import lattice from './assets/seven_note_lattice.png';
+
 export default class About extends React.Component {
   render() {
     return (
@@ -24,9 +32,10 @@ export default class About extends React.Component {
             (Figure 2) was born.
           </p>
 
-          <img src={img.network} alt="figure 1" />
+          <img width="30%" src={network} alt="figure 1" />
 
           <p>
+          THESTNIS
             The basics of the interface are as follows: each scale in the Scale
             Navigator is represented by a clickable polygonal-shaped node. The
             selected scale is in the center, radially surrounded by adjacent
@@ -36,8 +45,10 @@ export default class About extends React.Component {
             staff.
           </p>
 
+          <img width="10%" src={lattice} alt="" />
+
           <p>
-            As a multimedia artist, I am interested in synesthesia and the idea
+            THERHERJHERAs a multimedia artist, I am interested in synesthesia and the idea
             that sound, color, shape, and direction can have meaningful and
             persistent relationships among one another. I decided to keep
             synesthesia in my mind as a guiding design principle while working
@@ -80,6 +91,8 @@ export default class About extends React.Component {
             me to implement Boyd's algorithm for chord choice based on root
             movement (Figure 3):
           </p>
+
+          <img width="60%" src={fifths} alt="" />
 
           <p>
             Boyd did not give instructions for the case of root movement by
