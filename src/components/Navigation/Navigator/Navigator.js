@@ -150,10 +150,11 @@ function Navigator(setScaleData) {
         //draw all the polygons
         for (var p of allPolygons) {
             if (p) {
-                p.draw(true, p != this.main_polygon, this.neighbors.includes(p) ? {
-                    x: (p.animation.target.x - this.main_polygon.animation.target.x) / 3,
-                    y: (p.animation.target.y - this.main_polygon.animation.target.y) / 3
-                } : { x: 0, y: 0 });
+                // p.draw(true, p != this.main_polygon, this.neighbors.includes(p) ? {
+                //     x: (p.animation.target.x - this.main_polygon.animation.target.x) / 3,
+                //     y: (p.animation.target.y - this.main_polygon.animation.target.y) / 3
+                // } : { x: 0, y: 0 });
+                p.draw(true);
             }
             // document.getElementById("labels_checkbox").checked
         }

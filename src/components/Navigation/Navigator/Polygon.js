@@ -152,6 +152,8 @@ export default class Polygon {
             this.p5.textSize(font_size_2);
             this.p5.textAlign(this.p5.CENTER, this.p5.CENTER);
 
+
+            if (this.data.scale_class === "harmonic_minor" || this.data.scale_class === "harmonic_major") this.p5.translate(0, -4)
             if (drawText) {
                 this.p5.text(Pfivesketch.note_names[this.data.root],
                     neighOffset.x * this.p5.width, -font_size_2 / 2 + neighOffset.y * this.p5.height);
