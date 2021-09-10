@@ -60,9 +60,10 @@ export default class Polygon {
             // translate so we dont have to always write x and y
             this.p5.translate(this.x * this.p5.width, this.y * this.p5.height);
 
-            this.p5.noStroke();
             var angle = this.p5.TWO_PI / this.points_count;
             var fontcolor;
+            this.p5.strokeJoin(this.p5.ROUND);
+            this.p5.strokeWeight(this.radius / 5)
             this.p5.beginShape();
 
             // set the color
@@ -91,6 +92,7 @@ export default class Polygon {
             // add in the opacity
             fontcolor.push(255 * this.opacity);
             this.p5.fill(fontcolor);
+            this.p5.stroke(fontcolor)
             this.p5.textFont("Mulish")
 
             // draw the polygon
