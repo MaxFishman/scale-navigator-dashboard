@@ -3,7 +3,36 @@ import "./TriadCircle.scss";
 import ChordData from "common/ChordData";
 import classNames from "classnames";
 
+const triad_spelling = {
+  "C": "C",
+  "Em": "Em",
+  "G":"G",
+  "Bm":"Bm",
+  "D":"D",
+  "F#m":"G♭m", 
+  "A":"A",
+  "C#m":"D♭m",
+  "E":"E",
+  "G#m":"A♭m",
+  "B":"B",
+  "D#m":"E♭m",
+  "F#":"G♭",
+  "B♭m":"A#m",
+  "D♭":"C#",
+  "Fm":"Fm",
+  "A♭":"G#",
+  "Cm":"Cm",
+  "E♭":"D#",
+  "Gm":"Gm",
+  "B♭":"A#",
+  "Dm":"Dm",
+  "F":"F",
+  "Am":"Am",
+
+}
+
 export default function TriadCircle({ keyData }) {
+  console.log("keydata: ", keyData);
   const radius = 850;
   const padding = 200;
   const polarToCart = (deg) => {
@@ -30,12 +59,16 @@ export default function TriadCircle({ keyData }) {
         r={radius}
       />
       {ChordData.map((chord, i) => {
-        const { x, y } = polarToCart(270 + i * (360 / ChordData.length));
+        if (!keyData.chords.includes(chord)){
+          chord = triad_spelling[chord];
+        }
+        const { x, y } = polarToCart(270 + i * (360 / 24));
         return (
           <>
             <circle
               class={classNames("triadcircle__chord", {
                 "triadcircle__chord--off": !keyData.chords.includes(chord),
+
               })}
               cx={x}
               cy={y}

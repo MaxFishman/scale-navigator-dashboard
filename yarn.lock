@@ -3405,7 +3405,7 @@
   dependencies:
     "tweetnacl" "^0.14.3"
 
-"bezier-js@3 - 4":
+"bezier-js@^4.1.1", "bezier-js@3 - 4":
   "integrity" "sha512-oVOS6SSFFFlfnZdzC+lsfvhs/RRcbxJ47U04M4s5QIBaJmr3YWmTIL3qmrOK9uW+nUUcl9Jccmo/xpTrG+bBoQ=="
   "resolved" "https://registry.npmjs.org/bezier-js/-/bezier-js-4.1.1.tgz"
   "version" "4.1.1"

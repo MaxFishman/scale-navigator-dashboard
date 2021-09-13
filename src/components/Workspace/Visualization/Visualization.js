@@ -1,4 +1,5 @@
 import React from "react";
+import { Bezier } from "bezier-js/src/bezier.js"
 import {
   ForceGraph2D,
   ForceGraph3D,
@@ -9,8 +10,8 @@ import {
 const Visualization = () => {
   return (
     <p> hey waht</p>
-    <ForceGraph3D graphData={myData} />;
     )
 };
 
 export default Visualization;
+

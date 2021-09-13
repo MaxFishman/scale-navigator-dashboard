@@ -4,6 +4,7 @@ import About from "./About/About";
 import Chords from "./Chords/Chords";
 import Ensemble from "./Ensemble/Ensemble";
 import Tablature from "./Tablature/Tablature";
+// import Visualization from "./Visualization/Visualization";
 import React, { useContext } from "react";
 import { app } from "../../config/base";
 import { ScaleContext } from "../Context/ScaleContext";
