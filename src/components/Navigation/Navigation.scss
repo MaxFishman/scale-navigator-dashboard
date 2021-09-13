@@ -78,7 +78,11 @@
   color: white;
   font-family: "Karla";
   font-weight: bold;
-  margin-bottom: 12px;
+  padding-bottom: 30px;
+
+  @include sm {
+    padding-bottom: 0;
+  }
 
   &__root,
   &__scaleclass {
@@ -142,5 +146,3 @@
     }
   }
 }
-
-

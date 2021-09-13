@@ -1,0 +1,80 @@
+.mobile-tabs {
+    width: 100%;
+    height: 63px;
+    padding: 0 1.25rem;
+    z-index: 999;
+    position: fixed;
+    bottom: 11px;
+    left: 0;
+    background-color: black;
+
+    ol {
+        width: 100%;
+        height: 100%;
+        border-radius: 15px;
+        border: 2px solid #fff;
+        overflow: hidden;
+    }
+
+    li {
+        width: 100%;
+        height: 100%;
+        text-align: center;
+        padding: 6px 0 0;
+
+        &:not(:first-child) {
+            border-left: 1px solid #fff;
+        }
+
+        a {
+            color: #fff;
+            line-height: 20px;
+            font-size: 10px;
+        }
+
+        &.workspace__navitem--on {
+            background: #fff;
+
+            a {
+                color: #000;
+
+                .icon {
+                    filter: invert(1);
+                }
+            }
+        }
+    }
+
+    .icon {
+        display: block;
+        margin-bottom: 5px;
+        width: 100%;
+        height: 30px;
+        background-repeat: no-repeat;
+        background-size: 30px;
+        background-position: center;
+    }
+
+    .icon.Tablature {
+        background-image: url('./assets/Tablature.svg');
+    }
+    .icon.Navigator {
+        background-image: url('./assets/Navigator.svg');
+    }
+    .icon.Ensemble {
+        background-image: url('./assets/Ensemble.svg');
+    }
+    .icon.Chords {
+        background-image: url('./assets/Chords.svg');
+    }
+    .icon.Visualization {
+        background-image: url('./assets/Visualizer.svg');
+    }
+
+    .workspace__navitem {
+        &.About,
+        &.Account {
+            display: none;
+        }
+    }
+}

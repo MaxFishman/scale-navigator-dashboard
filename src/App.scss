@@ -24,7 +24,7 @@ body {
 
 .appcontainer {
   width: 100%;
-  min-height: 100vh;
+  height: 100vh;
   padding: 0;
   background-color: $accent-medium;
 
@@ -40,9 +40,7 @@ body {
   grid-template-columns: 100%;
   gap: 2rem;
   background: black;
-
   padding: 1.25rem;
-  padding-top: 1.75rem;
 
   @include md {
     grid-template-rows: 100%;
@@ -410,7 +408,7 @@ ul {
       border: 1px solid white;
       border-radius: 9px;
     }
-    
+
     input[type='range']::-webkit-slider-runnable-track {
 
       -webkit-appearance: none;
@@ -418,7 +416,7 @@ ul {
       color: black;
 
     }
-    
+
     input[type='range']::-webkit-slider-thumb {
       width: 10px;
       -webkit-appearance: none;
