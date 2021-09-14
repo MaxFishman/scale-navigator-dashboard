@@ -30,7 +30,7 @@
     "tone": "^14.7.77",
     "vexflow": "^3.0.9",
     "web-vitals": "^1.0.1",
-    "yarn": "^1.22.11"
+
   },
   "scripts": {
     "start": "react-scripts start",
