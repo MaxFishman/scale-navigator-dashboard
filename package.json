@@ -1,7 +1,4 @@
 {
-  "engines": {
-    "node": "12"
-  },
   "name": "scale-navigator-dashboard",
   "version": "0.1.0",
   "private": true,
