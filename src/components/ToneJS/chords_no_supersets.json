@@ -6800,7 +6800,7 @@
                 "original_voicing": [54, 60, 64, 69, 76],
                 "prime_form_kinda": [0, 4, 6, 9],
                 "root": 6,
-                "root_transposed_to_zero": [6, 12, 16, 33, 40],
+                "root_transposed_to_zero": [6, 12, 16, 21, 28],
                 "scale_supersets": []},
  "fs_m9(add6)-94": {"chord_type": "_m9(add6)-94",
                     "original_voicing": [51, 57, 61, 68, 73],
