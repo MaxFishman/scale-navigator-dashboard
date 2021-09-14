@@ -1,6 +1,11 @@
 @import "styles/_variables.scss";
 @import "styles/_media.scss";
 
+.header-wrapper {
+    display: flex;
+    justify-content: space-between;
+}
+
 .navigation {
   width: 100%;
   height: 90vh;
@@ -30,7 +35,8 @@
 
 
     @include md {
-      font-size: 4vw;
+      font-size: 3.2vw;
+      margin: 0 auto;
     }
   }
 
@@ -78,7 +84,6 @@
   color: white;
   font-family: "Karla";
   font-weight: bold;
-  padding-bottom: 30px;
 
   @include sm {
     padding-bottom: 0;

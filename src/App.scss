@@ -5,13 +5,14 @@
 img {
    -webkit-filter: invert(1);
    filter: invert(1);
-   }
+}
 
 body {
   font-family: arial, sans-serif;
   overscroll-behavior-y: none;
   overflow-x: hidden;
   font-family: "Mulish";
+  background-color: black;
 
   @include md {
     overflow: hidden;
@@ -41,7 +42,7 @@ body {
   grid-template-columns: 100%;
   gap: 2rem;
   background: black;
-  padding: 1.25rem;
+  padding: 14px;
 
   @include md {
     grid-template-rows: 100%;
@@ -466,4 +467,9 @@ input[type=checkbox] {
     &:focus{
         outline: none !important;
     }
+}
+
+button {
+  border: 0;
+  background-color: transparent;
 }

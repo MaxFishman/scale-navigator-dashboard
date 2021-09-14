@@ -1,14 +1,19 @@
-import Pfivesketch from "./Navigator/Pfivesketch";
 import React, { useContext, useEffect, useRef } from "react";
+import Pfivesketch from "./Navigator/Pfivesketch";
 import { ScaleContext } from "../Context/ScaleContext";
 import ScaleData from "common/ScaleData";
 import PitchClassData from "common/PitchClassData";
 import Navigator from "./Navigator/Navigator";
 import Tabs from "components/Tabs";
+import MobileMenu from "../MobileMenu";
+import useWindowSize from "../../hooks/device/index";
 
 import "./Navigation.scss";
 
 const Navigation = () => {
+  const size = useWindowSize();
+  const isMobile = size.width < 425;
+
   const { scaleData, setScaleData } = useContext(ScaleContext);
   const { scale } = scaleData;
 
@@ -26,15 +31,32 @@ const Navigation = () => {
     navRef.current.scaleDataCallback(setScaleData);
   }, [setScaleData]);
 
+  const hasActiveRoute = isMobile && window.location.pathname !== '/';
+  const wrapperStyle = hasActiveRoute ? {height: '0', overflow: 'hidden'} : {};
+  const logoStyle = hasActiveRoute ? {
+    position: 'fixed',
+    top: 0,
+    left: 0,
+    width: '100%',
+    background: 'black',
+    'z-index': 123,
+    'padding-top': '12px'
+  } : {};
+
   return (
-    <div className="navigation">
-      <div className="navigation__logowrap">
-        <h1 className="navigation__logo">Scale Navigator</h1>
-        <h2 className="navigation__sublogo">Dashboard</h2>
+    <div className="navigation" style={wrapperStyle}>
+
+      <div className="header-wrapper" style={logoStyle}>
+        <h1 className="navigation__logo">
+          Scale Navigator
+          <h2 className="navigation__sublogo">Dashboard</h2>
+        </h1>
+
+        {isMobile && <MobileMenu/>}
       </div>
 
       <div className="navigation__scalenav canvas-wrapper" id="canv_container">
-        <Pfivesketch nav={navRef.current}/>
+        {!hasActiveRoute && <Pfivesketch nav={navRef.current}/>}
       </div>
 
       <div className="navinfo">
@@ -72,7 +94,7 @@ const Navigation = () => {
           </div> */}
 
           <div className="navinfo__option">
-            <input 
+            <input
               style={{direction: "rtl"}}
               type="range"
               autoComplete="off"
@@ -80,7 +102,7 @@ const Navigation = () => {
               id="autopilot_interval"
               min="1"
               max="4"
-              
+
               step="0.01"
             ></input>
           </div>
