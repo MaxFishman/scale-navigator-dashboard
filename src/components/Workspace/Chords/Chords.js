@@ -178,9 +178,14 @@ class Chords extends React.Component {
       keys[hand].push(vexflowString);
     });
 
-    if (pitchClassToNoteName[chordObject.root] !== undefined) {
-      keys.bass.push(pitchClassToNoteName[chordObject.root] + "/3");
-      accidentals.bass.push(null);
+    let rootNoteName = pitchClassToNoteName[chordObject.root];
+    if (rootNoteName !== undefined) {
+      keys.bass.push(rootNoteName + "/3");
+      if (rootNoteName.length === 2) {
+        accidentals.bass.push(rootNoteName[1]);
+      } else {
+        accidentals.bass.push(null);
+      }
     }
 
     for (let hand of ["left", "right", "bass"]) {
