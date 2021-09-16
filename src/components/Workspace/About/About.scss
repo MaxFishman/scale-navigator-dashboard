@@ -1,3 +1,5 @@
+@import "styles/_variables.scss";
+@import "styles/_media.scss";
 
 article {
   word-wrap: break-word;
@@ -6,43 +8,54 @@ article {
   float: left;
   padding: 20px;
   width: 100%;
-
 }
 
 article > p {
   color: white;
 }
 
-.iframe-container{
+#credits{
+  text-align: center;
+}
+
+article > h2 {
+  color: white;
+  padding-bottom: 12px;
+  text-align: center;
+  font-family: "Glow Better Script";
+  font-weight: normal;
+}
+
+.iframe-container {
   position: relative;
   width: 100%;
-  padding-bottom: 56.25%; 
+  padding-bottom: 56.25%;
   height: 0;
 }
 
-.iframe-container iframe{
+.iframe-container iframe {
   position: absolute;
-  top:0;
+  top: 0;
   left: 0;
   width: 100%;
   height: 100%;
 }
 
 a:link {
-  color: #FFDE6A;
+  color: #ffde6a;
 }
 
 /* visited link */
 a:visited {
-  color: #FFDE6A;
+  color: #ffde6a;
 }
 
 /* mouse over link */
 a:hover {
-  color: #F7CC2F;
+  color: #f7cc2f;
 }
 
 /* selected link */
 a:active {
-  color: #FFDE6A;
+  color: #ffde6a;
 }
