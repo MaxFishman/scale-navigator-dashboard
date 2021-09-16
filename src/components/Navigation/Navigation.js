@@ -1,4 +1,5 @@
 import React, { useContext, useEffect, useRef } from "react";
+import { useLocation } from 'react-router-dom';
 import Pfivesketch from "./Navigator/Pfivesketch";
 import { ScaleContext } from "../Context/ScaleContext";
 import ScaleData from "common/ScaleData";
@@ -11,12 +12,14 @@ import useWindowSize from "../../hooks/device/index";
 import "./Navigation.scss";
 
 const Navigation = () => {
+  const location = useLocation();
   const size = useWindowSize();
   const isMobile = size.width < 425;
 
   const { scaleData, setScaleData } = useContext(ScaleContext);
   const { scale } = scaleData;
 
+  const canvasWrapperRef = useRef(null);
   const navRef = useRef(null);
 
   useEffect(() => {
@@ -31,8 +34,9 @@ const Navigation = () => {
     navRef.current.scaleDataCallback(setScaleData);
   }, [setScaleData]);
 
-  const hasActiveRoute = isMobile && window.location.pathname !== '/';
-  const wrapperStyle = hasActiveRoute ? {height: '0', overflow: 'hidden'} : {};
+  const hasActiveRoute = isMobile && location.pathname !== '/';
+  const wrapperStyle = hasActiveRoute ? { height: '40vh', overflow: 'hidden' } : {};
+  const navInfoStyle = hasActiveRoute ? { display: 'none' } : {};
   const logoStyle = hasActiveRoute ? {
     position: 'fixed',
     top: 0,
@@ -42,6 +46,8 @@ const Navigation = () => {
     'z-index': 123,
     'padding-top': '12px'
   } : {};
+
+  const sketchWrapperStyle = hasActiveRoute ? { height: '40vh', overflow: 'hidden', marginTop: '70px' } : {}
 
   return (
     <div className="navigation" style={wrapperStyle}>
@@ -55,11 +61,11 @@ const Navigation = () => {
         {isMobile && <MobileMenu/>}
       </div>
 
-      <div className="navigation__scalenav canvas-wrapper" id="canv_container">
-        {!hasActiveRoute && <Pfivesketch nav={navRef.current}/>}
+      <div className="navigation__scalenav canvas-wrapper" id="canv_container" ref={canvasWrapperRef} style={sketchWrapperStyle}>
+        <Pfivesketch navRef={navRef.current} canvasWrapperRef={canvasWrapperRef}/>
       </div>
 
-      <div className="navinfo">
+      <div className="navinfo" style={navInfoStyle}>
         <div className="navinfo__root">
           <h5>ROOT</h5>
           {PitchClassData[ScaleData[scale].root].note}
@@ -81,17 +87,6 @@ const Navigation = () => {
             ></input>
             <label for="autopilot">autopilot</label>
           </div>
-
-          {/* <div className="navinfo__option">
-            <input
-              type="checkbox"
-              autoComplete="off"
-              name="labels"
-              id="labels_checkbox"
-              defaultChecked="false"
-            ></input>
-            <label for="labels">Labels</label>
-          </div> */}
 
           <div className="navinfo__option">
             <input

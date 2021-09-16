@@ -1,9 +1,10 @@
-import React, {useState, useEffect} from "react";
-import { Card, Avatar, Input, message, Button } from "antd";
+import React from "react";
+import { Card, Avatar, Input, Button } from "antd";
 import { app, host } from "../../../config/base";
 import Auth from "../../Authentication/AuthenticationModal";
 import axios from 'axios';
 import io from 'socket.io-client';
+
 const { Search } = Input;
 const { Meta } = Card;
 
@@ -11,7 +12,7 @@ class EnsembleInfo extends React.Component {
   render() {
     return (
       <Card
-        style={{ width: 300 }}
+        style={{ width: '100%' }}
         onClick={() => this.props.onSelect()}
       >
         <Meta
@@ -28,7 +29,7 @@ class EnsembleInfo extends React.Component {
 }
 
 function subscribeToMessages(cb) {
-  const socket = io(host); 
+  const socket = io(host);
   socket.on("message", data => cb(data));
 }
 
@@ -48,7 +49,7 @@ export default class Ensemble extends React.Component {
   handleMessage = data => { //very important!!!!!!!!!!!
     this.setState({messages: this.state.messages.concat(data)});
   }
-  
+
   handleLogin = () => {
     console.log(app.auth().currentUser);
     this.setState({ready: true})
@@ -82,7 +83,7 @@ export default class Ensemble extends React.Component {
           <Auth onMasterClose={this.handleLogin}/>
         ) : (
           <>
-            {this.state.activeRoom === null ? 
+            {this.state.activeRoom === null ?
               <div style={{ background: "#ECECEC", padding: "30px" }}>
                 <Search
                   placeholder="input new ensemble name"
@@ -107,7 +108,7 @@ export default class Ensemble extends React.Component {
                     <EnsembleInfo host={"TBD"} title={i.name} members={'tbd'} onSelect={() => this.handleRoomSelect(i.id)} />
                   ))}
                 </div>}
-              </div> : 
+              </div> :
               <div>
                 <h1>Current Room: {this.state.activeRoom.name}</h1>
                 <Button onClick={() => this.setState({activeRoom: null})}>Exit Room</Button>

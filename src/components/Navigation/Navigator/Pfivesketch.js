@@ -1,61 +1,67 @@
-import React, { useRef } from "react";
+import React,{useLayoutEffect} from "react";
+import { useLocation } from 'react-router-dom';
 import Sketch from "react-p5";
 import './../../../resources/Mulish/Mulish-Regular.ttf';
 
-//pass in p5 in the draw func, and only where its needed.
-
 const fps = 30;
-var font;
 
-function Pfivesketch({ nav }) {
-    const preload = (p5) => {}
+function Pfivesketch({ navRef, canvasWrapperRef }) {
+    const location = useLocation();
+    const wrapperElm = canvasWrapperRef.current;
+
+    useLayoutEffect(() => {
+        const p = wrapperElm && wrapperElm.getBoundingClientRect();
+        window.scaleP5 && window.scaleP5.resizeCanvas(p.width, p.height);
+
+    }, [location.pathname])
 
     const setup = (p5, canvasParentRef) => {
-        var p = document.getElementById("canv_container").getBoundingClientRect();
+        const p = wrapperElm && wrapperElm.getBoundingClientRect();
+
         p5.createCanvas(p.width, Math.max(p.height, document.body.getBoundingClientRect().height / 2)).parent(canvasParentRef);
         p5.frameRate(fps);
-
-        nav.init(p5);
-
+        navRef.init(p5);
         windowResized(p5);
     };
 
     const draw = (p5) => {
         p5.clear();
-        nav.draw(p5);
+        navRef.draw(p5);
 
         if (
             document.getElementById("autopilot_checkbox").checked !==
-            nav.autopilot_data.active
+            navRef.autopilot_data.active
         ) {
-            nav.toggle_autopilot();
+            navRef.toggle_autopilot();
         }
     };
 
     const mousePressed = (p5, event) => {
-        nav.mousePressed(p5, event);
+        navRef.mousePressed(p5, event);
     };
 
     const mouseReleased = (p5, event) => {
-        nav.mouseReleased(p5, event);
+        navRef.mouseReleased(p5, event);
     };
 
     const windowResized = (p5) => {
-        var p = document.getElementById("canv_container").getBoundingClientRect();
-        p5.resizeCanvas(p.width, Math.max(p.height, document.body.getBoundingClientRect().height / 2));
+        const p = wrapperElm && wrapperElm.getBoundingClientRect();
+        p5.resizeCanvas(p.width, p.height);
     };
 
-    const touchStarted = mousePressed;
+    const preload = (p5) => {
+        window.scaleP5 = p5
+    }
 
-    return ( <
-        Sketch setup = { setup }
-        preload = { preload }
-        draw = { draw }
-        mousePressed = { mousePressed }
-        //touchStarted = { touchStarted }
-        mouseReleased = { mouseReleased }
-        windowResized = { windowResized }
-        navigator = { nav }
+    return (
+        <Sketch
+            preload={preload}
+            setup={setup}
+            draw={draw}
+            mousePressed={mousePressed}
+            mouseReleased={mouseReleased}
+            windowResized={windowResized}
+            navigator={navRef}
         />
     );
 }
@@ -74,6 +80,7 @@ Pfivesketch.note_names = [
     "B♭",
     "B",
 ];
+
 Pfivesketch.fps = fps;
 
 export default Pfivesketch;
