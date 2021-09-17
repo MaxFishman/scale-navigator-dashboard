@@ -103,6 +103,7 @@ class Chords extends React.Component {
   }
 
   updateNotation() {
+    console.log(this.props.chordData.chordName);
     const container = document.getElementById("chords-notation-ctr");
     while (container.hasChildNodes()) {
       container.removeChild(container.lastChild);
@@ -235,6 +236,7 @@ class Chords extends React.Component {
     this.props.setScaleData({
       scale: scale,
     });
+
   }
 
   render() {
@@ -266,7 +268,10 @@ class Chords extends React.Component {
     const pivotModulationButtons = this.getPivotModulations().map((scale) => {
       return (
         <button class="supersets" onClick={modulate(scale)}>
-          {scale}
+          {scale
+            .split("_")
+            .map((word) => word.charAt(0) + word.slice(1))
+            .join(" ")}
         </button>
       );
     });
@@ -281,7 +286,12 @@ class Chords extends React.Component {
           <div id="this_scale">
 
               <h3>Current scale:</h3>
-              <p>{this.props.scaleData.scale}</p>
+              <p>{
+                this.props.scaleData.scale
+                .split("_")
+                .map((word) => word.charAt(0) + word.slice(1))
+                .join(" ")
+              }</p>
 
               <h3>Pivot modulations:</h3>
               <p>{pivotModulationButtons}</p>
@@ -295,7 +305,12 @@ class Chords extends React.Component {
                 ? "none"
                 : this.props.chordData.chordName === "error"
                 ? "Error -- couldn't find a chord fitting these constraints. Try checking more boxes."
-                : this.props.chordData.chordName}
+                : this.props.chordData.chordName
+                  .slice(0,this.props.chordData.chordName.lastIndexOf('-'))
+                  .split("_")
+                  .map((word) => word.charAt(0) + word.slice(1))
+                  .join("  ")
+              }
             </p>
             <div id="chords-notation-ctr"></div>
           </div>

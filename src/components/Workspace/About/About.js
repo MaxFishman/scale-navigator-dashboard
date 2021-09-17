@@ -39,7 +39,7 @@ export default class About extends React.Component {
               width={171}
               height={180}
               alt="171x180"
-              src="assets/2dnetwork.png"
+              src="./assets/2dnetwork.png"
             />
             <Figure.Caption>
               Nulla vitae elit libero, a pharetra augue mollis interdum.
