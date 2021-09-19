@@ -29,7 +29,7 @@
     font-weight: normal;
     text-align: center;
     font-size: 9vw;
-    margin: 0;
+    margin-left: 12px;
     line-height: 1;
     color: white;
 
@@ -45,13 +45,13 @@
     font-family: "Glow Better Script";
     font-weight: normal;
     text-align: right;
-    font-size: 6vw;
+    font-size: 5vw;
     line-height: 1;
     color: $accent-medium;
-    margin-right: 8%;
+    margin-right: 3%;
 
     @include md {
-      font-size: 2.5vw;
+      font-size: 2vw;
     }
   }
 

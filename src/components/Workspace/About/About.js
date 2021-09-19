@@ -1,14 +1,16 @@
 import React from "react";
 import "./About.scss";
+import Figure from "react-bootstrap/Figure";
+import FigureImage from "react-bootstrap/FigureImage";
+import FigureCaption from "react-bootstrap/FigureCaption";
 
-
-import network from './assets/2dnetwork.png';
-import fifths from './assets/circleoffifths.png';
-import debussy from './assets/debussy_analysis.png';
-import pressingcircle from './assets/pressing_circle.png';
-import scales from './assets/scales.svg';
-import intersects from './assets/seven_note_intersects.png';
-import lattice from './assets/seven_note_lattice.png';
+import network from "./assets/2dnetwork.png";
+import fifths from "./assets/circleoffifths.png";
+import debussy from "./assets/debussy_analysis.png";
+import pressingcircle from "./assets/pressing_circle.png";
+import scales from "./assets/scales.svg";
+import intersects from "./assets/seven_note_intersects.png";
+import lattice from "./assets/seven_note_lattice.png";
 
 export default class About extends React.Component {
   render() {
@@ -31,6 +33,18 @@ export default class About extends React.Component {
             <a href="https://www.nathanturczan.com/apps/">Scale Navigator</a>{" "}
             (Figure 2) was born.
           </p>
+
+          <Figure>
+            <Figure.Image
+              width={171}
+              height={180}
+              alt="171x180"
+              src="./assets/2dnetwork.png"
+            />
+            <Figure.Caption>
+              Nulla vitae elit libero, a pharetra augue mollis interdum.
+            </Figure.Caption>
+          </Figure>
 
           <img width="100%" src={network} alt="figure 1" />
           <img width="100%" src={debussy} alt="figure 1" />
@@ -201,6 +215,18 @@ export default class About extends React.Component {
                 Shorter
               </a>
             </li>
+          </ul>
+          <h2>Credits</h2>
+          <ul id="credits">
+            <li>Netanel Benyoram</li>
+            <li>Brady Boettcher</li>
+            <li>Scott Devereux</li>
+            <li>Nathan Ho</li>
+            <li>Colin Honigman</li>
+            <li>Michael Maurer</li>
+            <li>Nathan Turczan</li>
+            <li>Ondřej Sedláček</li>
+            <li>Dexter Shepherd</li>
           </ul>
         </article>
       </>

@@ -1,11 +1,11 @@
 .mobile-menu-wrapper {
     &> button {
         display: block;
-        background-image: url('./menu.png');
+        background-image: url('./menu.svg');
         background-repeat: no-repeat;
         background-size: contain;
         width: 40px;
         height: 40px;
-        margin: -5px;
+        margin: 5px;
     }
 }
