@@ -218,7 +218,7 @@ export default class About extends React.Component {
           </ul>
           <h2>Credits</h2>
           <ul id="credits">
-            <li>Netanel Benyoram</li>
+            <li>Nate Ben</li>
             <li>Brady Boettcher</li>
             <li>Scott Devereux</li>
             <li>Nathan Ho</li>

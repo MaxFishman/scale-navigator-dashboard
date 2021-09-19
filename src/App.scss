@@ -13,6 +13,7 @@ body {
   overflow-x: hidden;
   font-family: "Mulish";
   background-color: black;
+  touch-action: pan-x pan-y;
 
   @include md {
     overflow: hidden;
