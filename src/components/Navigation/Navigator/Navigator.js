@@ -32,6 +32,8 @@ function Navigator(setScaleData) {
         this.p5 = p5;
         this.init_autopilot(p5);
 
+        this.poly_size = this.p5.min(this.p5.width, this.p5.height) / 7.5;
+
         this.initPolygons();
     };
 
@@ -312,6 +314,24 @@ function Navigator(setScaleData) {
 
         return;
     };
+
+    this.updateSizes = (p5) => {
+        var oldps = this.poly_size;
+        this.poly_size = p5.min(p5.width, p5.height) / 7.5;
+
+        //background(255);
+        var allPolygons = [this.main_polygon].concat(
+            this.preview_polygons,
+            this.old_neighbors,
+            this.hover_polygons
+        );
+        allPolygons.push(...this.neighbors);
+        allPolygons.push(this.old_main_polygon);
+
+        for (var p of allPolygons) {
+            if (p) p.radius *= this.poly_size / oldps;
+        }
+    }
 
     this.get_new_neighbors = (p5, p) => {
         var prev_poly = p.getNeighbors();

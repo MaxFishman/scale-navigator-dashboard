@@ -1,4 +1,4 @@
-import React,{useLayoutEffect} from "react";
+import React, { useLayoutEffect } from "react";
 import { useLocation } from 'react-router-dom';
 import Sketch from "react-p5";
 import './../../../resources/Mulish/Mulish-Regular.ttf';
@@ -47,21 +47,21 @@ function Pfivesketch({ navRef, canvasWrapperRef }) {
     const windowResized = (p5) => {
         const p = wrapperElm && wrapperElm.getBoundingClientRect();
         p5.resizeCanvas(p.width, p.height);
+        navRef.updateSizes(p5);
     };
 
     const preload = (p5) => {
         window.scaleP5 = p5
     }
 
-    return (
-        <Sketch
-            preload={preload}
-            setup={setup}
-            draw={draw}
-            mousePressed={mousePressed}
-            mouseReleased={mouseReleased}
-            windowResized={windowResized}
-            navigator={navRef}
+    return ( <
+        Sketch preload = { preload }
+        setup = { setup }
+        draw = { draw }
+        mousePressed = { mousePressed }
+        mouseReleased = { mouseReleased }
+        windowResized = { windowResized }
+        navigator = { navRef }
         />
     );
 }
