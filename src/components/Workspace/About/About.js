@@ -1,10 +1,10 @@
 import React from "react";
 import "./About.scss";
-import Figure from "react-bootstrap/Figure";
-import FigureImage from "react-bootstrap/FigureImage";
-import FigureCaption from "react-bootstrap/FigureCaption";
 
-import network from "./assets/2dnetwork.png";
+import "bootstrap/dist/css/bootstrap.min.css";
+import Figure from "react-bootstrap/Figure";
+
+import network from "./assets/twodnetwork.png";
 import fifths from "./assets/circleoffifths.png";
 import debussy from "./assets/debussy_analysis.png";
 import pressingcircle from "./assets/pressing_circle.png";
@@ -19,38 +19,112 @@ export default class About extends React.Component {
         <article>
           <h2>About</h2>
 
+          
+
           <p>
-            In the summer of 2018, I came across{" "}
+            In 2018, I read Dmitri Tymoczko's paper{" "}
             <a href="https://dmitri.mycpanel.princeton.edu/files/publications/debussy.pdf">
               Scale Networks and Debussy
-            </a>
-            , a paper by Dmitri Tymoczko that describes Claude Debussy's
-            harmonic language as as a crystalline lattice of interlocking
-            scales, or "scale network" (Figure 1). I was excited about the idea
-            of creating a graphical interface that could allow users to interact
-            directly with the scale network to explore Debussian harmony, and so
-            the{" "}
-            <a href="https://www.nathanturczan.com/apps/">Scale Navigator</a>{" "}
-            (Figure 2) was born.
+            </a>{" "}
+            which describes Claude Debussy's harmonic language as as a
+            crystalline lattice of connected scales, or "scale network" (Figure
+            1). Reading this paper changed everything for me; ever since, I rely
+            on the scale network framework whenever I compose music. However,
+            Tymoczko's proposed scale network is complex enough that it's
+            tough to hold bits of it in my head, let alone the whole thing,
+            and so I found myself working out the same musical calculations by hand
+            over and over again — a dead giveaway that it's time to write a
+            computer program. This is how I came upon the idea to create a
+            graphical interface that could allow users to interact directly with
+            the scale network, and so <strong>Scale Navigator</strong> was born.{" "}
           </p>
 
           <Figure>
-            <Figure.Image
-              width={171}
-              height={180}
-              alt="171x180"
-              src="./assets/2dnetwork.png"
-            />
-            <Figure.Caption>
-              Nulla vitae elit libero, a pharetra augue mollis interdum.
+            <Figure.Image alt="Scale Network" src={network} />
+            <Figure.Caption style={{ "text-align": "center" }}>
+              Figure 1. Scale Network of 7-note Pressing Scales, connected via
+              maximal intersection
             </Figure.Caption>
           </Figure>
 
-          <img width="100%" src={network} alt="figure 1" />
-          <img width="100%" src={debussy} alt="figure 1" />
-          <img width="100%" src={pressingcircle} alt="figure 1" />
-          <img width="100%" src={scales} alt="figure 1" />
-          <img width="100%" src={intersects} alt="figure 1" />
+          <p>
+            <strong>Scale Navigator</strong> makes harmony accessible by giving
+            people tangible harmonic objects to play with (scales represented
+            via shape, color, and position), and placing these objects within an
+            easy-to-understand and easy-to-navigate framework (the scale
+            network). Even as an instrumentalist it takes work to physically
+            learn new chords/scales before you can really hear them; and if you
+            aren't a traditional instrumentalist, these things can be locked
+            away.
+          </p>
+
+          <p>
+            {" "}
+            <strong>Scale Navigator</strong> -- designed as a creative-composition,
+            improvisation, and teaching tool, focused on families of related
+            scales --
+          </p>
+
+          <Figure>
+            <Figure.Image alt="Scale Network" src={debussy} />
+            <Figure.Caption style={{ "text-align": "center" }}>
+              Figure 2. Debussy
+            </Figure.Caption>
+          </Figure>
+
+          <Figure>
+            <Figure.Image alt="Debussy" src={pressingcircle} />
+            <Figure.Caption style={{ "text-align": "center" }}>
+              Figure 3. Debussy
+            </Figure.Caption>
+          </Figure>
+
+          <Figure>
+            <Figure.Image alt="scales" src={scales} />
+            <Figure.Caption style={{ "text-align": "center" }}>
+              Figure 4. Scales
+            </Figure.Caption>
+          </Figure>
+
+          <Figure>
+            <Figure.Image alt="intersects" src={intersects} />
+            <Figure.Caption style={{ "text-align": "center" }}>
+              Figure 5. intersects
+            </Figure.Caption>
+          </Figure>
+
+          <Figure>
+            <Figure.Image alt="Scale Network" src={fifths} />
+            <Figure.Caption style={{ "text-align": "center" }}>
+              Figure 1. Scale Network
+            </Figure.Caption>
+          </Figure>
+
+          <Figure>
+            <Figure.Image alt="Scale Network" src={lattice} />
+            <Figure.Caption style={{ "text-align": "center" }}>
+              Figure 1. Scale Network
+            </Figure.Caption>
+          </Figure>
+
+          <blockquote cite="https://en.wikipedia.org/wiki/Pitch_space">
+            And what is a diagram? A representation of a musical system. And we
+            use a diagram so that, for students of the subject, matters which
+            are hard to grasp with the hearing may appear before their eyes.
+            <div class="attribution">
+              <p class="author">Bacchius</p>
+            </div>
+          </blockquote>
+
+          <blockquote cite="https://en.wikipedia.org/wiki/Modulation_(music)">
+            Modulation is the essential part of the art. Without it there is
+            little music, for a piece derives its true beauty not from the large
+            number of fixed modes which it embraces but rather from the subtle
+            fabric of its modulation.
+            <div class="attribution">
+              <p class="author">Charles-Henri Blainville</p>
+            </div>
+          </blockquote>
 
           <p>
             The basics of the interface are as follows: each scale in the Scale
@@ -62,14 +136,12 @@ export default class About extends React.Component {
             staff.
           </p>
 
-          <img width="100%" src={lattice} alt="" />
-
           <p>
             As a multimedia artist, I am interested in synesthesia and the idea
             that sound, color, shape, and direction can have meaningful and
             persistent relationships among one another. I decided to keep
             synesthesia in my mind as a guiding design principle while working
-            on the Scale Navigator, determining that the scale's class (whether
+            on the <strong>Scale Navigator</strong>, determining that the scale's class (whether
             it be Diatonic, Acoustic, Harmonic Major, Harmonic Minor, Octatonic,
             Heptatonic or Whole Tone) should govern the shape of the scale node,
             and the scale's root should dictate the scale node's color.
@@ -77,7 +149,7 @@ export default class About extends React.Component {
 
           <p>
             While the scale network accounts for the relationship among scales,
-            I wanted the Scale Navigator to also include a way of dealing with
+            I wanted the <strong>Scale Navigator</strong> to also include a way of dealing with
             chords, so I added a chordal element to the interface. The Scale
             Navigator’s chord generator draws from a lexicon of jazz chord
             voicings catalogued in Bill Boyd’s{" "}
@@ -109,8 +181,6 @@ export default class About extends React.Component {
             movement (Figure 3):
           </p>
 
-          <img width="100%" src={fifths} alt="" />
-
           <p>
             Boyd did not give instructions for the case of root movement by
             tritone, and so the authors allow for selection of a chord in any
@@ -134,7 +204,7 @@ export default class About extends React.Component {
           </p>
 
           <p>
-            It was important that the Scale Navigator should actually play these
+            It was important that the <strong>Scale Navigator</strong> should actually play these
             chords aloud, and so I used{" "}
             <a href="https://tonejs.github.io/">Tone.js</a> to design the
             synthesizer patch that the user hears when interacting with the
@@ -146,18 +216,18 @@ export default class About extends React.Component {
             audiovisual performances &mdash; choose from among your computer's
             MIDI drivers from the drop down menu in the bottom-center of the
             interface. Refer to Figure 4 for a YouTube playlist of music
-            improvised using the Scale Navigator and routed to various digital
+            improvised using the <strong>Scale Navigator</strong> and routed to various digital
             instruments, synthesizers, and Yamaha DisKlaviers.
           </p>
 
           <p>
-            At every point in the process of designing the Scale Navigator, I
+            At every point in the process of designing the <strong>Scale Navigator</strong>, I
             was lucky to have help from my advisors{" "}
             <a href="https://colinhonigman.com/">Colin Honigman</a> and{" "}
             <a href="https://dexterjshepherd.com/">Dexter Shepherd</a>, who were
             a constant source of design advice and support. In addition to
             teaching me computer science fundamentals, these two also
-            contributed to this project by use-testing the Scale Navigator in
+            contributed to this project by use-testing the <strong>Scale Navigator</strong> in
             its different iterations and helping to generate the dataset that
             describes the scale network.
           </p>
@@ -185,13 +255,13 @@ export default class About extends React.Component {
 
           <h2>Further Reading</h2>
           <p>
-            The Scale Navigator was the subject of my graduate thesis at
+            The <strong>Scale Navigator</strong> was the subject of my graduate thesis at
             California Institute of the Arts:{" "}
             <a href="https://mtiid.calarts.edu/wp-content/uploads/2020/03/Turczan_MFA_Thesis.pdf">
               “The Scale Navigator: A Synesthetic Interface for Manipulating
               Harmony in Composition, Performance and Installation”
             </a>{" "}
-            describes not only the Scale Navigator's design, but also its use as
+            describes not only the <strong>Scale Navigator</strong>'s design, but also its use as
             a music compositional assistive tool, a performance tool, and as an
             interface for interacting with multimedia installations. I later
             presented this work at the{" "}
