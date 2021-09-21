@@ -17,9 +17,8 @@ article {
 
 .attribution {
   text-align: right;
-  
 }
-.author{
+.author {
   color: black;
 }
 
@@ -33,7 +32,7 @@ blockquote {
 
 blockquote:before {
   color: #ccc;
-  content: '“';
+  content: "“";
   font-size: 2em;
   line-height: 0.1em;
   margin-right: 0.25em;
@@ -50,6 +49,20 @@ article > p {
 
 #credits {
   text-align: center;
+}
+
+#scale_list_container {
+  display: flex;
+  flex-direction: row;
+}
+
+#shape_list_wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+#scale_img_wrapper {
 }
 
 article > h2 {
