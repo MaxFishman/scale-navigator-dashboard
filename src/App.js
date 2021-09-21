@@ -11,6 +11,8 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import "./App.scss";
 
 const App = () => {
+    const [tabData, setTabData] = useState([]);
+
     const [scaleData, setScaleData] = useState({
         scale: "c_diatonic",
         scaleIndex: 0,
@@ -39,11 +41,12 @@ const App = () => {
                 ...newChordData,
                 ...previousProps,
             });
-        }
+        },
     }
 
     const scaleContext = {
         scaleData,
+        tabData,
         setScaleData: (newScaleData) => {
             const previousProps = {};
 
@@ -57,6 +60,13 @@ const App = () => {
                 ...newScaleData,
                 ...previousProps,
             });
+        },
+        setTablatureInstruments: (data) => {
+            // setTabData([
+            //     ...tabData,
+            //     ...data
+            // ])
+            setTabData(data)
         }
     }
 
@@ -67,11 +77,11 @@ const App = () => {
                     <Container fluid>
                         <Row>
                             <Chords/>
-                            <Col xs="12" md="6">
+                            <Col xs="12" md="5">
                                 <Navigation />
                             </Col>
 
-                            <Col xs="12" md="6">
+                            <Col xs="12" md="7">
                                 <Workspace />
                             </Col>
                         </Row>

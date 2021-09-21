@@ -2,111 +2,111 @@
 @import "styles/_media.scss";
 
 $label-font-size: 0.8rem;
+
 .tabcontainer {
-  background-color:white;
-  position: relative;
-  width: 100%;
-  border: 4px solid rgba(0, 0, 0, 0.01);
-  box-sizing: border-box;
-  margin-bottom: 0.5rem;
-
-  // filter: drop-shadow(0px 0px 13px rgba(0, 255, 255, 0.44))
-  //   drop-shadow(0px 4px 24px rgba(255, 255, 255, 0.5))
-  //   drop-shadow(0px 0px 6px #ffffff);
-  border-radius: 19px;
-
-  &__title {
-    position: absolute;
-    left: 0.6rem;
-    top: 0.15rem;
-    margin: 0;
-    font-size: $label-font-size;
-    color: black;
-  }
-
-  &__close {
-    position: absolute;
-    right: 0rem;
-    top: 0rem;
+    background-color: white;
+    position: relative;
+    width: 100%;
     border: 4px solid rgba(0, 0, 0, 0.01);
-    background-color: rgba(0, 0, 0, 0.01);
-    border-radius: 0px 15px 0px 7px;
-    cursor: pointer;
-    color: black;
-    padding-left: 0.5rem;
-    padding-bottom: 0.2rem;
-    text-decoration: none;
-    border: none;
-  }
+    box-sizing: border-box;
+    margin-bottom: 0.5rem;
+
+    // filter: drop-shadow(0px 0px 13px rgba(0, 255, 255, 0.44))
+    //   drop-shadow(0px 4px 24px rgba(255, 255, 255, 0.5))
+    //   drop-shadow(0px 0px 6px #ffffff);
+    border-radius: 19px;
+
+    &__title {
+        position: absolute;
+        left: 0.6rem;
+        top: 0.15rem;
+        margin: 0;
+        font-size: $label-font-size;
+        color: black;
+    }
+
+    &__close {
+        position: absolute;
+        right: 0rem;
+        top: 0rem;
+        border: 4px solid rgba(0, 0, 0, 0.01);
+        background-color: rgba(0, 0, 0, 0.01);
+        border-radius: 0px 15px 0px 7px;
+        cursor: pointer;
+        color: black;
+        padding-left: 0.5rem;
+        padding-bottom: 0.2rem;
+        text-decoration: none;
+        border: none;
+    }
 }
 
 .alltabscontainer {
-  list-style-type: none;
-  padding: 0;
+    list-style-type: none;
+    padding: 0;
 }
 
 .tabsectioncontainer {
-  padding: 0 0.75rem;
 
-  & > * {
-    font-size: $label-font-size;
-    padding-bottom: 0.5rem;
+    &>* {
+        font-size: $label-font-size;
+        padding-bottom: 0.5rem;
 
-    &:first-child {
-      padding-top: 0.5rem;
+        &:first-child {
+            padding-top: 0.5rem;
+        }
     }
-  }
 
-  &__select {
-    z-index: 10;
-    width: 100%;
-  }
+    &__select {
+        z-index: 10;
+        width: 100%;
+    }
 
-  &__title {
-    font-weight: normal;
-    color: white;
-    text-align: left;
-    margin: 0;
-    padding-bottom: 0.1rem;
-  }
+    &__title {
+        font-weight: normal;
+        color: white;
+        text-align: left;
+        margin: 0;
+        padding-bottom: 0.1rem;
+    }
 }
 
 .select {
-  &__control {
-    border: 2px solid #ffde6a !important;
-    border-radius: 8px !important;
-    background-color: transparent !important;
+    &__control {
+        border: 2px solid #ffde6a !important;
+        border-radius: 8px !important;
+        background-color: transparent !important;
 
-    &--is-focused {
-      border: 3px solid #ffde6a !important;
-      box-shadow: none !important;
-    }
-  }
-
-  &__indicator {
-    color: #ffde6a !important;
-  }
-
-  &__value-container {
-    padding: 0.2rem !important;
-  }
-
-  &__placeholder {
-    color: white !important;
-    opacity: 0.4 !important;
-  }
-
-  &__multi-value {
-    background: rgba(0, 0, 0, 0.1) !important;
-    border-radius: 7px !important;
-
-    &__label {
-      color: white !important;
+        &--is-focused {
+            border: 3px solid #ffde6a !important;
+            box-shadow: none !important;
+        }
     }
 
-    &__remove {
-      color: white !important;
-      opacity: 0.2 !important;
+    &__indicator {
+        color: #ffde6a !important;
     }
-  }
+
+    &__value-container {
+        padding: 0.2rem !important;
+    }
+
+    &__placeholder {
+        color: white !important;
+        opacity: 0.4 !important;
+    }
+
+    &__multi-value {
+        background: rgba(0, 0, 0, 0.1) !important;
+        border-radius: 7px !important;
+
+        &__label {
+            color: white !important;
+        }
+
+        &__remove {
+            color: white !important;
+            opacity: 0.2 !important;
+        }
+    }
 }

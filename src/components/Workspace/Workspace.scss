@@ -1,5 +1,6 @@
 @import "styles/_variables.scss";
 @import "styles/_media.scss";
+
 .workspace {
     display: none;
     position: relative;
@@ -7,23 +8,29 @@
     justify-content: flex-start;
     text-align: center;
     height: 100vh;
+
     &.is-visible {
         display: flex;
     }
+
     &__navwrap {
         &.desktop {
             display: none;
+
             @include sm {
                 display: flex;
             }
         }
+
         &.mobile-tabs {
             display: block;
+
             @include sm {
                 display: none;
             }
         }
     }
+
     &__nav {
         width: 100%;
         padding-left: 0;
@@ -31,24 +38,34 @@
         margin: 0;
         display: flex;
         justify-content: space-between;
+
         @include md {
             flex-wrap: nowrap;
         }
     }
+
     &__content {
         border-top: 8px solid $accent-medium;
         box-sizing: border-box;
         height: 100%;
         flex: 0 1 auto;
         overflow: auto;
-        @include md {
+        border: 0;
+        padding: 12px;
+
+        @include sm {
             border: 8px solid $accent-medium;
+        }
+
+        @include md {
             box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
             border-radius: 0px 0px 40px 0px;
         }
+
         &::-webkit-scrollbar {
             width: 6px;
         }
+
         &::-webkit-scrollbar-thumb {
             background: $main-medium;
             border-radius: 10px;
@@ -71,18 +88,23 @@
         transition: background-color 0.25s ease;
         text-align: center;
         border-radius: 15px;
+
         &.Navigator {
             display: none;
         }
+
         @include md {
             border-radius: 20px 20px 0px 0px;
         }
+
         &:first-child {
             border-radius: 20px 20px 0px 0px;
         }
+
         &>a {
             color: black;
         }
+
         &--on {
             background-color: $accent-medium;
         }

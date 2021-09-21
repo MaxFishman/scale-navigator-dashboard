@@ -277,14 +277,14 @@ class Chords extends React.Component {
     });
 
     return (
-      <div id="Chords">
+      <div id="Chords" className="chords-page">
         <button id="play" onClick={this.togglePlaying}>
           {this.props.chordData.playing ? "STOP" : "PLAY"}
         </button>
 
-        <div id="chord_controls_container">
-          <div id="this_scale">
+        <div id="chord_controls_container" className="chords-wrapper">
 
+          <div id="this_scale" className="current-scale-wrapper">
               <h3>Current scale:</h3>
               <p>{
                 this.props.scaleData.scale
@@ -298,7 +298,7 @@ class Chords extends React.Component {
 
           </div>
 
-          <div id="this_chord">
+          <div id="this_chord" className="current-chord-wrapper">
             <h3>Current chord: </h3>
             <p>
               {this.props.chordData.chordName === null
@@ -315,7 +315,7 @@ class Chords extends React.Component {
             <div id="chords-notation-ctr"></div>
           </div>
 
-          <div id="controls">
+          <div id="controls" className="chords-control-wrapper">
             <h3>Allowed root movements:</h3>
             <ul>{elements}</ul>
             <p>
