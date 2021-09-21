@@ -5,15 +5,20 @@ import Chords from "./Chords/Chords";
 import Ensemble from "./Ensemble/Ensemble";
 import Tablature from "./Tablature/Tablature";
 // import Visualization from "./Visualization/Visualization";
-import React, { useContext } from "react";
+import React, { useContext, useRef } from "react";
 import { app } from "../../config/base";
 import { ScaleContext } from "../Context/ScaleContext";
 import { Switch, Route, Redirect, useLocation } from "react-router-dom";
 import ROUTES from "common/Routes";
+import {
+  Provider,
+  KeepAlive,
+} from 'react-keep-alive';
 import { ChordContext } from "components/Context/ChordContext";
 import Tabs from "components/Tabs";
 
 import "./Workspace.scss";
+import Visualization from "./Visualization/Visualization";
 
 export default function Workspace() {
   const location = useLocation();
@@ -47,7 +52,14 @@ export default function Workspace() {
           </Route>
 
           <Route path={ROUTES.SCALENET}>
-            <p>Scale Network Component</p>
+            <Provider>
+              <KeepAlive name="Visualization">
+                <div className="navigation__scalenav visu-wrapper" id="canv_container_visu">
+                  <Visualization />
+                </div>
+              </KeepAlive>
+            </Provider>
+    
           </Route>
 
           <Route path={ROUTES.ABOUT}>

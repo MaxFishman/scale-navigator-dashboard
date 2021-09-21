@@ -1,112 +1,90 @@
 @import "styles/_variables.scss";
 @import "styles/_media.scss";
-
-
-
 .workspace {
-  display: none;
-  position: relative;
-  flex-direction: column;
-  justify-content: flex-start;
-  text-align: center;
-  height: 100vh;
-
-  &.is-visible {
-    display: flex;
-  }
-
-  &__navwrap {
-    &.desktop {
-      display: none;
-
-      @include sm {
-
+    display: none;
+    position: relative;
+    flex-direction: column;
+    justify-content: flex-start;
+    text-align: center;
+    height: 100vh;
+    &.is-visible {
         display: flex;
-
-      }
     }
-
-    &.mobile-tabs {
-      display: block;
-
-      @include sm {
-        display: none;
-      }
+    &__navwrap {
+        &.desktop {
+            display: none;
+            @include sm {
+                display: flex;
+            }
+        }
+        &.mobile-tabs {
+            display: block;
+            @include sm {
+                display: none;
+            }
+        }
     }
-  }
+    &__nav {
+        width: 100%;
+        padding-left: 0;
+        list-style-type: none;
+        margin: 0;
+        display: flex;
+        justify-content: space-between;
+        @include md {
+            flex-wrap: nowrap;
+        }
+    }
+    &__content {
+        border-top: 8px solid $accent-medium;
+        box-sizing: border-box;
+        height: 100%;
+        flex: 0 1 auto;
+        overflow: auto;
+        @include md {
+            border: 8px solid $accent-medium;
+            box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+            border-radius: 0px 0px 40px 0px;
+        }
+        &::-webkit-scrollbar {
+            width: 6px;
+        }
+        &::-webkit-scrollbar-thumb {
+            background: $main-medium;
+            border-radius: 10px;
+        }
+    }
+}
 
-  &__nav {
-
+.visu-wrapper {
     width: 100%;
-    padding-left: 0;
-    list-style-type: none;
-    margin:0;
-    display: flex;
-    justify-content: space-between;
-
-    @include md {
-      flex-wrap: nowrap;
-    }
-  }
-
-  &__content {
-
-    border-top: 8px solid $accent-medium;
-
-    box-sizing: border-box;
-
     height: 100%;
-    flex: 0 1 auto;
-    overflow: auto;
-
-    @include md {
-
-      border: 8px solid $accent-medium;
-      box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-      border-radius: 0px 0px 40px 0px;
-    }
-
-
-
-    &::-webkit-scrollbar {
-      width: 6px;
-    }
-
-    &::-webkit-scrollbar-thumb {
-      background: $main-medium;
-      border-radius: 10px;
-    }
-  }
+    padding: 5%;
 }
 
 .workspace__navwrap.desktop {
-  .workspace__navitem {
-    background-color: white;
-    flex: auto;
-    padding: 0.25rem 0;
-    font-size: 0.75rem;
-    transition: background-color 0.25s ease;
-    text-align: center;
-    border-radius: 15px;
-
-    &.Navigator {
-      display: none;
+    .workspace__navitem {
+        background-color: white;
+        flex: auto;
+        padding: 0.25rem 0;
+        font-size: 0.75rem;
+        transition: background-color 0.25s ease;
+        text-align: center;
+        border-radius: 15px;
+        &.Navigator {
+            display: none;
+        }
+        @include md {
+            border-radius: 20px 20px 0px 0px;
+        }
+        &:first-child {
+            border-radius: 20px 20px 0px 0px;
+        }
+        &>a {
+            color: black;
+        }
+        &--on {
+            background-color: $accent-medium;
+        }
     }
-
-    @include md {
-      border-radius: 20px 20px 0px 0px;
-    }
-
-    &:first-child {
-      border-radius: 20px 20px 0px 0px;
-    }
-
-    & > a {
-      color: black;
-    }
-
-    &--on {
-      background-color: $accent-medium;
-    }
-  }
 }
