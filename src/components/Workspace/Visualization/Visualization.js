@@ -25,8 +25,13 @@ const Visualization = () => {
         if (!ran_setup) setup(p5);
         else {
             cnv.parent(canvasParentRef)
-            p5.background(255)
-            console.log("visu draw")
+            p5.background(255, 16)
+
+            p5.translate(p5.width / 2, p5.height / 2)
+            var f = p5.frameCount / 50;
+            var l = Math.min(p5.width, p5.height) / 3
+            p5.fill(0);
+            p5.ellipse(Math.cos(f) * l, Math.sin(f) * l, l / 5)
         }
     };
 
