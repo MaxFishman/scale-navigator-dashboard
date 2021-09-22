@@ -32,7 +32,8 @@ function Navigator(setScaleData) {
         this.p5 = p5;
         this.init_autopilot(p5);
 
-        this.poly_size = this.p5.min(this.p5.width, this.p5.height) / 7.5;
+        this.poly_size = (this.p5.width + this.p5.height) / 22;
+        this.poly_size = p5.max((1000) / 22, this.poly_size)
 
         this.initPolygons();
     };
@@ -317,7 +318,8 @@ function Navigator(setScaleData) {
 
     this.updateSizes = (p5) => {
         var oldps = this.poly_size;
-        this.poly_size = p5.min(p5.width, p5.height) / 7.5;
+        this.poly_size = (p5.width + p5.height) / 22;
+        this.poly_size = p5.max((1000) / 22, this.poly_size)
 
         //background(255);
         var allPolygons = [this.main_polygon].concat(
@@ -329,7 +331,13 @@ function Navigator(setScaleData) {
         allPolygons.push(this.old_main_polygon);
 
         for (var p of allPolygons) {
-            if (p) p.radius *= this.poly_size / oldps;
+            if (p) p.radius = p.radius / oldps * this.poly_size;
+        }
+
+        var pos = this.main_polygon.getNeighborPositions();
+        for (var p = 0; p < this.neighbors.length; p++) {
+            this.neighbors[p].x = pos[p].x;
+            this.neighbors[p].y = pos[p].y;
         }
     }
 
