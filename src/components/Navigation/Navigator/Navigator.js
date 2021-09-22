@@ -33,7 +33,7 @@ function Navigator(setScaleData) {
         this.init_autopilot(p5);
 
         this.poly_size = (this.p5.width + this.p5.height) / 22;
-        this.poly_size = p5.max((1000) / 22, this.poly_size)
+        this.poly_size = p5.max((1200) / 22, this.poly_size)
 
         this.initPolygons();
     };
@@ -319,7 +319,7 @@ function Navigator(setScaleData) {
     this.updateSizes = (p5) => {
         var oldps = this.poly_size;
         this.poly_size = (p5.width + p5.height) / 22;
-        this.poly_size = p5.max((1000) / 22, this.poly_size)
+        this.poly_size = p5.max((1200) / 22, this.poly_size)
 
         //background(255);
         var allPolygons = [this.main_polygon].concat(
