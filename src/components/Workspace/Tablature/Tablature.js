@@ -1,10 +1,10 @@
-import React, { useContext, useState } from "react";
+import React from "react";
+import { useSelector, useDispatch } from 'react-redux'
 import Mandolin from "./instruments/strings/Mandolin";
 import Guitar from "./instruments/strings/Guitar";
 import Banjo from "./instruments/strings/Banjo";
 import Ukulele from "./instruments/strings/Ukulele";
 import ScaleData from "common/ScaleData";
-import { ScaleContext } from "components/Context/ScaleContext";
 import Flute from "./instruments/flute/Flute";
 import Select from "react-select";
 import Piano from "./instruments/keyboard/Piano";
@@ -72,8 +72,9 @@ const INST = {
 };
 
 export default function Tablature() {
-    // const [selected, setSelected] = useState([]);
-    const { scaleData, tabData, setTablatureInstruments } = useContext(ScaleContext);
+    const dispatch = useDispatch()
+    const { tabData, scaleData } = useSelector(state => state.root)
+    const setTablatureInstruments = (payload) => dispatch({ type: 'SET_TAB_DATA', payload })
 
     const options = [
         {
@@ -113,7 +114,6 @@ export default function Tablature() {
     ];
 
     const onChange = (newSelected, s) => {
-        // setSelected(newSelected);
         setTablatureInstruments(newSelected);
     };
 
@@ -124,9 +124,8 @@ export default function Tablature() {
 
     const makeCloseFn = (name) => {
         return () => {
-        const newSelected = tabData.filter((s) => s.value !== name);
-        // setSelected(newSelected);
-        setTablatureInstruments(newSelected);
+            const newSelected = tabData.filter((s) => s.value !== name);
+            setTablatureInstruments(newSelected);
         };
     };
 
@@ -158,22 +157,22 @@ export default function Tablature() {
 
     return (
         <div className="tabsectioncontainer">
-        <h2 className="tabsectioncontainer__title">Instruments</h2>
-        <Select
-            isMulti
-            name="Tablature"
-            onChange={onChange}
-            options={options}
-            value={tabData}
-            className="tabsectioncontainer__select"
-            classNamePrefix="select"
-            placeholder="add instrument..."
-        />
-        <SortableTabsList
-            onSortEnd={onSortEnd}
-            keyData={keyData}
-            curSelected={tabData}
-        ></SortableTabsList>
+            <h2 className="tabsectioncontainer__title">Instruments</h2>
+            <Select
+                isMulti
+                name="Tablature"
+                onChange={onChange}
+                options={options}
+                value={tabData}
+                className="tabsectioncontainer__select"
+                classNamePrefix="select"
+                placeholder="add instrument..."
+            />
+            <SortableTabsList
+                onSortEnd={onSortEnd}
+                keyData={keyData}
+                curSelected={tabData}
+            />
         </div>
     );
 }
