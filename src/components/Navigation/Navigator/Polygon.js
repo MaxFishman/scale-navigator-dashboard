@@ -53,12 +53,13 @@ export default class Polygon {
 
         this.lastHover = false;
 
-        this.draw = (drawText = true, isNeigh = false, neighOffset = { x: 0, y: 0 }) => {
+        this.draw = (drawText = true, isNeigh = false, neighOffset = { x: 0, y: 0 }, scale_mult = 1) => {
             this.p5.push();
             this.animation_lerp();
 
             // translate so we dont have to always write x and y
             this.p5.translate(this.x * this.p5.width, this.y * this.p5.height);
+            this.p5.scale(scale_mult);
 
             var angle = this.p5.TWO_PI / this.points_count;
             var fontcolor;

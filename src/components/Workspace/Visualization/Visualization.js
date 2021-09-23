@@ -134,9 +134,13 @@ const Visualization = () => {
                     if (arr[i]) {
                         arr[i].x = x + 1 / 2;
                         arr[i].y = y + 1 / 2;
+
+                        arr[i].layer_id = j;
                     }
                 }
             }
+
+            console.log(layers)
 
             // console.log(diatonic,
             //     acoustic,
@@ -158,10 +162,77 @@ const Visualization = () => {
             if (p5.width != p.width * .9 || p5.height != p.height * .9) windowResized(p5);
             p5.background(0)
 
+            function getScaleObjectByName(name) {
+                for (var l of layers) {
+                    for (var po of l) {
+                        if (po) {
+                            if (po.scale == name) return po;
+                        }
+                    }
+                }
+                return undefined;
+            }
+
             for (var l of layers) {
                 for (var po of l) {
                     if (po) {
+                        if (window.navRef.current.main_polygon.scale == po.scale) {
+                            var x = po.x;
+                            var y = po.y;
 
+                            p5.push();
+                            p5.noStroke();
+                            for (var i = 0; i < 1; i += 1 / 20) {
+                                p5.fill(255, 222, 106, i * 64)
+                                p5.ellipse(x * p5.width, y * p5.height, 5 * po.radius * (1 - i))
+                            }
+                            p5.pop();
+                        }
+
+                        p5.push();
+                        p5.stroke(255, 16)
+                        p5.strokeWeight((p5.width + p5.height) / 1000)
+                        var alph = 128;
+                        var cols_same = [
+                            [255, 0, 255, alph],
+                            [255, 0, 0, alph],
+                            [0, 153, 255, alph],
+                            [153, 0, 204, alph],
+                            [0, 255, 0, alph],
+                            [255, 255, 0, alph],
+                            [0, 255, 255, alph],
+                            [255, 255, 255, alph]
+                        ]
+                        alph = 64
+                        var cols_dif = [
+                            [255, 0, 255, alph],
+                            [255, 0, 0, alph],
+                            [0, 153, 255, alph],
+                            [153, 0, 204, alph],
+                            [0, 255, 0, alph],
+                            [255, 255, 0, alph],
+                            [0, 255, 255, alph],
+                            [255, 255, 255, alph]
+                        ]
+                        for (var adj of po.data.adjacent_scales) {
+                            var scale = getScaleObjectByName(adj);
+
+                            if (scale) {
+                                if (scale.layer_id == po.layer_id) {
+                                    p5.stroke(...cols_same[po.layer_id])
+                                } else {
+                                    p5.stroke(...cols_dif[Math.abs(scale.layer_id - po.layer_id)])
+                                }
+
+                                var x1 = p5.width * scale.x;
+                                var y1 = p5.height * scale.y;
+                                var x2 = p5.width * po.x;
+                                var y2 = p5.height * po.y;
+
+                                p5.line(x1, y1, x2, y2);
+                            }
+                        }
+                        p5.pop();
                     }
                 }
             }
@@ -169,7 +240,8 @@ const Visualization = () => {
             for (var l of layers) {
                 for (var po of l) {
                     if (po) {
-                        po.draw(false);
+                        po.draw(false, false, { x: 0, y: 0 },
+                            window.navRef.current.main_polygon.scale == po.scale ? 1.25 : 1)
                     }
                 }
             }
