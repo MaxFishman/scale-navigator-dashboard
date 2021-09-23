@@ -131,14 +131,14 @@ export default class Polygon {
                 }
                 if (this.data.scale_class === "harmonic_major") {
                     this.p5.vertex(this.radius, this.radius * 0.25);
-                    this.p5.vertex(-this.radius, this.radius * 1.25);
+                    this.p5.vertex(-this.radius, this.radius * 0.75);
                     this.p5.vertex(-this.radius, -this.radius * 0.25);
-                    this.p5.vertex(this.radius, -this.radius * 1.75);
+                    this.p5.vertex(this.radius, -this.radius * 1);
                 }
                 if (this.data.scale_class === "harmonic_minor") {
-                    this.p5.vertex(this.radius, this.radius * 1.25);
+                    this.p5.vertex(this.radius, this.radius * 0.75);
                     this.p5.vertex(-this.radius, this.radius * 0.25);
-                    this.p5.vertex(-this.radius, -this.radius * 1.75);
+                    this.p5.vertex(-this.radius, -this.radius * 1);
                     this.p5.vertex(this.radius, -this.radius * 0.25);
                 }
             }
@@ -153,7 +153,7 @@ export default class Polygon {
             this.p5.textAlign(this.p5.CENTER, this.p5.CENTER);
 
 
-            if (this.data.scale_class === "harmonic_minor" || this.data.scale_class === "harmonic_major") this.p5.translate(0, -4)
+            if (this.data.scale_class === "harmonic_minor" || this.data.scale_class === "harmonic_major") this.p5.translate(0, -this.radius / 5.5)
             if (drawText) {
                 this.p5.text(Pfivesketch.note_names[this.data.root],
                     neighOffset.x * this.p5.width, -font_size_2 / 2 + neighOffset.y * this.p5.height);

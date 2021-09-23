@@ -21,6 +21,7 @@ const Navigation = () => {
 
   const canvasWrapperRef = useRef(null);
   const navRef = useRef(null);
+  window.navRef = navRef;
 
   useEffect(() => {
     navRef.current = new Navigator.Navigator(setScaleData);
