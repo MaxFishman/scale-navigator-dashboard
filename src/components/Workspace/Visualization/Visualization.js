@@ -192,6 +192,7 @@ const Visualization = () => {
                         p5.push();
                         p5.stroke(255, 16)
                         var sw = (p5.width + p5.height) / 1000
+                        var layerAllowed = false;
                         var alph = 100;
                         var cols_same = [
                             [255, 0, 255, alph],
@@ -217,10 +218,8 @@ const Visualization = () => {
 
                         if (l.map(x => { if (x) return x.scale }).includes(window.navRef.current.main_polygon.scale)) {
                             cols_same[po.layer_id][3] *= 2;
-                            sw *= 3;
+                            layerAllowed = true;
                         }
-
-                        p5.strokeWeight(sw)
 
                         for (var adj of po.data.adjacent_scales) {
                             var scale = getScaleObjectByName(adj);
@@ -228,8 +227,11 @@ const Visualization = () => {
                             if (scale) {
                                 if (scale.layer_id == po.layer_id) {
                                     p5.stroke(...cols_same[po.layer_id])
+                                    if (layerAllowed) p5.strokeWeight(sw * 3)
+                                    else p5.strokeWeight(sw)
                                 } else {
                                     p5.stroke(...cols_dif[Math.abs(scale.layer_id - po.layer_id)])
+                                    p5.strokeWeight(sw)
                                 }
 
                                 var x1 = p5.width * scale.x;
