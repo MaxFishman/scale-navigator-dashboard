@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useRef } from "react";
+import React from "react";
 import Sketch from "react-p5";
 import Polygon from "components/Navigation/Navigator/Polygon";
 import ScaleData from "common/ScaleData";

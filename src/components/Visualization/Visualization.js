@@ -1,7 +1,7 @@
-import React, { useContext, useEffect, useRef } from "react";
+import React, { useEffect, useRef } from "react";
+import { useSelector, useDispatch } from 'react-redux'
 import { useLocation } from 'react-router-dom';
 import Pfivesketch from "./Navigator/Pfivesketch";
-import { ScaleContext } from "../Context/ScaleContext";
 import ScaleData from "common/ScaleData";
 import PitchClassData from "common/PitchClassData";
 import Navigator from "./Navigator/Navigator";
@@ -12,11 +12,14 @@ import useWindowSize from "../../hooks/device/index";
 import "./Navigation.scss";
 
 const Navigation = () => {
+    const dispatch = useDispatch()
+    const { scaleData } = useSelector(state => state.root)
+    const setScaleData = (payload) => dispatch({ type: 'SET_SCALE_DATA', payload })
+
   const location = useLocation();
   const size = useWindowSize();
   const isMobile = size.width < 425;
 
-  const { scaleData, setScaleData } = useContext(ScaleContext);
   const { scale } = scaleData;
 
   const canvasWrapperRef = useRef(null);

@@ -1,7 +1,7 @@
-import React, { useContext, useEffect, useRef } from "react";
+import React, { useEffect, useRef } from "react";
+import { useSelector, useDispatch } from 'react-redux'
 import { useLocation } from 'react-router-dom';
 import Pfivesketch from "./Navigator/Pfivesketch";
-import { ScaleContext } from "../Context/ScaleContext";
 import ScaleData from "common/ScaleData";
 import PitchClassData from "common/PitchClassData";
 import Navigator from "./Navigator/Navigator";
@@ -12,101 +12,104 @@ import useWindowSize from "../../hooks/device/index";
 import "./Navigation.scss";
 
 const Navigation = () => {
-  const location = useLocation();
-  const size = useWindowSize();
-  const isMobile = size.width < 425;
+    const dispatch = useDispatch()
+    const { scaleData } = useSelector(state => state.root)
+    const setScaleData = (payload) => dispatch({ type: 'SET_SCALE_DATA', payload })
 
-  const { scaleData, setScaleData } = useContext(ScaleContext);
-  const { scale } = scaleData;
+    const location = useLocation();
+    const size = useWindowSize();
+    const isMobile = size.width < 425;
 
-  const canvasWrapperRef = useRef(null);
-  const navRef = useRef(null);
-  window.navRef = navRef;
+    const { scale } = scaleData;
 
-  useEffect(() => {
-    navRef.current = new Navigator.Navigator(setScaleData);
-  }, []);
+    const canvasWrapperRef = useRef(null);
+    const navRef = useRef(null);
+    window.navRef = navRef;
 
-  useEffect(() => {
-    navRef.current.jumpToScale(scale);
-  }, [scale]);
+    useEffect(() => {
+        navRef.current = new Navigator.Navigator(setScaleData);
+    }, []);
 
-  useEffect(() => {
-    navRef.current.scaleDataCallback(setScaleData);
-  }, [setScaleData]);
+    useEffect(() => {
+        navRef.current.jumpToScale(scale);
+    }, [scale]);
 
-  const hasActiveRoute = isMobile && location.pathname !== '/';
-  const wrapperStyle = hasActiveRoute ? { height: '40vh', overflow: 'hidden' } : {};
-  const navInfoStyle = hasActiveRoute ? { display: 'none' } : {};
-  const logoStyle = hasActiveRoute ? {
-    position: 'fixed',
-    top: 0,
-    left: 0,
-    width: '100%',
-    background: 'black',
-    'z-index': 123
-  } : {};
+    useEffect(() => {
+        navRef.current.scaleDataCallback(setScaleData);
+    }, [setScaleData]);
 
-  const sketchWrapperStyle = hasActiveRoute ? { height: '40vh', overflow: 'hidden', marginTop: '70px' } : {}
+    const hasActiveRoute = isMobile && location.pathname !== '/';
+    const wrapperStyle = hasActiveRoute ? { height: '40vh', overflow: 'hidden' } : {};
+    const navInfoStyle = hasActiveRoute ? { display: 'none' } : {};
+    const logoStyle = hasActiveRoute ? {
+        position: 'fixed',
+        top: 0,
+        left: 0,
+        width: '100%',
+        background: 'black',
+        'z-index': 123
+    } : {};
 
-  return (
-    <div className="navigation" style={wrapperStyle}>
+    const sketchWrapperStyle = hasActiveRoute ? { height: '40vh', overflow: 'hidden', marginTop: '70px' } : {}
 
-      <div className="header-wrapper" style={logoStyle}>
-        <h1 className="navigation__logo">
-          Scale Navigator
-          <h2 className="navigation__sublogo">Dashboard</h2>
-        </h1>
+    return (
+        <div className="navigation" style={wrapperStyle}>
 
-        {isMobile && <MobileMenu/>}
-      </div>
+        <div className="header-wrapper" style={logoStyle}>
+            <h1 className="navigation__logo">
+            Scale Navigator
+            <h2 className="navigation__sublogo">Dashboard</h2>
+            </h1>
 
-      <div className="navigation__scalenav canvas-wrapper" id="canv_container" ref={canvasWrapperRef} style={sketchWrapperStyle}>
-        <Pfivesketch navRef={navRef.current} canvasWrapperRef={canvasWrapperRef}/>
-      </div>
-
-      <div className="navinfo" style={navInfoStyle}>
-        <div className="navinfo__root">
-          <h5>ROOT</h5>
-          {PitchClassData[ScaleData[scale].root].note}
+            {isMobile && <MobileMenu/>}
         </div>
-        <div className="navinfo__scaleclass">
-          <h5>SCALE CLASS</h5>
-          {ScaleData[scale].scale_class
-            .split("_")
-            .map((word) => word.charAt(0) + word.slice(1))
-            .join(" ")}
+
+        <div className="navigation__scalenav canvas-wrapper" id="canv_container" ref={canvasWrapperRef} style={sketchWrapperStyle}>
+            <Pfivesketch navRef={navRef.current} canvasWrapperRef={canvasWrapperRef}/>
         </div>
-        <div className="navinfo__options">
-          <div className="navinfo__option">
-            <input
-              type="checkbox"
-              autoComplete="off"
-              name="autopilot"
-              id="autopilot_checkbox"
-            ></input>
-            <label for="autopilot">autopilot</label>
-          </div>
 
-          <div className="navinfo__option">
-            <input
-              style={{direction: "rtl"}}
-              type="range"
-              autoComplete="off"
-              name="autopilot_interval"
-              id="autopilot_interval"
-              min="1"
-              max="4"
+        <div className="navinfo" style={navInfoStyle}>
+            <div className="navinfo__root">
+            <h5>ROOT</h5>
+            {PitchClassData[ScaleData[scale].root].note}
+            </div>
+            <div className="navinfo__scaleclass">
+            <h5>SCALE CLASS</h5>
+            {ScaleData[scale].scale_class
+                .split("_")
+                .map((word) => word.charAt(0) + word.slice(1))
+                .join(" ")}
+            </div>
+            <div className="navinfo__options">
+            <div className="navinfo__option">
+                <input
+                type="checkbox"
+                autoComplete="off"
+                name="autopilot"
+                id="autopilot_checkbox"
+                ></input>
+                <label for="autopilot">autopilot</label>
+            </div>
 
-              step="0.01"
-            ></input>
-          </div>
+            <div className="navinfo__option">
+                <input
+                style={{direction: "rtl"}}
+                type="range"
+                autoComplete="off"
+                name="autopilot_interval"
+                id="autopilot_interval"
+                min="1"
+                max="4"
+
+                step="0.01"
+                ></input>
+            </div>
+            </div>
         </div>
-      </div>
 
-      <Tabs className="mobile-tabs"/>
-    </div>
-  );
+        <Tabs className="mobile-tabs"/>
+        </div>
+    );
 };
 
 export default Navigation;

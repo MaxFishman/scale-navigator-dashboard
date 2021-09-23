@@ -1,6 +1,5 @@
-import { ChordContext } from "components/Context/ChordContext";
-import { ScaleContext } from "components/Context/ScaleContext";
-import React, { useContext, useEffect, useRef } from "react";
+import { useSelector, useDispatch } from 'react-redux'
+import React, { useEffect, useRef } from "react";
 import * as Tone from "tone";
 import ChordChooser from "./ChordChooser";
 
@@ -9,49 +8,53 @@ const midiToHz = (midiNote) => {
 };
 
 function Chords() {
-  const { chordData, setChordData } = useContext(ChordContext);
-  const { scaleData } = useContext(ScaleContext);
-  const { scale, scaleIndex } = scaleData;
+    const dispatch = useDispatch()
+    const { chordData, scaleData } = useSelector(state => state.root)
 
-  const chordChooserRef = useRef(null);
-  const synthRef = useRef(null);
+    const { scale, scaleIndex } = scaleData;
 
-  useEffect(() => {
-    chordChooserRef.current = new ChordChooser(
-      chordData,
-      setChordData,
-      scaleData.scale
-    );
-    synthRef.current = new Tone.PolySynth({ volume: -20 }).toDestination();
-  }, []);
+    const _setChordData = (payload) => dispatch({ type: 'SET_CHORD_DATA', payload })
 
-  useEffect(() => {
-    chordChooserRef.current.setChordDataContext(chordData, setChordData);
-  }, [chordData, setChordData]);
+    const chordChooserRef = useRef(null);
+    const synthRef = useRef(null);
 
-  useEffect(() => {
-    chordChooserRef.current.tick(scale);
-  }, [scale, scaleIndex]);
+    useEffect(() => {
+        chordChooserRef.current = new ChordChooser(
+            chordData,
+            _setChordData,
+            scale
+        );
+        synthRef.current = new Tone.PolySynth({ volume: -20 }).toDestination();
+    }, []);
 
-  useEffect(() => {
-    const { playing, chord, previousChord } = chordData;
+    useEffect(() => {
+        chordChooserRef.current.setChordDataContext(chordData, _setChordData);
+    }, [chordData, _setChordData]);
 
-    const isNewChord =
-      !previousChord ||
-      previousChord.root !== chord.root ||
-      previousChord.chord_type !== chord.chord_type;
+    useEffect(() => {
+        chordChooserRef.current.tick(scale);
+    }, [scale, scaleIndex]);
 
-    const notes = chord === null ? [] : chord.original_voicing.map(midiToHz);
-    if (playing && isNewChord) {
-      synthRef.current.triggerAttack(notes);
-    }
+    useEffect(() => {
+        const { playing, chord, previousChord } = chordData;
 
-    return () => {
-      synthRef.current.triggerRelease(notes);
-    };
-  }, [chordData]);
+        const isNewChord =
+            !previousChord ||
+            previousChord.root !== chord.root ||
+            previousChord.chord_type !== chord.chord_type;
 
-  return <></>;
+        const notes = chord === null ? [] : chord.original_voicing.map(midiToHz);
+
+        if (playing && isNewChord) {
+            synthRef.current.triggerAttack(notes);
+        }
+
+        return () => {
+            synthRef.current.triggerRelease(notes);
+        };
+    }, [chordData]);
+
+    return <></>;
 }
 
 export default Chords;
