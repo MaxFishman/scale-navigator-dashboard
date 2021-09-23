@@ -191,8 +191,8 @@ const Visualization = () => {
 
                         p5.push();
                         p5.stroke(255, 16)
-                        p5.strokeWeight((p5.width + p5.height) / 1000)
-                        var alph = 128;
+                        var sw = (p5.width + p5.height) / 1000
+                        var alph = 100;
                         var cols_same = [
                             [255, 0, 255, alph],
                             [255, 0, 0, alph],
@@ -203,7 +203,7 @@ const Visualization = () => {
                             [0, 255, 255, alph],
                             [255, 255, 255, alph]
                         ]
-                        alph = 64
+                        alph = 50
                         var cols_dif = [
                             [255, 0, 255, alph],
                             [255, 0, 0, alph],
@@ -214,6 +214,14 @@ const Visualization = () => {
                             [0, 255, 255, alph],
                             [255, 255, 255, alph]
                         ]
+
+                        if (l.map(x => { if (x) return x.scale }).includes(window.navRef.current.main_polygon.scale)) {
+                            cols_same[po.layer_id][3] *= 2;
+                            sw *= 3;
+                        }
+
+                        p5.strokeWeight(sw)
+
                         for (var adj of po.data.adjacent_scales) {
                             var scale = getScaleObjectByName(adj);
 
