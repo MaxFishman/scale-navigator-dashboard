@@ -1,4 +1,6 @@
 import React, { useState } from "react";
+import { Provider } from 'react-redux'
+import store from './store'
 import Navigation from "./components/Navigation/Navigation";
 import Workspace from "./components/Workspace/Workspace";
 import { ScaleContext } from "./components/Context/ScaleContext";
@@ -62,33 +64,27 @@ const App = () => {
             });
         },
         setTablatureInstruments: (data) => {
-            // setTabData([
-            //     ...tabData,
-            //     ...data
-            // ])
             setTabData(data)
         }
     }
 
     return (
-        <ChordContext.Provider value={chordContext}>
-            <ScaleContext.Provider value={scaleContext}>
-                <Router>
-                    <Container fluid>
-                        <Row>
-                            <Chords/>
-                            <Col xs="12" md="5">
-                                <Navigation />
-                            </Col>
+        <Provider store={store}>
+            <Router>
+                <Container fluid>
+                    <Row>
+                        <Chords/>
+                        <Col xs="12" md="5">
+                            <Navigation />
+                        </Col>
 
-                            <Col xs="12" md="7">
-                                <Workspace />
-                            </Col>
-                        </Row>
-                    </Container>
-                </Router>
-            </ScaleContext.Provider>
-        </ChordContext.Provider>
+                        <Col xs="12" md="7">
+                            <Workspace />
+                        </Col>
+                    </Row>
+                </Container>
+            </Router>
+        </Provider>
     );
 }
 
