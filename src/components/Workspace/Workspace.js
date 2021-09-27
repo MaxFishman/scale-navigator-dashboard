@@ -6,7 +6,6 @@ import Ensemble from "./Ensemble/Ensemble";
 import Tablature from "./Tablature/Tablature";
 // import Visualization from "./Visualization/Visualization";
 import React from "react";
-import { app } from "../../config/base";
 import { Switch, Route, Redirect, useLocation } from "react-router-dom";
 import ROUTES from "common/Routes";
 import {
@@ -18,6 +17,8 @@ import Visualization from "./Visualization/Visualization";
 
 import "react-tabs/style/react-tabs.css";
 import "./Workspace.scss";
+import SignUp from './SignUp'
+import SignIn from './SignIn'
 
 export default function Workspace() {
     const dispatch = useDispatch()
@@ -35,8 +36,15 @@ export default function Workspace() {
         <div className={classNames}>
             <Tabs className="desktop"/>
 
-            <div className="workspace__content">
+            <div className="workspace__content">      
                 <Switch>
+                <Route path={ROUTES.SIGN_IN}>
+                    <SignIn/>
+                </Route>
+                 <Route path={ROUTES.SIGN_UP}>
+                    <SignUp/>
+                </Route>
+
                 <Route path={ROUTES.ENSEMBLE}>
                     <Ensemble/>
                 </Route>
