@@ -2,8 +2,7 @@ import React from 'react';
 
 import { withAuthorization, withEmailVerification, AuthUserContext } from '../../Session';
 import { compose } from 'recompose';
-import SignOutButton from '../SignOut'
-import Rooms from '../Rooms'
+import Room from '../Room'
 
 const Ensemble = (authUser) => (
   <div>
@@ -11,7 +10,7 @@ const Ensemble = (authUser) => (
     <AuthUserContext.Consumer>
        {authUser => (
           <div style={{color:'white'}} align="center">
-            <Rooms authUser={authUser}/>
+            <Room authUser={authUser}/>
           </div>
         )}
       </AuthUserContext.Consumer>  

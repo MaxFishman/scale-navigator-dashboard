@@ -1,7 +1,8 @@
 import React, { Component, useState, useEffect } from 'react';
 import { withFirebase } from '../../Firebase';
-import { Link } from 'react-router-dom';
+import { Link, Switch } from 'react-router-dom';
 import ROUTES from 'common/Routes';
+import RoomView from '../RoomView'
 
 function RoomItem(props) {
   
@@ -10,9 +11,9 @@ function RoomItem(props) {
     const {authUser, room, onRemoveMessage} = props;
 
     return (
-       <div>
 
-        <div style={{marginTop:90}}>
+
+     <div style={{marginTop:30, border:'solid 1px yellow'}}>    
        <Link
             style={{textDecoration:'none'}}
             to={{
@@ -23,7 +24,6 @@ function RoomItem(props) {
          <p variant="body2">{room.userName}</p>
 
        </Link>
-        </div>
        </div>
     );
   }
