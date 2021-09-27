@@ -6,7 +6,7 @@ import RoomList from './RoomList';
 import { Link, withRouter } from 'react-router-dom';
 import ROUTES from 'common/Routes';
 import { compose } from 'recompose';
-
+import SignOutButton from '../SignOut'
 function Rooms(props) {
 
   const [rooms, setRooms] = useState([])
@@ -93,6 +93,7 @@ const [roomName, setRoomName] = useState()
           <AuthUserContext.Consumer>
               {authUser =>
                 authUser ? (
+               <React.Fragment>   
                <button
                style={{backgroundColor:'white', color:'red'}}
                onClick={handleNewRoom}
@@ -100,6 +101,10 @@ const [roomName, setRoomName] = useState()
                 >
               + Host An Ensemble
             </button>
+            <br/>
+            <br/>
+            <SignOutButton/>
+            </React.Fragment>
                 ) : (
              <button
                onClick={handleNotAuth}
@@ -111,12 +116,15 @@ const [roomName, setRoomName] = useState()
             </AuthUserContext.Consumer>
     
             {rooms && (
+              <React.Fragment>
+
               <RoomList
                 authUser={authUser}
                 rooms={rooms}
                 //onEditMessage={onEditMessage}
                 onRemoveRoom={onRemoveRoom}
               />
+              </React.Fragment>
             )}
             </div>)}
 
