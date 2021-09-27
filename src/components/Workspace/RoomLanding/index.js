@@ -1,16 +1,17 @@
 import React from 'react';
 
+import Rooms from '../Rooms'
 import { withAuthorization, withEmailVerification, AuthUserContext } from '../../Session';
 import { compose } from 'recompose';
-import Room from '../Room'
 
-const Ensemble = (authUser) => (
+
+
+const RoomLanding = (authUser) => (
   <div>
-
     <AuthUserContext.Consumer>
        {authUser => (
-          <div style={{color:'white'}} align="center">
-            <Room authUser={authUser}/>
+          <div style={{marginTop:20}} align="center">
+            <Rooms authUser={authUser}/>
           </div>
         )}
       </AuthUserContext.Consumer>  
@@ -21,4 +22,4 @@ const Ensemble = (authUser) => (
 
 export default compose(
   //withEmailVerification,
-)(Ensemble);
+)(RoomLanding);

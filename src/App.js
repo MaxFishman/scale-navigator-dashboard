@@ -8,6 +8,7 @@ import { ChordContext } from "./components/Context/ChordContext";
 import { BrowserRouter as Router } from "react-router-dom";
 import Chords from "components/ToneJS/Chord";
 import { Container, Row, Col } from 'reactstrap';
+import { withAuthentication } from 'components/Session';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 import "./App.scss";
@@ -88,4 +89,4 @@ const App = () => {
     );
 }
 
-export default App;
+export default withAuthentication (App);
