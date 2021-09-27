@@ -3,6 +3,7 @@ import "./About.scss";
 
 import "bootstrap/dist/css/bootstrap.min.css";
 import Figure from "react-bootstrap/Figure";
+import Modal from "react-modal";
 
 import network from "./assets/twodnetwork.png";
 import fifths from "./assets/circleoffifths.png";
@@ -12,6 +13,20 @@ import scales from "./assets/scales.svg";
 import intersects from "./assets/seven_note_intersects.svg";
 import lattice from "./assets/seven_note_lattice.png";
 
+import acoustic from "./shape_svgs/acoustic.svg";
+import diatonic from "./shape_svgs/diatonic.svg";
+import harmonic_major from "./shape_svgs/harmonic_major.svg";
+import harmonic_minor from "./shape_svgs/harmonic_minor.svg";
+import hexatonic from "./shape_svgs/hexatonic.svg";
+import octatonic from "./shape_svgs/octatonic.svg";
+import whole_tone from "./shape_svgs/whole_tone.svg";
+
+const MyContentStyles = {
+  backgroundColor: "white",
+  color: "black",
+  padding: "20px 40px",
+};
+
 export default class About extends React.Component {
   render() {
     return (
@@ -20,123 +35,123 @@ export default class About extends React.Component {
           <h2>About</h2>
 
           <p>
+            <strong>Scale Navigator Dashboard</strong> is a web app for
+            exploring musical harmony! Use it to:
+          </p>
+
+          <ul>
+            <li>
+              creatively <strong>compose</strong> music
+            </li>
+            <li>
+              <strong>Improvise</strong> melodies, chords, riffs, and phrases
+            </li>
+            <li>
+              Learn <strong>music theory</strong> concepts
+            </li>
+            <li>
+              Stay <strong>harmonically synchronized</strong> while jamming in{" "}
+              <strong>ensembles</strong> with your friends
+            </li>
+            <li>
+              Connect with <strong>Scale Navigator MIDI VST</strong> to
+              harmonically synchronize your DAW
+            </li>
+          </ul>
+
+          <p>
             <strong>Scale Navigator</strong> makes harmony accessible by giving
-            users tangible harmonic objects to play with (scales represented via
-            shape, color, and position), and placing these objects within an
-            easy-to-understand and easy-to-navigate framework (the scale
-            network). Even for an instrumentalist, it takes work to physically
-            learn new chords/scales before you can really hear them; and if you
-            aren't a traditional instrumentalist, these things can be locked
-            away.
+            users tangible harmonic objects to <em>play with</em>, and placing
+            these objects within an easy-to-understand and easy-to-navigate
+            framework. Even as an instrumentalist, it takes work to physically
+            learn new musical concepts such as scales and chords before you can
+            really <em>hear them</em>; and if you aren't a traditional
+            instrumentalist, these things can be locked away.
           </p>
 
           <p>
-            <strong>Scale Navigator</strong> is designed as a
-            creative-composition, improvisation, and teaching tool, focused on
-            families of related scales --
+            <strong>Scale Navigator</strong> represents Musical scales as icons.
+            A scale icon's polygonal shape indicates its scale class:
           </p>
 
-          <p>
-            In 2018, I read Dmitri Tymoczko's paper{" "}
-            <a href="https://dmitri.mycpanel.princeton.edu/files/publications/debussy.pdf">
-              Scale Networks and Debussy
-            </a>{" "}
-            which describes Claude Debussy's harmonic language as as a
-            crystalline lattice of connected scales, or "scale network" (Figure
-            1). Reading this paper changed everything for me; ever since, I rely
-            on the scale network framework whenever I compose music. However,
-            Tymoczko's proposed scale network is complex enough that it's tough
-            to hold bits of it in my head, let alone the whole thing, and so I
-            found myself working out the same musical calculations by hand over
-            and over again — a dead giveaway that it's time to write a computer
-            program. This is how I came upon the idea to create an application
-            centered around a graphical interface that could allow users to
-            interact directly with the scale network, and so{" "}
-            <strong>Scale Navigator</strong> was born.{" "}
-          </p>
+          <div id="scale_table">
+            <Figure class="scale_fig">
+              <Figure.Image alt="diatonic scale class icon" src={diatonic} />
+              <Figure.Caption style={{ "text-align": "center" }}>
+                diatonic
+              </Figure.Caption>
+            </Figure>
 
-          <Figure>
-            <Figure.Image alt="Scale Network" src={network} />
-            <Figure.Caption style={{ "text-align": "center" }}>
-              Figure 1. Scale Network of 7-note Pressing Scales, connected via
-              maximal intersection
-            </Figure.Caption>
-          </Figure>
+            <Figure class="scale_fig">
+              <Figure.Image alt="acoustic scale class icon" src={acoustic} />
+              <Figure.Caption style={{ "text-align": "center" }}>
+                acoustic
+              </Figure.Caption>
+            </Figure>
 
-          <Figure>
-            <div id="scale_list_container">
-              <div id="shape_list_wrapper">
-                <p>t</p>
-                <p>t</p>
-                <p>t</p>
-                <p>t</p>
-                <p>t</p>
-                <p>t</p>
-                <p>t</p>
-              </div>
+            <Figure class="scale_fig">
+              <Figure.Image
+                alt="harmonic major scale class icon"
+                src={harmonic_major}
+              />
+              <Figure.Caption style={{ "text-align": "center" }}>
+                harmonic major
+              </Figure.Caption>
+            </Figure>
 
-              <div id="scale_img_wrapper">
-                <Figure.Image alt="scales" src={scales} />
-              </div>
-            </div>
-            <Figure.Caption style={{ "text-align": "center" }}>
-              Figure 4. Scales
-            </Figure.Caption>
-          </Figure>
+            <Figure class="scale_fig">
+              <Figure.Image
+                alt="harmonic minor scale class icon"
+                src={harmonic_minor}
+              />
+              <Figure.Caption style={{ "text-align": "center" }}>
+                harmonic minor
+              </Figure.Caption>
+            </Figure>
 
-          <Figure>
-            <Figure.Image alt="Scale Network" src={debussy} />
-            <Figure.Caption style={{ "text-align": "center" }}>
-              Figure 2. Debussy
-            </Figure.Caption>
-          </Figure>
+            <Figure class="scale_fig">
+              <Figure.Image
+                alt="whole tone scale class icon"
+                src={whole_tone}
+              />
+              <Figure.Caption style={{ "text-align": "center" }}>
+                whole tone
+              </Figure.Caption>
+            </Figure>
 
-          <Figure>
-            <Figure.Image alt="Debussy" src={pressingcircle} />
-            <Figure.Caption style={{ "text-align": "center" }}>
-              Figure 3. Debussy
-            </Figure.Caption>
-          </Figure>
+            <Figure class="scale_fig">
+              <Figure.Image alt="octatonic scale class icon" src={octatonic} />
+              <Figure.Caption style={{ "text-align": "center" }}>
+                octatonic
+              </Figure.Caption>
+            </Figure>
 
-          <Figure>
-            <Figure.Image alt="intersects" src={intersects} />
-            <Figure.Caption style={{ "text-align": "center" }}>
-              Figure 5. intersects
-            </Figure.Caption>
-          </Figure>
+            <Figure class="scale_fig">
+              <Figure.Image alt="hexatonic scale class icon" src={hexatonic} />
+              <Figure.Caption style={{ "text-align": "center" }}>
+                hexatonic
+              </Figure.Caption>
+            </Figure>
+          </div>
 
-          <Figure>
-            <Figure.Image alt="Scale Network" src={fifths} />
-            <Figure.Caption style={{ "text-align": "center" }}>
-              Figure 1. Scale Network
-            </Figure.Caption>
-          </Figure>
+          <p>A scale icon's color indicates its root:</p>
 
-          <Figure>
-            <Figure.Image alt="Scale Network" src={lattice} />
-            <Figure.Caption style={{ "text-align": "center" }}>
-              Figure 1. Scale Network
-            </Figure.Caption>
-          </Figure>
+          <div id="root_table">
+          <div class ="root_heading" id="root_f">F</div>
+          <div class ="root_heading" id="root_c">C</div>
+          <div class ="root_heading" id="root_g">G</div>
+          <div class ="root_heading" id="root_d">D</div>
+          <div class ="root_heading" id="root_a">A</div>
+          <div class ="root_heading" id="root_e">E</div>
+          <div class ="root_heading" id="root_b">B</div>
+          <div class ="root_heading" id="root_fs">F#</div>
+          <div class ="root_heading" id="root_df">D♭</div>
+          <div class ="root_heading" id="root_af">A♭</div>
+          <div class ="root_heading" id="root_ef">E♭</div>
+          <div class ="root_heading" id="root_bf">B♭</div>
+          <div class ="root_heading" id="root_f">F</div>
 
-          <blockquote cite="https://en.wikipedia.org/wiki/Pitch_space">
-            And what is a diagram? A representation of a musical system. And we
-            use a diagram so that, for students of the subject, matters which
-            are hard to grasp with the hearing may appear before their eyes.
-            <div class="attribution">
-              <p class="author">Bacchius</p>
-            </div>
-          </blockquote>
-
-          <blockquote cite="https://en.wikipedia.org/wiki/Modulation_(music)">
-            Modulation is the essential part of the art. Without it there is
-            little music, for a piece derives its true beauty not from the large
-            number of fixed modes which it embraces but rather from the subtle
-            fabric of its modulation.
-            <div class="attribution">
-              <p class="author">Charles-Henri Blainville</p>
-            </div>
-          </blockquote>
+          </div>
 
           <p>
             The basics of the interface are as follows: each scale in the Scale

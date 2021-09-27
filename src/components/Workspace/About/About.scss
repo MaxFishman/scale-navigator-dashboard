@@ -13,6 +13,115 @@ article {
   @include md {
     padding-bottom: 0;
   }
+
+  Figure {
+    padding: 12px;
+
+    width: 14%;
+  }
+
+  li{
+    color: white;
+  }
+
+  li:before {
+    content: "• ";
+  }
+
+  #scale_fig{
+
+  }
+
+  a:link {
+    color: #ffde6a;
+  }
+
+  /* visited link */
+  a:visited {
+    color: #ffde6a;
+  }
+
+  /* mouse over link */
+  a:hover {
+    color: #f7cc2f;
+  }
+
+  /* selected link */
+  a:active {
+    color: #ffde6a;
+  }
+}
+
+.root_heading{
+  font-size:x-large;
+  font-weight: 900;
+  width: 7.6%;
+}
+
+#root_f{
+  color:#F08784;
+}
+
+#root_c{
+  color:#FBE7E6;
+}
+
+#root_g{
+  color:#F9DEEE;
+}
+
+#root_d{
+  color:#F4D5FC;
+}
+
+#root_a{
+  color:#D9CCFB;
+}
+
+#root_e{
+  color:#C1CDFB;
+}
+
+#root_b{
+  color:#C0EAFD;
+}
+
+#root_fs{
+  color:#BFFDEA;
+}
+
+#root_df{
+  color:#B9FCBB;
+}
+
+#root_af{
+  color:#CEFCA6;
+}
+
+#root_ef{
+  color:#F8FDA0;
+}
+
+#root_bf{
+  color:#F8CA92;
+}
+
+#root_f{
+  color:#F08784;
+}
+
+
+
+
+#scale_table {
+  display: flex;
+  flex-direction: row;
+}
+
+#root_table {
+  display: flex;
+  flex-direction: row;
+  justify-content:space-evenly;
 }
 
 .attribution {
@@ -88,21 +197,4 @@ article > h2 {
   height: 100%;
 }
 
-a:link {
-  color: #ffde6a;
-}
 
-/* visited link */
-a:visited {
-  color: #ffde6a;
-}
-
-/* mouse over link */
-a:hover {
-  color: #f7cc2f;
-}
-
-/* selected link */
-a:active {
-  color: #ffde6a;
-}
