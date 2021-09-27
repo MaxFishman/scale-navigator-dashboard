@@ -44,7 +44,8 @@ export default class About extends React.Component {
               creatively <strong>compose</strong> music
             </li>
             <li>
-              <strong>Improvise</strong> melodies, chords, riffs, and phrases
+              <strong>Improvise</strong> melodies, chords, riffs, progressions,
+              and phrases
             </li>
             <li>
               Learn <strong>music theory</strong> concepts
@@ -55,23 +56,23 @@ export default class About extends React.Component {
             </li>
             <li>
               Connect with <strong>Scale Navigator MIDI VST</strong> to
-              harmonically synchronize your DAW
+              harmonically synchronize your <strong>DAW</strong>
             </li>
           </ul>
 
           <p>
-            <strong>Scale Navigator</strong> makes harmony accessible by giving
-            users tangible harmonic objects to <em>play with</em>, and placing
-            these objects within an easy-to-understand and easy-to-navigate
-            framework. Even as an instrumentalist, it takes work to physically
-            learn new musical concepts such as scales and chords before you can
-            really <em>hear them</em>; and if you aren't a traditional
-            instrumentalist, these things can be locked away.
+            Scale Navigator makes harmony accessible by giving users tangible
+            harmonic objects to <em>play with</em>, and placing these objects
+            within an easy-to-understand and easy-to-navigate framework. Even as
+            an instrumentalist, it takes work to physically learn new musical
+            objects like scales / chords before you can actually{" "}
+            <em>hear them</em>; and if you aren't a traditional instrumentalist,
+            these things can be locked away.
           </p>
 
           <p>
-            <strong>Scale Navigator</strong> represents Musical scales as icons.
-            A scale icon's polygonal shape indicates its scale class:
+            Scale Navigator represents Musical scales as icons. A scale icon's
+            polygonal shape indicates its scale class:
           </p>
 
           <div id="scale_table">
@@ -136,31 +137,50 @@ export default class About extends React.Component {
 
           <p>A scale icon's color indicates its root:</p>
 
-          <div id="root_table">
-          <div class ="root_heading" id="root_f">F</div>
-          <div class ="root_heading" id="root_c">C</div>
-          <div class ="root_heading" id="root_g">G</div>
-          <div class ="root_heading" id="root_d">D</div>
-          <div class ="root_heading" id="root_a">A</div>
-          <div class ="root_heading" id="root_e">E</div>
-          <div class ="root_heading" id="root_b">B</div>
-          <div class ="root_heading" id="root_fs">F#</div>
-          <div class ="root_heading" id="root_df">D♭</div>
-          <div class ="root_heading" id="root_af">A♭</div>
-          <div class ="root_heading" id="root_ef">E♭</div>
-          <div class ="root_heading" id="root_bf">B♭</div>
-          <div class ="root_heading" id="root_f">F</div>
-
+          <div id="circle_container">
+            <div class="root_heading" id="root_f">
+              F
+            </div>
+            <div class="root_heading" id="root_c">
+              C
+            </div>
+            <div class="root_heading" id="root_g">
+              G
+            </div>
+            <div class="root_heading" id="root_d">
+              D
+            </div>
+            <div class="root_heading" id="root_a">
+              A
+            </div>
+            <div class="root_heading" id="root_e">
+              E
+            </div>
+            <div class="root_heading" id="root_b">
+              B
+            </div>
+            <div class="root_heading" id="root_fs">
+              F#
+            </div>
+            <div class="root_heading" id="root_df">
+              D♭
+            </div>
+            <div class="root_heading" id="root_af">
+              A♭
+            </div>
+            <div class="root_heading" id="root_ef">
+              E♭
+            </div>
+            <div class="root_heading" id="root_bf">
+              B♭
+            </div>
           </div>
 
           <p>
-            The basics of the interface are as follows: each scale in the Scale
-            Navigator is represented by a clickable polygonal-shaped node. The
-            selected scale is in the center, radially surrounded by adjacent
-            neighbor scales. Clicking on an adjacent scale selects a new scale.
-            A <a href="https://www.vexflow.com/">VexFlow</a> display in the
-            upper left corner shows the notes of the selected scale on a treble
-            staff.
+            Users can travel (or "modulate") from one scale to another by interacting with the
+            Navigator interface on the left. The current selected scale is in the
+            center, radially surrounded by adjacent neighbor scales. Clicking on
+            an adjacent scale selects a new scale.
           </p>
 
           <h2>Further Reading</h2>

@@ -20,7 +20,7 @@ article {
     width: 14%;
   }
 
-  li{
+  li {
     color: white;
   }
 
@@ -28,8 +28,7 @@ article {
     content: "• ";
   }
 
-  #scale_fig{
-
+  #scale_fig {
   }
 
   a:link {
@@ -52,67 +51,6 @@ article {
   }
 }
 
-.root_heading{
-  font-size:x-large;
-  font-weight: 900;
-  width: 7.6%;
-}
-
-#root_f{
-  color:#F08784;
-}
-
-#root_c{
-  color:#FBE7E6;
-}
-
-#root_g{
-  color:#F9DEEE;
-}
-
-#root_d{
-  color:#F4D5FC;
-}
-
-#root_a{
-  color:#D9CCFB;
-}
-
-#root_e{
-  color:#C1CDFB;
-}
-
-#root_b{
-  color:#C0EAFD;
-}
-
-#root_fs{
-  color:#BFFDEA;
-}
-
-#root_df{
-  color:#B9FCBB;
-}
-
-#root_af{
-  color:#CEFCA6;
-}
-
-#root_ef{
-  color:#F8FDA0;
-}
-
-#root_bf{
-  color:#F8CA92;
-}
-
-#root_f{
-  color:#F08784;
-}
-
-
-
-
 #scale_table {
   display: flex;
   flex-direction: row;
@@ -121,7 +59,7 @@ article {
 #root_table {
   display: flex;
   flex-direction: row;
-  justify-content:space-evenly;
+  justify-content: space-evenly;
 }
 
 .attribution {
@@ -197,4 +135,107 @@ article > h2 {
   height: 100%;
 }
 
+@mixin on-circle($item-count, $circle-size, $item-size) {
+  position: relative;
+  width: $circle-size;
+  height: $circle-size;
+  padding: 0;
+  border-radius: 50%;
+  list-style: none;
 
+  > * {
+    display: block;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: $item-size;
+    height: $item-size;
+    margin: -($item-size / 2);
+
+    $angle: (360 / $item-count);
+    $rot: 240;
+
+    @for $i from 1 through $item-count {
+      &:nth-of-type(#{$i}) {
+        transform: rotate($rot * 1deg)
+          translate($circle-size / 2)
+          rotate($rot * -1deg);
+      }
+
+      $rot: $rot + $angle;
+    }
+  }
+}
+
+.root_heading {
+  font-size: x-large;
+  font-weight: 900;
+  width: 7.6%;
+}
+
+#circle_container {
+  @include on-circle($item-count: 12, $circle-size: 10em, $item-size: 6em);
+  margin: 5em auto 0;
+  // border: solid 5px tomato;
+
+  #root_f {
+    color: #f08784;
+  }
+
+  #root_c {
+    color: #fbe7e6;
+  }
+
+  #root_g {
+    color: #f9deee;
+  }
+
+  #root_d {
+    color: #f4d5fc;
+  }
+
+  #root_a {
+    color: #d9ccfb;
+  }
+
+  #root_e {
+    color: #c1cdfb;
+  }
+
+  #root_b {
+    color: #c0eafd;
+  }
+
+  #root_fs {
+    color: #bffdea;
+  }
+
+  #root_df {
+    color: #b9fcbb;
+  }
+
+  #root_af {
+    color: #cefca6;
+  }
+
+  #root_ef {
+    color: #f8fda0;
+  }
+
+  #root_bf {
+    color: #f8ca92;
+  }
+
+  #root_f {
+    color: #f08784;
+  }
+
+  .root_heading {
+    text-align: center;
+    display: block;
+    max-width: 100%;
+    // border-radius: 50%;
+
+    // border: solid 5px tomato;
+  }
+}
