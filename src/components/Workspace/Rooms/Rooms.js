@@ -1,0 +1,144 @@
+import React, { Component, useState, useEffect } from 'react';
+
+import { AuthUserContext, withAuthorization, } from '../../Session';
+import { withFirebase } from '../../Firebase';
+import RoomList from './RoomList';
+import { Link, withRouter } from 'react-router-dom';
+import ROUTES from 'common/Routes';
+import { compose } from 'recompose';
+
+function Rooms(props) {
+
+  const [rooms, setRooms] = useState([])
+
+
+  const handleNewRoom = () => {
+      props.firebase
+     .user(props.authUser.uid)
+     .onSnapshot(snapshot => {
+      setUserName(
+       snapshot.data().userName || '' 
+      )
+   })
+    setAddNewRoomMode(true) 
+    setListMode(false)
+  };
+
+
+
+const [userName, setUserName] = useState('')   
+const [addNewRoomMode, setAddNewRoomMode] = useState(false)
+const [listMode, setListMode] = useState(true)
+
+
+
+  useEffect(() => {
+
+    const unsubscribe = props.firebase
+      .rooms()
+      .orderBy('createdAt', 'desc')
+      //.setLimit(10)
+      .onSnapshot(snapshot => {
+        if (snapshot.size) {
+          let rooms = [];
+          snapshot.forEach(doc =>
+            rooms.push({ ...doc.data(), uid: doc.id }),
+          );
+           
+          setRooms(rooms.reverse()) 
+        
+        } else {
+          setRooms(null)
+        
+        }
+      })
+    return () => {
+      unsubscribe()
+    } 
+   }, [props.firebase])
+
+
+  const handleNotAuth = () =>{
+    props.history.push(ROUTES.SIGN_UP);
+  }
+
+  const onCreateRoom = (event, authUser) => {
+     props.firebase.rooms().add({
+      roomName: roomName,
+      userName: userName,
+      userId: props.authUser.uid,
+      createdAt: new Date().getTime(),
+    });
+
+    setRoomName('')
+    setAddNewRoomMode(false)
+    setListMode(true)
+    event.preventDefault();
+  };
+
+
+  const onRemoveRoom = uid => {
+    props.firebase.Room(uid).delete();
+  };
+
+
+
+const [roomName, setRoomName] = useState()
+
+    return (
+      <AuthUserContext.Consumer>
+        {authUser => (
+          <div>
+         {listMode && (<div>
+          <AuthUserContext.Consumer>
+              {authUser =>
+                authUser ? (
+               <button
+               style={{backgroundColor:'white', color:'red'}}
+               onClick={handleNewRoom}
+  
+                >
+              + Host An Ensemble
+            </button>
+                ) : (
+             <button
+               onClick={handleNotAuth}
+                >
+              + Host An Ensemble
+            </button>
+                )
+              }
+            </AuthUserContext.Consumer>
+    
+            {rooms && (
+              <RoomList
+                authUser={authUser}
+                rooms={rooms}
+                //onEditMessage={onEditMessage}
+                onRemoveRoom={onRemoveRoom}
+              />
+            )}
+            </div>)}
+
+         {addNewRoomMode && (<div>
+          <form
+            onSubmit={event =>
+              onCreateRoom(event, authUser)
+              }
+            > 
+         <p variant="h6">Create a new Ensemble</p>   
+        <input autoFocus required style={{width:'100%', color:'#000000'}} onChange={event=>setRoomName(event.target.value)}  />
+              <br/>
+              <br/>
+          <button style={{color:'red', backgroundColor:'white'}} type="submit" >
+           OK
+          </button>
+          </form>  
+          </div>)}
+          </div>
+        )}
+      </AuthUserContext.Consumer>
+    );
+  }
+
+export default compose(withRouter, withFirebase)(Rooms);
