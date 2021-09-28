@@ -63,17 +63,20 @@ const [listMode, setListMode] = useState(true)
   }
 
   const onCreateRoom = (event, authUser) => {
+     event.preventDefault();
      props.firebase.rooms().add({
       roomName: roomName,
       userName: userName,
       userId: props.authUser.uid,
       createdAt: new Date().getTime(),
-    });
+    }).then(function(docRef) {
+       props.history.push(ROUTES.ENSEMBLE + '/' + docRef.id);
+       setAddNewRoomMode(false)
+       setListMode(true)
+       setRoomName('')
 
-    setRoomName('')
-    setAddNewRoomMode(false)
-    setListMode(true)
-    event.preventDefault();
+    })
+
   };
 
 
