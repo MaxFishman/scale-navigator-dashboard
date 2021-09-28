@@ -20,7 +20,6 @@ import hexatonic from "./shape_svgs/hexatonic.svg";
 import octatonic from "./shape_svgs/octatonic.svg";
 import whole_tone from "./shape_svgs/whole_tone.svg";
 
-
 export default class About extends React.Component {
   render() {
     return (
@@ -72,12 +71,12 @@ export default class About extends React.Component {
 
           <div id="scale_table">
             <Figure class="scale_fig">
-              <a href="https://en.wikipedia.org/wiki/Diatonic_scale">
-                <Figure.Image alt="diatonic scale class icon" src={diatonic} />
-                <Figure.Caption className="figurecaption">
+              <Figure.Image alt="diatonic scale class icon" src={diatonic} />
+              <Figure.Caption className="figurecaption">
+                <a href="https://en.wikipedia.org/wiki/Diatonic_scale">
                   diatonic
-                </Figure.Caption>
-              </a>
+                </a>
+              </Figure.Caption>
             </Figure>
 
             <Figure class="scale_fig">
@@ -270,7 +269,9 @@ export default class About extends React.Component {
             by Garrett Michaelsen.
           </p>
 
-          <p style={{"text-align":"right"}}>&mdash; Nathan Turczan, September 2021</p>
+          <p style={{ "text-align": "right" }}>
+            &mdash; Nathan Turczan, September 2021
+          </p>
 
           <h2>Credits</h2>
           <ul id="credits">
