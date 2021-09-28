@@ -62,6 +62,11 @@ const [listMode, setListMode] = useState(true)
     props.history.push(ROUTES.SIGN_UP);
   }
 
+  const handleCancel = () =>{
+    setListMode(true)
+    setAddNewRoomMode(false)
+  }
+
   const onCreateRoom = (event, authUser) => {
      event.preventDefault();
      props.firebase.rooms().add({
@@ -143,6 +148,9 @@ const [roomName, setRoomName] = useState()
               <br/>
           <button style={{color:'red', backgroundColor:'white'}} type="submit" >
            OK
+          </button>
+           <button style={{color:'red'}} onClick={handleCancel} >
+          Cancel
           </button>
           </form>  
           </div>)}
