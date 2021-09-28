@@ -39,9 +39,9 @@ export default class About extends React.Component {
             exploring musical harmony! Use it to:
           </p>
 
-          <ul>
+          <ul id="activities">
             <li>
-              creatively <strong>compose</strong> music
+              Creatively <strong>compose</strong> music
             </li>
             <li>
               <strong>Improvise</strong> melodies, chords, riffs, progressions,
@@ -64,10 +64,11 @@ export default class About extends React.Component {
             Scale Navigator makes harmony accessible by giving users tangible
             harmonic objects to <em>play with</em>, and placing these objects
             within an easy-to-understand and easy-to-navigate framework. Even as
-            an instrumentalist, it takes work to physically learn new musical
-            objects like scales / chords before you can actually{" "}
-            <em>hear them</em>; and if you aren't a traditional instrumentalist,
-            these things can be locked away.
+            an instrumentalist, it takes work to physically learn scales /
+            chords before you can actually <em>hear them</em>; and if you aren't
+            a traditional instrumentalist, these things can be locked away.
+            Scale Navigator unlocks these harmonic concepts by giving them form,
+            and by placing them in context. 
           </p>
 
           <p>
@@ -78,14 +79,14 @@ export default class About extends React.Component {
           <div id="scale_table">
             <Figure class="scale_fig">
               <Figure.Image alt="diatonic scale class icon" src={diatonic} />
-              <Figure.Caption style={{ "text-align": "center" }}>
+              <Figure.Caption className="figure-caption">
                 diatonic
               </Figure.Caption>
             </Figure>
 
             <Figure class="scale_fig">
               <Figure.Image alt="acoustic scale class icon" src={acoustic} />
-              <Figure.Caption style={{ "text-align": "center" }}>
+              <Figure.Caption className="figure-caption">
                 acoustic
               </Figure.Caption>
             </Figure>
@@ -95,8 +96,10 @@ export default class About extends React.Component {
                 alt="harmonic major scale class icon"
                 src={harmonic_major}
               />
-              <Figure.Caption style={{ "text-align": "center" }}>
-                harmonic major
+              <Figure.Caption className="figure-caption">
+                harmonic
+                <br />
+                major
               </Figure.Caption>
             </Figure>
 
@@ -105,8 +108,10 @@ export default class About extends React.Component {
                 alt="harmonic minor scale class icon"
                 src={harmonic_minor}
               />
-              <Figure.Caption style={{ "text-align": "center" }}>
-                harmonic minor
+              <Figure.Caption className="figure-caption">
+                harmonic
+                <br />
+                minor
               </Figure.Caption>
             </Figure>
 
@@ -115,27 +120,30 @@ export default class About extends React.Component {
                 alt="whole tone scale class icon"
                 src={whole_tone}
               />
-              <Figure.Caption style={{ "text-align": "center" }}>
-                whole tone
+              <Figure.Caption className="figure-caption">
+                whole
+                <br />
+                tone
               </Figure.Caption>
             </Figure>
 
             <Figure class="scale_fig">
               <Figure.Image alt="octatonic scale class icon" src={octatonic} />
-              <Figure.Caption style={{ "text-align": "center" }}>
+              <Figure.Caption className="figure-caption">
                 octatonic
               </Figure.Caption>
             </Figure>
 
             <Figure class="scale_fig">
               <Figure.Image alt="hexatonic scale class icon" src={hexatonic} />
-              <Figure.Caption style={{ "text-align": "center" }}>
+              <Figure.Caption className="figure-caption">
                 hexatonic
               </Figure.Caption>
             </Figure>
           </div>
 
           <p>A scale icon's color indicates its root:</p>
+          <br />
 
           <div id="circle_container">
             <div class="root_heading" id="root_f">
@@ -177,10 +185,10 @@ export default class About extends React.Component {
           </div>
 
           <p>
-            Users can travel (or "modulate") from one scale to another by interacting with the
-            Navigator interface on the left. The current selected scale is in the
-            center, radially surrounded by adjacent neighbor scales. Clicking on
-            an adjacent scale selects a new scale.
+            Users can travel (or "modulate") from one scale to another by
+            interacting with the Navigator interface. The current
+            selected scale is in the center, radially surrounded by adjacent
+            neighbor scales. Clicking on an adjacent scale selects a new scale.
           </p>
 
           <h2>Further Reading</h2>
@@ -218,15 +226,15 @@ export default class About extends React.Component {
           </ul>
           <h2>Credits</h2>
           <ul id="credits">
-            <li>Nate Ben</li>
-            <li>Brady Boettcher</li>
-            <li>Scott Devereux</li>
-            <li>Nathan Ho</li>
-            <li>Colin Honigman</li>
-            <li>Michael Maurer</li>
-            <li>Nathan Turczan</li>
-            <li>Ondřej Sedláček</li>
-            <li>Dexter Shepherd</li>
+            <li><a href="https://yobro.icu/">Nate Ben</a></li>
+            <li><a href="https://bboettcher3.github.io/">Brady Boettcher</a></li>
+            <li><a href="https://popleap.dev/">Scott Devereux</a></li>
+            <li><a href="https://nathan.ho.name/">Nathan Ho</a></li>
+            <li><a href="https://colinhonigman.com/">Colin Honigman</a></li>
+            <li><a href="https://github.com/mjmaurer">Michael Maurer</a></li>
+            <li><a href="https://nathanturczan.com">Nathan Turczan</a></li>
+            <li><a href="https://github.com/rudytak">Ondřej Sedláček</a></li>
+            <li><a href="https://dexterjshepherd.com/">Dexter Shepherd</a></li>
           </ul>
         </article>
       </>

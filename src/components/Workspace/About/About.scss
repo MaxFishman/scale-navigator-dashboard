@@ -20,12 +20,21 @@ article {
     width: 14%;
   }
 
-  li {
-    color: white;
+  .figure-caption {
+    text-align: center;
+    white-space: nowrap;
+    overflow-y: auto;
   }
 
-  li:before {
-    content: "• ";
+  #activities {
+    li {
+      color: white;
+      text-align: left;
+    }
+
+    li:before {
+      content: "• ";
+    }
   }
 
   #scale_fig {
@@ -95,7 +104,14 @@ article > p {
 }
 
 #credits {
-  text-align: center;
+  li{
+    text-align: center;
+    list-style-type: none;
+    color:#ffde6a;
+  }
+  a{
+    text-decoration: none;
+  }
 }
 
 #scale_list_container {
@@ -114,7 +130,7 @@ article > p {
 
 article > h2 {
   color: white;
-  padding-bottom: 12px;
+  padding-bottom: 18px;
   text-align: center;
   font-family: "Glow Better Script";
   font-weight: normal;
