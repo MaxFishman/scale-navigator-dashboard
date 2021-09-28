@@ -25,19 +25,25 @@ function RoomView(props) {
 
 return(
   <div>
-
+ <AuthUserContext.Consumer>
+    {authUser => (
    <div>
    <p variant="body2">You are in Ensemble : <span style={{color:'red'}}>{roomName}</span></p>
    <br/>
     <p>The host of this Ensemble is : <span style={{color:'red'}}>{userName}</span></p>
   <br/>
-   <p><Link  to={ROUTES.ENSEMBLE}>Home</Link></p>
+   <p><Link to={ROUTES.ENSEMBLE}>Home</Link></p>
    </div>
+   )}
+   </AuthUserContext.Consumer>  
   </div>
  );
 }
 
+const condition = authUser => !!authUser;
+
 export default compose(
   //withEmailVerification,
+  withAuthorization(condition),
   withFirebase,
 )(RoomView);
