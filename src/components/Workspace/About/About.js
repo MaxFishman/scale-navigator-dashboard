@@ -198,7 +198,9 @@ export default class About extends React.Component {
             neighbor scale shares all notes in common with the current scale
             save for one, i.e., each neighbor scale differs from the current
             scale by a single note. Enable autopilot (in the infobox below the
-            Navigator interface) to
+            Navigator interface) to automatically select a new current
+            scale&mdash;adjust the autopilot slider to change the rate at which
+            the autopilot selects a new scale.
           </p>
 
           <p>
