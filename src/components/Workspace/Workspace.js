@@ -19,6 +19,8 @@ import "react-tabs/style/react-tabs.css";
 import "./Workspace.scss";
 import SignUp from './SignUp'
 import SignIn from './SignIn'
+import AccountLanding from './AccountLanding'
+
 
 export default function Workspace() {
     const dispatch = useDispatch()
@@ -78,7 +80,7 @@ export default function Workspace() {
                 </Route>
 
                 <Route path={ROUTES.ACCOUNT}>
-                    <p>Account Component</p>
+                   <AccountLanding/>
                 </Route>
 
                 {window.innerWidth > 960 &&

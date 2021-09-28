@@ -62,18 +62,26 @@ const [listMode, setListMode] = useState(true)
     props.history.push(ROUTES.SIGN_UP);
   }
 
+  const handleCancel = () =>{
+    setListMode(true)
+    setAddNewRoomMode(false)
+  }
+
   const onCreateRoom = (event, authUser) => {
+     event.preventDefault();
      props.firebase.rooms().add({
       roomName: roomName,
       userName: userName,
       userId: props.authUser.uid,
       createdAt: new Date().getTime(),
-    });
+    }).then(function(docRef) {
+       props.history.push(ROUTES.ENSEMBLE + '/' + docRef.id);
+       setAddNewRoomMode(false)
+       setListMode(true)
+       setRoomName('')
 
-    setRoomName('')
-    setAddNewRoomMode(false)
-    setListMode(true)
-    event.preventDefault();
+    })
+
   };
 
 
@@ -140,6 +148,9 @@ const [roomName, setRoomName] = useState()
               <br/>
           <button style={{color:'red', backgroundColor:'white'}} type="submit" >
            OK
+          </button>
+           <button style={{color:'red'}} onClick={handleCancel} >
+          Cancel
           </button>
           </form>  
           </div>)}
