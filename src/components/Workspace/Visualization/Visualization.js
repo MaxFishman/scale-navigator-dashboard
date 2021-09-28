@@ -193,26 +193,26 @@ const Visualization = () => {
                         p5.stroke(255, 16)
                         var sw = (p5.width + p5.height) / 1000
                         var layerAllowed = false;
-                        var alph = 100;
+                        var alph = 12.5;
                         var cols_same = [
-                            [255, 0, 255, alph],
-                            [255, 0, 0, alph],
-                            [0, 153, 255, alph],
-                            [153, 0, 204, alph],
-                            [0, 255, 0, alph],
-                            [255, 255, 0, alph],
-                            [0, 255, 255, alph],
+                            [255, 255, 255, alph],
+                            [255, 255, 255, alph],
+                            [255, 255, 255, alph],
+                            [255, 255, 255, alph],
+                            [255, 255, 255, alph],
+                            [255, 255, 255, alph],
+                            [255, 255, 255, alph],
                             [255, 255, 255, alph]
                         ]
-                        alph = 50
+                        alph = 12.5;
                         var cols_dif = [
-                            [255, 0, 255, alph],
-                            [255, 0, 0, alph],
-                            [0, 153, 255, alph],
-                            [153, 0, 204, alph],
-                            [0, 255, 0, alph],
-                            [255, 255, 0, alph],
-                            [0, 255, 255, alph],
+                            [255, 255, 255, alph],
+                            [255, 255, 255, alph],
+                            [255, 255, 255, alph],
+                            [255, 255, 255, alph],
+                            [255, 255, 255, alph],
+                            [255, 255, 255, alph],
+                            [255, 255, 255, alph],
                             [255, 255, 255, alph]
                         ]
 

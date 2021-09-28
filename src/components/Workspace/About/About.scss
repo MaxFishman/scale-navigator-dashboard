@@ -20,10 +20,17 @@ article {
     width: 14%;
   }
 
-  .figure-caption {
+  .figurecaption {
     text-align: center;
     white-space: nowrap;
     overflow-y: auto;
+    a {
+      font-size: 1.125vw;
+      text-decoration: none;
+    }
+    a:hover {
+      text-decoration: underline;
+    }
   }
 
   #activities {
@@ -104,13 +111,16 @@ article > p {
 }
 
 #credits {
-  li{
+  li {
     text-align: center;
     list-style-type: none;
-    color:#ffde6a;
+    color: #ffde6a;
   }
-  a{
+  a {
     text-decoration: none;
+  }
+  a:hover {
+    text-decoration: underline;
   }
 }
 
