@@ -65,7 +65,7 @@ export default class About extends React.Component {
           </p>
 
           <p>
-            Scale Navigator represents Musical scales as icons. A scale icon's
+            Scale Navigator represents scales as icons. A scale icon's
             polygonal shape indicates its scale class:
           </p>
 
@@ -210,7 +210,7 @@ export default class About extends React.Component {
             <a href="https://scale-navigator-dashboard.vercel.app/scale-network">
               Visualization tab
             </a>
-            , which desplays all of the scales icons in a network graph.
+            , which desplays all of the scale icons in a network graph.
           </p>
 
           <p>
