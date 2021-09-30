@@ -78,6 +78,7 @@ const [listMode, setListMode] = useState(true)
     }).then(function(docRef) {
 
      props.firebase.room(docRef.id).collection('activeUsers').add({
+           userName: userName,
       userId: props.authUser.uid,
       createdAt: new Date().getTime(),
     })
