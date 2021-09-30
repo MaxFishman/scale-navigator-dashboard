@@ -4,16 +4,15 @@ import { Link, Switch } from 'react-router-dom';
 import ROUTES from 'common/Routes';
 import RoomView from '../RoomView'
 
+
+//Fetch the individual room item with unique id from the list
+
 function RoomItem(props) {
-  
 
-
-    const {authUser, room, onRemoveMessage} = props;
+   const {authUser, room, onRemoveMessage} = props;
 
     return (
-
-
-     <div style={{marginTop:30, border:'solid 1px yellow'}}>    
+     <div style={{marginTop:30, border:'solid 1px yellow'}}>
        <Link
             style={{textDecoration:'none'}}
             to={{
@@ -21,7 +20,7 @@ function RoomItem(props) {
             }}
           >
         <p>{room.roomName}</p>
-         <p variant="body2">{room.userName}</p>
+         <p variant="body2">{room.hostName}</p>
 
        </Link>
        </div>

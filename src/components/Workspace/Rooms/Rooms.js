@@ -7,6 +7,9 @@ import { Link, withRouter } from 'react-router-dom';
 import ROUTES from 'common/Routes';
 import { compose } from 'recompose';
 import SignOutButton from '../SignOut'
+
+//Room component handle auth state of the list to control ui / add a new room 
+
 function Rooms(props) {
 
   const [rooms, setRooms] = useState([])
@@ -33,7 +36,6 @@ const [listMode, setListMode] = useState(true)
 
 
   useEffect(() => {
-
     const unsubscribe = props.firebase
       .rooms()
       .orderBy('createdAt', 'desc')
@@ -48,7 +50,7 @@ const [listMode, setListMode] = useState(true)
           setRooms(rooms.reverse()) 
         
         } else {
-          setRooms(null)
+          setRooms([])
         
         }
       })
@@ -69,19 +71,12 @@ const [listMode, setListMode] = useState(true)
 
   const onCreateRoom = (event, authUser) => {
      event.preventDefault();
-    
      props.firebase.rooms().add({
       roomName: roomName,
-      userName: userName,
-      userId: props.authUser.uid,
-      createdAt: new Date().getTime(),
+      hostName: userName,
+      hostId:props.authUser.uid,
+      createdAt:new Date().getTime()
     }).then(function(docRef) {
-
-     props.firebase.room(docRef.id).collection('activeUsers').add({
-           userName: userName,
-      userId: props.authUser.uid,
-      createdAt: new Date().getTime(),
-    })
        props.history.push(ROUTES.ENSEMBLE + '/' + docRef.id);
        setAddNewRoomMode(false)
        setListMode(true)
