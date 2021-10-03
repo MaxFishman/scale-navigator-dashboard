@@ -8,6 +8,7 @@ import Navigator from "./Navigator/Navigator";
 import Tabs from "components/Tabs";
 import MobileMenu from "../MobileMenu";
 import useWindowSize from "../../hooks/device/index";
+import { ReactComponent as Logo } from '../../assets/logo.svg'
 
 import "./Navigation.scss";
 
@@ -55,10 +56,9 @@ const Navigation = () => {
     <div className="navigation" style={wrapperStyle}>
 
       <div className="header-wrapper" style={logoStyle}>
-        <h1 className="navigation__logo">
-          Scale Navigator
-          <h2 className="navigation__sublogo">Dashboard</h2>
-        </h1>
+        <div className="app-logo">
+            <Logo/>
+        </div>
 
         {isMobile && <MobileMenu/>}
       </div>

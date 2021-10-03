@@ -2,11 +2,6 @@
 @import "styles/_variables.scss";
 @import "styles/_fonts.scss";
 
-// img {
-//     -webkit-filter: invert(1);
-//     filter: invert(1);
-// }
-
 body {
     font-family: arial, sans-serif;
     overscroll-behavior-y: none;
@@ -19,8 +14,6 @@ body {
         overflow: hidden;
     }
 }
-
-#root {}
 
 .appcontainer {
     background-color: $accent-medium;
@@ -452,9 +445,6 @@ input[type=checkbox] {
 
     &:checked:after {
         /* Heres your symbol replacement */
-
-
-
     }
 
 
@@ -466,10 +456,33 @@ input[type=checkbox] {
 button {
     border: 0;
     background-color: transparent;
+    transition: .3s ease opacity;
+
+    &:hover,
+    &:disabled {
+        opacity: .7;
+    }
 }
 
 .drawer-content-wrapper {
     top: 0;
     position: fixed;
     z-index: 123123;
+}
+
+.workspace__content {
+    padding-bottom: 70px;
+
+    @include md {
+        padding-bottom: 0;
+    }
+}
+
+.app-logo {
+    height: 70px;
+    margin: 0 auto;
+
+    @include md {
+        height: 90px;
+    }
 }
