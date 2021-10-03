@@ -456,6 +456,12 @@ input[type=checkbox] {
 button {
     border: 0;
     background-color: transparent;
+    transition: .3s ease opacity;
+
+    &:hover,
+    &:disabled {
+        opacity: .7;
+    }
 }
 
 .drawer-content-wrapper {
