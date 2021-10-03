@@ -15,6 +15,10 @@ body {
     }
 }
 
+a {
+    text-decoration: none;
+}
+
 .appcontainer {
     background-color: $accent-medium;
     width: 100%;

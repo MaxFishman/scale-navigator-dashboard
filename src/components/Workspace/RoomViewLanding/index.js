@@ -1,25 +1,13 @@
 import React from 'react';
-
 import RoomView from '../RoomView'
-import { withAuthorization, withEmailVerification, AuthUserContext } from '../../Session';
-import { compose } from 'recompose';
+import { AuthUserContext } from '../../Session';
 
-
-
-const RoomViewLanding = (authUser) => (
-  <div>
+const RoomViewLanding = () => (
     <AuthUserContext.Consumer>
-       {authUser => (
-          <div style={{marginTop:20}} align="center">
+        {authUser => (
             <RoomView authUser={authUser}/>
-          </div>
         )}
-      </AuthUserContext.Consumer>  
-  </div>
+    </AuthUserContext.Consumer>
 );
 
-
-
-export default compose(
-  //withEmailVerification,
-)(RoomViewLanding);
+export default RoomViewLanding
