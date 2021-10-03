@@ -1,16 +1,8 @@
 import React from "react";
-import "./About.scss";
-
-import "bootstrap/dist/css/bootstrap.min.css";
+import { Link } from "react-router-dom";
 import Figure from "react-bootstrap/Figure";
 
-import network from "./assets/twodnetwork.png";
-import fifths from "./assets/circleoffifths.png";
-import debussy from "./assets/debussy_analysis.png";
-import pressingcircle from "./assets/pressing_circle.png";
-import scales from "./assets/scales.svg";
-import intersects from "./assets/seven_note_intersects.svg";
-import lattice from "./assets/seven_note_lattice.png";
+import "./About.scss";
 
 import acoustic from "./shape_svgs/acoustic.svg";
 import diatonic from "./shape_svgs/diatonic.svg";
@@ -20,40 +12,37 @@ import hexatonic from "./shape_svgs/hexatonic.svg";
 import octatonic from "./shape_svgs/octatonic.svg";
 import whole_tone from "./shape_svgs/whole_tone.svg";
 
-export default class About extends React.Component {
-  render() {
-    return (
-      <>
-        <article>
-          <h2>About</h2>
+const About = () => (
+    <article>
+            <h2>About</h2>
 
-          <p>
+            <p>
             <strong>Scale Navigator Dashboard</strong> is a web app for
             exploring musical harmony! Use it to:
-          </p>
+            </p>
 
-          <ul id="activities">
+            <ul id="activities">
             <li>
-              Creatively <strong>compose</strong> music
+                Creatively <strong>compose</strong> music
             </li>
             <li>
-              <strong>Improvise</strong> melodies, chords, riffs, progressions,
-              and phrases
+                <strong>Improvise</strong> melodies, chords, riffs, progressions,
+                and phrases
             </li>
             <li>
-              Learn <strong>music theory</strong> concepts
+                Learn <strong>music theory</strong> concepts
             </li>
             <li>
-              Stay <strong>harmonically synchronized</strong> while jamming in{" "}
-              <strong>ensembles</strong> with your friends
+                Stay <strong>harmonically synchronized</strong> while jamming in{" "}
+                <strong>ensembles</strong> with your friends
             </li>
             <li>
-              Connect with <strong>Scale Navigator MIDI VST</strong> to
-              harmonically synchronize your <strong>DAW</strong>
+                Connect with <strong>Scale Navigator MIDI VST</strong> to
+                harmonically synchronize your <strong>DAW</strong>
             </li>
-          </ul>
+            </ul>
 
-          <p>
+            <p>
             Scale Navigator makes harmony accessible by giving users tangible
             harmonic objects to <em>play with</em>, and placing these objects
             within an easy-to-understand and easy-to-navigate framework. Even as
@@ -62,136 +51,136 @@ export default class About extends React.Component {
             play an instrument, these things can be locked away. Scale Navigator
             unlocks these harmonic concepts by giving them form, and by placing
             them in context.
-          </p>
+            </p>
 
-          <p>
+            <p>
             Scale Navigator represents scales as icons. A scale icon's
             polygonal shape indicates its scale class:
-          </p>
+            </p>
 
-          <div id="scale_table">
+            <div id="scale_table">
             <Figure class="scale_fig">
-              <Figure.Image alt="diatonic scale class icon" src={diatonic} />
-              <Figure.Caption className="figurecaption">
+                <Figure.Image alt="diatonic scale class icon" src={diatonic} />
+                <Figure.Caption className="figurecaption">
                 <a href="https://en.wikipedia.org/wiki/Diatonic_scale">
-                  diatonic
+                    diatonic
                 </a>
-              </Figure.Caption>
+                </Figure.Caption>
             </Figure>
 
             <Figure class="scale_fig">
-              <Figure.Image alt="acoustic scale class icon" src={acoustic} />
-              <Figure.Caption className="figurecaption">
+                <Figure.Image alt="acoustic scale class icon" src={acoustic} />
+                <Figure.Caption className="figurecaption">
                 <a href="https://en.wikipedia.org/wiki/Acoustic_scale">
-                  acoustic
+                    acoustic
                 </a>
-              </Figure.Caption>
+                </Figure.Caption>
             </Figure>
 
             <Figure class="scale_fig">
-              <Figure.Image
+                <Figure.Image
                 alt="harmonic major scale class icon"
                 src={harmonic_major}
-              />
-              <Figure.Caption className="figurecaption">
+                />
+                <Figure.Caption className="figurecaption">
                 <a href="https://en.wikipedia.org/wiki/Harmonic_major_scale">
-                  harmonic
-                  <br />
-                  major
+                    harmonic
+                    <br />
+                    major
                 </a>
-              </Figure.Caption>
+                </Figure.Caption>
             </Figure>
 
             <Figure class="scale_fig">
-              <Figure.Image
+                <Figure.Image
                 alt="harmonic minor scale class icon"
                 src={harmonic_minor}
-              />
-              <Figure.Caption className="figurecaption">
+                />
+                <Figure.Caption className="figurecaption">
                 <a href="https://en.wikipedia.org/wiki/Minor_scale#Harmonic_minor_scale">
-                  harmonic
-                  <br />
-                  minor
+                    harmonic
+                    <br />
+                    minor
                 </a>
-              </Figure.Caption>
+                </Figure.Caption>
             </Figure>
 
             <Figure class="scale_fig">
-              <Figure.Image
+                <Figure.Image
                 alt="whole tone scale class icon"
                 src={whole_tone}
-              />
-              <Figure.Caption className="figurecaption">
+                />
+                <Figure.Caption className="figurecaption">
                 <a href="https://en.wikipedia.org/wiki/Whole_tone_scale">
-                  whole
-                  <br />
-                  tone
+                    whole
+                    <br />
+                    tone
                 </a>
-              </Figure.Caption>
+                </Figure.Caption>
             </Figure>
 
             <Figure class="scale_fig">
-              <Figure.Image alt="octatonic scale class icon" src={octatonic} />
-              <Figure.Caption className="figurecaption">
+                <Figure.Image alt="octatonic scale class icon" src={octatonic} />
+                <Figure.Caption className="figurecaption">
                 <a href="https://en.wikipedia.org/wiki/Octatonic_scale">
-                  octatonic
+                    octatonic
                 </a>
-              </Figure.Caption>
+                </Figure.Caption>
             </Figure>
 
             <Figure class="scale_fig">
-              <Figure.Image alt="hexatonic scale class icon" src={hexatonic} />
-              <Figure.Caption className="figurecaption">
+                <Figure.Image alt="hexatonic scale class icon" src={hexatonic} />
+                <Figure.Caption className="figurecaption">
                 <a href="https://en.wikipedia.org/wiki/Hexatonic_scale#Augmented_scale">
-                  hexatonic
+                    hexatonic
                 </a>
-              </Figure.Caption>
+                </Figure.Caption>
             </Figure>
-          </div>
+            </div>
 
-          <p>A scale icon's color indicates its root:</p>
-          <br />
+            <p>A scale icon's color indicates its root:</p>
+            <br />
 
-          <div id="circle_container">
+            <div id="circle_container">
             <div class="root_heading" id="root_f">
-              F
+                F
             </div>
             <div class="root_heading" id="root_c">
-              C
+                C
             </div>
             <div class="root_heading" id="root_g">
-              G
+                G
             </div>
             <div class="root_heading" id="root_d">
-              D
+                D
             </div>
             <div class="root_heading" id="root_a">
-              A
+                A
             </div>
             <div class="root_heading" id="root_e">
-              E
+                E
             </div>
             <div class="root_heading" id="root_b">
-              B
+                B
             </div>
             <div class="root_heading" id="root_fs">
-              F#
+                F#
             </div>
             <div class="root_heading" id="root_df">
-              D♭
+                D♭
             </div>
             <div class="root_heading" id="root_af">
-              A♭
+                A♭
             </div>
             <div class="root_heading" id="root_ef">
-              E♭
+                E♭
             </div>
             <div class="root_heading" id="root_bf">
-              B♭
+                B♭
             </div>
-          </div>
+            </div>
 
-          <p>
+            <p>
             Users can travel (or "modulate") to a new scale by clicking on its
             scale icon in the Navigator interface. The current selected scale is
             in the center, radially surrounded by adjacent neighbor scales. Each
@@ -201,112 +190,111 @@ export default class About extends React.Component {
             Navigator interface) to automatically select a new current
             scale&mdash;adjust the autopilot slider to change the rate at which
             the autopilot selects a new scale.
-          </p>
+            </p>
 
-          <p>
+            <p>
             The Navigator interface displays the local harmonic context as it
             relates to the current selected scale. A bird's eye view of all of
             the scales as they relate to one another can be seen in the{" "}
-            <a href="https://scale-navigator-dashboard.vercel.app/scale-network">
-              Visualization tab
-            </a>
+            <Link to="scale-network">
+                Visualization tab
+            </Link>
             , which desplays all of the scale icons in a network graph.
-          </p>
+            </p>
 
-          <p>
+            <p>
             Make music with your friends by creating or joining an ensemble in
             the{" "}
-            <a href="https://scale-navigator-dashboard.vercel.app/ensemble">
-              Ensemble tab
-            </a>
+            <Link to="ensemble">
+                Ensemble tab
+            </Link>
             .
-          </p>
+            </p>
 
-          <p>
+            <p>
             Select an instrument with which to compose or improvise music in the{" "}
-            <a href="https://scale-navigator-dashboard.vercel.app/Tablature">
-              Tablature tab
-            </a>
+            <Link to="tablature">
+                Tablature tab
+            </Link>
             .
-          </p>
+            </p>
 
-          <p>
+            <p>
             In the words of Dmitri Tymoczko, "New scales [provide] access to new
             chords, while new chords, in turn, [suggest] new scales." Use the{" "}
-            <a href="https://scale-navigator-dashboard.vercel.app/Chords">
-              Chords tab
-            </a>{" "}
+            <Link to="chords">
+                Chords tab
+            </Link>{" "}
             to generate chords within the context of the current selected scale.
-          </p>
+            </p>
 
-          <h2>Further Reading</h2>
-          <p>
+            <h2>Further Reading</h2>
+            <p>
             Scale Navigator was the subject of my graduate thesis at California
             Institute of the Arts:{" "}
             <a href="https://mtiid.calarts.edu/wp-content/uploads/2020/03/Turczan_MFA_Thesis.pdf">
-              “The Scale Navigator: A Synesthetic Interface for Manipulating
-              Harmony in Composition, Performance and Installation”
+                “The Scale Navigator: A Synesthetic Interface for Manipulating
+                Harmony in Composition, Performance and Installation”
             </a>{" "}
             describes not only Scale Navigator's design, but also its use as a
             music compositional assistive tool, a performance tool, and as a
             framework&mdash;and interface&mdash;for interactive multimedia
             installations. I later presented this work at the{" "}
             <a href="https://www.nime.org/proceedings/2019/nime2019_paper020.pdf">
-              New Interfaces for Musical Expression conference
+                New Interfaces for Musical Expression conference
             </a>{" "}
             in June 2019.
-          </p>
-          <p>
+            </p>
+            <p>
             Scale Navigator is built entirely on the foundation laid by Dmitri
             Tymoczko in his paper{" "}
             <a href="https://dmitri.mycpanel.princeton.edu/files/publications/debussy.pdf">
-              Scale Networks and Debussy
+                Scale Networks and Debussy
             </a>
             . To read more about scale networks, this time in a jazz context,
             check out{" "}
             <a href="https://music.arts.uci.edu/abauer/3.1/notes/Chord-Scale_Networks.pdf">
-              Chord-Scale Networks in the Music and Improvisations of Wayne
-              Shorter
+                Chord-Scale Networks in the Music and Improvisations of Wayne
+                Shorter
             </a>{" "}
             by Garrett Michaelsen.
-          </p>
+            </p>
 
-          <p style={{ "text-align": "right" }}>
+            <p style={{ "text-align": "right" }}>
             &mdash; Nathan Turczan, September 2021
-          </p>
+            </p>
 
-          <h2>Credits</h2>
-          <ul id="credits">
+            <h2>Credits</h2>
+            <ul id="credits">
             <li>
-              <a href="https://yobro.icu/">Nate Ben</a>
+                <a href="https://yobro.icu/">Nate Ben</a>
             </li>
             <li>
-              <a href="https://bboettcher3.github.io/">Brady Boettcher</a>
+                <a href="https://bboettcher3.github.io/">Brady Boettcher</a>
             </li>
             <li>
-              <a href="https://popleap.dev/">Scott Devereux</a>
+                <a href="https://popleap.dev/">Scott Devereux</a>
             </li>
             <li>
-              <a href="https://nathan.ho.name/">Nathan Ho</a>
+                <a href="https://nathan.ho.name/">Nathan Ho</a>
             </li>
             <li>
-              <a href="https://colinhonigman.com/">Colin Honigman</a>
+                <a href="https://colinhonigman.com/">Colin Honigman</a>
             </li>
             <li>
-              <a href="https://github.com/mjmaurer">Michael Maurer</a>
+                <a href="https://github.com/mjmaurer">Michael Maurer</a>
             </li>
             <li>
-              <a href="https://nathanturczan.com">Nathan Turczan</a>
+                <a href="https://nathanturczan.com">Nathan Turczan</a>
             </li>
             <li>
-              <a href="https://github.com/rudytak">Ondřej Sedláček</a>
+                <a href="https://github.com/rudytak">Ondřej Sedláček</a>
             </li>
             <li>
-              <a href="https://dexterjshepherd.com/">Dexter Shepherd</a>
+                <a href="https://dexterjshepherd.com/">Dexter Shepherd</a>
             </li>
-          </ul>
-        </article>
-      </>
-    );
-  }
-}
+            </ul>
+    </article>
+);
+
+export default  About
