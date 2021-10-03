@@ -68,39 +68,42 @@ const Navigation = () => {
 
             <div className="navinfo" style={navInfoStyle}>
                 <div className="navinfo__root">
-                <h5>ROOT</h5>
-                {PitchClassData[ScaleData[scale].root].note}
-                </div>
-                <div className="navinfo__scaleclass">
-                <h5>SCALE CLASS</h5>
-                {ScaleData[scale].scale_class
-                    .split("_")
-                    .map((word) => word.charAt(0) + word.slice(1))
-                    .join(" ")}
-                </div>
-                <div className="navinfo__options">
-                <div className="navinfo__option">
-                    <input
-                        type="checkbox"
-                        autoComplete="off"
-                        name="autopilot"
-                        id="autopilot_checkbox"
-                    />
-                    <label for="autopilot">autopilot</label>
+                    <h5>ROOT</h5>
+                    {PitchClassData[ScaleData[scale].root].note}
                 </div>
 
-                <div className="navinfo__option">
-                    <input
-                        style={{direction: "rtl"}}
-                        type="range"
-                        autoComplete="off"
-                        name="autopilot_interval"
-                        id="autopilot_interval"
-                        min="1"
-                        max="4"
-                        step="0.01"
-                    />
+                <div className="navinfo__scaleclass">
+                    <h5>SCALE CLASS</h5>
+
+                    {ScaleData[scale].scale_class
+                        .split("_")
+                        .map((word) => word.charAt(0) + word.slice(1))
+                        .join(" ")}
                 </div>
+
+                <div className="navinfo__options">
+                    <div className="navinfo__option">
+                        <input
+                            type="checkbox"
+                            autoComplete="off"
+                            name="autopilot"
+                            id="autopilot_checkbox"
+                        />
+                        <label for="autopilot">autopilot</label>
+                    </div>
+
+                    <div className="navinfo__option">
+                        <input
+                            style={{direction: "rtl"}}
+                            type="range"
+                            autoComplete="off"
+                            name="autopilot_interval"
+                            id="autopilot_interval"
+                            min="1"
+                            max="4"
+                            step="0.01"
+                        />
+                    </div>
                 </div>
             </div>
 
