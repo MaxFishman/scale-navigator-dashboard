@@ -3,6 +3,7 @@ import {Link} from 'react-router-dom';
 import styled from 'styled-components';
 import Modal from 'react-modal';
 
+
 const customStyles = {
     content: {
         top: '50%',
