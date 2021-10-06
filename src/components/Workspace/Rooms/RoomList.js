@@ -2,7 +2,8 @@ import React from 'react';
 
 import RoomItem from './RoomItem';
 
-
+//Passes the room list objects between the room compononent and item.
+ 
 const RoomList = ({
   authUser,
   rooms,
