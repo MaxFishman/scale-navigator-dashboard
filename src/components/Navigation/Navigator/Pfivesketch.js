@@ -12,7 +12,6 @@ function Pfivesketch({ navRef, canvasWrapperRef }) {
     useLayoutEffect(() => {
         const p = wrapperElm && wrapperElm.getBoundingClientRect();
         window.scaleP5 && window.scaleP5.resizeCanvas(p.width, p.height);
-
     }, [location.pathname])
 
     const setup = (p5, canvasParentRef) => {
