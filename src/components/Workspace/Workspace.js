@@ -38,55 +38,55 @@ export default function Workspace() {
         <div className={classNames}>
             <Tabs className="desktop"/>
 
-            <div className="workspace__content">      
+            <div className="workspace__content">
                 <Switch>
-                <Route path={ROUTES.SIGN_IN}>
-                    <SignIn/>
-                </Route>
-                 <Route path={ROUTES.SIGN_UP}>
-                    <SignUp/>
-                </Route>
+                    <Route path={ROUTES.SIGN_IN}>
+                        <SignIn/>
+                    </Route>
+                    <Route path={ROUTES.SIGN_UP}>
+                        <SignUp/>
+                    </Route>
 
-                <Route path={ROUTES.ENSEMBLE}>
-                    <Ensemble/>
-                </Route>
+                    <Route path={ROUTES.ENSEMBLE}>
+                        <Ensemble/>
+                    </Route>
 
-                <Route path={ROUTES.TABLATURE}>
-                    <Tablature/>
-                </Route>
+                    <Route path={ROUTES.TABLATURE}>
+                        <Tablature/>
+                    </Route>
 
-                <Route path={ROUTES.CHORDS}>
-                    <Chords
-                    scaleData={scaleData}
-                    setScaleData={setScaleData}
-                    chordData={chordData}
-                    setChordData={setChordData}
-                    />
-                </Route>
+                    <Route path={ROUTES.CHORDS}>
+                        <Chords
+                        scaleData={scaleData}
+                        setScaleData={setScaleData}
+                        chordData={chordData}
+                        setChordData={setChordData}
+                        />
+                    </Route>
 
-                <Route path={ROUTES.SCALENET}>
-                    <Provider>
-                    <KeepAlive name="Visualization">
-                        <div className="navigation__scalenav visu-wrapper" id="canv_container_visu">
-                        <Visualization />
-                        </div>
-                    </KeepAlive>
-                    </Provider>
+                    <Route path={ROUTES.SCALENET}>
+                        <Provider>
+                        <KeepAlive name="Visualization">
+                            <div className="navigation__scalenav visu-wrapper" id="canv_container_visu">
+                            <Visualization />
+                            </div>
+                        </KeepAlive>
+                        </Provider>
+                    </Route>
 
-                </Route>
+                    <Route path={ROUTES.ABOUT}>
+                        <About/>
+                    </Route>
 
-                <Route path={ROUTES.ABOUT}>
-                    <About/>
-                </Route>
+                    <Route path={ROUTES.ACCOUNT}>
+                        <AccountLanding/>
+                    </Route>
 
-                <Route path={ROUTES.ACCOUNT}>
-                   <AccountLanding/>
-                </Route>
-
-                {window.innerWidth > 960 &&
-                    <Route exact path="/">
-                    <Redirect to={ROUTES.ABOUT} />
-                    </Route>}
+                    {window.innerWidth > 960 &&
+                        <Route exact path="/">
+                            <Redirect to={ROUTES.ABOUT} />
+                        </Route>
+                    }
                 </Switch>
             </div>
         </div>

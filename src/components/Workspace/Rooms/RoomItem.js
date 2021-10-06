@@ -3,29 +3,62 @@ import { withFirebase } from '../../Firebase';
 import { Link, Switch } from 'react-router-dom';
 import ROUTES from 'common/Routes';
 import RoomView from '../RoomView'
+import styled from 'styled-components';
 
+const Wrapper = styled.div`
+    border: 2px solid #FFFFFF;
+    box-sizing: border-box;
+    border-radius: 8px;
+    color: white;
+    padding: 20px;
+    width: 250px;
+    height: 124px;
+    margin: 6px;
+    transition: .3s ease opacity;
+    display: flex;
+    align-items: center;
+
+    &:hover {
+        opacity: .7;
+    }
+`;
+
+const RoomImage = styled.div`
+    height: 100%;
+    background-color: red;
+    width: 88px;
+    margin-right: 14px;
+    border-radius: 50px 0 50px 0;
+`;
+
+const Title = styled.div`
+    font-weight: bold;
+    font-size: 16px;
+    line-height: 20px;
+    color: #FFDE6A;
+    text-align: left;
+
+    >div {
+        color: white;
+    }
+`;
 
 //Fetch the individual room item with unique id from the list
 
-function RoomItem(props) {
-
-   const {authUser, room, onRemoveMessage} = props;
-
+const RoomItem = ({ authUser, room, onRemoveMessage }) => {
     return (
-     <div style={{marginTop:30, border:'solid 1px yellow'}}>
-       <Link
-            style={{textDecoration:'none'}}
-            to={{
-              pathname: `${ROUTES.ENSEMBLE}/${room.uid}`,
-            }}
-          >
-        <p>{room.roomName}</p>
-         <p variant="body2">{room.hostName}</p>
-
+        <Link to={`${ROUTES.ENSEMBLE}/${room.uid}`}>
+            <Wrapper>
+                <RoomImage/>
+                <Title>
+                    {room.roomName}
+                    <div>Host: {room.hostName}</div><br/>
+                    <div>{10} Members</div>
+                </Title>
+                {console.log(room)}
+            </Wrapper>
        </Link>
-       </div>
     );
-  }
-
+}
 
 export default withFirebase(RoomItem)

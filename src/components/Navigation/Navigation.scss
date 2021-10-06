@@ -55,16 +55,10 @@
             font-size: 2vw;
         }
     }
-
-    &__scalenav {
-        height: 100%;
-        flex: 0 1 auto;
-    }
 }
 
 .canvas-wrapper {
     width: 100%;
-    min-height: 48vh;
 
     canvas {
         width: 100%;

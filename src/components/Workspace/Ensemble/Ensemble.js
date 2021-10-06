@@ -1,25 +1,13 @@
-
 import React from 'react';
-
-import { withAuthorization, withEmailVerification, AuthUserContext } from '../../Session';
-import { compose } from 'recompose';
+import { AuthUserContext } from '../../Session';
 import Room from '../Room'
 
-const Ensemble = (authUser) => (
-  <div>
-
+const Ensemble = () => (
     <AuthUserContext.Consumer>
        {authUser => (
-          <div style={{color:'white'}} align="center">
             <Room authUser={authUser}/>
-          </div>
         )}
-      </AuthUserContext.Consumer>  
-  </div>
+    </AuthUserContext.Consumer>
 );
 
-
-
-export default compose(
-  //withEmailVerification,
-)(Ensemble);
+export default Ensemble
