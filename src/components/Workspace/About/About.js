@@ -284,14 +284,15 @@ const About = () => (
             <li>
                 <a href="https://github.com/mjmaurer">Michael Maurer</a>
             </li>
-            <li>
-                <a href="https://nathanturczan.com">Nathan Turczan</a>
-            </li>
+            
             <li>
                 <a href="https://github.com/rudytak">Ondřej Sedláček</a>
             </li>
             <li>
                 <a href="https://dexterjshepherd.com/">Dexter Shepherd</a>
+            </li>
+<li>
+                <a href="https://nathanturczan.com">Nathan Turczan</a>
             </li>
             </ul>
     </article>
