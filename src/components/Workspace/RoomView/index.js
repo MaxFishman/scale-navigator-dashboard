@@ -15,12 +15,12 @@ function RoomView(props) {
     const [messages, setMessages] = useState([])
 
     useEffect(() => {
-            const unsubscribe = props.firebase
-                .room(props.match.params.id)
-                .onSnapshot(snapshot => {
-                    setRoomName(
-                        snapshot.data().roomName || ''
-                    )
+       const unsubscribe = props.firebase
+         .room(props.match.params.id)
+         .onSnapshot(snapshot => {
+          setRoomName(
+            snapshot.data().roomName || ''
+               )
             })
 
         return () => {
@@ -54,7 +54,6 @@ function RoomView(props) {
 
                 } else {
                 setMessages([])
-
                 }
         })
 
@@ -65,37 +64,37 @@ function RoomView(props) {
 
 
     useEffect(() => {
-        props.firebase
+       const unsubscribe = props.firebase
         .user(props.authUser.uid)
         .onSnapshot(snapshot => {
-        setUserName(snapshot.data().userName || '')
-        props.firebase.room(props.match.params.id).collection('activeUsers').doc(props.authUser.uid).set({
-        userId: props.authUser.uid,
-        userName: snapshot.data().userName || '',
-        createdAt:new Date().getTime(),
-        }).then(()=>{
-        const unsubscribe = props.firebase
-        .room(props.match.params.id)
-        .collection('activeUsers')
-        .orderBy('createdAt', 'desc')
-        .onSnapshot(snapshot => {
-            if (snapshot.size) {
-            let activeUsers = [];
-            snapshot.forEach(doc =>
-                activeUsers.push({ ...doc.data(), uid: doc.id }),
-            )
+            setUserName(snapshot.data().userName || '')
+            props.firebase.room(props.match.params.id).collection('activeUsers').doc(props.authUser.uid).set({
+            userId: props.authUser.uid,
+            userName: snapshot.data().userName || '',
+            createdAt:new Date().getTime(),
+            }).then(()=>{
+            const unsubscribe = props.firebase
+            .room(props.match.params.id)
+            .collection('activeUsers')
+            .orderBy('createdAt', 'desc')
+            .onSnapshot(snapshot => {
+                if (snapshot.size) {
+                let activeUsers = [];
+                snapshot.forEach(doc =>
+                    activeUsers.push({ ...doc.data(), uid: doc.id }),
+                )
 
-            setActiveUsers(activeUsers.reverse())
-            setHostName(activeUsers[0].userName)
+                setActiveUsers(activeUsers.reverse())
+                setHostName(activeUsers[0].userName)
 
-            } else {
-            setActiveUsers([])
+                } else {
+                setActiveUsers([])
 
+                }
+            })
+            return () => {
+            unsubscribe()
             }
-        })
-        return () => {
-        unsubscribe()
-        }
     })
     })
 
@@ -104,7 +103,6 @@ function RoomView(props) {
 
 
     const handleLeaveRoom = () =>{
-
 
         if(activeUsers.length === 1){
         props.history.push(ROUTES.ENSEMBLE)

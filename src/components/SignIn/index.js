@@ -1,7 +1,7 @@
 import React, { useState }  from 'react';
 import { compose } from 'recompose';
 import { withRouter, Link } from 'react-router-dom';
-import { withFirebase } from '../../Firebase';
+import { withFirebase } from '../Firebase';
 import ROUTES from 'common/Routes';
 import LoginModal from 'components/LoginModal';
 import styled from 'styled-components';
@@ -137,11 +137,11 @@ function SignIn( props) {
     
    } 
   return(
-          <>
-            <Modal
-                isOpen={isVisible}
-                style={customStyles}
-                onRequestClose={()=>window.location.replace('/about')}
+         <>
+          <Modal
+             isOpen={isVisible}
+             style={customStyles}
+             onRequestClose={()=>window.location.replace('/about')}
             >
          <Wrapper>
          <Title>Login to access!</Title>
@@ -180,9 +180,14 @@ function SignIn( props) {
           >
             Sign In
           </Submit>
-
+          <SignUpContent>
+              <Link to="">Don't have an account? Create one</Link><br/>
+              <Link to=""> <Forgot>Forgotten Password</Forgot></Link>
+           </SignUpContent>
    
         </form>
+
+
         </Wrapper>
         </Modal>
       </>  

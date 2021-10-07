@@ -55,7 +55,6 @@ const RoomItem = ({ authUser, room, onRemoveMessage }) => {
                     <div>Host: {room.hostName}</div><br/>
                     <div>{10} Members</div>
                 </Title>
-                {console.log(room)}
             </Wrapper>
        </Link>
     );

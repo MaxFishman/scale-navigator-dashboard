@@ -18,9 +18,9 @@ import Visualization from "./Visualization/Visualization";
 import "react-tabs/style/react-tabs.css";
 import "./Workspace.scss";
 import SignUp from './SignUp'
-import SignIn from './SignIn'
 import AccountLanding from './AccountLanding'
-
+import LoginModal from 'components/LoginModal'
+import SignUpModal from 'components/SignUpModal'
 
 export default function Workspace() {
     const dispatch = useDispatch()
@@ -41,7 +41,10 @@ export default function Workspace() {
             <div className="workspace__content">
                 <Switch>
                     <Route path={ROUTES.SIGN_IN}>
-                        <SignIn/>
+                        <LoginModal/>
+                    </Route>
+                    <Route path={ROUTES.SIGN_UP}>
+                        <SignUpModal/>
                     </Route>
                     <Route path={ROUTES.SIGN_UP}>
                         <SignUp/>
@@ -80,6 +83,10 @@ export default function Workspace() {
 
                     <Route path={ROUTES.ACCOUNT}>
                         <AccountLanding/>
+                    </Route>
+
+                     <Route path={ROUTES.SIGN_IN_MODAL}>
+                        <LoginModal/>
                     </Route>
 
                     {window.innerWidth > 960 &&

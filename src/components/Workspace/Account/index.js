@@ -2,7 +2,8 @@ import React,{useState, useEffect} from 'react';
 import { compose } from 'recompose';
 import { withAuthorization, withEmailVerification, withAuthentication, AuthUserContext } from '../../Session';
 import SignOutButton from '../SignOut'
-
+import { withRouter, Link } from 'react-router-dom';
+import ROUTES from 'common/Routes';
 
 function Account() {
 
@@ -12,7 +13,12 @@ function Account() {
       authUser ? (
         <SignOutButton/>
       ) : (
-      <p>You are not currently signed In</p>
+     <>
+       <p>You are currently not signed in </p>
+       <Link to={ROUTES.SIGN_IN}> <p>Sign In </p></Link>
+       <p>OR</p>
+        <Link to={ROUTES.SIGN_UP}> <p>Sign Up </p></Link>
+      </>
       )
     }
   </AuthUserContext.Consumer>
@@ -39,7 +45,6 @@ function AccountAuth(props) {
 
     return (
         <div align="center">
-
             <SignOutButton/>
         </div>
     );

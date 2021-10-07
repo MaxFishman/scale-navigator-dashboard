@@ -6,14 +6,12 @@ import { withFirebase } from '../Firebase';
 import ROUTES from 'common/Routes';
 import { compose } from 'recompose';
 
+
 const ERROR_CODE_ACCOUNT_EXISTS = 'auth/email-already-in-use';
 
 const ERROR_MSG_ACCOUNT_EXISTS = `
   An account with this E-Mail address already exists.
-  Try to login with this account instead. If you think the
-  account is already used from one of the social logins, try
-  to sign in with one of them. Afterward, associate your accounts
-  on your personal account page.
+  Try to login with this account instead.
 `;
 
 const customStyles = {
@@ -108,25 +106,37 @@ const Forgot = styled.span`
     color: #FFDE6A;
 `;
 
-const LoginModal = (props) => {
-    const isVisible = true
-    const [ email, setEmail] = useState('')
-    const [ passwordOne, setPasswordOne] = useState('')
+const SignUpModal = (props) => {
+  const isVisible = true
+  const [ email, setEmail] = useState('')
+  const [ passwordOne, setPasswordOne] = useState('')
+  const [error] = useState('')
+  const [userName, setUserName] = useState('')
 
   const onSubmit = evt => {
      evt.preventDefault();
-      props.firebase.doSignInWithEmailAndPassword(email, passwordOne)
+      props.firebase.doCreateUserWithEmailAndPassword(email, passwordOne)
       .then(authUser => {
         return props.firebase.user(authUser.user.uid).set(
           {
-            email,  
+            email:email,  
+            userName:userName,
           },
           { merge: true },
         );
       })
       .then(() => {
-        props.history.push(ROUTES.ENSEMBLE)
+        props.history.push(ROUTES.ENSEMBLE);
       })
+      //need to add error catching return
+       .catch(error => {
+        if (error.code === ERROR_CODE_ACCOUNT_EXISTS) {
+          error.message = ERROR_MSG_ACCOUNT_EXISTS;
+        }
+
+        //this.setState({ error });
+      });
+
     
    } 
 
@@ -140,9 +150,19 @@ const LoginModal = (props) => {
              <form autocomplete="off"  onSubmit={onSubmit}>
                 <Wrapper>
 
-                    <Title>Login to access!</Title>
+                    <Title>Sign Up</Title>
 
                     <div>
+                      <Label>
+                          <div>* User Name</div>
+                          <Input
+                            value={userName}
+                            type="text"
+                            required
+                            onChange={e => setUserName(e.target.value)}
+                            autoFocus
+                          />
+                     </Label>  
                         <Label>
                             <div>* Email</div>
                             <Input
@@ -170,10 +190,10 @@ const LoginModal = (props) => {
                         </Label>
                     </div>
 
-                    <Submit type="submit" >Sign In</Submit>
+                    <Submit type="submit" >Sign Up</Submit>
 
                     <SignUpContent>
-                        <Link to="">Don't have an account? Create one</Link><br/>
+                        <Link to="">Already have an account? Sign In</Link><br/>
                         <Link to="">
                             <Forgot>Forgotten Password</Forgot>
                         </Link>
@@ -185,4 +205,4 @@ const LoginModal = (props) => {
     );
 }
 
-export default compose(withRouter, withFirebase) (LoginModal);
+export default compose(withRouter, withFirebase) (SignUpModal);

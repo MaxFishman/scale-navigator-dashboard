@@ -8,16 +8,83 @@ import ROUTES from 'common/Routes';
 import { compose } from 'recompose';
 import SignOutButton from '../SignOut'
 import styled from 'styled-components';
+import Modal from 'react-modal';
+
+
+const customStyles = {
+    content: {
+        top: '50%',
+        left: '50%',
+        right: 'auto',
+        bottom: 'auto',
+        width: '100%',
+        maxWidth: '550px',
+        marginRight: '-50%',
+        transform: 'translate(-50%, -50%)',
+        background: 'transparent',
+        border: 0,
+        zIndex: 9090
+    },
+};
+
+const Title = styled.div`
+    font-weight: bold;
+    font-size: 36px;
+    line-height: 20px;
+    text-align: center;
+    width: 100%;
+`;
+
+const Input = styled.input`
+    border: 2px solid #FFFFFF;
+    box-sizing: border-box;
+    border-radius: 9px;
+    background-color: transparent;
+    height: 39px;
+    width: 100%;
+    margin-bottom: 28px;
+    padding-left: 12px;
+`;
 
 const Wrapper = styled.div`
     height: 100%;
 `;
+
+
+const ModalWrapper = styled.div`
+    color: #fff;
+    background: #000000;
+    border: 3px solid #FFFFFF;
+    box-sizing: border-box;
+    border-radius: 38px;
+    padding: 20px 0 35px;
+
+    &>div {
+        width: 100%;
+        max-width: 350px;
+        margin: 0 auto;
+        padding: 50px 20px 0;
+    }
+`;
+
 
 const Header = styled.div`
     display: flex;
     align-items: center;
     justify-content: space-between;
     margin-bottom: 30px;
+`;
+
+const Submit = styled.button`
+    background: #FFDE6A;
+    border-radius: 9px;
+    text-align: center;
+    width: 139px;
+    height: 40px;
+    color: black;
+    font-weight: bold;
+    margin: 12px auto 30px;
+    display: block;
 `;
 
 const CreateEnsamble = styled.div`
@@ -54,19 +121,31 @@ const CreateEnsamble = styled.div`
 function Rooms(props) {
 
     const [rooms, setRooms] = useState([])
-
-
-    const handleNewRoom = () => {
-        props.firebase
-        .user(props.authUser.uid)
-        .onSnapshot(snapshot => {
-        setUserName(
-        snapshot.data().userName || ''
-        )
+     
+    const handleNewRoom = (e) =>{
+       props.firebase
+      .user(props.authUser.uid)
+      .get().then((doc) => {
+        if (doc.exists) {
+         props.firebase.rooms().add({
+        roomName: roomName,
+        hostName: doc.data().userName || '',
+        hostId:props.authUser.uid,
+        createdAt:new Date().getTime()
+        }).then(function(docRef) {
+        props.history.push(ROUTES.ENSEMBLE + '/' + docRef.id); 
+        })
+        e.preventDefault();    
+ 
+       } else {
+        console.log("No such document!");
+       }
     })
-        setAddNewRoomMode(true)
-        setListMode(false)
-    };
+  }
+
+
+
+
 
     const [userName, setUserName] = useState('')
     const [addNewRoomMode, setAddNewRoomMode] = useState(false)
@@ -107,40 +186,38 @@ function Rooms(props) {
         setAddNewRoomMode(false)
     }
 
-    const onCreateRoom = (event, authUser) => {
-        event.preventDefault();
-        props.firebase.rooms().add({
-        roomName: roomName,
-        hostName: userName,
-        hostId:props.authUser.uid,
-        createdAt:new Date().getTime()
-        }).then(function(docRef) {
-        props.history.push(ROUTES.ENSEMBLE + '/' + docRef.id);
-        setAddNewRoomMode(false)
-        setListMode(true)
-        setRoomName('')
-
-        })
-
-    };
 
     const onRemoveRoom = uid => {
         props.firebase.Room(uid).delete();
     };
 
     const [roomName, setRoomName] = useState()
-
+    const isVisible = true
     return (
         <AuthUserContext.Consumer>
             {authUser => (
                 <Wrapper>
                     {listMode && <>
-                        <CreateEnsamble>
-                            <input placeholder="input new ensemble name..."/>
-                            <button onClick={handleNotAuth}>
-                                Create Ensemble
-                            </button>
-                        </CreateEnsamble>
+                        <AuthUserContext.Consumer>
+                            {authUser =>
+                              authUser ? (
+                             <CreateEnsamble>
+                                <input onChange={e => setRoomName(e.target.value)}  placeholder="input new ensemble name..."/>
+                                 <button onClick={handleNewRoom}>
+                                    Create Ensemble
+                                </button>
+                             </CreateEnsamble>
+                              ) : (
+                             <CreateEnsamble>
+                                <input placeholder="input new ensemble name..."/>
+                                 <button onClick={''}>
+                                    Create Ensemble
+                                </button>
+                             </CreateEnsamble>
+                              )
+                            }
+                          </AuthUserContext.Consumer>
+                
 
                         {rooms &&
                             <RoomList
@@ -152,24 +229,6 @@ function Rooms(props) {
                         }
                     </>}
 
-                    {addNewRoomMode && <>
-                        <form
-                            onSubmit={event =>
-                            onCreateRoom(event, authUser)
-                            }
-                            >
-                            <p variant="h6">Create a new Ensemble</p>
-                            <input autoFocus required style={{width:'100%', color:'#000000'}} onChange={event=>setRoomName(event.target.value)}  />
-                                <br/>
-                                <br/>
-                            <button style={{color:'red', backgroundColor:'white'}} type="submit" >
-                            OK
-                            </button>
-                            <button style={{color:'red'}} onClick={handleCancel} >
-                            Cancel
-                            </button>
-                        </form>
-                    </>}
                 </Wrapper>
             )}
         </AuthUserContext.Consumer>
