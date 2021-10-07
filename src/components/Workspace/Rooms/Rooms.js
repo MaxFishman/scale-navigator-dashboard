@@ -123,6 +123,9 @@ function Rooms(props) {
     const [rooms, setRooms] = useState([])
      
     const handleNewRoom = (e) =>{
+       if(roomName == ''){
+        return
+       } 
        props.firebase
       .user(props.authUser.uid)
       .get().then((doc) => {
@@ -191,7 +194,7 @@ function Rooms(props) {
         props.firebase.Room(uid).delete();
     };
 
-    const [roomName, setRoomName] = useState()
+    const [roomName, setRoomName] = useState('')
     const isVisible = true
     return (
         <AuthUserContext.Consumer>
@@ -210,7 +213,7 @@ function Rooms(props) {
                               ) : (
                              <CreateEnsamble>
                                 <input placeholder="input new ensemble name..."/>
-                                 <button onClick={''}>
+                                 <button onClick={handleNotAuth}>
                                     Create Ensemble
                                 </button>
                              </CreateEnsamble>
