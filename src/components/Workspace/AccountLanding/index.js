@@ -6,7 +6,7 @@ import { compose } from 'recompose';
 
 
 
-const RoomLanding = (authUser) => (
+const AccountLanding = (authUser) => (
   <div>
     <AuthUserContext.Consumer>
        {authUser => (
@@ -22,4 +22,4 @@ const RoomLanding = (authUser) => (
 
 export default compose(
   //withEmailVerification,
-)(RoomLanding);
+)(AccountLanding);

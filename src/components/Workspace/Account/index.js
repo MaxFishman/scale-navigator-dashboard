@@ -4,57 +4,37 @@ import { withAuthorization, withEmailVerification, withAuthentication, AuthUserC
 import SignOutButton from '../SignOut'
 import { withRouter, Link } from 'react-router-dom';
 import ROUTES from 'common/Routes';
+import { withFirebase } from '../../Firebase';
+import AccountMenu from '../AccountMenu'
 
-function Account() {
+function Account(props) {
 
  return( 
   <AuthUserContext.Consumer>
     {authUser =>
       authUser ? (
-        <SignOutButton/>
+       <div> 
+       <AccountMenu authUser={authUser}/>
+       </div> 
       ) : (
-     <>
+     <div>
        <p>You are currently not signed in </p>
        <Link to={ROUTES.SIGN_IN}> <p>Sign In </p></Link>
        <p>OR</p>
         <Link to={ROUTES.SIGN_UP}> <p>Sign Up </p></Link>
-      </>
-      )
-    }
+      </div>
+      )}
   </AuthUserContext.Consumer>
  )
 };
 
-function AccountAuth(props) {
 
-    const [userName, setUserName] = useState('')
-    const [email, setEmail] = useState('')
-
-    useEffect(() => {
-        props.firebase
-            .user(props.authUser.uid)
-            .onSnapshot(snapshot => {
-                setEmail(
-                   // snapshot.data().email || ''
-                )
-                setUserName(
-                   // snapshot.data().userName || ''
-            )
-        })
-    })
-
-    return (
-        <div align="center">
-            <SignOutButton/>
-        </div>
-    );
-    
-}
 
 const condition = authUser => !!authUser;
 
 export default compose(
     //withEmailVerification,
     withAuthentication,
-
-)(Account);
+    withFirebase,
+    //withAuthorization(condition),
+    )(Account);
