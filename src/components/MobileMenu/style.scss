@@ -23,19 +23,21 @@
 
     li {
         color: white;
+        margin-top: 12px;
     }
 
     .drawer-close {
         color: white;
-        font-size: 20px;
-        line-height: 1;
+        font-size: 22px;
+        font-family: monospace;
+        line-height: 100%;
         border: 1px solid white;
         border-radius: 5px;
         display: flex;
         align-items: center;
         justify-content: center;
         float: right;
-        margin: 12px;
+        margin: 14px;
     }
 
     .drawer-content {
