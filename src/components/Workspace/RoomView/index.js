@@ -4,9 +4,69 @@ import { compose } from 'recompose';
 import { Link, withRouter } from 'react-router-dom';
 import { withFirebase } from '../../Firebase';
 import ROUTES from 'common/Routes';
+import styled from 'styled-components';
+import Messages, { SendMessage } from '../../Messages';
+
+const Wrapper = styled.div`
+    color: #ffffff;
+`;
+
+const Header = styled.div`
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px 20px;
+    border: 2px solid #FFFFFF;
+    border-radius: 8px;
+    margin-bottom: 22px;
+`;
+
+const RoomImage = styled.div`
+    background-color: red;
+    height: 88px;
+    width: 88px;
+    margin-right: 14px;
+    border-radius: 50px 0 50px 0;
+`;
+
+const RoomName = styled.div`
+    color: #FFDE6A;
+    font-weight: bold;
+    font-size: 26px;
+    text-align: left;
+`;
+
+const HostName = styled.div`
+    color: #fff;
+    font-weight: bold;
+    font-size: 20px;
+    text-align: left;
+`;
+
+const Button = styled.button`
+    background: #FFDE6A;
+    border-radius: 9px;
+    text-align: center;
+    width: 139px;
+    height: 40px;
+    color: black;
+    font-weight: bold;
+    display: block;
+`;
+
+const MembersInRoom = styled.div`
+    margin-top: 4px;
+    font-size: 20px;
+`;
+
+const ContentWrapper = styled.div`
+    min-height: 100%;
+    border: 2px solid #FFFFFF;
+    border-radius: 8px 8px 28px 8px;
+    margin-bottom: 12px;
+`;
 
 function RoomView(props) {
-
     const [roomName, setRoomName] = useState('')
     const [userName, setUserName] = useState('')
     const [hostName, setHostName] = useState('')
@@ -29,7 +89,7 @@ function RoomView(props) {
     },[props.firebase])
 
 
-    const createMessage = () => {
+    const createMessage = ({target}) => {
         props.firebase.room(props.match.params.id).collection('messages').add({
             userId: userName,
             message:text,
@@ -62,95 +122,87 @@ function RoomView(props) {
         }
     },[props.firebase])
 
-
     useEffect(() => {
        const unsubscribe = props.firebase
-        .user(props.authUser.uid)
-        .onSnapshot(snapshot => {
-            setUserName(snapshot.data().userName || '')
-            props.firebase.room(props.match.params.id).collection('activeUsers').doc(props.authUser.uid).set({
-            userId: props.authUser.uid,
-            userName: snapshot.data().userName || '',
-            createdAt:new Date().getTime(),
-            }).then(()=>{
-            const unsubscribe = props.firebase
-            .room(props.match.params.id)
-            .collection('activeUsers')
-            .orderBy('createdAt', 'desc')
+            .user(props.authUser.uid)
             .onSnapshot(snapshot => {
-                if (snapshot.size) {
-                let activeUsers = [];
-                snapshot.forEach(doc =>
-                    activeUsers.push({ ...doc.data(), uid: doc.id }),
-                )
-
-                setActiveUsers(activeUsers.reverse())
-                setHostName(activeUsers[0].userName)
-
-                } else {
-                setActiveUsers([])
-
+                setUserName(snapshot.data().userName || '')
+                props.firebase.room(props.match.params.id).collection('activeUsers').doc(props.authUser.uid).set({
+                userId: props.authUser.uid,
+                userName: snapshot.data().userName || '',
+                createdAt:new Date().getTime(),
+                }).then(()=>{
+                const unsubscribe = props.firebase
+                .room(props.match.params.id)
+                .collection('activeUsers')
+                .orderBy('createdAt', 'desc')
+                .onSnapshot(snapshot => {
+                    if (snapshot.size) {
+                        let activeUsers = [];
+                        snapshot.forEach(doc =>
+                            activeUsers.push({ ...doc.data(), uid: doc.id }),
+                        )
+                        setActiveUsers(activeUsers.reverse())
+                        setHostName(activeUsers[0].userName)
+                    } else {
+                        setActiveUsers([])
+                    }
+                })
+                return () => {
+                unsubscribe()
                 }
             })
-            return () => {
-            unsubscribe()
-            }
-    })
-    })
-
+        })
     },[props.firebase])
 
-
-
     const handleLeaveRoom = () =>{
-
-        if(activeUsers.length === 1){
-        props.history.push(ROUTES.ENSEMBLE)
-        props.firebase.room(props.match.params.id).delete()
-
-        }else{
-        props.firebase.room(props.match.params.id).collection('activeUsers').doc(props.authUser.uid).delete()
-        props.history.push(ROUTES.ENSEMBLE);
-        setHostName(activeUsers[0].userName)
+        if (activeUsers.length === 1) {
+            props.history.push(ROUTES.ENSEMBLE)
+            props.firebase.room(props.match.params.id).delete()
+        } else {
+            props.firebase.room(props.match.params.id).collection('activeUsers').doc(props.authUser.uid).delete()
+            props.history.push(ROUTES.ENSEMBLE);
+            setHostName(activeUsers[0].userName)
         }
-
-
     }
 
-
     return(
-    <div>
-        <AuthUserContext.Consumer>
-            {authUser => (
-        <div>
-        <p variant="body2">You are in Ensemble : <span style={{color:'red'}}>{roomName}</span></p>
-        <br/>
-            <p>The current host of this Ensemble is : <span style={{color:'red'}}>{hostName}</span></p>
-            <p>Users in this room:</p>
-                {activeUsers.map((activeUser)=>(
-            <p key={activeUser.userId}><span>{activeUser.userName}</span></p>
-            ))}
+        <Wrapper>
+            <AuthUserContext.Consumer>
+                {authUser => (
+                    <div>
+                        <Header>
+                            <div style={{display: 'flex'}}>
+                                <RoomImage/>
+                                <div>
+                                    <RoomName>{roomName}</RoomName>
+                                    <HostName>Host: {hostName}</HostName>
+                                </div>
+                            </div>
+                            <div>
+                                <Button onClick={handleLeaveRoom} >Leave Ensemble</Button>
+                                <MembersInRoom>{activeUsers.length} Members</MembersInRoom>
+                            </div>
+                        </Header>
 
-            {messages.map((message)=>(
-            <p key={message.userId}><span>{message.userId + ':\xa0' + message.message}</span></p>
-            ))}
+                        <ContentWrapper>
+                            <Messages data={messages}/>
+                            <SendMessage
+                                text={text}
+                                handleText={({target})=>setText(target.value)}
+                                createMessage={createMessage}/>
+                        </ContentWrapper>
 
-        <p>Send Message to room:</p>
-        <input
-            value={text}
-            style={{color:'black'}}
-            onChange={event=>setText(event.target.value)}
-        /><br/>
-        <button onClick={createMessage}>send</button>
-        <br/>
-        <br/>
-
-
-        <button onClick={handleLeaveRoom} style={{color:'red', backgroundColor:'white', cursor:'pointer'}} >Leave Room</button>
-        </div>
-        )}
-        </AuthUserContext.Consumer>
-        </div>
+                        {/* <br/>
+                            <p>Users in this room:</p>
+                                {activeUsers.map((activeUser)=>(
+                                    <p key={activeUser.userId}><span>{activeUser.userName}</span></p>
+                                ))}
+                        */}
+                    </div>
+                )}
+            </AuthUserContext.Consumer>
+        </Wrapper>
     );
 }
 

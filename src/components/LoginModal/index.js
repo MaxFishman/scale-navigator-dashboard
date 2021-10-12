@@ -113,22 +113,21 @@ const LoginModal = (props) => {
     const [ email, setEmail] = useState('')
     const [ passwordOne, setPasswordOne] = useState('')
 
-  const onSubmit = evt => {
-     evt.preventDefault();
-      props.firebase.doSignInWithEmailAndPassword(email, passwordOne)
-      .then(authUser => {
-        return props.firebase.user(authUser.user.uid).set(
-          {
-            email,  
-          },
-          { merge: true },
-        );
-      })
-      .then(() => {
-        props.history.push(ROUTES.ENSEMBLE)
-      })
-    
-   } 
+    const onSubmit = evt => {
+        evt.preventDefault();
+        props.firebase.doSignInWithEmailAndPassword(email, passwordOne)
+        .then(authUser => {
+            return props.firebase.user(authUser.user.uid).set(
+            {
+                email,
+            },
+            { merge: true },
+            );
+        })
+        .then(() => {
+            props.history.push(ROUTES.ENSEMBLE)
+        })
+    }
 
     return (
         <>
@@ -137,49 +136,47 @@ const LoginModal = (props) => {
                 style={customStyles}
                 onRequestClose={()=>window.location.replace('/account')}
             >
-             <form autocomplete="off"  onSubmit={onSubmit}>
-                <Wrapper>
+                <form autocomplete="off"  onSubmit={onSubmit}>
+                    <Wrapper>
 
-                    <Title>Login to access!</Title>
+                        <Title>Login to access!</Title>
 
-                    <div>
-                        <Label>
-                            <div>* Email</div>
-                            <Input
-                            value={email}
-                            type="text"
-                            required
-                            placeholder="email"
+                        <div>
+                            <Label>
+                                <div>* Email</div>
+                                <Input
+                                    value={email}
+                                    type="text"
+                                    required
+                                    placeholder="email"
+                                    name="email"
+                                    onChange={e => setEmail(e.target.value)}
+                                    autoFocus
+                                />
+                            </Label>
+                            <Label>
+                                <div>* Password</div>
+                                <Input
+                                    value={passwordOne}
+                                    placeholder="password"
+                                    required
+                                    id="password"
+                                    type="password"
+                                    onChange={e => setPasswordOne(e.target.value)}
+                                />
+                            </Label>
+                        </div>
 
-                            //autoComplete="new-password"
-                            name="email"
-                            onChange={e => setEmail(e.target.value)}
-                            autoFocus
-                            />
-                        </Label>
-                        <Label>
-                            <div>* Password</div>
-                            <Input 
-                                value={passwordOne}
-                                placeholder="password"
-                                required
-                                id="password"
-                                type="password"
-                                onChange={e => setPasswordOne(e.target.value)}
-                              />
-                        </Label>
-                    </div>
+                        <Submit type="submit">Sign In</Submit>
 
-                    <Submit type="submit" >Sign In</Submit>
-
-                    <SignUpContent>
-                        <Link to="">Don't have an account? Create one</Link><br/>
-                        <Link to="">
-                            <Forgot>Forgotten Password</Forgot>
-                        </Link>
-                    </SignUpContent>
-                </Wrapper>
-              </form>  
+                        <SignUpContent>
+                            <Link to={ROUTES.SIGN_UP}>Don't have an account? Create one</Link><br/>
+                            <Link to={ROUTES.RESET_PWD}>
+                                <Forgot>Forgotten Password</Forgot>
+                            </Link>
+                        </SignUpContent>
+                    </Wrapper>
+                </form>
             </Modal>
         </>
     );

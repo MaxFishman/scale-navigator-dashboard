@@ -20,7 +20,7 @@ const MobileMenu = () => {
                 className="mobile-nav-drawer"
             >
                 <div>
-                    <button className="drawer-close" onClick={()=>setisOpen(!isOpen)}>x</button>
+                    <button className="drawer-close" onClick={()=>setisOpen(!isOpen)}>&times;</button>
                 </div>
 
                 <ul>

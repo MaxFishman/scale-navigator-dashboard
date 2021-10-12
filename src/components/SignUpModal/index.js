@@ -107,38 +107,36 @@ const Forgot = styled.span`
 `;
 
 const SignUpModal = (props) => {
-  const isVisible = true
-  const [ email, setEmail] = useState('')
-  const [ passwordOne, setPasswordOne] = useState('')
-  const [error] = useState('')
-  const [userName, setUserName] = useState('')
+    const isVisible = true
+    const [ email, setEmail] = useState('')
+    const [ passwordOne, setPasswordOne] = useState('')
+    const [error] = useState('')
+    const [userName, setUserName] = useState('')
 
-  const onSubmit = evt => {
-     evt.preventDefault();
-      props.firebase.doCreateUserWithEmailAndPassword(email, passwordOne)
-      .then(authUser => {
-        return props.firebase.user(authUser.user.uid).set(
-          {
-            email:email,  
-            userName:userName,
-          },
-          { merge: true },
-        );
-      })
-      .then(() => {
-        props.history.push(ROUTES.ENSEMBLE);
-      })
-      //need to add error catching return
-       .catch(error => {
-        if (error.code === ERROR_CODE_ACCOUNT_EXISTS) {
-          error.message = ERROR_MSG_ACCOUNT_EXISTS;
-        }
+    const onSubmit = evt => {
+        evt.preventDefault();
+        props.firebase.doCreateUserWithEmailAndPassword(email, passwordOne)
+        .then(authUser => {
+            return props.firebase.user(authUser.user.uid).set(
+                {
+                    email:email,
+                    userName:userName,
+                },
+                { merge: true },
+            );
+        })
+        .then(() => {
+            props.history.push(ROUTES.ENSEMBLE);
+        })
+        //need to add error catching return
+        .catch(error => {
+            if (error.code === ERROR_CODE_ACCOUNT_EXISTS) {
+            error.message = ERROR_MSG_ACCOUNT_EXISTS;
+            }
 
-        //this.setState({ error });
-      });
-
-    
-   } 
+            //this.setState({ error });
+        });
+    }
 
     return (
         <>
@@ -162,7 +160,7 @@ const SignUpModal = (props) => {
                             onChange={e => setUserName(e.target.value)}
                             autoFocus
                           />
-                     </Label>  
+                     </Label>
                         <Label>
                             <div>* Email</div>
                             <Input
@@ -170,8 +168,6 @@ const SignUpModal = (props) => {
                             type="text"
                             required
                             placeholder="email"
-
-                            //autoComplete="new-password"
                             name="email"
                             onChange={e => setEmail(e.target.value)}
                             autoFocus
@@ -179,7 +175,7 @@ const SignUpModal = (props) => {
                         </Label>
                         <Label>
                             <div>* Password</div>
-                            <Input 
+                            <Input
                                 value={passwordOne}
                                 placeholder="password"
                                 required
@@ -193,13 +189,13 @@ const SignUpModal = (props) => {
                     <Submit type="submit" >Sign Up</Submit>
 
                     <SignUpContent>
-                        <Link to="">Already have an account? Sign In</Link><br/>
-                        <Link to="">
+                        <Link to={ROUTES.SIGN_IN}>Already have an account? Sign In</Link><br/>
+                        <Link to={ROUTES.RESET_PWD}>
                             <Forgot>Forgotten Password</Forgot>
                         </Link>
                     </SignUpContent>
                 </Wrapper>
-              </form>  
+              </form>
             </Modal>
         </>
     );
