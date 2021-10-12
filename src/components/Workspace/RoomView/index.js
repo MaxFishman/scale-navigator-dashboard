@@ -5,7 +5,7 @@ import { Link, withRouter } from 'react-router-dom';
 import { withFirebase } from '../../Firebase';
 import ROUTES from 'common/Routes';
 import styled from 'styled-components';
-import Messages from '../../Messages';
+import Messages, { SendMessage } from '../../Messages';
 
 const Wrapper = styled.div`
     color: #ffffff;
@@ -60,9 +60,10 @@ const MembersInRoom = styled.div`
 `;
 
 const ContentWrapper = styled.div`
+    min-height: 100%;
     border: 2px solid #FFFFFF;
     border-radius: 8px 8px 28px 8px;
-    min-height: 50vh;
+    margin-bottom: 12px;
 `;
 
 function RoomView(props) {
@@ -88,7 +89,7 @@ function RoomView(props) {
     },[props.firebase])
 
 
-    const createMessage = () => {
+    const createMessage = ({target}) => {
         props.firebase.room(props.match.params.id).collection('messages').add({
             userId: userName,
             message:text,
@@ -186,6 +187,10 @@ function RoomView(props) {
 
                         <ContentWrapper>
                             <Messages data={messages}/>
+                            <SendMessage
+                                text={text}
+                                handleText={({target})=>setText(target.value)}
+                                createMessage={createMessage}/>
                         </ContentWrapper>
 
                         {/* <br/>
@@ -193,18 +198,7 @@ function RoomView(props) {
                                 {activeUsers.map((activeUser)=>(
                                     <p key={activeUser.userId}><span>{activeUser.userName}</span></p>
                                 ))}
-
-
-
-                        <p>Send Message to room:</p>
-                        <input
-                            value={text}
-                            style={{color:'black'}}
-                            onChange={event=>setText(event.target.value)}
-                        /><br/>
-                        <button onClick={createMessage}>send</button>
-                        <br/>
-                        <br/> */}
+                        */}
                     </div>
                 )}
             </AuthUserContext.Consumer>
