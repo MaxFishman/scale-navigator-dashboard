@@ -4,6 +4,7 @@ import { withAuthorization, withEmailVerification, withAuthentication, AuthUserC
 import SignOutButton from '../SignOut'
 import { withRouter, Link } from 'react-router-dom';
 import ROUTES from 'common/Routes';
+
 import styled, { css } from 'styled-components';
 import UserImage from './user.png'
 
@@ -90,3 +91,4 @@ function UserDetails({ user }) {
 }
 
 export default compose(withAuthentication)(Account);
+
