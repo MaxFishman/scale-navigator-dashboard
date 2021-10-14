@@ -47,7 +47,8 @@ const Navigation = () => {
     left: 0,
     width: '100%',
     background: 'black',
-    'z-index': 123
+    'z-index': 123,
+    padding: '10px 12px'
   } : {};
 
   const sketchWrapperStyle = hasActiveRoute ? { height: '40vh', overflow: 'hidden', marginTop: '70px' } : {}
