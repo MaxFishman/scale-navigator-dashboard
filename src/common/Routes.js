@@ -9,7 +9,7 @@ const ROUTES = {
   ACCOUNT: "/account",
   SIGN_UP: "/sign-up",
   SIGN_IN: "/sign-in",
-
+  CHECKOUT: "/check-out",
 }
 
 export default ROUTES;

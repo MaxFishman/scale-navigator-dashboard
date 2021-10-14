@@ -38,13 +38,21 @@
     "styled-components": "^5.3.1",
     "tone": "^14.7.77",
     "vexflow": "^3.0.9",
-    "web-vitals": "^1.0.1"
+    "web-vitals": "^1.0.1",
+    "@stripe/react-stripe-js": "^1.0.0",
+    "@stripe/stripe-js": "^1.0.0",
+    "concurrently": "4.1.2",
+    "express": "^4.17.1",
+    "stripe": "^7.1.0"
   },
+   "proxy": "http://localhost:4242",
   "scripts": {
-    "start": "react-scripts start",
+    "start-client": "react-scripts start",
+    "start-server": "node server.js",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+     "start": "concurrently \"yarn start-client\" \"yarn start-server\""
   },
   "eslintConfig": {
     "extends": [

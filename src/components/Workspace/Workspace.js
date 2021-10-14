@@ -20,6 +20,7 @@ import "./Workspace.scss";
 import AccountLanding from './AccountLanding'
 import LoginModal from 'components/LoginModal'
 import SignUpModal from 'components/SignUpModal'
+import Ecomm from 'components/Ecomm'
 
 export default function Workspace() {
     const dispatch = useDispatch()
@@ -79,6 +80,10 @@ export default function Workspace() {
 
                     <Route path={ROUTES.ACCOUNT}>
                         <AccountLanding/>
+                    </Route>
+
+                  <Route path={ROUTES.CHECKOUT}>
+                        <Ecomm/>
                     </Route>
 
 
