@@ -121,6 +121,8 @@ const SignUpModal = (props) => {
                 {
                     email:email,
                     userName:userName,
+                    accountType:'free',
+                    ensembleCount:0,
                 },
                 { merge: true },
             );

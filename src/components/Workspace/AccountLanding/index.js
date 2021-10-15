@@ -19,7 +19,6 @@ const AccountLanding = (authUser) => (
 );
 
 
-
 export default compose(
   //withEmailVerification,
 )(AccountLanding);

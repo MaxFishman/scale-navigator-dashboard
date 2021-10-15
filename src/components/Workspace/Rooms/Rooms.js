@@ -129,19 +129,38 @@ function Rooms(props) {
        props.firebase
       .user(props.authUser.uid)
       .get().then((doc) => {
-        if (doc.exists) {
-         props.firebase.rooms().add({
-        roomName: roomName,
-        hostName: doc.data().userName || '',
-        hostId:props.authUser.uid,
-        createdAt:new Date().getTime()
+        if (doc.exists && doc.data().accountType=='free' && doc.data().ensembleCount == 0) {
+            props.firebase.rooms().add({
+            roomName: roomName,
+            hostName: doc.data().userName || '',
+            hostId:props.authUser.uid,
+            createdAt:new Date().getTime()
         }).then(function(docRef) {
         props.history.push(ROUTES.ENSEMBLE + '/' + docRef.id); 
+            props.firebase.user(props.authUser.uid).set({
+             ensembleCount:1  
+            },{merge:true})   
         })
         e.preventDefault();    
  
        } else {
-        console.log("No such document!");
+          if (doc.exists && doc.data().accountType=='pro' && doc.data().ensembleCount == 1){
+           props.firebase.rooms().add({
+            roomName: roomName,
+            hostName: doc.data().userName || '',
+            hostId:props.authUser.uid,
+            createdAt:new Date().getTime()
+        }).then(function(docRef) {
+        props.history.push(ROUTES.ENSEMBLE + '/' + docRef.id); 
+            props.firebase.user(props.authUser.uid).set({
+             ensembleCount:1  
+            },{merge:true})   
+        })
+
+          }else{
+              props.history.push(ROUTES.CHECKOUT); 
+          }
+ 
        }
     })
   }
@@ -153,6 +172,9 @@ function Rooms(props) {
     const [userName, setUserName] = useState('')
     const [addNewRoomMode, setAddNewRoomMode] = useState(false)
     const [listMode, setListMode] = useState(true)
+    const [ensembleCount, setEnsembleCount] = useState('')
+
+
 
     useEffect(() => {
         const unsubscribe = props.firebase

@@ -58,12 +58,14 @@ const UserDetailsWrapper = styled.div`
     }
 `;
 
+
+
 const Account = () => (
     <Wrapper>
         <AuthUserContext.Consumer>
             {authUser =>
                 authUser ? (
-                    <UserDetails user={authUser}/>
+                      <UserDetails user={authUser}/>
                 ) : (
                     <>
                         <p>You are currently not signed in</p>
@@ -77,13 +79,15 @@ const Account = () => (
 )
 
 function UserDetails({ user }) {
-    const { userName, email, emailVerified } = user;
+   
+    const { userName, email, emailVerified, accountType, stuff } = user;
     const EmailVerifiedText = emailVerified ? 'Email is Verified' : 'Email is not Verified'
 
     return (
         <UserDetailsWrapper>
             <UserName>{userName}</UserName>
             <div>{email}</div>
+            <div>Account Type: <span style={{color:'red'}}> {accountType}</span> </div>
             <EmailVerify>{EmailVerifiedText}</EmailVerify>
             <SignOutButton/>
         </UserDetailsWrapper>

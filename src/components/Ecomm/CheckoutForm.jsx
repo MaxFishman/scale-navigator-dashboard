@@ -11,7 +11,7 @@ import ROUTES from 'common/Routes';
 import { withFirebase } from '../Firebase';
 
 
-function CheckoutForm() {
+function CheckoutForm(props) {
   const [succeeded, setSucceeded] = useState(false);
   const [error, setError] = useState(null);
   const [processing, setProcessing] = useState('');
@@ -78,12 +78,18 @@ function CheckoutForm() {
     if (payload.error) {
       setError(`Payment failed ${payload.error.message}`);
       setProcessing(false);
-
+        props.firebase.user(props.authUser.uid).set({
+        accountType:'pro'
+        },{merge:true})   
+      
     } else {
       setError(null);
       setProcessing(false);
       setSucceeded(true);
       setPaymentMode(false)
+     props.firebase.user(props.authUser.uid).set({
+        accountType:'pro'
+        },{merge:true})   
     }
   };
 

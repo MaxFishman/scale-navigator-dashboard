@@ -9,6 +9,7 @@ import { withFirebase } from '../../Firebase';
 function AccountMenu(props) {
   const [userName, setUserName] = useState('')
   const [email, setEmail] = useState('')
+  const [accountType, setAccounttype] = useState('')
    
     useEffect(() => {
        const unsubscribe = props.firebase
@@ -18,8 +19,9 @@ function AccountMenu(props) {
             snapshot.data().userName || ''
            )
           setEmail(
-            snapshot.data().email || '' 
+          snapshot.data().email || '' 
            )
+       
          })
 
         return () => {
@@ -33,6 +35,7 @@ function AccountMenu(props) {
        <div> 
         <p>{userName}</p>
         <p>{email}</p>
+        <p>{accountType}</p>
         <SignOutButton/>
        </div> 
        )}
