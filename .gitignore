@@ -32,3 +32,5 @@ src/server/env
 src/server/__pycache__
 src/server/roomlog.json
 src/roomlog.json
+.firebase/hosting.cHVibGlj.cache
+.firebase/hosting.YnVpbGQ.cache

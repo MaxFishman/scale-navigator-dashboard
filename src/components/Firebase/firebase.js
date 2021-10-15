@@ -3,12 +3,14 @@ import 'firebase/auth';
 import 'firebase/firestore';
 
 const config = {
-  apiKey: "AIzaSyBOi8JxlvhF8pO3cUW9hl4-XZNfOVzbBTs",
-  authDomain: "scale-navigator.firebaseapp.com",
-  projectId: "scale-navigator",
-  storageBucket: "scale-navigator.appspot.com",
-  messagingSenderId: "908459111045",
-  appId: "1:908459111045:web:1799c278153c10c0f8afec"
+  apiKey: "AIzaSyBiTTX24mBjypGdel2ARBx0UUvFQEaRDf4",
+  authDomain: "scale-navigator-ensemble.firebaseapp.com",
+  databaseURL: "https://scale-navigator-ensemble-default-rtdb.firebaseio.com",
+  projectId: "scale-navigator-ensemble",
+  storageBucket: "scale-navigator-ensemble.appspot.com",
+  messagingSenderId: "156837833740",
+  appId: "1:156837833740:web:ce00fcf2297f899f8b9229",
+  measurementId: "G-5G2C3541ZY"
 };
 
 class Firebase {

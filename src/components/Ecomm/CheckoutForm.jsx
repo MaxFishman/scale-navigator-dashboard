@@ -5,7 +5,13 @@ import {
   useElements
 } from "@stripe/react-stripe-js";
 
-export default function CheckoutForm() {
+import { withAuthorization, withEmailVerification, withAuthentication, AuthUserContext } from '../Session';
+import { withRouter, Link } from 'react-router-dom';
+import ROUTES from 'common/Routes';
+import { withFirebase } from '../Firebase';
+
+
+function CheckoutForm() {
   const [succeeded, setSucceeded] = useState(false);
   const [error, setError] = useState(null);
   const [processing, setProcessing] = useState('');
@@ -14,6 +20,7 @@ export default function CheckoutForm() {
   const [paymentMode, setPaymentMode] = useState(true)
   const stripe = useStripe();
   const elements = useElements();
+  
 
   useEffect(() => {
     // Create PaymentIntent as soon as the page loads
@@ -71,6 +78,7 @@ export default function CheckoutForm() {
     if (payload.error) {
       setError(`Payment failed ${payload.error.message}`);
       setProcessing(false);
+
     } else {
       setError(null);
       setProcessing(false);
@@ -86,7 +94,7 @@ export default function CheckoutForm() {
     {paymentMode && (<form id="payment-form" onSubmit={handleSubmit}>
      
         <p>Upgrade to a pro Account</p>
-         <p>$29.99 / Per Year</p>
+         <p>$29.99 </p>
       <CardElement id="card-element" options={cardStyle} onChange={handleChange} />
 
       <button
@@ -109,18 +117,12 @@ export default function CheckoutForm() {
         </div>
       )}
       {/* Show a success message upon completion */}
-      <p className={succeeded ? "result-message" : "result-message hidden"}>
-        Payment succeeded, see the result in your
-        <a
-          href={`https://dashboard.stripe.com/test/payments`}
-        >
-          {" "}
-          Stripe dashboard.
-        </a> Refresh the page to pay again.
-      </p>
+    
     </form>)}
 
     {succeeded &&(<><p>Awesome! That worked. You are now a pro</p></>)}
   </div>  
   );
 }
+
+export default withFirebase (CheckoutForm)

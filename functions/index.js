@@ -1,33 +1,56 @@
 const functions = require('firebase-functions');
-
-const express = require("express");
+const express = require('express');
+const cors = require('cors')({origin: true});
 const app = express();
-// This is your real test secret API key.
-const stripe = require("stripe")("sk_test_ju1E3Y8rI8Xj9JFM2GaKP9KO00wVoTsAJX");
 
+// TODO: Remember to set token using >> firebase functions:config:set stripe.token="SECRET_STRIPE_TOKEN_HERE" >> before deploying
+const stripe = require('stripe')(functions.config().stripe.token);
 
+function charge(req, res) {
+    const body = JSON.parse(req.body);
+    const token = body.token.id;
+    const amount = body.charge.amount;
+    const currency = body.charge.currency;
 
-app.use(express.static("public"));
-app.use(express.json());
+    // Charge card
+    stripe.charges.create({
+        amount,
+        currency,
+        description: 'Firebase Example',
+        source: token,
+    }).then(charge => {
+        send(res, 200, {
+            message: 'Success',
+            charge,
+        });
+    }).catch(err => {
+        console.log(err);
+        send(res, 500, {
+            error: err.message,
+        });
+    });
+}
 
-const calculateOrderAmount = items => {
-  // Replace this constant with a calculation of the order's amount
-  // Calculate the order total on the server to prevent
-  // people from directly manipulating the amount on the client
-  return 1400;
-};
+function send(res, code, body) {
+    res.send({
+        statusCode: code,
+        headers: {'Access-Control-Allow-Origin': '*'},
+        body: JSON.stringify(body),
+    });
+}
 
-app.post("/create-payment-intent", async (req, res) => {
-  const { items } = req.body;
-  // Create a PaymentIntent with the order amount and currency
-  const paymentIntent = await stripe.paymentIntents.create({
-    amount: 29.99,
-    currency: "usd"
-  });
+app.use(cors);
+app.post('/', (req, res) => {
 
-  res.send({
-    clientSecret: paymentIntent.client_secret
-  });
+    // Catch any unexpected errors to prevent crashing
+    try {
+        charge(req, res);
+    } catch(e) {
+        console.log(e);
+        send(res, 500, {
+            error: `The server received an unexpected error. Please try again and contact the site admin if the error persists.`,
+        });
+    }
 });
 
-app.listen(4242, () => console.log('Node server listening on port 4242!'));
+exports.charge = functions.https.onRequest(app);
