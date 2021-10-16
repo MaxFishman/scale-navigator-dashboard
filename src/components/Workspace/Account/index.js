@@ -80,7 +80,7 @@ const Account = () => (
 
 function UserDetails({ user }) {
   
-    const { userName, email, emailVerified, accountType, stuff } = user;
+    const { userName, email, emailVerified, accountType } = user;
     const EmailVerifiedText = emailVerified ? 'Email is Verified' : 'Email is not Verified'
 
     return (
