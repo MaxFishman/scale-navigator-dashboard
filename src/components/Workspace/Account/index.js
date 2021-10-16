@@ -4,7 +4,7 @@ import { withAuthorization, withEmailVerification, withAuthentication, AuthUserC
 import SignOutButton from '../SignOut'
 import { withRouter, Link } from 'react-router-dom';
 import ROUTES from 'common/Routes';
-
+import { withFirebase } from '../../Firebase';
 import styled, { css } from 'styled-components';
 import UserImage from './user.png'
 
@@ -79,7 +79,7 @@ const Account = () => (
 )
 
 function UserDetails({ user }) {
-   
+  
     const { userName, email, emailVerified, accountType, stuff } = user;
     const EmailVerifiedText = emailVerified ? 'Email is Verified' : 'Email is not Verified'
 

@@ -10,7 +10,7 @@ import MobileMenu from "../MobileMenu";
 import useWindowSize from "../../hooks/device/index";
 import styled from 'styled-components';
 import { ReactComponent as Logo } from '../../assets/logo.svg'
-
+import { withFirebase } from '../Firebase';
 import "./Navigation.scss";
 
 const MainWrapper = styled.div`

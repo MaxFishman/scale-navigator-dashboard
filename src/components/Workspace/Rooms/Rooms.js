@@ -136,10 +136,12 @@ function Rooms(props) {
             hostId:props.authUser.uid,
             createdAt:new Date().getTime()
         }).then(function(docRef) {
-        props.history.push(ROUTES.ENSEMBLE + '/' + docRef.id); 
             props.firebase.user(props.authUser.uid).set({
-             ensembleCount:1  
+             ensembleCount:1,  
+             currentEnsemble:docRef.id,
+             currentEnsembleRole:'host',
             },{merge:true})   
+             props.history.push(ROUTES.ENSEMBLE + '/' + docRef.id);    
         })
         e.preventDefault();    
  
@@ -153,7 +155,9 @@ function Rooms(props) {
         }).then(function(docRef) {
         props.history.push(ROUTES.ENSEMBLE + '/' + docRef.id); 
             props.firebase.user(props.authUser.uid).set({
-             ensembleCount:1  
+             ensembleCount:1,
+             currentEnsemble:docRef.id,
+             currentEnsembleRole:'host',
             },{merge:true})   
         })
 
