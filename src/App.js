@@ -26,7 +26,7 @@ const App = () => (
                        <AuthUserContext.Consumer>
                          {authUser => ( 
                          <Col xs="12" md="5">
-                           <NavigationLanding user={authUser} />
+                           <NavigationLanding  />
                           </Col>
                            )}
                           </AuthUserContext.Consumer> 
