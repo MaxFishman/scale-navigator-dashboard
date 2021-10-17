@@ -18,7 +18,7 @@
     background-color: black;
 
     ul {
-        margin-top: 22px;
+        padding: 12px 22px;
     }
 
     li {
@@ -43,5 +43,6 @@
     .drawer-content {
         overflow: auto;
         height: 100vh;
+        padding-top: 12px;
     }
 }

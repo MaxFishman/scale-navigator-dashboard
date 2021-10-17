@@ -13,10 +13,20 @@ body {
     @include md {
         overflow: hidden;
     }
+
+    #root,
+    #root > div,
+    #root > div > div {
+        height: 100%;
+    }
 }
 
 a {
     text-decoration: none;
+}
+
+ul {
+    padding: 0;
 }
 
 .appcontainer {

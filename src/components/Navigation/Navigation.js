@@ -29,18 +29,16 @@ const MainWrapper = styled.div`
 `;
 
 const Navigation = (props) =>{
-   return( 
-     <div>
+   return(
         <AuthUserContext.Consumer>
             {authUser =>
                 authUser ? (
-                      <NavigationAuth props={props} authUser={authUser}/>
+                        <NavigationAuth props={props} authUser={authUser}/>
                 ) : (
-                     <NavigationUnAuth/>
+                        <NavigationUnAuth/>
             )}
         </AuthUserContext.Consumer>
-    </div>
-   ) 
+   )
 }
 
 const NavigationAuth = ({props}) => {
@@ -91,7 +89,7 @@ const NavigationAuth = ({props}) => {
 
     const sketchWrapperStyle = hasActiveRoute ? { height: '40vh', overflow: 'hidden', marginTop: '70px' } : {}
     const [isHost, setIsHost] = useState(true)
-   
+
     useEffect(() => {
        const unsubscribe = props.firebase
          .user(props.authUser.uid)
@@ -114,10 +112,10 @@ const NavigationAuth = ({props}) => {
                 </div>
                 {isMobile && <MobileMenu/>}
             </div>
-            
+
 
              {isHost && (<> <MainWrapper>
-            
+
                 <div className="navigation__scalenav canvas-wrapper" id="canv_container" ref={canvasWrapperRef} style={sketchWrapperStyle}>
                     <Pfivesketch navRef={navRef.current} canvasWrapperRef={canvasWrapperRef}/>
                 </div>
@@ -162,7 +160,7 @@ const NavigationAuth = ({props}) => {
                         </div>
                     </div>
                 </div>
-                
+
             </MainWrapper></>)}
 
             <Tabs className="mobile-tabs"/>
@@ -227,10 +225,10 @@ const NavigationUnAuth = () => {
                 </div>
                 {isMobile && <MobileMenu/>}
             </div>
-            
+
 
            <MainWrapper>
-            
+
                 <div className="navigation__scalenav canvas-wrapper" id="canv_container" ref={canvasWrapperRef} style={sketchWrapperStyle}>
                     <Pfivesketch navRef={navRef.current} canvasWrapperRef={canvasWrapperRef}/>
                 </div>
@@ -275,7 +273,7 @@ const NavigationUnAuth = () => {
                         </div>
                     </div>
                 </div>
-                
+
             </MainWrapper>
 
             <Tabs className="mobile-tabs"/>

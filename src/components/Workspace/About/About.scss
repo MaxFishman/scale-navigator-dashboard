@@ -1,263 +1,243 @@
 @import "styles/_variables.scss";
 @import "styles/_media.scss";
 
-article {
-  word-wrap: break-word;
-  text-align: justify;
-  text-justify: inter-word;
-  float: left;
-  padding: 20px;
-  width: 100%;
-  padding-bottom: 100px;
-
-  @include md {
-    padding-bottom: 0;
-  }
-
-  Figure {
-    padding: 12px;
-
-    width: 14%;
-  }
-
-  .figurecaption {
-    text-align: center;
-    white-space: nowrap;
+.page-about {
+    height: 90vh;
     overflow-y: auto;
-    a {
-      font-size: 1.125vw;
-      text-decoration: none;
-    }
-    a:hover {
-      text-decoration: underline;
-    }
-  }
 
-  #activities {
-    li {
-      color: white;
-      text-align: left;
+    #scale_table {
+        display: flex;
+        flex-direction: row;
     }
 
-    li:before {
-      content: "• ";
+    #root_table {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-evenly;
     }
-  }
 
-  #scale_fig {
-  }
-
-  a:link {
-    color: #ffde6a;
-  }
-
-  /* visited link */
-  a:visited {
-    color: #ffde6a;
-  }
-
-  /* mouse over link */
-  a:hover {
-    color: #f7cc2f;
-  }
-
-  /* selected link */
-  a:active {
-    color: #ffde6a;
-  }
-}
-
-#scale_table {
-  display: flex;
-  flex-direction: row;
-}
-
-#root_table {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-evenly;
-}
-
-.attribution {
-  text-align: right;
-}
-.author {
-  color: black;
-}
-
-blockquote {
-  background: #f9f9f9;
-  border-left: 10px solid #ccc;
-  margin: 1.5em 10px;
-  padding: 0.5em 10px;
-  quotes: "\201C""\201D""\2018""\2019";
-}
-
-blockquote:before {
-  color: #ccc;
-  content: "“";
-  font-size: 2em;
-  line-height: 0.1em;
-  margin-right: 0.25em;
-  vertical-align: -0.4em;
-}
-
-blockquote p {
-  display: inline;
-}
-
-article > p {
-  color: white;
-}
-
-#credits {
-  li {
-    text-align: center;
-    list-style-type: none;
-    color: #ffde6a;
-  }
-  a {
-    text-decoration: none;
-  }
-  a:hover {
-    text-decoration: underline;
-  }
-}
-
-#scale_list_container {
-  display: flex;
-  flex-direction: row;
-}
-
-#shape_list_wrapper {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-}
-
-#scale_img_wrapper {
-}
-
-article > h2 {
-  color: white;
-  padding-bottom: 18px;
-  text-align: center;
-  font-family: "Glow Better Script";
-  font-weight: normal;
-}
-
-.iframe-container {
-  position: relative;
-  width: 100%;
-  padding-bottom: 56.25%;
-  height: 0;
-}
-
-.iframe-container iframe {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-}
-
-@mixin on-circle($item-count, $circle-size, $item-size) {
-  position: relative;
-  width: $circle-size;
-  height: $circle-size;
-  padding: 0;
-  border-radius: 50%;
-  list-style: none;
-
-  > * {
-    display: block;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    width: $item-size;
-    height: $item-size;
-    margin: -($item-size / 2);
-
-    $angle: (360 / $item-count);
-    $rot: 240;
-
-    @for $i from 1 through $item-count {
-      &:nth-of-type(#{$i}) {
-        transform: rotate($rot * 1deg)
-          translate($circle-size / 2)
-          rotate($rot * -1deg);
-      }
-
-      $rot: $rot + $angle;
+    h2 {
+        color: white;
+        padding-bottom: 18px;
+        text-align: center;
+        font-family: "Glow Better Script";
+        font-weight: normal;
     }
-  }
-}
 
-.root_heading {
-  font-size: x-large;
-  font-weight: 900;
-  width: 7.6%;
-}
+    p {
+        color: white;
+    }
 
-#circle_container {
-  @include on-circle($item-count: 12, $circle-size: 10em, $item-size: 6em);
-  margin: 5em auto 0;
-  // border: solid 5px tomato;
+    > div {
+        width: 100%;
+        word-wrap: break-word;
+        text-align: justify;
+        padding: 20px 12px;
+        padding-bottom: 100px;
 
-  #root_f {
-    color: #f08784;
-  }
+        @include md {
+            padding-bottom: 0;
+        }
 
-  #root_c {
-    color: #fbe7e6;
-  }
+        Figure {
+            padding: 12px;
+            width: 14%;
+        }
 
-  #root_g {
-    color: #f9deee;
-  }
+        .figurecaption {
+            text-align: center;
+            white-space: nowrap;
+            overflow-y: auto;
 
-  #root_d {
-    color: #f4d5fc;
-  }
+            a {
+                font-size: 1.125vw;
+                text-decoration: none;
+            }
 
-  #root_a {
-    color: #d9ccfb;
-  }
+            a:hover {
+                text-decoration: underline;
+            }
+        }
 
-  #root_e {
-    color: #c1cdfb;
-  }
+        #activities {
+            li {
+                color: white;
+                text-align: left;
+            }
 
-  #root_b {
-    color: #c0eafd;
-  }
+            li:before {
+                content: "• ";
+            }
+        }
 
-  #root_fs {
-    color: #bffdea;
-  }
+        a:link {
+            color: #ffde6a;
+        }
 
-  #root_df {
-    color: #b9fcbb;
-  }
+        /* visited link */
+        a:visited {
+            color: #ffde6a;
+        }
 
-  #root_af {
-    color: #cefca6;
-  }
+        /* mouse over link */
+        a:hover {
+            color: #f7cc2f;
+        }
 
-  #root_ef {
-    color: #f8fda0;
-  }
+        /* selected link */
+        a:active {
+            color: #ffde6a;
+        }
+    }
 
-  #root_bf {
-    color: #f8ca92;
-  }
+    .attribution {
+        text-align: right;
+    }
 
-  .root_heading {
-    text-align: center;
-    display: block;
-    max-width: 100%;
-    // border-radius: 50%;
+    .author {
+        color: black;
+    }
 
-    // border: solid 5px tomato;
-  }
+    blockquote {
+        background: #f9f9f9;
+        border-left: 10px solid #ccc;
+        margin: 1.5em 10px;
+        padding: 0.5em 10px;
+        quotes: "\201C""\201D""\2018""\2019";
+
+        &:before {
+            color: #ccc;
+            content: "“";
+            font-size: 2em;
+            line-height: 0.1em;
+            margin-right: 0.25em;
+            vertical-align: -0.4em;
+        }
+
+        p {
+            display: inline;
+        }
+    }
+
+    #credits {
+        li {
+            text-align: center;
+            list-style-type: none;
+            color: #ffde6a;
+        }
+
+        a {
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+    }
+
+    #scale_list_container {
+        display: flex;
+        flex-direction: row;
+    }
+
+    #shape_list_wrapper {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+    }
+
+    @mixin on-circle($item-count, $circle-size, $item-size) {
+        position: relative;
+        width: $circle-size;
+        height: $circle-size;
+        padding: 0;
+        border-radius: 50%;
+        list-style: none;
+
+        >* {
+            display: block;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: $item-size;
+            height: $item-size;
+            margin: -($item-size / 2);
+
+            $angle: (360 / $item-count);
+            $rot: 240;
+
+            @for $i from 1 through $item-count {
+                &:nth-of-type(#{$i}) {
+                    transform: rotate($rot * 1deg) translate($circle-size / 2) rotate($rot * -1deg);
+                }
+
+                $rot: $rot+$angle;
+            }
+        }
+    }
+
+    .root_heading {
+        font-size: x-large;
+        font-weight: 900;
+        width: 7.6%;
+    }
+
+    #circle_container {
+        @include on-circle($item-count: 12, $circle-size: 10em, $item-size: 6em);
+        margin: 5em auto 0;
+
+        #root_f {
+            color: #f08784;
+        }
+
+        #root_c {
+            color: #fbe7e6;
+        }
+
+        #root_g {
+            color: #f9deee;
+        }
+
+        #root_d {
+            color: #f4d5fc;
+        }
+
+        #root_a {
+            color: #d9ccfb;
+        }
+
+        #root_e {
+            color: #c1cdfb;
+        }
+
+        #root_b {
+            color: #c0eafd;
+        }
+
+        #root_fs {
+            color: #bffdea;
+        }
+
+        #root_df {
+            color: #b9fcbb;
+        }
+
+        #root_af {
+            color: #cefca6;
+        }
+
+        #root_ef {
+            color: #f8fda0;
+        }
+
+        #root_bf {
+            color: #f8ca92;
+        }
+
+        .root_heading {
+            text-align: center;
+            display: block;
+            max-width: 100%;
+        }
+    }
 }
