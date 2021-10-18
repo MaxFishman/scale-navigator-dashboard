@@ -56,9 +56,8 @@ class Firebase {
     this.auth.onAuthStateChanged(authUser => {
       if (authUser) {
         this.user(authUser.uid)
-          .get()
-          .then(snapshot => {
-            const dbUser = snapshot.data();
+         .onSnapshot((doc) => {
+            const dbUser = doc.data();
 
             // default empty roles
            // if (!dbUser.roles) {
@@ -67,7 +66,7 @@ class Firebase {
 
             // merge auth and db user
             authUser = {
-              uid: authUser.uid,
+              uid: authUser.uid ,
               email: authUser.email,
               emailVerified: authUser.emailVerified,
               providerData: authUser.providerData,

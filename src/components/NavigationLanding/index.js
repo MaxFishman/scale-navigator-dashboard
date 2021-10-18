@@ -1,19 +1,26 @@
 import React from 'react';
 import Navigation from '../Navigation/Navigation'
+
 import { AuthUserContext } from '../Session';
 
-const NavigationLanding = () => (
+
+
+function NavigationLanding(){
+    return(    
         <AuthUserContext.Consumer>
             {authUser =>
                 authUser ? (
                      <Navigation authUser={authUser}/>
                 ) : (
-                  <Navigation authUser={''}/>
+                     <div></div>
             )}
         </AuthUserContext.Consumer>
-);
+     )
+}
 
 
 
 
 export default NavigationLanding
+
+

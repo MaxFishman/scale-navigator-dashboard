@@ -1,7 +1,7 @@
 import React from "react";
 import { Provider } from 'react-redux'
 import store from './store'
-import NavigationLanding from "./components/NavigationLanding";
+import Navigation from "./components/Navigation/Navigation";
 import Workspace from "./components/Workspace/Workspace";
 import { BrowserRouter as Router } from "react-router-dom";
 import Chords from "components/ToneJS/Chord";
@@ -23,13 +23,18 @@ const App = () => (
             <Container fluid>
                 <Row>
                     <Chords/>
-                       <AuthUserContext.Consumer>
-                         {authUser => ( 
+                
                          <Col xs="12" md="5">
-                           <NavigationLanding  />
+                         <AuthUserContext.Consumer>
+                            {authUser =>
+                                authUser ? (
+                                 <Navigation authUser={authUser}/>
+                                ) : (
+                                 <Navigation  />
+                             )}
+                           </AuthUserContext.Consumer>  
                           </Col>
-                           )}
-                          </AuthUserContext.Consumer> 
+                    
                          <Col xs="12" md="7">
                         <Workspace />
                     </Col>

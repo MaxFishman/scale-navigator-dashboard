@@ -18,22 +18,22 @@ import { withAuthorization, withEmailVerification, withAuthentication, AuthUserC
 
 const MainWrapper = styled.div`
     height: calc(100vh - 188px);
-
     .canvas-wrapper {
         height: 80%;
     }
-
     .navinfo {
         height: 20%;
     }
 `;
 
 
-
 const Navigation = (props) => {
     const dispatch = useDispatch()
     const { scaleData } = useSelector(state => state.root)
     const setScaleData = (payload) => dispatch({ type: 'SET_SCALE_DATA', payload })
+    const viewSD = (payload) =>{
+       
+    }
 
     // Note for Scott:
     //
@@ -77,30 +77,8 @@ const Navigation = (props) => {
     } : {};
 
     const sketchWrapperStyle = hasActiveRoute ? { height: '40vh', overflow: 'hidden', marginTop: '70px' } : {}
-    const [isHost, setIsHost] = useState(true)
-    const [stuff, setStuff] = useState('')
-   
-    useEffect(() => {
-        if(props.authUser.uid === undefined){
-            return
-        }
-
-       const unsubscribe = props.firebase
-         .user(props.authUser.uid)
-         .onSnapshot(snapshot => {
-          setIsHost(
-            snapshot.data().isHost
-               )
-          setStuff(
-            snapshot.data().stuff
-            )
-            })
-
-        return () => {
-            unsubscribe()
-        }
-    },[props.firebase])
-
+  
+    
     return (
         <div className="navigation" style={wrapperStyle}>
             <div className="header-wrapper" style={logoStyle}>
@@ -109,13 +87,24 @@ const Navigation = (props) => {
                 </div>
                 {isMobile && <MobileMenu/>}
             </div>
-            
+             
+     <MainWrapper>
 
-            <MainWrapper>
-            
+       <AuthUserContext.Consumer>
+            {authUser =>
+               authUser ? (
+              <div align="center"> {authUser.isHost ? (<p>You are currently the host of : <span>{authUser.currentEnsemble}</span></p>):(<p>You are currently the guest of : <span>{authUser.currentEnsemble}</span></p>)}
                 <div className="navigation__scalenav canvas-wrapper" id="canv_container" ref={canvasWrapperRef} style={sketchWrapperStyle}>
-                    {isHost ? ( <Pfivesketch navRef={navRef.current} canvasWrapperRef={canvasWrapperRef}/>):(<p>You are a guest</p>)}
+                    <Pfivesketch navRef={navRef.current} canvasWrapperRef={canvasWrapperRef}/>
                 </div>
+               </div> 
+                ) : (
+                   <div className="navigation__scalenav canvas-wrapper" id="canv_container" ref={canvasWrapperRef} style={sketchWrapperStyle}>
+                    <Pfivesketch navRef={navRef.current} canvasWrapperRef={canvasWrapperRef}/>
+                </div>
+            )}
+             </AuthUserContext.Consumer>
+
 
                 <div className="navinfo" style={navInfoStyle}>
                     <div className="navinfo__root">
@@ -157,13 +146,14 @@ const Navigation = (props) => {
                         </div>
                     </div>
                 </div>
-                
+
             </MainWrapper>
 
             <Tabs className="mobile-tabs"/>
         </div>
     );
 };
+
 
 
 
