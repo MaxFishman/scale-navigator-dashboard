@@ -7,7 +7,7 @@
     flex-direction: column;
     justify-content: flex-start;
     text-align: center;
-    height: 100vh;
+    height: 100%;
 
     &.is-visible {
         display: flex;
@@ -49,8 +49,6 @@
         box-sizing: border-box;
         height: 100%;
         flex: 0 1 auto;
-        overflow: auto;
-        border: 0;
         padding: 12px;
 
         @include sm {

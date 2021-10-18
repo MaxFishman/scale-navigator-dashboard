@@ -2,6 +2,15 @@ import "./Chords.scss";
 import React from "react";
 import Vex from "vexflow";
 import ScaleData from "common/ScaleData";
+import styled from 'styled-components';
+
+const RootsList = styled.ul`
+    span {
+        display: inline-block;
+        width: 100%;
+        max-width: 80px;
+    }
+`;
 
 const DEFAULT_SPELLINGS = [
   "c",
@@ -317,7 +326,7 @@ class Chords extends React.Component {
 
           <div id="controls" className="chords-control-wrapper">
             <h3>Allowed root movements:</h3>
-            <ul>{elements}</ul>
+            <RootsList>{elements}</RootsList>
             <p>
               <label htmlFor="voice-leading-smoothness">
                 Voice leading smoothness:

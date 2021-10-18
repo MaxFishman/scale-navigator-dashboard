@@ -1,9 +1,15 @@
 import React from 'react';
 import Drawer from 'rc-drawer';
 import About from '../Workspace/About/About';
-// import Account from '../Account';
-
+import Account from '../Workspace/Account';
+import styled from 'styled-components';
 import './style.scss'
+
+const Content = styled.div`
+    padding-top: 12px;
+    border-top: 1px solid #eee;
+    text-align: center;
+`;
 
 const MobileMenu = () => {
     const [isOpen, setisOpen] = React.useState(false)
@@ -11,7 +17,7 @@ const MobileMenu = () => {
 
     return (
         <div className="mobile-menu-wrapper">
-            <button onClick={()=>setisOpen(!isOpen)}/>
+            <button onClick={()=>{ setisOpen(!isOpen); setPage('none'); }}/>
 
             <Drawer
                 placement="right"
@@ -32,8 +38,10 @@ const MobileMenu = () => {
                     </li>
                 </ul>
 
-                {/* {activePage === 'account' && <div className="drawer-content"><Account/></div>} */}
-                {activePage === 'about' && <div className="drawer-content"><About/></div>}
+                <Content>
+                    {activePage === 'account' && <Account/>}
+                    {activePage === 'about' && <About/>}
+                </Content>
 
             </Drawer>
         </div>

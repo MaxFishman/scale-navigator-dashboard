@@ -13,7 +13,8 @@ import octatonic from "./shape_svgs/octatonic.svg";
 import whole_tone from "./shape_svgs/whole_tone.svg";
 
 const About = () => (
-    <article>
+    <div className="page-about">
+        <div>
             <h2>About</h2>
 
             <p>
@@ -284,18 +285,19 @@ const About = () => (
             <li>
                 <a href="https://github.com/mjmaurer">Michael Maurer</a>
             </li>
-            
+
             <li>
                 <a href="https://github.com/rudytak">Ondřej Sedláček</a>
             </li>
             <li>
                 <a href="https://dexterjshepherd.com/">Dexter Shepherd</a>
             </li>
-<li>
+            <li>
                 <a href="https://nathanturczan.com">Nathan Turczan</a>
             </li>
             </ul>
-    </article>
+        </div>
+    </div>
 );
 
 export default  About
