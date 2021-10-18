@@ -138,7 +138,7 @@ function Rooms(props) {
         }).then(function(docRef) {
             props.firebase.user(props.authUser.uid).set({
              ensembleCount:1,  
-             currentEnsemble:docRef.id,
+             currentEnsemble:roomName,
              isHost:true,
             },{merge:true})   
              props.history.push(ROUTES.ENSEMBLE + '/' + docRef.id);    
@@ -156,7 +156,7 @@ function Rooms(props) {
         props.history.push(ROUTES.ENSEMBLE + '/' + docRef.id); 
             props.firebase.user(props.authUser.uid).set({
              ensembleCount:1,
-             currentEnsemble:docRef.id,
+             currentEnsemble:roomName,
              isHost:true
             },{merge:true})   
         })
