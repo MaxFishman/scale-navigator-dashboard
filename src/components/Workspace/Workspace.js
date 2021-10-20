@@ -1,4 +1,5 @@
 import { useSelector, useDispatch } from 'react-redux'
+import { Col } from 'reactstrap';
 import classnames from "classnames";
 import About from "./About/About";
 import Chords from "./Chords/Chords";
@@ -35,7 +36,7 @@ export default function Workspace() {
     })
 
     return (
-        <div className={classNames}>
+        <Col xs="12" md="7"  className={classNames}>
             <Tabs className="desktop"/>
 
             <div className="workspace__content">
@@ -46,7 +47,7 @@ export default function Workspace() {
                     <Route path={ROUTES.SIGN_UP}>
                         <SignUpModal/>
                     </Route>
-             
+
                     <Route path={ROUTES.ENSEMBLE}>
                         <Ensemble/>
                     </Route>
@@ -82,7 +83,7 @@ export default function Workspace() {
                         <AccountLanding/>
                     </Route>
 
-                  <Route path={ROUTES.CHECKOUT}>
+                <Route path={ROUTES.CHECKOUT}>
                         <Ecomm/>
                     </Route>
 
@@ -94,6 +95,6 @@ export default function Workspace() {
                     }
                 </Switch>
             </div>
-        </div>
+        </Col>
     );
 }

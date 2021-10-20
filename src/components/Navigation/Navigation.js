@@ -2,22 +2,24 @@ import React, { useEffect, useRef, useState } from "react";
 import { compose } from 'recompose'
 import { useSelector, useDispatch } from 'react-redux'
 import { useLocation } from 'react-router-dom';
-import Pfivesketch from "./Navigator/Pfivesketch";
 import ScaleData from "common/ScaleData";
 import PitchClassData from "common/PitchClassData";
 import Navigator from "./Navigator/Navigator";
 import Tabs from "components/Tabs";
+import ScaleNavigator from "components/ScaleNavigator";
 import MobileMenu from "../MobileMenu";
 import useWindowSize from "../../hooks/device/index";
 import styled from 'styled-components';
 import { ReactComponent as Logo } from '../../assets/logo.svg'
 import { withFirebase } from '../Firebase';
-import "./Navigation.scss";
 import { withAuthorization, withEmailVerification, withAuthentication, AuthUserContext } from '../Session';
-;
+import { logoStyle } from '../../common/LayoutConfig'
+import "./Navigation.scss";
 
 const MainWrapper = styled.div`
-    height: calc(100vh - 188px);
+    /* height: calc(100vh - 188px); */
+    height: 100%;
+
     .canvas-wrapper {
         height: 80%;
     }
@@ -32,7 +34,7 @@ const Navigation = (props) => {
     const { scaleData } = useSelector(state => state.root)
     const setScaleData = (payload) => dispatch({ type: 'SET_SCALE_DATA', payload })
     const viewSD = (payload) =>{
-       
+
     }
 
     // Note for Scott:
@@ -66,44 +68,28 @@ const Navigation = (props) => {
     const hasActiveRoute = isMobile && location.pathname !== '/';
     const wrapperStyle = hasActiveRoute ? { height: '40vh', overflow: 'hidden' } : {};
     const navInfoStyle = hasActiveRoute ? { display: 'none' } : {};
-    const logoStyle = hasActiveRoute ? {
-        position: 'fixed',
-        top: 0,
-        left: 0,
-        width: '100%',
-        background: 'black',
-        'z-index': 123,
-        padding: '10px 12px'
-    } : {};
 
-    const sketchWrapperStyle = hasActiveRoute ? { height: '40vh', overflow: 'hidden', marginTop: '70px' } : {}
-  
-    
     return (
         <div className="navigation" style={wrapperStyle}>
-            <div className="header-wrapper" style={logoStyle}>
+            <div className="header-wrapper" style={hasActiveRoute ? logoStyle : {}}>
                 <div className="app-logo">
                     <Logo/>
                 </div>
                 {isMobile && <MobileMenu/>}
             </div>
-             
+
      <MainWrapper>
 
        <AuthUserContext.Consumer>
             {authUser =>
-               authUser ? (
-              <div align="center"> {authUser.isHost ? (<p>You are currently the host of : <span>{authUser.currentEnsemble}</span></p>):(<p>You are currently the guest of : <span>{authUser.currentEnsemble}</span></p>)}
-                <div className="navigation__scalenav canvas-wrapper" id="canv_container" ref={canvasWrapperRef} style={sketchWrapperStyle}>
-                    <Pfivesketch navRef={navRef.current} canvasWrapperRef={canvasWrapperRef}/>
+               authUser &&
+                <div align="center">
+                    {authUser.isHost ? (<p>You are currently the host of : <span>{authUser.currentEnsemble}</span></p>):(<p>You are currently the guest of : <span>{authUser.currentEnsemble}</span></p>)}
                 </div>
-               </div> 
-                ) : (
-                   <div className="navigation__scalenav canvas-wrapper" id="canv_container" ref={canvasWrapperRef} style={sketchWrapperStyle}>
-                    <Pfivesketch navRef={navRef.current} canvasWrapperRef={canvasWrapperRef}/>
-                </div>
-            )}
-             </AuthUserContext.Consumer>
+            }
+        </AuthUserContext.Consumer>
+
+        <ScaleNavigator canvasWrapperRef={canvasWrapperRef} navRef={navRef.current} hasActiveRoute={hasActiveRoute}/>
 
 
                 <div className="navinfo" style={navInfoStyle}>

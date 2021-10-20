@@ -1,14 +1,15 @@
 import React, { useEffect, useRef } from "react";
 import { useSelector, useDispatch } from 'react-redux'
 import { useLocation } from 'react-router-dom';
-import Pfivesketch from "./Navigator/Pfivesketch";
 import ScaleData from "common/ScaleData";
 import PitchClassData from "common/PitchClassData";
 import Navigator from "./Navigator/Navigator";
 import Tabs from "components/Tabs";
+import ScaleNavigator from "components/ScaleNavigator";
 import MobileMenu from "../MobileMenu";
 import useWindowSize from "../../hooks/device/index";
 import { ReactComponent as Logo } from '../../assets/logo.svg'
+import { logoStyle } from '../../common/LayoutConfig'
 
 import "./Navigation.scss";
 
@@ -41,22 +42,11 @@ const Navigation = () => {
   const hasActiveRoute = isMobile && location.pathname !== '/';
   const wrapperStyle = hasActiveRoute ? { height: '40vh', overflow: 'hidden' } : {};
   const navInfoStyle = hasActiveRoute ? { display: 'none' } : {};
-  const logoStyle = hasActiveRoute ? {
-    position: 'fixed',
-    top: 0,
-    left: 0,
-    width: '100%',
-    background: 'black',
-    'z-index': 123,
-    padding: '10px 12px'
-  } : {};
-
-  const sketchWrapperStyle = hasActiveRoute ? { height: '40vh', overflow: 'hidden', marginTop: '70px' } : {}
 
   return (
     <div className="navigation" style={wrapperStyle}>
 
-      <div className="header-wrapper" style={logoStyle}>
+      <div className="header-wrapper" style={hasActiveRoute ? logoStyle : {}}>
         <div className="app-logo">
             <Logo/>
         </div>
@@ -64,9 +54,7 @@ const Navigation = () => {
         {isMobile && <MobileMenu/>}
       </div>
 
-      <div className="navigation__scalenav canvas-wrapper" id="canv_container" ref={canvasWrapperRef} style={sketchWrapperStyle}>
-        <Pfivesketch navRef={navRef.current} canvasWrapperRef={canvasWrapperRef}/>
-      </div>
+        <ScaleNavigator canvasWrapperRef={canvasWrapperRef} navRef={navRef.current} hasActiveRoute={hasActiveRoute}/>
 
       <div className="navinfo" style={navInfoStyle}>
         <div className="navinfo__root">
