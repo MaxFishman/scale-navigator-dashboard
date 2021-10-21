@@ -45,10 +45,15 @@
     }
 
     &__content {
+        border-top: 0px solid $accent-medium;
         box-sizing: border-box;
         height: 100%;
         flex: 0 1 auto;
         padding: 12px;
+
+        @include sm {
+            border: 8px solid $accent-medium;
+        }
 
         @include md {
             box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
