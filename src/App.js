@@ -23,21 +23,19 @@ const App = () => (
             <Container fluid>
                 <Row>
                     <Chords/>
-                
-                         <Col xs="12" md="5">
-                         <AuthUserContext.Consumer>
-                            {authUser =>
-                                authUser ? (
-                                 <Navigation authUser={authUser}/>
-                                ) : (
-                                 <Navigation  />
-                             )}
-                           </AuthUserContext.Consumer>  
-                          </Col>
-                    
-                         <Col xs="12" md="7">
-                        <Workspace />
+
+                    <Col xs="12" md="5">
+                        <AuthUserContext.Consumer>
+                        {authUser =>
+                            authUser ? (
+                                <Navigation authUser={authUser}/>
+                            ) : (
+                                <Navigation  />
+                            )}
+                        </AuthUserContext.Consumer>
                     </Col>
+
+                    <Workspace />
                 </Row>
             </Container>
         </Router>
