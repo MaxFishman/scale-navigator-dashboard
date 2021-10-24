@@ -1,5 +1,5 @@
 import React, { Component, useState, useEffect } from 'react';
-
+import { useSelector, useDispatch } from 'react-redux'
 import { AuthUserContext, withAuthorization, } from '../../Session';
 import { withFirebase } from '../../Firebase';
 import RoomList from './RoomList';
@@ -119,13 +119,16 @@ const CreateEnsamble = styled.div`
 //Room component handle auth state of the list to control ui / add a new room
 
 function Rooms(props) {
+    const dispatch = useDispatch()
+    const { isEnsembleHost } = useSelector(state => state.root)
+    const setUserAsEnsembleHost = () => dispatch({ type: 'SET_IS_ENSEMBLE_HOST', payload: true })
 
     const [rooms, setRooms] = useState([])
-     
+
     const handleNewRoom = (e) =>{
        if(roomName == ''){
         return
-       } 
+       }
        props.firebase
       .user(props.authUser.uid)
       .get().then((doc) => {
@@ -136,15 +139,17 @@ function Rooms(props) {
             hostId:props.authUser.uid,
             createdAt:new Date().getTime()
         }).then(function(docRef) {
+            setUserAsEnsembleHost();
+
             props.firebase.user(props.authUser.uid).set({
-             ensembleCount:1,  
+             ensembleCount:1,
              currentEnsemble:roomName,
              isHost:true,
-            },{merge:true})   
-             props.history.push(ROUTES.ENSEMBLE + '/' + docRef.id);    
+            },{merge:true})
+             props.history.push(ROUTES.ENSEMBLE + '/' + docRef.id);
         })
-        e.preventDefault();    
- 
+        e.preventDefault();
+
        } else {
           if (doc.exists && doc.data().accountType=='pro' && doc.data().ensembleCount == 1){
            props.firebase.rooms().add({
@@ -153,18 +158,18 @@ function Rooms(props) {
             hostId:props.authUser.uid,
             createdAt:new Date().getTime()
         }).then(function(docRef) {
-        props.history.push(ROUTES.ENSEMBLE + '/' + docRef.id); 
+        props.history.push(ROUTES.ENSEMBLE + '/' + docRef.id);
             props.firebase.user(props.authUser.uid).set({
              ensembleCount:1,
              currentEnsemble:roomName,
              isHost:true
-            },{merge:true})   
+            },{merge:true})
         })
 
           }else{
-              props.history.push(ROUTES.CHECKOUT); 
+              props.history.push(ROUTES.CHECKOUT);
           }
- 
+
        }
     })
   }
@@ -222,6 +227,7 @@ function Rooms(props) {
 
     const [roomName, setRoomName] = useState('')
     const isVisible = true
+
     return (
         <AuthUserContext.Consumer>
             {authUser => (
@@ -231,22 +237,24 @@ function Rooms(props) {
                             {authUser =>
                               authUser ? (
                              <CreateEnsamble>
+                                 {/* TODO: REMOVE CODE DUPLICATION */}
                                 <input onChange={e => setRoomName(e.target.value)}  placeholder="input new ensemble name..."/>
                                  <button onClick={handleNewRoom}>
                                     Create Ensemble
                                 </button>
                              </CreateEnsamble>
                               ) : (
-                             <CreateEnsamble>
+                                <CreateEnsamble>
+                                 {/* TODO: REMOVE CODE DUPLICATION */}
                                 <input placeholder="input new ensemble name..."/>
                                  <button onClick={handleNotAuth}>
                                     Create Ensemble
                                 </button>
                              </CreateEnsamble>
-                              )
+                                )
                             }
                           </AuthUserContext.Consumer>
-                
+
 
                         {rooms &&
                             <RoomList

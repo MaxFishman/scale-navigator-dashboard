@@ -14,11 +14,13 @@ const scaleData = {
 }
 
 const tabData = []
+const isEnsembleHost = false;
 
 const initialState = {
     chordData,
     scaleData,
-    tabData
+    tabData,
+    isEnsembleHost
 }
 
 export default (state = initialState, action) => {
@@ -64,6 +66,13 @@ export default (state = initialState, action) => {
             return {
                 ...state,
                 tabData: action.payload
+            }
+        }
+
+        case "SET_IS_ENSEMBLE_HOST": {
+            return {
+                ...state,
+                isEnsembleHost: action.payload
             }
         }
 
