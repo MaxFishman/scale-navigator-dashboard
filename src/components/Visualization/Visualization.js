@@ -72,7 +72,7 @@ const Navigation = () => {
                     name="autopilot"
                     id="autopilot_checkbox"
                     ></input>
-                    <label for="autopilot">autopilot</label>
+                    <label htmlFor="autopilot">autopilot</label>
                 </div>
 
                 <div className="navinfo__option">

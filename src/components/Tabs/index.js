@@ -20,9 +20,9 @@ const Tabs = ({ className }) => {
     return (
         <nav className={`workspace__navwrap ${className}`}>
             <ol className="workspace__nav">
-            {Object.entries(routes).map((nameroute) => {
+            {Object.entries(routes).map((nameroute, key) => {
                 return (
-                    <li
+                    <li key={key}
                         className={classNames("workspace__navitem", nameroute[0], {
                             "workspace__navitem--on": location.pathname === nameroute[1],
                         })}>

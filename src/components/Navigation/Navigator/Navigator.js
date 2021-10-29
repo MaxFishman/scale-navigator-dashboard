@@ -2,7 +2,7 @@ import ChordChooser from "../../ToneJS/ChordChooser";
 import Polygon from "./Polygon";
 import Helper from "./Helper";
 
-function Navigator({ setScaleData, setFirebaseScaleData }) {
+function Navigator({ setScaleData }) {
     this.scale = "c_diatonic";
     this.main_polygon = undefined;
     this.neighbors = [];
@@ -449,7 +449,7 @@ function Navigator({ setScaleData, setFirebaseScaleData }) {
     this.updateScaleState = (newScale) => {
         this.scale = newScale;
         setScaleData(newScale);
-        setFirebaseScaleData(newScale)
+        window.setFirebaseScaleData(newScale)
     }
 
     this.jumpToScale = (newScale) => {

@@ -49,7 +49,7 @@ const Navigation = (props) => {
     window.navRef = navRef;
 
     useEffect(() => {
-        navRef.current = new Navigator.Navigator({ setScaleData, setFirebaseScaleData });
+        navRef.current = new Navigator.Navigator({ setScaleData });
     }, []);
 
     useEffect(() => {
@@ -65,6 +65,8 @@ const Navigation = (props) => {
         props.firebase.room(roomId).update({ scaleData })
     }
 
+    window.setFirebaseScaleData = setFirebaseScaleData;
+
     const getFirebaseScaleData = () => {
         const roomId = location.pathname.split('/')[2];
 
@@ -76,6 +78,7 @@ const Navigation = (props) => {
 
                 const { scaleData } = doc.data()
                 navRef.current.jumpToScale(scaleData);
+                setScaleData(scaleData)
             });
     }
 
@@ -126,7 +129,7 @@ const Navigation = (props) => {
                                 name="autopilot"
                                 id="autopilot_checkbox"
                             />
-                            <label for="autopilot">autopilot</label>
+                            <label htmlFor="autopilot">autopilot</label>
                         </div>
 
                         <div className="navinfo__option">

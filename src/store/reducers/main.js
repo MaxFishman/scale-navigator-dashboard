@@ -57,19 +57,11 @@ export default (state = initialState, action) => {
 
         case "SET_SCALE_DATA": {
             const newScaleData = action.payload
-            const previousProps = {};
-
-            if (newScaleData.scale) {
-                previousProps.previousScale = state.scaleData.scale;
-                previousProps.scaleIndex = state.scaleData.scaleIndex + 1;
-            }
 
             return {
                 ...state,
                 scaleData: {
-                    ...state.scaleData,
-                    ...newScaleData,
-                    ...previousProps,
+                    scale: newScaleData
                 }
             };
         }

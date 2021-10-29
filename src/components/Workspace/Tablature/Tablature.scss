@@ -11,7 +11,7 @@ $label-font-size: 0.8rem;
     box-sizing: border-box;
     margin-bottom: 0.5rem;
 
-    // filter: drop-shadow(0px 0px 13px rgba(0, 255, 255, 0.44))
+    //   filter: drop-shadow(0px 0px 13px rgba(0, 255, 255, 0.44))
     //   drop-shadow(0px 4px 24px rgba(255, 255, 255, 0.5))
     //   drop-shadow(0px 0px 6px #ffffff);
     border-radius: 19px;
@@ -60,6 +60,7 @@ $label-font-size: 0.8rem;
     &__select {
         z-index: 10;
         width: 100%;
+        color: #000;
     }
 
     &__title {
@@ -92,8 +93,8 @@ $label-font-size: 0.8rem;
     }
 
     &__placeholder {
-        color: white !important;
-        opacity: 0.4 !important;
+        color: white;
+        opacity: 0.8;
     }
 
     &__multi-value {
@@ -101,7 +102,7 @@ $label-font-size: 0.8rem;
         border-radius: 7px !important;
 
         &__label {
-            color: white !important;
+            color: #000;
         }
 
         &__remove {
