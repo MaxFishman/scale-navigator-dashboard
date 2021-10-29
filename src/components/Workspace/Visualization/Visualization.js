@@ -32,7 +32,6 @@ const Visualization = () => {
 
             var keys = Object.keys(ScaleData);
             var scale_data_arr = keys.map((k, id) => Object.defineProperty(ScaleData[k], "name", { value: k }));
-            console.log(scale_data_arr)
 
             var s = (p5.width + p5.height) / 100;
 
@@ -139,16 +138,6 @@ const Visualization = () => {
                     }
                 }
             }
-
-            console.log(layers)
-
-            // console.log(diatonic,
-            //     acoustic,
-            //     harmonic_major,
-            //     harmonic_minor,
-            //     octatonic,
-            //     hexatonic,
-            //     whole_tone)
         }
     };
 

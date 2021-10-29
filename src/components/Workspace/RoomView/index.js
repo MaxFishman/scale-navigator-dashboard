@@ -1,7 +1,8 @@
 import React, {useEffect, useState} from 'react';
+import { useSelector, useDispatch } from 'react-redux'
 import { withAuthorization, withEmailVerification, AuthUserContext } from '../../Session';
 import { compose } from 'recompose';
-import { Link, withRouter } from 'react-router-dom';
+import { withRouter } from 'react-router-dom';
 import { withFirebase } from '../../Firebase';
 import ROUTES from 'common/Routes';
 import styled from 'styled-components';
@@ -67,20 +68,21 @@ const ContentWrapper = styled.div`
 `;
 
 function RoomView(props) {
+    const dispatch = useDispatch()
+    const { userData } = useSelector(state => state.root)
+
     const [roomName, setRoomName] = useState('')
-    const [userName, setUserName] = useState('')
     const [hostName, setHostName] = useState('')
     const [activeUsers, setActiveUsers] = useState([])
     const [text, setText] = useState('')
     const [messages, setMessages] = useState([])
 
     useEffect(() => {
-       const unsubscribe = props.firebase
-         .room(props.match.params.id)
-         .onSnapshot(snapshot => {
-          setRoomName(
-            snapshot.data().roomName || ''
-               )
+        const unsubscribe = props.firebase
+            .room(props.match.params.id)
+            .onSnapshot(snapshot => {
+                if(!snapshot.data()) return props.history.push(ROUTES.ENSEMBLE);
+                setRoomName(snapshot.data().roomName || '')
             })
 
         return () => {
@@ -88,8 +90,9 @@ function RoomView(props) {
         }
     },[props.firebase])
 
-
     const createMessage = ({target}) => {
+        const { userName } = userData
+
         props.firebase.room(props.match.params.id).collection('messages').add({
             userId: userName,
             message:text,
@@ -123,33 +126,35 @@ function RoomView(props) {
     },[props.firebase])
 
     useEffect(() => {
-       const unsubscribe = props.firebase
+        const unsubscribe = props.firebase
             .user(props.authUser.uid)
             .onSnapshot(snapshot => {
-                setUserName(snapshot.data().userName || '')
                 props.firebase.room(props.match.params.id).collection('activeUsers').doc(props.authUser.uid).set({
-                userId: props.authUser.uid,
-                userName: snapshot.data().userName || '',
-                createdAt:new Date().getTime(),
+                    userId: props.authUser.uid,
+                    userName: snapshot.data().userName || '',
+                    createdAt: new Date().getTime(),
                 }).then(()=>{
-                const unsubscribe = props.firebase
-                .room(props.match.params.id)
-                .collection('activeUsers')
-                .orderBy('createdAt', 'desc')
-                .onSnapshot(snapshot => {
-                    if (snapshot.size) {
-                        let activeUsers = [];
-                        snapshot.forEach(doc =>
-                            activeUsers.push({ ...doc.data(), uid: doc.id }),
-                        )
-                        setActiveUsers(activeUsers.reverse())
-                        setHostName(activeUsers[0].userName)
-                    } else {
-                        setActiveUsers([])
-                    }
-                })
+                    const unsubscribe = props.firebase
+                        .room(props.match.params.id)
+                        .collection('activeUsers')
+                        .orderBy('createdAt', 'desc')
+                        .onSnapshot(snapshot => {
+                            if (snapshot.size) {
+                                let activeUsers = [];
+
+                                snapshot.forEach(doc =>
+                                    activeUsers.push({ ...doc.data(), uid: doc.id }),
+                                )
+
+                                setActiveUsers(activeUsers.reverse())
+                                setHostName(activeUsers[0].userName)
+                            } else {
+                                setActiveUsers([])
+                            }
+                        })
+
                 return () => {
-                unsubscribe()
+                    unsubscribe()
                 }
             })
         })
@@ -164,6 +169,8 @@ function RoomView(props) {
             props.history.push(ROUTES.ENSEMBLE);
             setHostName(activeUsers[0].userName)
         }
+
+        dispatch({ type: 'SET_IS_ENSEMBLE_MEMBER', payload: false })
     }
 
     return(
@@ -209,7 +216,6 @@ function RoomView(props) {
 const condition = authUser => !!authUser;
 
 export default compose(
-    //withEmailVerification,
     withRouter,
     withAuthorization(condition),
     withFirebase,

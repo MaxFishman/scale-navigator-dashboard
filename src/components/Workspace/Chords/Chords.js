@@ -112,7 +112,6 @@ class Chords extends React.Component {
   }
 
   updateNotation() {
-    console.log(this.props.chordData.chordName);
     const container = document.getElementById("chords-notation-ctr");
     while (container.hasChildNodes()) {
       container.removeChild(container.lastChild);

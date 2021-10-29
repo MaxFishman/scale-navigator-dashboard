@@ -10,7 +10,6 @@ import SignOutButton from '../SignOut'
 import styled from 'styled-components';
 import Modal from 'react-modal';
 
-
 const customStyles = {
     content: {
         top: '50%',
@@ -112,84 +111,61 @@ const CreateEnsamble = styled.div`
         color: #000;
         font-weight: bold;
         font-size: 20px;
-        margin-left: -11px;
     }
 `;
 
-//Room component handle auth state of the list to control ui / add a new room
-
 function Rooms(props) {
     const dispatch = useDispatch()
-    const { isEnsembleHost } = useSelector(state => state.root)
-    const setUserAsEnsembleHost = () => dispatch({ type: 'SET_IS_ENSEMBLE_HOST', payload: true })
+    const setUserAsEnsembleHost = (roomId) => dispatch({ type: 'SET_ENSEMBLE_HOST_ROOM_ID', payload: roomId })
 
+    const [roomName, setRoomName] = useState('')
     const [rooms, setRooms] = useState([])
-
-    const handleNewRoom = (e) =>{
-       if(roomName == ''){
-        return
-       }
-       props.firebase
-      .user(props.authUser.uid)
-      .get().then((doc) => {
-        if (doc.exists && doc.data().accountType=='free' && doc.data().ensembleCount == 0) {
-            props.firebase.rooms().add({
-            roomName: roomName,
-            hostName: doc.data().userName || '',
-            hostId:props.authUser.uid,
-            createdAt:new Date().getTime()
-        }).then(function(docRef) {
-            setUserAsEnsembleHost();
-
-            props.firebase.user(props.authUser.uid).set({
-             ensembleCount:1,
-             currentEnsemble:roomName,
-             isHost:true,
-            },{merge:true})
-             props.history.push(ROUTES.ENSEMBLE + '/' + docRef.id);
-        })
-        e.preventDefault();
-
-       } else {
-          if (doc.exists && doc.data().accountType=='pro' && doc.data().ensembleCount == 1){
-           props.firebase.rooms().add({
-            roomName: roomName,
-            hostName: doc.data().userName || '',
-            hostId:props.authUser.uid,
-            createdAt:new Date().getTime()
-        }).then(function(docRef) {
-        props.history.push(ROUTES.ENSEMBLE + '/' + docRef.id);
-            props.firebase.user(props.authUser.uid).set({
-             ensembleCount:1,
-             currentEnsemble:roomName,
-             isHost:true
-            },{merge:true})
-        })
-
-          }else{
-              props.history.push(ROUTES.CHECKOUT);
-          }
-
-       }
-    })
-  }
-
-
-
-
-
-    const [userName, setUserName] = useState('')
-    const [addNewRoomMode, setAddNewRoomMode] = useState(false)
     const [listMode, setListMode] = useState(true)
-    const [ensembleCount, setEnsembleCount] = useState('')
 
+    const handleNewRoom = () => {
+        if (roomName == '') return
 
+        props.firebase
+            .user(props.authUser.uid)
+            .get().then((doc) => {
+                // Check if user eligible to create room
+                if (doc.exists && doc.data().accountType === 'free' && doc.data().ensembleCount > 0) {
+                    props.history.push(ROUTES.CHECKOUT);
+                } else {
+                    addNewRoom()
+                }
+            })
+    }
+
+    const addNewRoom = () => {
+        const { uid, userName } = props.authUser
+
+        props.firebase.rooms().add({
+            createdAt: new Date().getTime(),
+            roomName: roomName,
+            hostName: userName || '',
+            hostId: uid,
+            scaleData: 'c_diatonic'
+        }).then(function(docRef) {
+            // Save room Id for hosting
+            const roomId = docRef.id
+            setUserAsEnsembleHost(roomId);
+
+            props.firebase.user(uid).set({
+                ensembleCount: 1,
+                currentEnsemble: roomName,
+                isHost: true,
+                ensembleHostRoomId: roomId
+            }, {merge:true})
+
+            props.history.push(ROUTES.ENSEMBLE + '/' + docRef.id);
+        })
+    }
 
     useEffect(() => {
         const unsubscribe = props.firebase
         .rooms()
         .orderBy('createdAt', 'desc')
-        //.setLimit(10)
         .onSnapshot(snapshot => {
             if (snapshot.size) {
             let rooms = [];
@@ -215,18 +191,9 @@ function Rooms(props) {
         props.history.push(ROUTES.SIGN_UP);
     }
 
-    const handleCancel = () =>{
-        setListMode(true)
-        setAddNewRoomMode(false)
-    }
-
-
     const onRemoveRoom = uid => {
         props.firebase.Room(uid).delete();
     };
-
-    const [roomName, setRoomName] = useState('')
-    const isVisible = true
 
     return (
         <AuthUserContext.Consumer>
@@ -260,7 +227,6 @@ function Rooms(props) {
                             <RoomList
                                 authUser={authUser}
                                 rooms={rooms}
-                                //onEditMessage={onEditMessage}
                                 onRemoveRoom={onRemoveRoom}
                             />
                         }

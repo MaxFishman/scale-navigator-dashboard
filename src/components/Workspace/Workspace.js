@@ -58,10 +58,10 @@ export default function Workspace() {
 
                     <Route path={ROUTES.CHORDS}>
                         <Chords
-                        scaleData={scaleData}
-                        setScaleData={setScaleData}
-                        chordData={chordData}
-                        setChordData={setChordData}
+                            scaleData={scaleData}
+                            setScaleData={setScaleData}
+                            chordData={chordData}
+                            setChordData={setChordData}
                         />
                     </Route>
 

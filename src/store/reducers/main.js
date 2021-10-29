@@ -1,3 +1,4 @@
+import Firebase from '../../components/Firebase'
 
 const chordData = {
     playing: false,
@@ -13,18 +14,29 @@ const scaleData = {
     scaleIndex: 0,
 }
 
+const userData = {}
 const tabData = []
-const isEnsembleHost = false;
+const ensembleHostRoomId = undefined;
+const isEnsembleMember = false;
 
 const initialState = {
+    userData,
     chordData,
     scaleData,
     tabData,
-    isEnsembleHost
+    ensembleHostRoomId,
+    isEnsembleMember
 }
 
 export default (state = initialState, action) => {
     switch (action.type) {
+        case "HYDRATE_FIREBASE_DATA": {
+            return {
+                ...state,
+                userData: action.payload
+            };
+        }
+
         case "SET_CHORD_DATA": {
             const newChordData = action.payload
             const previousProps = {};
@@ -69,10 +81,20 @@ export default (state = initialState, action) => {
             }
         }
 
-        case "SET_IS_ENSEMBLE_HOST": {
+        case "SET_ENSEMBLE_HOST_ROOM_ID": {
             return {
                 ...state,
-                isEnsembleHost: action.payload
+                userData: {
+                    ...userData,
+                    ensembleHostRoomId: action.payload
+                }
+            }
+        }
+
+        case "SET_IS_ENSEMBLE_MEMBER": {
+            return {
+                ...state,
+                isEnsembleMember: action.payload
             }
         }
 

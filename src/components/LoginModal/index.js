@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useDispatch } from 'react-redux'
 import styled from 'styled-components';
 import Modal from 'react-modal';
 import { withRouter, Link } from 'react-router-dom';
@@ -109,6 +110,8 @@ const Forgot = styled.span`
 `;
 
 const LoginModal = (props) => {
+    const dispatch = useDispatch()
+
     const isVisible = true
     const [ email, setEmail] = useState('')
     const [ passwordOne, setPasswordOne] = useState('')
@@ -116,17 +119,14 @@ const LoginModal = (props) => {
     const onSubmit = evt => {
         evt.preventDefault();
         props.firebase.doSignInWithEmailAndPassword(email, passwordOne)
-        .then(authUser => {
-            return props.firebase.user(authUser.user.uid).set(
-            {
-                email,
-            },
-            { merge: true },
-            );
-        })
-        .then(() => {
-            props.history.push(ROUTES.ENSEMBLE)
-        })
+            .then(authUser => {
+                dispatch({ type: 'HYDRATE_FIREBASE_DATA', payload: authUser })
+
+                return props.firebase.user(authUser.user.uid).set({ email }, { merge: true });
+            })
+            .then(() => {
+                props.history.push(ROUTES.ENSEMBLE)
+            })
     }
 
     return (

@@ -1,9 +1,10 @@
-import React, { Component, useState, useEffect } from 'react';
-import { withFirebase } from '../../Firebase';
-import { Link, Switch } from 'react-router-dom';
+import React from 'react';
+import { useDispatch } from 'react-redux'
 import ROUTES from 'common/Routes';
-import RoomView from '../RoomView'
 import styled from 'styled-components';
+import { withFirebase } from '../../Firebase';
+import { withRouter } from 'react-router-dom';
+import { compose } from 'recompose';
 
 const Wrapper = styled.div`
     border: 2px solid #FFFFFF;
@@ -43,11 +44,17 @@ const Title = styled.div`
     }
 `;
 
-//Fetch the individual room item with unique id from the list
+const RoomItem = ({ room, history }) => {
+    const dispatch = useDispatch()
 
-const RoomItem = ({ authUser, room, onRemoveMessage }) => {
+    const handleRoomClick = () => {
+        dispatch({ type: 'SET_IS_ENSEMBLE_MEMBER', payload: true })
+        const roomRoute = `${ROUTES.ENSEMBLE}/${room.uid}`
+        history.push(roomRoute);
+    }
+
     return (
-        <Link to={`${ROUTES.ENSEMBLE}/${room.uid}`}>
+        <button onClick={handleRoomClick}>
             <Wrapper>
                 <RoomImage/>
                 <Title>
@@ -56,8 +63,11 @@ const RoomItem = ({ authUser, room, onRemoveMessage }) => {
                     <div>{10} Members</div>
                 </Title>
             </Wrapper>
-       </Link>
+       </button>
     );
 }
 
-export default withFirebase(RoomItem)
+export default compose(
+    withRouter,
+    withFirebase,
+)(RoomItem);
