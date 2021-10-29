@@ -5,14 +5,15 @@ import './../../../resources/Mulish/Mulish-Regular.ttf';
 
 const fps = 30;
 
-function Pfivesketch({ navRef, canvasWrapperRef }) {
+function Pfivesketch({ navRef, canvasWrapperRef, isMember = false }) {
     const location = useLocation();
-    const wrapperElm = canvasWrapperRef.current;
 
     useLayoutEffect(() => {
         const p = wrapperElm && wrapperElm.getBoundingClientRect();
         window.scaleP5 && window.scaleP5.resizeCanvas(p.width, p.height);
     }, [location.pathname])
+
+    const wrapperElm = canvasWrapperRef.current;
 
     const setup = (p5, canvasParentRef) => {
         const p = wrapperElm && wrapperElm.getBoundingClientRect();
@@ -36,10 +37,12 @@ function Pfivesketch({ navRef, canvasWrapperRef }) {
     };
 
     const mousePressed = (p5, event) => {
+        if (isMember) return
         navRef.mousePressed(p5, event);
     };
 
     const mouseReleased = (p5, event) => {
+        if (isMember) return
         navRef.mouseReleased(p5, event);
     };
 
@@ -53,14 +56,15 @@ function Pfivesketch({ navRef, canvasWrapperRef }) {
         window.scaleP5 = p5
     }
 
-    return ( <
-        Sketch preload = { preload }
-        setup = { setup }
-        draw = { draw }
-        mousePressed = { mousePressed }
-        mouseReleased = { mouseReleased }
-        windowResized = { windowResized }
-        navigator = { navRef }
+    return (
+        <Sketch
+            preload = { preload }
+            setup = { setup }
+            draw = { draw }
+            mousePressed = { mousePressed }
+            mouseReleased = { mouseReleased }
+            windowResized = { windowResized }
+            navigator = { navRef }
         />
     );
 }

@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef } from "react";
 import { compose } from 'recompose'
 import { useSelector, useDispatch } from 'react-redux'
 import { useLocation } from 'react-router-dom';
@@ -12,12 +12,10 @@ import useWindowSize from "../../hooks/device/index";
 import styled from 'styled-components';
 import { ReactComponent as Logo } from '../../assets/logo.svg'
 import { withFirebase } from '../Firebase';
-import { withAuthorization, withEmailVerification, withAuthentication, AuthUserContext } from '../Session';
 import { logoStyle } from '../../common/LayoutConfig'
 import "./Navigation.scss";
 
 const MainWrapper = styled.div`
-    /* height: calc(100vh - 188px); */
     height: 100%;
 
     .canvas-wrapper {
@@ -28,33 +26,30 @@ const MainWrapper = styled.div`
     }
 `;
 
+const HostBanner = styled.div`
+    text-align: center;
+    margin-bottom: -36px;
+`;
 
 const Navigation = (props) => {
     const dispatch = useDispatch()
-    const { scaleData } = useSelector(state => state.root)
-    const setScaleData = (payload) => dispatch({ type: 'SET_SCALE_DATA', payload })
-    const viewSD = (payload) =>{
+    const { scaleData, isEnsembleMember } = useSelector(state => state.root)
+    const { scale } = scaleData;
 
+    const setScaleData = (payload) => {
+        dispatch({ type: 'SET_SCALE_DATA', payload })
     }
-
-    // Note for Scott:
-    //
-    // Persist the scale data on firebase once changed
-    // Listen to the scale data changes and use this line to set the view.
-    // dispatch({ type: 'SET_SCALE_DATA', payload })
 
     const location = useLocation();
     const size = useWindowSize();
     const isMobile = size.width < 425;
-
-    const { scale } = scaleData;
 
     const canvasWrapperRef = useRef(null);
     const navRef = useRef(null);
     window.navRef = navRef;
 
     useEffect(() => {
-        navRef.current = new Navigator.Navigator(setScaleData);
+        navRef.current = new Navigator.Navigator({ setScaleData, setFirebaseScaleData });
     }, []);
 
     useEffect(() => {
@@ -62,12 +57,33 @@ const Navigation = (props) => {
     }, [scale]);
 
     useEffect(() => {
-        navRef.current.scaleDataCallback(setScaleData);
-    }, [setScaleData]);
+        if (isEnsembleMember) getFirebaseScaleData()
+    }, [isEnsembleMember]);
+
+    const setFirebaseScaleData = (scaleData) => {
+        const roomId = location.pathname.split('/')[2];
+        props.firebase.room(roomId).update({ scaleData })
+    }
+
+    const getFirebaseScaleData = () => {
+        const roomId = location.pathname.split('/')[2];
+
+        if (!roomId) { return }
+
+        props.firebase.room(roomId)
+            .onSnapshot(doc => {
+                if (!doc.exists) { return }
+
+                const { scaleData } = doc.data()
+                navRef.current.jumpToScale(scaleData);
+            });
+    }
 
     const hasActiveRoute = isMobile && location.pathname !== '/';
     const wrapperStyle = hasActiveRoute ? { height: '40vh', overflow: 'hidden' } : {};
     const navInfoStyle = hasActiveRoute ? { display: 'none' } : {};
+
+    const { authUser } = props
 
     return (
         <div className="navigation" style={wrapperStyle}>
@@ -78,19 +94,14 @@ const Navigation = (props) => {
                 {isMobile && <MobileMenu/>}
             </div>
 
-     <MainWrapper>
+            <MainWrapper>
+                {authUser &&
+                    <HostBanner>
+                        {authUser.isHost ? (<p>You are currently the host of : <span>{authUser.currentEnsemble}</span></p>)
+                        : (<p>You are currently the guest of : <span>{authUser.currentEnsemble}</span></p>)}
+                    </HostBanner>}
 
-       <AuthUserContext.Consumer>
-            {authUser =>
-               authUser &&
-                <div align="center">
-                    {authUser.isHost ? (<p>You are currently the host of : <span>{authUser.currentEnsemble}</span></p>):(<p>You are currently the guest of : <span>{authUser.currentEnsemble}</span></p>)}
-                </div>
-            }
-        </AuthUserContext.Consumer>
-
-        <ScaleNavigator canvasWrapperRef={canvasWrapperRef} navRef={navRef.current} hasActiveRoute={hasActiveRoute}/>
-
+                <ScaleNavigator canvasWrapperRef={canvasWrapperRef} navRef={navRef.current} hasActiveRoute={hasActiveRoute}/>
 
                 <div className="navinfo" style={navInfoStyle}>
                     <div className="navinfo__root">

@@ -2,14 +2,12 @@ import ChordChooser from "../../ToneJS/ChordChooser";
 import Polygon from "./Polygon";
 import Helper from "./Helper";
 
-function Navigator(setScaleData) {
+function Navigator({ setScaleData, setFirebaseScaleData }) {
     this.scale = "c_diatonic";
     this.main_polygon = undefined;
     this.neighbors = [];
     this.poly_size = 61;
     this.preview_polygons_ready = false;
-    this.setScaleData = setScaleData;
-
     this.p5 = null;
 
     this.autopilot_data = {
@@ -22,10 +20,6 @@ function Navigator(setScaleData) {
         max_visited: 10,
         visited: [],
         chordClicks: 0
-    };
-
-    this.scaleDataCallback = (setScaleData) => {
-        this.setScaleData = setScaleData;
     };
 
     this.init = (p5) => {
@@ -134,53 +128,60 @@ function Navigator(setScaleData) {
     };
 
     this.draw = (p5) => {
-        p5.push();
-        p5.ellipseMode(p5.RADIUS);
+        try {
+            p5.push();
+            p5.ellipseMode(p5.RADIUS);
 
-        //console.log(this.hover_polygons.length)
-        for (var h = 0; h < this.hover_polygons.length; h++) {
-            this.hover_polygons[h].draw(false);
-        }
-
-        //background(255);
-        var allPolygons = [this.main_polygon].concat(
-            this.preview_polygons,
-            this.old_neighbors
-        );
-        allPolygons.push(...this.neighbors);
-        allPolygons.push(this.old_main_polygon);
-
-        //draw all the polygons
-        for (var p of allPolygons) {
-            if (p) {
-                // p.draw(true, p != this.main_polygon, this.neighbors.includes(p) ? {
-                //     x: (p.animation.target.x - this.main_polygon.animation.target.x) / 3,
-                //     y: (p.animation.target.y - this.main_polygon.animation.target.y) / 3
-                // } : { x: 0, y: 0 });
-                p.draw(true);
+            for (var h = 0; h < this.hover_polygons.length; h++) {
+                this.hover_polygons[h].draw(false);
             }
-            // document.getElementById("labels_checkbox").checked
+
+            //background(255);
+            var allPolygons = [this.main_polygon].concat(
+                this.preview_polygons,
+                this.old_neighbors
+            );
+            allPolygons.push(...this.neighbors);
+            allPolygons.push(this.old_main_polygon);
+
+            //draw all the polygons
+            for (var p of allPolygons) {
+                if (p) {
+                    // p.draw(true, p != this.main_polygon, this.neighbors.includes(p) ? {
+                    //     x: (p.animation.target.x - this.main_polygon.animation.target.x) / 3,
+                    //     y: (p.animation.target.y - this.main_polygon.animation.target.y) / 3
+                    // } : { x: 0, y: 0 });
+                    p.draw(true);
+                }
+                // document.getElementById("labels_checkbox").checked
+            }
+
+            this.third_gen_hover(p5);
+
+            p5.pop();
+        } catch (error) {
+            console.error(error);
         }
-
-        this.third_gen_hover(p5);
-
-        p5.pop();
     };
 
     this.mousePressed = (p5, event) => {
-        if (event.type == "mousedown") {
-            if (this.main_polygon.click()) {
-                // Need to indicate to Chord player to change Chords
-                this.updateScaleState(this.scale);
-                return;
-            }
-            // check for clicks on all polygons
-            for (var p of this.neighbors) {
-                if (p && p.click() && !p.animation.active) {
-                    this.prepareChangeMainScale(p5, p);
+        try {
+            if (event.type == "mousedown") {
+                if (this.main_polygon.click()) {
+                    // Need to indicate to Chord player to change Chords
+                    this.updateScaleState(this.scale);
                     return;
                 }
+                // check for clicks on all polygons
+                for (var p of this.neighbors) {
+                    if (p && p.click() && !p.animation.active) {
+                        this.prepareChangeMainScale(p5, p);
+                        return;
+                    }
+                }
             }
+        } catch (err) {
+            console.error(err);
         }
     };
 
@@ -222,14 +223,6 @@ function Navigator(setScaleData) {
                 var total_poly = this.neighbors.length;
                 var ind = this.main_polygon.getNeighbors().findIndex((x) => x.isMatching(n));
                 var pos = n.getNeighborPositions(n.x, n.y, n.radius, undefined, undefined, p5.PI / 2 + (2 * p5.PI * (ind - 1)) / total_poly, p5.PI / 2 + (2 * p5.PI * (ind + 1)) / total_poly, add.length)
-
-                // var pos = add.map((p) => {
-                //     return {
-                //         x: p.x,
-                //         y: p.y,
-                //     };
-                // });
-                // console.log(pos, positions)
 
                 for (var p = 0; p < add.length; p++) {
                     add[p].set(["x", n.x], ["y", n.y], ["generated_from", n]);
@@ -455,15 +448,13 @@ function Navigator(setScaleData) {
 
     this.updateScaleState = (newScale) => {
         this.scale = newScale;
-
-        this.setScaleData({
-            scale: newScale,
-        });
+        setScaleData(newScale);
+        setFirebaseScaleData(newScale)
     }
 
     this.jumpToScale = (newScale) => {
         if (newScale !== this.scale) {
-            this.updateScaleState(newScale);
+            this.updateScaleState(newScale)
             this.initPolygons();
         }
     };

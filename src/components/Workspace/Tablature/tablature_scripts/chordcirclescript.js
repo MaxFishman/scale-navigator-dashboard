@@ -44,7 +44,6 @@ function showCircleChords(chords) {
   }
 
   for (var i = 0; i < chords.length; i++) {
-    //console.log('this chord is in this scale',chords[i]+"_chord");
     for (
       var j = document.getElementsByClassName(chords[i] + "_chord").length - 1;
       j >= 0;

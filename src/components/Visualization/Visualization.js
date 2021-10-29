@@ -16,88 +16,84 @@ import "./Navigation.scss";
 const Navigation = () => {
     const dispatch = useDispatch()
     const { scaleData } = useSelector(state => state.root)
+    const { scale } = scaleData;
+
     const setScaleData = (payload) => dispatch({ type: 'SET_SCALE_DATA', payload })
 
-  const location = useLocation();
-  const size = useWindowSize();
-  const isMobile = size.width < 425;
+    const location = useLocation();
+    const size = useWindowSize();
+    const isMobile = size.width < 425;
 
-  const { scale } = scaleData;
+    const canvasWrapperRef = useRef(null);
+    const navRef = useRef(null);
 
-  const canvasWrapperRef = useRef(null);
-  const navRef = useRef(null);
+    useEffect(() => {
+        navRef.current = new Navigator.Navigator(setScaleData);
+    }, []);
 
-  useEffect(() => {
-    navRef.current = new Navigator.Navigator(setScaleData);
-  }, []);
+    useEffect(() => {
+        navRef.current.jumpToScale(scale);
+    }, [scale]);
 
-  useEffect(() => {
-    navRef.current.jumpToScale(scale);
-  }, [scale]);
+    const hasActiveRoute = isMobile && location.pathname !== '/';
+    const wrapperStyle = hasActiveRoute ? { height: '40vh', overflow: 'hidden' } : {};
+    const navInfoStyle = hasActiveRoute ? { display: 'none' } : {};
 
-  useEffect(() => {
-    navRef.current.scaleDataCallback(setScaleData);
-  }, [setScaleData]);
+    return (
+        <div className="navigation" style={wrapperStyle}>
 
-  const hasActiveRoute = isMobile && location.pathname !== '/';
-  const wrapperStyle = hasActiveRoute ? { height: '40vh', overflow: 'hidden' } : {};
-  const navInfoStyle = hasActiveRoute ? { display: 'none' } : {};
+            <div className="header-wrapper" style={hasActiveRoute ? logoStyle : {}}>
+                <div className="app-logo">
+                    <Logo/>
+                </div>
 
-  return (
-    <div className="navigation" style={wrapperStyle}>
+                {isMobile && <MobileMenu/>}
+            </div>
 
-      <div className="header-wrapper" style={hasActiveRoute ? logoStyle : {}}>
-        <div className="app-logo">
-            <Logo/>
+            <ScaleNavigator canvasWrapperRef={canvasWrapperRef} navRef={navRef.current} hasActiveRoute={hasActiveRoute}/>
+
+            <div className="navinfo" style={navInfoStyle}>
+                <div className="navinfo__root">
+                <h5>ROOT</h5>
+                {PitchClassData[ScaleData[scale].root].note}
+                </div>
+                <div className="navinfo__scaleclass">
+                <h5>SCALE CLASS</h5>
+                {ScaleData[scale].scale_class
+                    .split("_")
+                    .map((word) => word.charAt(0) + word.slice(1))
+                    .join(" ")}
+                </div>
+                <div className="navinfo__options">
+                <div className="navinfo__option">
+                    <input
+                    type="checkbox"
+                    autoComplete="off"
+                    name="autopilot"
+                    id="autopilot_checkbox"
+                    ></input>
+                    <label for="autopilot">autopilot</label>
+                </div>
+
+                <div className="navinfo__option">
+                    <input
+                    style={{direction: "rtl"}}
+                    type="range"
+                    autoComplete="off"
+                    name="autopilot_interval"
+                    id="autopilot_interval"
+                    min="1"
+                    max="4"
+
+                    step="0.01"
+                    ></input>
+                </div>
+                </div>
+            </div>
+
+            <Tabs className="mobile-tabs"/>
         </div>
-
-        {isMobile && <MobileMenu/>}
-      </div>
-
-        <ScaleNavigator canvasWrapperRef={canvasWrapperRef} navRef={navRef.current} hasActiveRoute={hasActiveRoute}/>
-
-      <div className="navinfo" style={navInfoStyle}>
-        <div className="navinfo__root">
-          <h5>ROOT</h5>
-          {PitchClassData[ScaleData[scale].root].note}
-        </div>
-        <div className="navinfo__scaleclass">
-          <h5>SCALE CLASS</h5>
-          {ScaleData[scale].scale_class
-            .split("_")
-            .map((word) => word.charAt(0) + word.slice(1))
-            .join(" ")}
-        </div>
-        <div className="navinfo__options">
-          <div className="navinfo__option">
-            <input
-              type="checkbox"
-              autoComplete="off"
-              name="autopilot"
-              id="autopilot_checkbox"
-            ></input>
-            <label for="autopilot">autopilot</label>
-          </div>
-
-          <div className="navinfo__option">
-            <input
-              style={{direction: "rtl"}}
-              type="range"
-              autoComplete="off"
-              name="autopilot_interval"
-              id="autopilot_interval"
-              min="1"
-              max="4"
-
-              step="0.01"
-            ></input>
-          </div>
-        </div>
-      </div>
-
-      <Tabs className="mobile-tabs"/>
-    </div>
-  );
+    );
 };
 
 export default Navigation;

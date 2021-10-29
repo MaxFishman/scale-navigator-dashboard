@@ -80,18 +80,18 @@ class Firebase {
       }
     });
 
-  // *** User API ***
+    // *** User API ***
 
-  user = uid => this.db.doc(`users/${uid}`);
+    user = uid => this.db.doc(`users/${uid}`);
 
-  users = () => this.db.collection('users');
+    users = () => this.db.collection('users');
 
 
-   // *** Rooms API ***
+    // *** Rooms API ***
 
-  room = uid => this.db.doc(`rooms/${uid}`);
+    room = uid => this.db.doc(`rooms/${uid}`);
 
-  rooms = () => this.db.collection('rooms');
+    rooms = () => this.db.collection('rooms');
 }
 
 export default Firebase;
