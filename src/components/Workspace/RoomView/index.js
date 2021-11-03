@@ -78,11 +78,26 @@ function RoomView(props) {
     const [messages, setMessages] = useState([])
 
     useEffect(() => {
+        const roomId = props.location.pathname.split('/')[2];
+        dispatch({ type: 'SET_CURRENT_ROOM_ID', payload: roomId })
+    }, [props.location])
+
+    useEffect(() => {
         const unsubscribe = props.firebase
             .room(props.match.params.id)
             .onSnapshot(snapshot => {
                 if(!snapshot.data()) return props.history.push(ROUTES.ENSEMBLE);
                 setRoomName(snapshot.data().roomName || '')
+
+                const authUser = JSON.parse(localStorage.getItem('authUser')).userName
+
+                if (snapshot.data().hostName === authUser) {
+                    dispatch({ type: 'SET_IS_ENSEMBLE_HOST', payload: true })
+                    dispatch({ type: 'SET_IS_ENSEMBLE_MEMBER', payload: false })
+                } else {
+                    dispatch({ type: 'SET_IS_ENSEMBLE_HOST', payload: false })
+                    dispatch({ type: 'SET_IS_ENSEMBLE_MEMBER', payload: true })
+                }
             })
 
         return () => {
@@ -170,7 +185,7 @@ function RoomView(props) {
             setHostName(activeUsers[0].userName)
         }
 
-        dispatch({ type: 'SET_IS_ENSEMBLE_MEMBER', payload: false })
+        // dispatch({ type: 'SET_IS_ENSEMBLE_MEMBER', payload: false })
     }
 
     return(

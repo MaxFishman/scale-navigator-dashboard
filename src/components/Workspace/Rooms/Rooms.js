@@ -116,7 +116,6 @@ const CreateEnsamble = styled.div`
 
 function Rooms(props) {
     const dispatch = useDispatch()
-    const setUserAsEnsembleHost = (roomId) => dispatch({ type: 'SET_ENSEMBLE_HOST_ROOM_ID', payload: roomId })
 
     const [roomName, setRoomName] = useState('')
     const [rooms, setRooms] = useState([])
@@ -149,7 +148,7 @@ function Rooms(props) {
         }).then(function(docRef) {
             // Save room Id for hosting
             const roomId = docRef.id
-            setUserAsEnsembleHost(roomId);
+            dispatch({ type: 'SET_CURRENT_ROOM_ID', payload: roomId })
 
             props.firebase.user(uid).set({
                 ensembleCount: 1,

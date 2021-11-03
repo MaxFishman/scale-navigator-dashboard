@@ -33,7 +33,7 @@ const HostBanner = styled.div`
 
 const Navigation = (props) => {
     const dispatch = useDispatch()
-    const { scaleData, isEnsembleMember } = useSelector(state => state.root)
+    const { scaleData, isEnsembleMember, currentRoomId } = useSelector(state => state.root)
     const { scale } = scaleData;
 
     const setScaleData = (payload) => {
@@ -61,14 +61,14 @@ const Navigation = (props) => {
     }, [isEnsembleMember]);
 
     const setFirebaseScaleData = (scaleData) => {
-        const roomId = location.pathname.split('/')[2];
+        const roomId = currentRoomId
         props.firebase.room(roomId).update({ scaleData })
     }
 
     window.setFirebaseScaleData = setFirebaseScaleData;
 
     const getFirebaseScaleData = () => {
-        const roomId = location.pathname.split('/')[2];
+        const roomId = currentRoomId
 
         if (!roomId) { return }
 

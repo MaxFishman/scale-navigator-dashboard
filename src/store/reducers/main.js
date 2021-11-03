@@ -1,5 +1,3 @@
-import Firebase from '../../components/Firebase'
-
 const chordData = {
     playing: false,
     voiceLeadingSmoothness: 100,
@@ -25,7 +23,9 @@ const initialState = {
     scaleData,
     tabData,
     ensembleHostRoomId,
-    isEnsembleMember
+    isEnsembleMember,
+    currentRoomId: null,
+    authUser: null,
 }
 
 export default (state = initialState, action) => {
@@ -87,6 +87,20 @@ export default (state = initialState, action) => {
             return {
                 ...state,
                 isEnsembleMember: action.payload
+            }
+        }
+
+        case "SET_CURRENT_ROOM_ID": {
+            return {
+                ...state,
+                currentRoomId: action.payload
+            }
+        }
+
+        case "SET_AUTH_USER": {
+            return {
+                ...state,
+                authUser: action.payload
             }
         }
 

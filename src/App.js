@@ -25,6 +25,7 @@ const App = ({ firebase }) => {
             .get()
             .then((doc) => {
                 dispatch({ type: 'HYDRATE_FIREBASE_DATA', payload: doc.data() })
+                dispatch({ type: 'SET_AUTH_USER', payload: authUser.userName })
             })
     }, [])
 

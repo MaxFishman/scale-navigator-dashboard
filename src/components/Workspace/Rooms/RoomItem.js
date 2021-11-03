@@ -48,8 +48,10 @@ const RoomItem = ({ room, history }) => {
     const dispatch = useDispatch()
 
     const handleRoomClick = () => {
-        dispatch({ type: 'SET_IS_ENSEMBLE_MEMBER', payload: true })
-        const roomRoute = `${ROUTES.ENSEMBLE}/${room.uid}`
+        const roomId = room.uid
+        dispatch({ type: 'SET_CURRENT_ROOM_ID', payload: roomId })
+
+        const roomRoute = `${ROUTES.ENSEMBLE}/${roomId}`
         history.push(roomRoute);
     }
 
