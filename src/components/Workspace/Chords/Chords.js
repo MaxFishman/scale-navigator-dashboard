@@ -225,26 +225,28 @@ class Chords extends React.Component {
 
   getPivotModulations() {
     const chordObject = this.props.chordData.chord;
+
     if (chordObject === null) {
       return [];
     }
+
     const chordPitchClasses = chordObject.prime_form_kinda;
     const scales = [];
+
     for (let scaleName of Object.keys(ScaleData)) {
       const scale = ScaleData[scaleName];
       const scalePitchClasses = scale.pitch_classes;
+
       if (isSubset(chordPitchClasses, scalePitchClasses)) {
         scales.push(scaleName);
       }
     }
+
     return scales;
   }
 
   modulate(scale) {
-    this.props.setScaleData({
-      scale: scale,
-    });
-
+    this.props.setScaleData(scale);
   }
 
   render() {
@@ -294,12 +296,7 @@ class Chords extends React.Component {
 
           <div id="this_scale" className="current-scale-wrapper">
               <h3>Current scale:</h3>
-              <p>{
-                this.props.scaleData.scale
-                .split("_")
-                .map((word) => word.charAt(0) + word.slice(1))
-                .join(" ")
-              }</p>
+              <p>{this.props.scaleData.scale}</p>
 
               <h3>Pivot modulations:</h3>
               <p>{pivotModulationButtons}</p>
