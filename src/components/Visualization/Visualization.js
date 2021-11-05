@@ -36,7 +36,7 @@ const Navigation = () => {
     }, [scale]);
 
     const hasActiveRoute = isMobile && location.pathname !== '/';
-    const wrapperStyle = hasActiveRoute ? { height: '40vh', overflow: 'hidden' } : {};
+    const wrapperStyle = hasActiveRoute ? { height: '20vh', overflow: 'hidden' } : {};
     const navInfoStyle = hasActiveRoute ? { display: 'none' } : {};
 
     return (
