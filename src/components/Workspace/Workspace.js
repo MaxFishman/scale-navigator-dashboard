@@ -68,7 +68,7 @@ export default function Workspace() {
                     <Route path={ROUTES.SCALENET}>
                         <Provider>
                         <KeepAlive name="Visualization">
-                            <div className="navigation__scalenav visu-wrapper" id="canv_container_visu" style={{height: "50vh"}}>
+                            <div className="navigation__scalenav visu-wrapper" id="canv_container_visu" >
                             <Visualization />
                             </div>
                         </KeepAlive>
