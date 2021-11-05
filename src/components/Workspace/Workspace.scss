@@ -76,6 +76,16 @@
     padding: 5%;
 }
 
+#canv_container_visu {
+
+    height: 51vh;
+
+    @include md {
+        height: 100%;
+    }
+
+}
+
 .workspace__navwrap.desktop {
     .workspace__navitem {
         background-color: white;
