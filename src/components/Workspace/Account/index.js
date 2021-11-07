@@ -1,10 +1,10 @@
-import React,{useState, useEffect} from 'react';
+import React from 'react';
+import { useDispatch } from 'react-redux'
 import { compose } from 'recompose';
-import { withAuthorization, withEmailVerification, withAuthentication, AuthUserContext } from '../../Session';
+import { withAuthentication, AuthUserContext } from '../../Session';
 import SignOutButton from '../SignOut'
-import { withRouter, Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import ROUTES from 'common/Routes';
-import { withFirebase } from '../../Firebase';
 import styled, { css } from 'styled-components';
 import UserImage from './user.png'
 
@@ -58,28 +58,30 @@ const UserDetailsWrapper = styled.div`
     }
 `;
 
+const Account = () => {
+    const dispatch = useDispatch()
+    const toggleMenu = () => dispatch({ type: 'SET_IS_MOBILE_MENU_VISIBLE', payload: false })
 
-
-const Account = () => (
-    <Wrapper>
-        <AuthUserContext.Consumer>
-            {authUser =>
-                authUser ? (
-                      <UserDetails user={authUser}/>
-                ) : (
-                    <>
-                        <p>You are currently not signed in</p>
-                        <Link to={ROUTES.SIGN_IN}><Button>Sign In </Button></Link>
-                        <p>OR</p>
-                        <Link to={ROUTES.SIGN_UP}><Button alt>Sign Up </Button></Link>
-                    </>
-            )}
-        </AuthUserContext.Consumer>
-    </Wrapper>
-)
+    return (
+        <Wrapper>
+            <AuthUserContext.Consumer>
+                {authUser =>
+                    authUser ? (
+                        <UserDetails user={authUser}/>
+                    ) : (
+                        <>
+                            <p>You are currently not signed in</p>
+                            <Link to={ROUTES.SIGN_IN}><Button onClick={toggleMenu}>Sign In </Button></Link>
+                            <p>OR</p>
+                            <Link to={ROUTES.SIGN_UP}><Button onClick={toggleMenu} alt>Sign Up </Button></Link>
+                        </>
+                )}
+            </AuthUserContext.Consumer>
+        </Wrapper>
+    )
+}
 
 function UserDetails({ user }) {
-  
     const { userName, email, emailVerified, accountType } = user;
     const EmailVerifiedText = emailVerified ? 'Email is Verified' : 'Email is not Verified'
 
@@ -95,4 +97,3 @@ function UserDetails({ user }) {
 }
 
 export default compose(withAuthentication)(Account);
-
