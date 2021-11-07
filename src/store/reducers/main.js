@@ -26,6 +26,7 @@ const initialState = {
     isEnsembleMember,
     currentRoomId: null,
     authUser: null,
+    isMobileMenuVisible: false
 }
 
 export default (state = initialState, action) => {
@@ -101,6 +102,13 @@ export default (state = initialState, action) => {
             return {
                 ...state,
                 authUser: action.payload
+            }
+        }
+
+        case "SET_IS_MOBILE_MENU_VISIBLE": {
+            return {
+                ...state,
+                isMobileMenuVisible: action.payload
             }
         }
 

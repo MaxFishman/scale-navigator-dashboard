@@ -1,8 +1,10 @@
 import React from 'react';
+import { useSelector, useDispatch } from 'react-redux'
 import Drawer from 'rc-drawer';
 import About from '../Workspace/About/About';
 import Account from '../Workspace/Account';
 import styled from 'styled-components';
+
 import './style.scss'
 
 const Content = styled.div`
@@ -12,21 +14,23 @@ const Content = styled.div`
 `;
 
 const MobileMenu = () => {
-    const [isOpen, setisOpen] = React.useState(false)
+    const dispatch = useDispatch()
+    const { isMobileMenuVisible } = useSelector(state => state.root)
+    const toggleMenu = () => dispatch({ type: 'SET_IS_MOBILE_MENU_VISIBLE', payload: !isMobileMenuVisible })
     const [activePage, setPage] = React.useState('none')
 
     return (
         <div className="mobile-menu-wrapper">
-            <button onClick={()=>{ setisOpen(!isOpen); setPage('none'); }}/>
+            <button onClick={()=>{ toggleMenu(); setPage('none'); }}/>
 
             <Drawer
                 placement="right"
-                open={isOpen}
+                open={isMobileMenuVisible}
                 width="100vw"
                 className="mobile-nav-drawer"
             >
                 <div>
-                    <button className="drawer-close" onClick={()=>setisOpen(!isOpen)}>&times;</button>
+                    <button className="drawer-close" onClick={toggleMenu}>&times;</button>
                 </div>
 
                 <ul>
