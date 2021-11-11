@@ -11,7 +11,7 @@ function Chords() {
     const dispatch = useDispatch();
     const { chordData, scaleData } = useSelector((state) => state.root);
 
-    const { scale } = scaleData;
+    const { scale, scaleIndex } = scaleData;
 
     const _setChordData = useCallback(
         (payload) => dispatch({ type: "SET_CHORD_DATA", payload }),
@@ -39,7 +39,7 @@ function Chords() {
 
     useEffect(() => {
         chordChooserRef.current.tick(scale);
-    }, [scale]);
+    }, [scale, scaleIndex]);
 
     useEffect(() => {
         const { playing, chord, previousChord } = chordData;

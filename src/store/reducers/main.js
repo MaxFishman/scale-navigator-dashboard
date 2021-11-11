@@ -62,7 +62,8 @@ export default (state = initialState, action) => {
             return {
                 ...state,
                 scaleData: {
-                    scale: newScaleData
+                    scale: newScaleData,
+                    scaleIndex: state.scaleData.scaleIndex + 1
                 }
             };
         }
