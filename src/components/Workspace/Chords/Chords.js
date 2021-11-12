@@ -3,6 +3,7 @@ import React from "react";
 import Vex from "vexflow";
 import ScaleData from "common/ScaleData";
 import styled from 'styled-components';
+import Midi from "./Midi";
 
 const RootsList = styled.ul`
     span {
@@ -338,6 +339,7 @@ class Chords extends React.Component {
             </p>
           </div>
         </div>
+        <Midi></Midi>
       </div>
     );
   }
