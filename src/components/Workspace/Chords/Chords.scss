@@ -78,10 +78,6 @@
     }
 
     #octave_controls {
-        display: flex;
-        justify-content: center;
-        margin-top: 8px;
-
         & p {
             margin-bottom: 0;;
         }
@@ -100,6 +96,39 @@
         & select {
             margin-left: 10px;
             min-width: 50px;
+        }
+    }
+
+    #midi_output {
+        display: flex;
+        flex-wrap: nowrap;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    #midi_outputs {
+        margin-bottom: 25px;
+        padding: 0 8px;
+
+        & li {
+            margin-bottom: 15px;
+        }
+
+        & select {
+            display: block;
+        }
+    }
+
+    #midi_add_output {
+        background-color: #FFDE6A;
+        margin-bottom: 12px;
+        border-radius: 12px;
+        padding: 7px 7px;
+        font-weight: bolder;
+        font-size: 0.8em;
+
+        @include md {
+            font-size: 0.8em;
         }
     }
 
