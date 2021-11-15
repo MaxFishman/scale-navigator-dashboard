@@ -3,6 +3,9 @@ import React, { useEffect } from "react";
 import ScaleData from "common/ScaleData";
 import OutputTypes from "./OutputTypes";
 
+const scaleclass_enum = ["acoustic", "diatonic", "harmonic_major", "harmonic_minor", "octatonic", "hexatonic", "whole_tone"];
+
+
 /**
  * This function actually sends the midi.
  *
@@ -33,7 +36,7 @@ function MidiPersist() {
                 midiOutputPort.send([146, scaleData.video_index - 1, 127]);
                 midiOutputPort.send([
                     147,
-                    scaleData.pitch_classes[0] + output.octave,
+                    scaleclass_enum.indexOf(scaleData.scale_class) + output.octave,
                     127,
                 ]);
                 midiOutputPort.send([148, scaleData.root + output.octave, 127]);
@@ -67,7 +70,7 @@ function MidiPersist() {
                     midiOutputPort.send([146, scaleData.video_index - 1, 0]);
                     midiOutputPort.send([
                         147,
-                        scaleData.pitch_classes[0] + output.octave,
+                        scaleclass_enum.indexOf(scaleData.scale_class) + output.octave,
                         0,
                     ]);
                     midiOutputPort.send([
