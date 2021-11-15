@@ -2,6 +2,8 @@ import { useSelector } from "react-redux";
 import React, { useState, useEffect, useRef } from "react";
 import ScaleData from "common/ScaleData";
 
+const scaleclass_enum = ["acoustic", "diatonic", "harmonic_major", "harmonic_minor", "octatonic", "hexatonic", "whole_tone"];
+
 function Midi() {
     const [featureEnabled, setFeatureEnabled] = useState(false);
     const [midiEnabled, setMidiEnabled] = useState(false);
@@ -58,14 +60,13 @@ function Midi() {
     useEffect(() => {
         const scaleData = ScaleData[scale];
         if (midiOutputPort) {
-            midiOutputPort.send([146, scaleData.video_index - 1, 127]);
-            midiOutputPort.send([
-                147,
-                scaleData.pitch_classes[0] + octave,
-                127,
-            ]);
+            midiOutputPort.send([146, scaleclass_enum.indexOf(scaleData.scale_class), 127]);
+            // midiOutputPort.send([
+            //     147,
+            //     scaleData.pitch_classes[0] + octave,
+            //     127,
+            // ]);
             midiOutputPort.send([148, scaleData.root + octave, 127]);
-            midiOutputPort.send([150, 127, 127]);
             // sleep(20);
             for (let i = 0; i < scaleData.pitch_classes.length; i++) {
                 midiOutputPort.send([
@@ -75,16 +76,15 @@ function Midi() {
                 ]);
             }
             // sleep(20);
-            midiOutputPort.send([150, 0, 127]);
         }
         return () => {
             if (midiOutputPort) {
-                midiOutputPort.send([146, scaleData.video_index - 1, 0]);
-                midiOutputPort.send([
-                    147,
-                    scaleData.pitch_classes[0] + octave,
-                    0,
-                ]);
+                midiOutputPort.send([146, scaleclass_enum.indexOf(scaleData.scale_class), 0]);
+                // midiOutputPort.send([
+                //     147,
+                //     scaleData.pitch_classes[0] + octave,
+                //     0,
+                // ]);
                 midiOutputPort.send([148, scaleData.root + octave, 0]);
                 for (let i = 0; i < scaleData.pitch_classes.length; i++) {
                     midiOutputPort.send([
@@ -93,8 +93,6 @@ function Midi() {
                         0,
                     ]);
                 }
-                midiOutputPort.send([150, 127, 0]);
-                midiOutputPort.send([150, 0, 0]);
             }
         };
     }, [midiOutputPort, scale, octave]);
@@ -166,3 +164,4 @@ function Midi() {
 }
 
 export default Midi;
+
