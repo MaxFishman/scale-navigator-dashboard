@@ -12,6 +12,14 @@ const scaleData = {
     scaleIndex: 0,
 }
 
+const midiData = {
+    featureEnabled: false,
+    midiEnabled: false,
+    midiError: false,
+    midiInfo: null,
+    midiOutputMap: {}
+}
+
 const userData = {}
 const tabData = []
 const ensembleHostRoomId = undefined;
@@ -22,6 +30,8 @@ const initialState = {
     chordData,
     scaleData,
     tabData,
+    midiData,
+    midiOutputs: [],
     ensembleHostRoomId,
     isEnsembleMember,
     currentRoomId: null,
@@ -110,6 +120,44 @@ export default (state = initialState, action) => {
             return {
                 ...state,
                 isMobileMenuVisible: action.payload
+            }
+        }
+
+        case "ADD_MIDI_OUTPUT": {
+            return {
+                ...state,
+                midiOutputs: [...state.midiOutputs, action.payload]
+            }
+        }
+
+        case "REMOVE_MIDI_OUTPUT": {
+            state.midiOutputs.splice(action.payload, 1)
+            return {
+                ...state,
+                midiOutputs: [...state.midiOutputs]
+            }
+        }
+
+        case "MODIFY_MIDI_OUTPUT": {
+            const {index, data} = action.payload
+            state.midiOutputs[index] = {
+                ...state.midiOutputs[index],
+                ...data
+            }
+
+            return {
+                ...state,
+                midiOutputs: [...state.midiOutputs]
+            }
+        }
+
+        case "SET_MIDI_DATA": {
+            return {
+                ...state,
+                midiData: {
+                    ...state.midiData,
+                    ...action.payload
+                }
             }
         }
 

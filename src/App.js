@@ -9,6 +9,7 @@ import Navigation from "./components/Navigation/Navigation";
 import Workspace from "./components/Workspace/Workspace";
 import { BrowserRouter as Router } from "react-router-dom";
 import Chords from "components/ToneJS/Chord";
+import MidiPersist from "components/Workspace/Chords/MidiPersist";
 
 Modal.setAppElement('#modal-root');
 Modal.defaultStyles.overlay.backgroundColor = 'rgb(0 0 0 / 65%)';
@@ -34,6 +35,7 @@ const App = ({ firebase }) => {
             <Container fluid>
                 <Row>
                     <Chords/>
+                    <MidiPersist/>
 
                     <Col xs="12" md="5">
                         <AuthUserContext.Consumer>
