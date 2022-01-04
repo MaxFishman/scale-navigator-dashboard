@@ -37,9 +37,6 @@ const Visualization = () => {
 
             layers = [
                 [
-                    new Polygon(p5, 0, 0, s, "a_diatonic"),
-                    new Polygon(p5, 0, 0, s, "d_diatonic"),
-                    new Polygon(p5, 0, 0, s, "g_diatonic"),
                     new Polygon(p5, 0, 0, s, "c_diatonic"),
                     new Polygon(p5, 0, 0, s, "f_diatonic"),
                     new Polygon(p5, 0, 0, s, "as_diatonic"),
@@ -48,12 +45,12 @@ const Visualization = () => {
                     new Polygon(p5, 0, 0, s, "cs_diatonic"),
                     new Polygon(p5, 0, 0, s, "fs_diatonic"),
                     new Polygon(p5, 0, 0, s, "b_diatonic"),
-                    new Polygon(p5, 0, 0, s, "e_diatonic")
+                    new Polygon(p5, 0, 0, s, "e_diatonic"),
+                    new Polygon(p5, 0, 0, s, "a_diatonic"),
+                    new Polygon(p5, 0, 0, s, "d_diatonic"),
+                    new Polygon(p5, 0, 0, s, "g_diatonic")
                 ],
                 [
-                    new Polygon(p5, 0, 0, s, "a_acoustic"),
-                    new Polygon(p5, 0, 0, s, "d_acoustic"),
-                    new Polygon(p5, 0, 0, s, "g_acoustic"),
                     new Polygon(p5, 0, 0, s, "c_acoustic"),
                     new Polygon(p5, 0, 0, s, "f_acoustic"),
                     new Polygon(p5, 0, 0, s, "as_acoustic"),
@@ -62,61 +59,65 @@ const Visualization = () => {
                     new Polygon(p5, 0, 0, s, "cs_acoustic"),
                     new Polygon(p5, 0, 0, s, "fs_acoustic"),
                     new Polygon(p5, 0, 0, s, "b_acoustic"),
-                    new Polygon(p5, 0, 0, s, "e_acoustic")
+                    new Polygon(p5, 0, 0, s, "e_acoustic"),
+                    new Polygon(p5, 0, 0, s, "a_acoustic"),
+                    new Polygon(p5, 0, 0, s, "d_acoustic"),
+                    new Polygon(p5, 0, 0, s, "g_acoustic")
                 ],
                 [
-                    new Polygon(p5, 0, 0, s, "b_harmonic_minor"),
-                    new Polygon(p5, 0, 0, s, "d_harmonic_major"),
                     new Polygon(p5, 0, 0, s, "d_harmonic_minor"),
                     new Polygon(p5, 0, 0, s, "f_harmonic_major"),
                     new Polygon(p5, 0, 0, s, "f_harmonic_minor"),
                     new Polygon(p5, 0, 0, s, "gs_harmonic_major"),
                     new Polygon(p5, 0, 0, s, "gs_harmonic_minor"),
                     new Polygon(p5, 0, 0, s, "b_harmonic_major"),
+                    new Polygon(p5, 0, 0, s, "b_harmonic_minor"),
+                    new Polygon(p5, 0, 0, s, "d_harmonic_major")
                 ],
                 [
-                    undefined,
-                    new Polygon(p5, 0, 0, s, "a_harmonic_major"),
-                    new Polygon(p5, 0, 0, s, "a_harmonic_minor"),
-                    undefined,
-                    new Polygon(p5, 0, 0, s, "c_harmonic_major"),
-                    new Polygon(p5, 0, 0, s, "c_harmonic_minor"),
-                    undefined,
-                    new Polygon(p5, 0, 0, s, "ds_harmonic_major"),
-                    new Polygon(p5, 0, 0, s, "ds_harmonic_minor"),
-                    undefined,
-                    new Polygon(p5, 0, 0, s, "fs_harmonic_major"),
-                    new Polygon(p5, 0, 0, s, "fs_harmonic_minor"),
+                     
+                     undefined,
+                     new Polygon(p5, 0, 0, s, "c_harmonic_major"),
+                     new Polygon(p5, 0, 0, s, "c_harmonic_minor"),
+                     undefined,
+                     new Polygon(p5, 0, 0, s, "ds_harmonic_major"),
+                     new Polygon(p5, 0, 0, s, "ds_harmonic_minor"),
+                     undefined,
+                     new Polygon(p5, 0, 0, s, "fs_harmonic_major"),
+                     new Polygon(p5, 0, 0, s, "fs_harmonic_minor"),
+                     undefined,
+                     new Polygon(p5, 0, 0, s, "a_harmonic_major"),
+                     new Polygon(p5, 0, 0, s, "a_harmonic_minor"),
                 ],
                 [
-                    new Polygon(p5, 0, 0, s, "e_harmonic_major"),
-                    new Polygon(p5, 0, 0, s, "e_harmonic_minor"),
-                    new Polygon(p5, 0, 0, s, "g_harmonic_major"),
-                    new Polygon(p5, 0, 0, s, "g_harmonic_minor"),
-                    new Polygon(p5, 0, 0, s, "as_harmonic_major"),
-                    new Polygon(p5, 0, 0, s, "as_harmonic_minor"),
-                    new Polygon(p5, 0, 0, s, "cs_harmonic_major"),
-                    new Polygon(p5, 0, 0, s, "cs_harmonic_minor"),
+                     new Polygon(p5, 0, 0, s, "g_harmonic_major"),
+                     new Polygon(p5, 0, 0, s, "g_harmonic_minor"),
+                     new Polygon(p5, 0, 0, s, "as_harmonic_major"),
+                     new Polygon(p5, 0, 0, s, "as_harmonic_minor"),
+                     new Polygon(p5, 0, 0, s, "cs_harmonic_major"),
+                     new Polygon(p5, 0, 0, s, "cs_harmonic_minor"),
+                     new Polygon(p5, 0, 0, s, "e_harmonic_major"),
+                     new Polygon(p5, 0, 0, s, "e_harmonic_minor"),
                 ],
                 [
-                    new Polygon(p5, 0, 0, s, "hexatonic_1"),
-                    new Polygon(p5, 0, 0, s, "hexatonic_2"),
-                    new Polygon(p5, 0, 0, s, "hexatonic_3"),
-                    new Polygon(p5, 0, 0, s, "hexatonic_4"),
+                     new Polygon(p5, 0, 0, s, "hexatonic_1"),
+                     new Polygon(p5, 0, 0, s, "hexatonic_2"),
+                     new Polygon(p5, 0, 0, s, "hexatonic_3"),
+                     new Polygon(p5, 0, 0, s, "hexatonic_4"),
                 ],
                 [
-                    undefined,
-                    new Polygon(p5, 0, 0, s, "octatonic_1"),
-                    undefined,
-                    new Polygon(p5, 0, 0, s, "octatonic_2"),
-                    undefined,
-                    new Polygon(p5, 0, 0, s, "octatonic_3"),
+                     undefined,
+                     new Polygon(p5, 0, 0, s, "octatonic_1"),
+                     undefined,
+                     new Polygon(p5, 0, 0, s, "octatonic_2"),
+                     undefined,
+                     new Polygon(p5, 0, 0, s, "octatonic_3"),
                 ],
                 [
-                    undefined,
-                    new Polygon(p5, 0, 0, s, "whole_tone_1"),
-                    undefined,
-                    new Polygon(p5, 0, 0, s, "whole_tone_2"),
+                     undefined,
+                     new Polygon(p5, 0, 0, s, "whole_tone_1"),
+                     undefined,
+                     new Polygon(p5, 0, 0, s, "whole_tone_2"),
                 ]
             ];
 
@@ -172,8 +173,8 @@ const Visualization = () => {
                             p5.push();
                             p5.noStroke();
                             for (var i = 0; i < 1; i += 1 / 20) {
-                                p5.fill(255, 222, 106, i * 64)
-                                p5.ellipse(x * p5.width, y * p5.height, 5 * po.radius * (1 - i))
+                                // p5.fill(255, 222, 106, i * 64)
+                                // p5.ellipse(x * p5.width, y * p5.height, 5 * po.radius * (1 - i))
                             }
                             p5.pop();
                         }
@@ -240,7 +241,7 @@ const Visualization = () => {
                 for (var po of l) {
                     if (po) {
                         po.draw(false, false, { x: 0, y: 0 },
-                            window.navRef.current.main_polygon.scale == po.scale ? 1.25 : 1)
+                            window.navRef.current.main_polygon.scale == po.scale ? 1 : 1)
                     }
                 }
             }
