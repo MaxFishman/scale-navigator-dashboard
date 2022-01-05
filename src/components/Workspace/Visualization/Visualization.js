@@ -180,8 +180,8 @@ const Visualization = () => {
                             p5.push();
                             p5.noStroke();
                             for (var i = 0; i < 1; i += 1 / 20) {
-                                // p5.fill(255, 255, 255, i * 64)
-                                // p5.ellipse(x * p5.width, y * p5.height, 5 * po.radius * (1 - i))
+                                 p5.fill(255, 255, 255, i * 64)
+                                 p5.ellipse(x * p5.width, y * p5.height, 5 * po.radius * (1 - i))
                             }
                             p5.pop();
                         }
@@ -266,7 +266,7 @@ const Visualization = () => {
                             false,
                             { x: 0, y: 0 },
                             window.navRef.current.main_polygon.scale == po.scale
-                                ? 1
+                                ? 1.25
                                 : 1
                         );
                     }
