@@ -20,116 +20,120 @@ const Visualization = () => {
     var layers = [];
 
     const setup = (p5) => {
-        if (canvasParentRef == null) canvasParentRef = document.getElementById("canv_container_visu");
+        if (canvasParentRef == null)
+            canvasParentRef = document.getElementById("canv_container_visu");
         if (canvasParentRef) {
             const p = canvasParentRef.getBoundingClientRect();
 
-            cnv = p5.createCanvas(p.width * 0.9, p.height * 0.9).parent(canvasParentRef);
+            cnv = p5
+                .createCanvas(p.width * 0.9, p.height * 0.9)
+                .parent(canvasParentRef);
             p5.frameRate(fps);
             windowResized(p5);
 
             ran_setup = true;
 
             var keys = Object.keys(ScaleData);
-            var scale_data_arr = keys.map((k, id) => Object.defineProperty(ScaleData[k], "name", { value: k }));
+            var scale_data_arr = keys.map((k, id) =>
+                Object.defineProperty(ScaleData[k], "name", { value: k })
+            );
 
             var s = (p5.width + p5.height) / 100;
 
             layers = [
                 [
                     new Polygon(p5, 0, 0, s, "c_diatonic"),
-                    new Polygon(p5, 0, 0, s, "f_diatonic"),
-                    new Polygon(p5, 0, 0, s, "as_diatonic"),
-                    new Polygon(p5, 0, 0, s, "ds_diatonic"),
-                    new Polygon(p5, 0, 0, s, "gs_diatonic"),
-                    new Polygon(p5, 0, 0, s, "cs_diatonic"),
-                    new Polygon(p5, 0, 0, s, "fs_diatonic"),
-                    new Polygon(p5, 0, 0, s, "b_diatonic"),
-                    new Polygon(p5, 0, 0, s, "e_diatonic"),
-                    new Polygon(p5, 0, 0, s, "a_diatonic"),
+                    new Polygon(p5, 0, 0, s, "g_diatonic"),
                     new Polygon(p5, 0, 0, s, "d_diatonic"),
-                    new Polygon(p5, 0, 0, s, "g_diatonic")
+                    new Polygon(p5, 0, 0, s, "a_diatonic"),
+                    new Polygon(p5, 0, 0, s, "e_diatonic"),
+                    new Polygon(p5, 0, 0, s, "b_diatonic"),
+                    new Polygon(p5, 0, 0, s, "fs_diatonic"),
+                    new Polygon(p5, 0, 0, s, "cs_diatonic"),
+                    new Polygon(p5, 0, 0, s, "gs_diatonic"),
+                    new Polygon(p5, 0, 0, s, "ds_diatonic"),
+                    new Polygon(p5, 0, 0, s, "as_diatonic"),
+                    new Polygon(p5, 0, 0, s, "f_diatonic"),
                 ],
                 [
                     new Polygon(p5, 0, 0, s, "c_acoustic"),
-                    new Polygon(p5, 0, 0, s, "f_acoustic"),
-                    new Polygon(p5, 0, 0, s, "as_acoustic"),
-                    new Polygon(p5, 0, 0, s, "ds_acoustic"),
-                    new Polygon(p5, 0, 0, s, "gs_acoustic"),
-                    new Polygon(p5, 0, 0, s, "cs_acoustic"),
-                    new Polygon(p5, 0, 0, s, "fs_acoustic"),
-                    new Polygon(p5, 0, 0, s, "b_acoustic"),
-                    new Polygon(p5, 0, 0, s, "e_acoustic"),
-                    new Polygon(p5, 0, 0, s, "a_acoustic"),
+                    new Polygon(p5, 0, 0, s, "g_acoustic"),
                     new Polygon(p5, 0, 0, s, "d_acoustic"),
-                    new Polygon(p5, 0, 0, s, "g_acoustic")
+                    new Polygon(p5, 0, 0, s, "a_acoustic"),
+                    new Polygon(p5, 0, 0, s, "e_acoustic"),
+                    new Polygon(p5, 0, 0, s, "b_acoustic"),
+                    new Polygon(p5, 0, 0, s, "fs_acoustic"),
+                    new Polygon(p5, 0, 0, s, "cs_acoustic"),
+                    new Polygon(p5, 0, 0, s, "gs_acoustic"),
+                    new Polygon(p5, 0, 0, s, "ds_acoustic"),
+                    new Polygon(p5, 0, 0, s, "as_acoustic"),
+                    new Polygon(p5, 0, 0, s, "f_acoustic"),
                 ],
                 [
                     new Polygon(p5, 0, 0, s, "d_harmonic_minor"),
-                    new Polygon(p5, 0, 0, s, "f_harmonic_major"),
-                    new Polygon(p5, 0, 0, s, "f_harmonic_minor"),
-                    new Polygon(p5, 0, 0, s, "gs_harmonic_major"),
-                    new Polygon(p5, 0, 0, s, "gs_harmonic_minor"),
-                    new Polygon(p5, 0, 0, s, "b_harmonic_major"),
+                    new Polygon(p5, 0, 0, s, "d_harmonic_major"),
                     new Polygon(p5, 0, 0, s, "b_harmonic_minor"),
-                    new Polygon(p5, 0, 0, s, "d_harmonic_major")
+                    new Polygon(p5, 0, 0, s, "b_harmonic_major"),
+                    new Polygon(p5, 0, 0, s, "gs_harmonic_minor"),
+                    new Polygon(p5, 0, 0, s, "gs_harmonic_major"),
+                    new Polygon(p5, 0, 0, s, "f_harmonic_minor"),
+                    new Polygon(p5, 0, 0, s, "f_harmonic_major"),
                 ],
                 [
-                     
-                     undefined,
-                     new Polygon(p5, 0, 0, s, "c_harmonic_major"),
-                     new Polygon(p5, 0, 0, s, "c_harmonic_minor"),
-                     undefined,
-                     new Polygon(p5, 0, 0, s, "ds_harmonic_major"),
-                     new Polygon(p5, 0, 0, s, "ds_harmonic_minor"),
-                     undefined,
-                     new Polygon(p5, 0, 0, s, "fs_harmonic_major"),
-                     new Polygon(p5, 0, 0, s, "fs_harmonic_minor"),
-                     undefined,
-                     new Polygon(p5, 0, 0, s, "a_harmonic_major"),
-                     new Polygon(p5, 0, 0, s, "a_harmonic_minor"),
+                    undefined,
+                    new Polygon(p5, 0, 0, s, "a_harmonic_minor"),
+                    new Polygon(p5, 0, 0, s, "a_harmonic_major"),
+                    undefined,
+                    new Polygon(p5, 0, 0, s, "fs_harmonic_minor"),
+                    new Polygon(p5, 0, 0, s, "fs_harmonic_major"),
+                    undefined,
+                    new Polygon(p5, 0, 0, s, "ds_harmonic_minor"),
+                    new Polygon(p5, 0, 0, s, "ds_harmonic_major"),
+                    undefined,
+                    new Polygon(p5, 0, 0, s, "c_harmonic_minor"),
+                    new Polygon(p5, 0, 0, s, "c_harmonic_major"),
                 ],
                 [
-                     new Polygon(p5, 0, 0, s, "g_harmonic_major"),
-                     new Polygon(p5, 0, 0, s, "g_harmonic_minor"),
-                     new Polygon(p5, 0, 0, s, "as_harmonic_major"),
-                     new Polygon(p5, 0, 0, s, "as_harmonic_minor"),
-                     new Polygon(p5, 0, 0, s, "cs_harmonic_major"),
-                     new Polygon(p5, 0, 0, s, "cs_harmonic_minor"),
-                     new Polygon(p5, 0, 0, s, "e_harmonic_major"),
-                     new Polygon(p5, 0, 0, s, "e_harmonic_minor"),
+                    new Polygon(p5, 0, 0, s, "g_harmonic_major"),
+                    new Polygon(p5, 0, 0, s, "e_harmonic_minor"),
+                    new Polygon(p5, 0, 0, s, "e_harmonic_major"),
+                    new Polygon(p5, 0, 0, s, "cs_harmonic_minor"),
+                    new Polygon(p5, 0, 0, s, "cs_harmonic_major"),
+                    new Polygon(p5, 0, 0, s, "as_harmonic_minor"),
+                    new Polygon(p5, 0, 0, s, "as_harmonic_major"),
+                    new Polygon(p5, 0, 0, s, "g_harmonic_minor"),
                 ],
                 [
-                     new Polygon(p5, 0, 0, s, "hexatonic_1"),
-                     new Polygon(p5, 0, 0, s, "hexatonic_2"),
-                     new Polygon(p5, 0, 0, s, "hexatonic_3"),
-                     new Polygon(p5, 0, 0, s, "hexatonic_4"),
+                    new Polygon(p5, 0, 0, s, "hexatonic_4"),
+                    new Polygon(p5, 0, 0, s, "hexatonic_3"),
+                    new Polygon(p5, 0, 0, s, "hexatonic_2"),
+                    new Polygon(p5, 0, 0, s, "hexatonic_1"),
                 ],
                 [
-                     undefined,
-                     new Polygon(p5, 0, 0, s, "octatonic_1"),
-                     undefined,
-                     new Polygon(p5, 0, 0, s, "octatonic_2"),
-                     undefined,
-                     new Polygon(p5, 0, 0, s, "octatonic_3"),
+                    undefined,
+                    new Polygon(p5, 0, 0, s, "octatonic_3"),
+                    undefined,
+                    new Polygon(p5, 0, 0, s, "octatonic_2"),
+                    undefined,
+                    new Polygon(p5, 0, 0, s, "octatonic_1"),
                 ],
                 [
-                     undefined,
-                     new Polygon(p5, 0, 0, s, "whole_tone_1"),
-                     undefined,
-                     new Polygon(p5, 0, 0, s, "whole_tone_2"),
-                ]
+                    undefined,
+                    new Polygon(p5, 0, 0, s, "whole_tone_2"),
+                    undefined,
+                    new Polygon(p5, 0, 0, s, "whole_tone_1"),
+                ],
             ];
 
-            p5.translate(p5.width / 2, p5.height / 2)
+            p5.translate(p5.width / 2, p5.height / 2);
 
             for (var j = 0; j < layers.length; j++) {
-                l = 45 / 50 - j / (layers.length + 1)
+                l = 45 / 50 - j / (layers.length + 1);
                 var arr = layers[j];
                 for (var i = 0; i < arr.length; i++) {
-                    var a = Math.PI * 2 * i / arr.length - Math.PI / 2;
-                    var x = Math.cos(a) * l / 2
-                    var y = Math.sin(a) * l / 2
+                    var a = (Math.PI * 2 * i) / arr.length - Math.PI / 2;
+                    var x = (Math.cos(a) * l) / 2;
+                    var y = (Math.sin(a) * l) / 2;
 
                     if (arr[i]) {
                         arr[i].x = x + 1 / 2;
@@ -147,10 +151,11 @@ const Visualization = () => {
         else {
             p5.push();
 
-            cnv.parent(canvasParentRef)
+            cnv.parent(canvasParentRef);
             const p = canvasParentRef.getBoundingClientRect();
-            if (p5.width != p.width * .9 || p5.height != p.height * .9) windowResized(p5);
-            p5.background(0)
+            if (p5.width != p.width * 0.9 || p5.height != p.height * 0.9)
+                windowResized(p5);
+            p5.background(0);
 
             function getScaleObjectByName(name) {
                 for (var l of layers) {
@@ -166,22 +171,24 @@ const Visualization = () => {
             for (var l of layers) {
                 for (var po of l) {
                     if (po) {
-                        if (window.navRef.current.main_polygon.scale == po.scale) {
+                        if (
+                            window.navRef.current.main_polygon.scale == po.scale
+                        ) {
                             var x = po.x;
                             var y = po.y;
 
                             p5.push();
                             p5.noStroke();
                             for (var i = 0; i < 1; i += 1 / 20) {
-                                 p5.fill(255, 255, 255, i * 64)
-                                 p5.ellipse(x * p5.width, y * p5.height, 5 * po.radius * (1 - i))
+                                // p5.fill(255, 255, 255, i * 64)
+                                // p5.ellipse(x * p5.width, y * p5.height, 5 * po.radius * (1 - i))
                             }
                             p5.pop();
                         }
 
                         p5.push();
-                        p5.stroke(255, 16)
-                        var sw = (p5.width + p5.height) / 1000
+                        p5.stroke(255, 16);
+                        var sw = (p5.width + p5.height) / 1000;
                         var layerAllowed = false;
                         var alph = 12.5;
                         var cols_same = [
@@ -192,8 +199,8 @@ const Visualization = () => {
                             [255, 255, 255, alph],
                             [255, 255, 255, alph],
                             [255, 255, 255, alph],
-                            [255, 255, 255, alph]
-                        ]
+                            [255, 255, 255, alph],
+                        ];
                         alph = 12.5;
                         var cols_dif = [
                             [255, 255, 255, alph],
@@ -203,10 +210,18 @@ const Visualization = () => {
                             [255, 255, 255, alph],
                             [255, 255, 255, alph],
                             [255, 255, 255, alph],
-                            [255, 255, 255, alph]
-                        ]
+                            [255, 255, 255, alph],
+                        ];
 
-                        if (l.map(x => { if (x) return x.scale }).includes(window.navRef.current.main_polygon.scale)) {
+                        if (
+                            l
+                                .map((x) => {
+                                    if (x) return x.scale;
+                                })
+                                .includes(
+                                    window.navRef.current.main_polygon.scale
+                                )
+                        ) {
                             cols_same[po.layer_id][3] *= 2;
                             layerAllowed = true;
                         }
@@ -216,12 +231,18 @@ const Visualization = () => {
 
                             if (scale) {
                                 if (scale.layer_id == po.layer_id) {
-                                    p5.stroke(...cols_same[po.layer_id])
-                                    if (layerAllowed) p5.strokeWeight(sw * 3)
-                                    else p5.strokeWeight(sw)
+                                    p5.stroke(...cols_same[po.layer_id]);
+                                    if (layerAllowed) p5.strokeWeight(sw * 3);
+                                    else p5.strokeWeight(sw);
                                 } else {
-                                    p5.stroke(...cols_dif[Math.abs(scale.layer_id - po.layer_id)])
-                                    p5.strokeWeight(sw)
+                                    p5.stroke(
+                                        ...cols_dif[
+                                            Math.abs(
+                                                scale.layer_id - po.layer_id
+                                            )
+                                        ]
+                                    );
+                                    p5.strokeWeight(sw);
                                 }
 
                                 var x1 = p5.width * scale.x;
@@ -240,8 +261,14 @@ const Visualization = () => {
             for (var l of layers) {
                 for (var po of l) {
                     if (po) {
-                        po.draw(false, false, { x: 0, y: 0 },
-                            window.navRef.current.main_polygon.scale == po.scale ? 1.25 : 1)
+                        po.draw(
+                            false,
+                            false,
+                            { x: 0, y: 0 },
+                            window.navRef.current.main_polygon.scale == po.scale
+                                ? 1
+                                : 1
+                        );
                     }
                 }
             }
@@ -267,16 +294,16 @@ const Visualization = () => {
         }
     };
 
-    const preload = (p5) => {}
+    const preload = (p5) => {};
 
-
-    return ( <
-        Sketch preload = { preload }
-        setup = { setup }
-        draw = { draw }
-        mousePressed = { mousePressed }
-        mouseReleased = { mouseReleased }
-        windowResized = { windowResized }
+    return (
+        <Sketch
+            preload={preload}
+            setup={setup}
+            draw={draw}
+            mousePressed={mousePressed}
+            mouseReleased={mouseReleased}
+            windowResized={windowResized}
         />
     );
 };
