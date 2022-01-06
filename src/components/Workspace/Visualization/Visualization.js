@@ -180,8 +180,8 @@ const Visualization = () => {
                             p5.push();
                             p5.noStroke();
                             for (var i = 0; i < 1; i += 1 / 20) {
-                                 p5.fill(255, 255, 255, i * 64)
-                                 p5.ellipse(x * p5.width, y * p5.height, 5 * po.radius * (1 - i))
+                                p5.fill(255, 255, 255, i * 64)
+                                p5.ellipse(x * p5.width, y * p5.height, 5 * po.radius * (1 - i))
                             }
                             p5.pop();
                         }
@@ -190,7 +190,7 @@ const Visualization = () => {
                         p5.stroke(255, 16);
                         var sw = (p5.width + p5.height) / 1000;
                         var layerAllowed = false;
-                        var alph = 12.5;
+                        var alph = 50;
                         var cols_same = [
                             [255, 255, 255, alph],
                             [255, 255, 255, alph],
@@ -201,7 +201,6 @@ const Visualization = () => {
                             [255, 255, 255, alph],
                             [255, 255, 255, alph],
                         ];
-                        alph = 12.5;
                         var cols_dif = [
                             [255, 255, 255, alph],
                             [255, 255, 255, alph],
@@ -215,12 +214,12 @@ const Visualization = () => {
 
                         if (
                             l
-                                .map((x) => {
-                                    if (x) return x.scale;
-                                })
-                                .includes(
-                                    window.navRef.current.main_polygon.scale
-                                )
+                            .map((x) => {
+                                if (x) return x.scale;
+                            })
+                            .includes(
+                                window.navRef.current.main_polygon.scale
+                            )
                         ) {
                             cols_same[po.layer_id][3] *= 2;
                             layerAllowed = true;
@@ -245,6 +244,8 @@ const Visualization = () => {
                                     p5.strokeWeight(sw);
                                 }
 
+                                if (window.navRef.current.main_polygon.scale == po.scale) p5.stroke(255)
+
                                 var x1 = p5.width * scale.x;
                                 var y1 = p5.height * scale.y;
                                 var x2 = p5.width * po.x;
@@ -263,11 +264,10 @@ const Visualization = () => {
                     if (po) {
                         po.draw(
                             false,
-                            false,
-                            { x: 0, y: 0 },
-                            window.navRef.current.main_polygon.scale == po.scale
-                                ? 1.25
-                                : 1
+                            false, { x: 0, y: 0 },
+                            window.navRef.current.main_polygon.scale == po.scale ?
+                            1.25 :
+                            1
                         );
                     }
                 }
@@ -296,14 +296,13 @@ const Visualization = () => {
 
     const preload = (p5) => {};
 
-    return (
-        <Sketch
-            preload={preload}
-            setup={setup}
-            draw={draw}
-            mousePressed={mousePressed}
-            mouseReleased={mouseReleased}
-            windowResized={windowResized}
+    return ( <
+        Sketch preload = { preload }
+        setup = { setup }
+        draw = { draw }
+        mousePressed = { mousePressed }
+        mouseReleased = { mouseReleased }
+        windowResized = { windowResized }
         />
     );
 };
