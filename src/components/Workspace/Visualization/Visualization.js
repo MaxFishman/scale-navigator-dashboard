@@ -80,16 +80,16 @@ const Visualization = () => {
                     new Polygon(p5, 0, 0, s, "f_harmonic_major"),
                 ],
                 [
-                    undefined,
+                    {},
                     new Polygon(p5, 0, 0, s, "a_harmonic_minor"),
                     new Polygon(p5, 0, 0, s, "a_harmonic_major"),
-                    undefined,
+                    {},
                     new Polygon(p5, 0, 0, s, "fs_harmonic_minor"),
                     new Polygon(p5, 0, 0, s, "fs_harmonic_major"),
-                    undefined,
+                    {},
                     new Polygon(p5, 0, 0, s, "ds_harmonic_minor"),
                     new Polygon(p5, 0, 0, s, "ds_harmonic_major"),
-                    undefined,
+                    {},
                     new Polygon(p5, 0, 0, s, "c_harmonic_minor"),
                     new Polygon(p5, 0, 0, s, "c_harmonic_major"),
                 ],
@@ -110,17 +110,17 @@ const Visualization = () => {
                     new Polygon(p5, 0, 0, s, "hexatonic_1"),
                 ],
                 [
-                    undefined,
+                    {},
                     new Polygon(p5, 0, 0, s, "octatonic_3"),
-                    undefined,
+                    {},
                     new Polygon(p5, 0, 0, s, "octatonic_2"),
-                    undefined,
+                    {},
                     new Polygon(p5, 0, 0, s, "octatonic_1"),
                 ],
                 [
-                    undefined,
+                    {},
                     new Polygon(p5, 0, 0, s, "whole_tone_2"),
-                    undefined,
+                    {},
                     new Polygon(p5, 0, 0, s, "whole_tone_1"),
                 ],
             ];
@@ -168,20 +168,39 @@ const Visualization = () => {
                 return undefined;
             }
 
+            //p5.fill(255, 0, 0)
+            //p5.text(p5.mouseX + ", " + p5.mouseY, p5.mouseX, p5.mouseY)
+
+            var old_m_p;
+            if (window.navRef.current.old_main_polygon) {
+                old_m_p = getScaleObjectByName(window.navRef.current.old_main_polygon.scale)
+            }
+
             for (var l of layers) {
+                var lay_ellipse_w_r;
+                var lay_ellipse_h_r;
+                lay_ellipse_h_r = p5.height / 2 - l[0].y * p5.height
+                lay_ellipse_w_r = p5.width / p5.height * lay_ellipse_h_r;
+
                 for (var po of l) {
-                    if (po) {
+                    if (po.data) {
                         if (
                             window.navRef.current.main_polygon.scale == po.scale
                         ) {
                             var x = po.x;
                             var y = po.y;
 
+                            if (window.navRef.current.main_polygon.animation.active) {
+                                var _p = window.navRef.current.main_polygon.animation.animation_curve(window.navRef.current.main_polygon.animation.progress());
+                                x = p5.lerp(po.x, old_m_p.x, 1 - _p)
+                                y = p5.lerp(po.y, old_m_p.y, 1 - _p)
+                            }
+
                             p5.push();
                             p5.noStroke();
                             for (var i = 0; i < 1; i += 1 / 20) {
-                                 p5.fill(255, 255, 255, i * 64)
-                                 p5.ellipse(x * p5.width, y * p5.height, 5 * po.radius * (1 - i))
+                                p5.fill(255, 255, 255, i * 64)
+                                p5.ellipse(x * p5.width, y * p5.height, 5 * po.radius * (1 - i))
                             }
                             p5.pop();
                         }
@@ -190,7 +209,7 @@ const Visualization = () => {
                         p5.stroke(255, 16);
                         var sw = (p5.width + p5.height) / 1000;
                         var layerAllowed = false;
-                        var alph = 12.5;
+                        var alph = 50;
                         var cols_same = [
                             [255, 255, 255, alph],
                             [255, 255, 255, alph],
@@ -201,7 +220,6 @@ const Visualization = () => {
                             [255, 255, 255, alph],
                             [255, 255, 255, alph],
                         ];
-                        alph = 12.5;
                         var cols_dif = [
                             [255, 255, 255, alph],
                             [255, 255, 255, alph],
@@ -213,14 +231,18 @@ const Visualization = () => {
                             [255, 255, 255, alph],
                         ];
 
+                        var ang = Math.PI / 2 -
+                            Math.atan2((p5.mouseX - p5.width / 2) / lay_ellipse_w_r, (p5.mouseY - p5.height / 2) / lay_ellipse_h_r)
                         if (
+                            /*
                             l
-                                .map((x) => {
-                                    if (x) return x.scale;
-                                })
-                                .includes(
-                                    window.navRef.current.main_polygon.scale
-                                )
+                            .map((x) => {
+                                if (x) return x.scale;
+                            })
+                            .includes(
+                                window.navRef.current.main_polygon.scale
+                            )*/
+                            p5.dist(Math.cos(ang) * lay_ellipse_w_r + p5.width / 2, Math.sin(ang) * lay_ellipse_h_r + p5.height / 2, p5.mouseX, p5.mouseY) < 15
                         ) {
                             cols_same[po.layer_id][3] *= 2;
                             layerAllowed = true;
@@ -245,6 +267,8 @@ const Visualization = () => {
                                     p5.strokeWeight(sw);
                                 }
 
+                                if (window.navRef.current.main_polygon.scale == po.scale) p5.stroke(255)
+
                                 var x1 = p5.width * scale.x;
                                 var y1 = p5.height * scale.y;
                                 var x2 = p5.width * po.x;
@@ -260,14 +284,13 @@ const Visualization = () => {
 
             for (var l of layers) {
                 for (var po of l) {
-                    if (po) {
+                    if (po.data) {
                         po.draw(
                             false,
-                            false,
-                            { x: 0, y: 0 },
-                            window.navRef.current.main_polygon.scale == po.scale
-                                ? 1.25
-                                : 1
+                            false, { x: 0, y: 0 },
+                            window.navRef.current.main_polygon.scale == po.scale ?
+                            1.25 :
+                            1
                         );
                     }
                 }
@@ -296,14 +319,13 @@ const Visualization = () => {
 
     const preload = (p5) => {};
 
-    return (
-        <Sketch
-            preload={preload}
-            setup={setup}
-            draw={draw}
-            mousePressed={mousePressed}
-            mouseReleased={mouseReleased}
-            windowResized={windowResized}
+    return ( <
+        Sketch preload = { preload }
+        setup = { setup }
+        draw = { draw }
+        mousePressed = { mousePressed }
+        mouseReleased = { mouseReleased }
+        windowResized = { windowResized }
         />
     );
 };

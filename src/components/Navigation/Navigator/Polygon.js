@@ -42,6 +42,10 @@ export default class Polygon {
                 x: this.x,
                 y: this.y,
             },
+            progress: () => {
+                return (this.p5.frameCount - this.animation.start_frame) /
+                    (this.animation.end_frame - this.animation.start_frame)
+            }
         };
 
         this.opacity = 1;
@@ -239,9 +243,7 @@ export default class Polygon {
         this.animation_lerp = () => {
             // lerp the animation of the object
             if (this.animation.active) {
-                var progress =
-                    (this.p5.frameCount - this.animation.start_frame) /
-                    (this.animation.end_frame - this.animation.start_frame);
+                var progress = this.animation.progress();
                 progress = this.animation.animation_curve(progress);
 
                 if (progress > 1) {
@@ -305,6 +307,10 @@ export default class Polygon {
                     y: this.y,
                     opacity: this.opacity,
                 },
+                progress: () => {
+                    return (this.p5.frameCount - this.animation.start_frame) /
+                        (this.animation.end_frame - this.animation.start_frame)
+                }
             };
         };
 
