@@ -80,16 +80,16 @@ const Visualization = () => {
                     new Polygon(p5, 0, 0, s, "f_harmonic_major"),
                 ],
                 [
-                    undefined,
+                    {},
                     new Polygon(p5, 0, 0, s, "a_harmonic_minor"),
                     new Polygon(p5, 0, 0, s, "a_harmonic_major"),
-                    undefined,
+                    {},
                     new Polygon(p5, 0, 0, s, "fs_harmonic_minor"),
                     new Polygon(p5, 0, 0, s, "fs_harmonic_major"),
-                    undefined,
+                    {},
                     new Polygon(p5, 0, 0, s, "ds_harmonic_minor"),
                     new Polygon(p5, 0, 0, s, "ds_harmonic_major"),
-                    undefined,
+                    {},
                     new Polygon(p5, 0, 0, s, "c_harmonic_minor"),
                     new Polygon(p5, 0, 0, s, "c_harmonic_major"),
                 ],
@@ -110,17 +110,17 @@ const Visualization = () => {
                     new Polygon(p5, 0, 0, s, "hexatonic_1"),
                 ],
                 [
-                    undefined,
+                    {},
                     new Polygon(p5, 0, 0, s, "octatonic_3"),
-                    undefined,
+                    {},
                     new Polygon(p5, 0, 0, s, "octatonic_2"),
-                    undefined,
+                    {},
                     new Polygon(p5, 0, 0, s, "octatonic_1"),
                 ],
                 [
-                    undefined,
+                    {},
                     new Polygon(p5, 0, 0, s, "whole_tone_2"),
-                    undefined,
+                    {},
                     new Polygon(p5, 0, 0, s, "whole_tone_1"),
                 ],
             ];
@@ -168,9 +168,16 @@ const Visualization = () => {
                 return undefined;
             }
 
+            p5.fill(255, 0, 0)
+            p5.text(p5.mouseX + ", " + p5.mouseY, p5.mouseX, p5.mouseY)
             for (var l of layers) {
+                var lay_ellipse_w_r;
+                var lay_ellipse_h_r;
+                lay_ellipse_h_r = p5.height / 2 - l[0].y * p5.height
+                lay_ellipse_w_r = p5.width / p5.height * lay_ellipse_h_r;
+
                 for (var po of l) {
-                    if (po) {
+                    if (po.data) {
                         if (
                             window.navRef.current.main_polygon.scale == po.scale
                         ) {
@@ -212,14 +219,18 @@ const Visualization = () => {
                             [255, 255, 255, alph],
                         ];
 
+                        var ang = Math.PI / 2 -
+                            Math.atan2((p5.mouseX - p5.width / 2) / lay_ellipse_w_r, (p5.mouseY - p5.height / 2) / lay_ellipse_h_r)
                         if (
+                            /*
                             l
                             .map((x) => {
                                 if (x) return x.scale;
                             })
                             .includes(
                                 window.navRef.current.main_polygon.scale
-                            )
+                            )*/
+                            p5.dist(Math.cos(ang) * lay_ellipse_w_r + p5.width / 2, Math.sin(ang) * lay_ellipse_h_r + p5.height / 2, p5.mouseX, p5.mouseY) < 15
                         ) {
                             cols_same[po.layer_id][3] *= 2;
                             layerAllowed = true;
@@ -261,7 +272,7 @@ const Visualization = () => {
 
             for (var l of layers) {
                 for (var po of l) {
-                    if (po) {
+                    if (po.data) {
                         po.draw(
                             false,
                             false, { x: 0, y: 0 },
