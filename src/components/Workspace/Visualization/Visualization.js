@@ -168,8 +168,8 @@ const Visualization = () => {
                 return undefined;
             }
 
-            p5.fill(255, 0, 0)
-            p5.text(p5.mouseX + ", " + p5.mouseY, p5.mouseX, p5.mouseY)
+            //p5.fill(255, 0, 0)
+            //p5.text(p5.mouseX + ", " + p5.mouseY, p5.mouseX, p5.mouseY)
 
             var old_m_p;
             if (window.navRef.current.old_main_polygon) {
