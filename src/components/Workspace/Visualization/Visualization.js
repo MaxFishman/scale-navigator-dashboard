@@ -170,6 +170,12 @@ const Visualization = () => {
 
             p5.fill(255, 0, 0)
             p5.text(p5.mouseX + ", " + p5.mouseY, p5.mouseX, p5.mouseY)
+
+            var old_m_p;
+            if (window.navRef.current.old_main_polygon) {
+                old_m_p = getScaleObjectByName(window.navRef.current.old_main_polygon.scale)
+            }
+
             for (var l of layers) {
                 var lay_ellipse_w_r;
                 var lay_ellipse_h_r;
@@ -183,6 +189,12 @@ const Visualization = () => {
                         ) {
                             var x = po.x;
                             var y = po.y;
+
+                            if (window.navRef.current.main_polygon.animation.active) {
+                                var _p = window.navRef.current.main_polygon.animation.animation_curve(window.navRef.current.main_polygon.animation.progress());
+                                x = p5.lerp(po.x, old_m_p.x, 1 - _p)
+                                y = p5.lerp(po.y, old_m_p.y, 1 - _p)
+                            }
 
                             p5.push();
                             p5.noStroke();
