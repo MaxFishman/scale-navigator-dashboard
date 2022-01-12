@@ -69,14 +69,24 @@ export default function Workspace() {
                         <Provider>
                         <KeepAlive name="Visualization">
                             <div className="navigation__scalenav visu-wrapper" id="canv_container_visu" >
-                                <input type="checkbox" id="visu_inp_l_0"></input>
-                                <input type="checkbox" id="visu_inp_l_1"></input>
-                                <input type="checkbox" id="visu_inp_l_2"></input>
-                                <input type="checkbox" id="visu_inp_l_3"></input>
-                                <input type="checkbox" id="visu_inp_l_4"></input>
-                                <input type="checkbox" id="visu_inp_l_5"></input>
-                                <input type="checkbox" id="visu_inp_l_6"></input>
-                                <input type="checkbox" id="visu_inp_l_7"></input>
+                                <div style={{position:"absolute"}}>
+                                    Diatonic
+                                    <input type="checkbox" id="visu_inp_l_0"></input><br></br>
+                                    Acoustic
+                                    <input type="checkbox" id="visu_inp_l_1"></input><br></br>
+                                    Harmonic Minor + Major
+                                    <input type="checkbox" id="visu_inp_l_2"></input><br></br>
+                                    Harmonic Minor + Major
+                                    <input type="checkbox" id="visu_inp_l_3"></input><br></br>
+                                    Harmonic Minor + Major
+                                    <input type="checkbox" id="visu_inp_l_4"></input><br></br>
+                                    Hexatonic
+                                    <input type="checkbox" id="visu_inp_l_5"></input><br></br>
+                                    Octatonic
+                                    <input type="checkbox" id="visu_inp_l_6"></input><br></br>
+                                    Whole Tone
+                                    <input type="checkbox" id="visu_inp_l_7"></input><br></br>
+                                </div>
                             <Visualization />
                             </div>
                         </KeepAlive>
