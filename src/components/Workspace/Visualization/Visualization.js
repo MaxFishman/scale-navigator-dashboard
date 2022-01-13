@@ -159,14 +159,27 @@ const Visualization = () => {
             p5.background(0);
 
             function getScaleObjectByName(name) {
-                for (var l of layers) {
+                for (var id = 0; id < layers.length; id++) {
+                    var l = layers[id]
                     for (var po of l) {
                         if (po) {
-                            if (po.scale == name) return { po: po, l: layers.indexOf(l) };
+                            if (po.scale == name) return { po: po, l: id };
                         }
                     }
                 }
                 return undefined;
+            }
+
+            function getCheckboxIDByScale(scale) {
+                var a = ["diatonic", "acoustic", "major", "minor"];
+                var b = ["hexatonic", "octatonic", "whole"];
+
+                var s = scale.split("_")
+                var id = a.indexOf(s[s.length - 1])
+
+                if (id == -1) {
+                    return 4 + b.indexOf(s[0])
+                } else return id
             }
 
             //p5.fill(255, 0, 0)
@@ -177,145 +190,148 @@ const Visualization = () => {
                 old_m_p = getScaleObjectByName(window.navRef.current.old_main_polygon.scale).po
             }
 
-            for (var l of layers) {
-                var id = layers.indexOf(l)
-                if (document.getElementById("visu_inp_l_" + id).checked) {
+            for (var id = 0; id < layers.length; id++) {
+                var l = layers[id];
 
-                    var lay_ellipse_w_r;
-                    var lay_ellipse_h_r;
-                    lay_ellipse_h_r = p5.height / 2 - l[0].y * p5.height
-                    lay_ellipse_w_r = p5.width / p5.height * lay_ellipse_h_r;
+                var lay_ellipse_w_r;
+                var lay_ellipse_h_r;
+                lay_ellipse_h_r = p5.height / 2 - l[0].y * p5.height
+                lay_ellipse_w_r = p5.width / p5.height * lay_ellipse_h_r;
 
-                    for (var po of l) {
-                        if (po.data) {
-                            if (
-                                window.navRef.current.main_polygon.scale == po.scale
-                            ) {
-                                var x = po.x;
-                                var y = po.y;
+                for (var po of l) {
+                    if (po.data) {
+                        if (
+                            window.navRef.current.main_polygon.scale == po.scale
+                        ) {
+                            var x = po.x;
+                            var y = po.y;
 
-                                if (window.navRef.current.main_polygon.animation.active) {
-                                    var _p = window.navRef.current.main_polygon.animation.animation_curve(window.navRef.current.main_polygon.animation.progress());
-                                    x = p5.lerp(po.x, old_m_p.x, 1 - _p)
-                                    y = p5.lerp(po.y, old_m_p.y, 1 - _p)
-                                }
-
-                                p5.push();
-                                p5.noStroke();
-                                for (var i = 0; i < 1; i += 1 / 20) {
-                                    p5.fill(255, 255, 255, i * 64)
-                                    p5.ellipse(x * p5.width, y * p5.height, 5 * po.radius * (1 - i))
-                                }
-                                p5.pop();
+                            if (window.navRef.current.main_polygon.animation.active) {
+                                var _p = window.navRef.current.main_polygon.animation.animation_curve(window.navRef.current.main_polygon.animation.progress());
+                                x = p5.lerp(po.x, old_m_p.x, 1 - _p)
+                                y = p5.lerp(po.y, old_m_p.y, 1 - _p)
                             }
 
                             p5.push();
-                            p5.stroke(255, 16);
-                            var sw = (p5.width + p5.height) / 1000;
-                            var layerAllowed = false;
-                            var alph = 50;
-                            var cols_same = [
-                                [255, 255, 255, alph],
-                                [255, 255, 255, alph],
-                                [255, 255, 255, alph],
-                                [255, 255, 255, alph],
-                                [255, 255, 255, alph],
-                                [255, 255, 255, alph],
-                                [255, 255, 255, alph],
-                                [255, 255, 255, alph],
-                            ];
-                            var cols_dif = [
-                                [255, 255, 255, alph],
-                                [255, 255, 255, alph],
-                                [255, 255, 255, alph],
-                                [255, 255, 255, alph],
-                                [255, 255, 255, alph],
-                                [255, 255, 255, alph],
-                                [255, 255, 255, alph],
-                                [255, 255, 255, alph],
-                            ];
-
-                            var ang = Math.PI / 2 -
-                                Math.atan2((p5.mouseX - p5.width / 2) / lay_ellipse_w_r, (p5.mouseY - p5.height / 2) / lay_ellipse_h_r)
-                            if (
-                                /*
-                                l
-                                .map((x) => {
-                                    if (x) return x.scale;
-                                })
-                                .includes(
-                                    window.navRef.current.main_polygon.scale
-                                )*/
-                                p5.dist(Math.cos(ang) * lay_ellipse_w_r + p5.width / 2, Math.sin(ang) * lay_ellipse_h_r + p5.height / 2, p5.mouseX, p5.mouseY) < 15
-                            ) {
-                                cols_same[po.layer_id][3] *= 2;
-                                layerAllowed = true;
-                            }
-
-                            for (var adj of po.data.adjacent_scales) {
-                                var scale_d = getScaleObjectByName(adj);
-                                var scale = scale_d.po;
-
-                                if (scale && document.getElementById("visu_inp_l_" + scale_d.l).checked) {
-                                    if (scale.layer_id == po.layer_id) {
-                                        p5.stroke(...cols_same[po.layer_id]);
-                                        if (layerAllowed) p5.strokeWeight(sw * 3);
-                                        else p5.strokeWeight(sw);
-                                    } else {
-                                        p5.stroke(
-                                            ...cols_dif[
-                                                Math.abs(
-                                                    scale.layer_id - po.layer_id
-                                                )
-                                            ]
-                                        );
-                                        p5.strokeWeight(sw);
-                                    }
-
-                                    if (window.navRef.current.main_polygon.scale == po.scale) p5.stroke(255)
-
-                                    var x1 = p5.width * scale.x;
-                                    var y1 = p5.height * scale.y;
-                                    var x2 = p5.width * po.x;
-                                    var y2 = p5.height * po.y;
-
-                                    p5.line(x1, y1, x2, y2);
-                                }
+                            p5.noStroke();
+                            for (var i = 0; i < 1; i += 1 / 20) {
+                                p5.fill(255, 255, 255, i * 64)
+                                p5.ellipse(x * p5.width, y * p5.height, 5 * po.radius * (1 - i))
                             }
                             p5.pop();
                         }
+
+                        p5.push();
+                        p5.stroke(255, 16);
+                        var sw = (p5.width + p5.height) / 1000;
+                        var layerAllowed = false;
+                        var alph = 50;
+                        var cols_same = [
+                            [255, 255, 255, alph],
+                            [255, 255, 255, alph],
+                            [255, 255, 255, alph],
+                            [255, 255, 255, alph],
+                            [255, 255, 255, alph],
+                            [255, 255, 255, alph],
+                            [255, 255, 255, alph],
+                            [255, 255, 255, alph],
+                        ];
+                        var cols_dif = [
+                            [255, 255, 255, alph],
+                            [255, 255, 255, alph],
+                            [255, 255, 255, alph],
+                            [255, 255, 255, alph],
+                            [255, 255, 255, alph],
+                            [255, 255, 255, alph],
+                            [255, 255, 255, alph],
+                            [255, 255, 255, alph],
+                        ];
+
+                        var ang = Math.PI / 2 -
+                            Math.atan2((p5.mouseX - p5.width / 2) / lay_ellipse_w_r, (p5.mouseY - p5.height / 2) / lay_ellipse_h_r)
+                        if (
+                            /*
+                            l
+                            .map((x) => {
+                                if (x) return x.scale;
+                            })
+                            .includes(
+                                window.navRef.current.main_polygon.scale
+                            )*/
+                            p5.dist(Math.cos(ang) * lay_ellipse_w_r + p5.width / 2, Math.sin(ang) * lay_ellipse_h_r + p5.height / 2, p5.mouseX, p5.mouseY) < 15
+                        ) {
+                            cols_same[po.layer_id][3] *= 2;
+                            layerAllowed = true;
+                        }
+
+                        for (var adj of po.data.adjacent_scales) {
+                            var scale_d = getScaleObjectByName(adj);
+                            var scale = scale_d.po;
+
+                            // && document.getElementById("visu_inp_l_" + scale_d.l).checked
+                            if (scale &&
+                                document.getElementById("visu_inp_l_" + getCheckboxIDByScale(scale.scale)).checked &&
+                                document.getElementById("visu_inp_l_" + getCheckboxIDByScale(po.scale)).checked) {
+
+                                //console.log(getCheckboxIDByScale(scale.scale), getCheckboxIDByScale(po.scale))
+
+                                if (scale.layer_id == po.layer_id) {
+                                    p5.stroke(...cols_same[po.layer_id]);
+                                    if (layerAllowed) p5.strokeWeight(sw * 3);
+                                    else p5.strokeWeight(sw);
+                                } else {
+                                    p5.stroke(
+                                        ...cols_dif[
+                                            Math.abs(
+                                                scale.layer_id - po.layer_id
+                                            )
+                                        ]
+                                    );
+                                    p5.strokeWeight(sw);
+                                }
+
+                                if (window.navRef.current.main_polygon.scale == po.scale) p5.stroke(255)
+
+                                var x1 = p5.width * scale.x;
+                                var y1 = p5.height * scale.y;
+                                var x2 = p5.width * po.x;
+                                var y2 = p5.height * po.y;
+
+                                p5.line(x1, y1, x2, y2);
+                            }
+                        }
+                        p5.pop();
                     }
                 }
             }
 
-            for (var l of layers) {
-                var id = layers.indexOf(l)
-                if (document.getElementById("visu_inp_l_" + id).checked) {
-                    for (var po of l) {
-                        if (po.data) {
-                            var cli = po.click();
-                            // if (cli && clickInNextFrame > 0) {
-                            //     var dist_p5 = window.navRef.current.p5;
-                            //     var mp = window.navRef.current.main_polygon;
-                            //     var poly = new Polygon(
-                            //         dist_p5,
-                            //         mp.x,
-                            //         mp.y,
-                            //         mp.poly_size,
-                            //         po.scale
-                            //     )
-                            //     window.navRef.current.changeMainScale(dist_p5, poly, mp)
-                            //     console.log(po.scale, poly)
-                            // }
+            for (var id = 0; id < layers.length; id++) {
+                var l = layers[id];
 
-                            po.draw(
-                                false,
-                                false, { x: 0, y: 0 },
-                                (window.navRef.current.main_polygon.scale == po.scale ?
-                                    1.25 :
-                                    1) + (cli ? 0.2 : 0)
-                            );
-                        }
+                for (var po of l) {
+                    if (po.data && document.getElementById("visu_inp_l_" + getCheckboxIDByScale(po.scale)).checked) {
+                        var cli = po.click();
+                        // if (cli && clickInNextFrame > 0) {
+                        //     var dist_p5 = window.navRef.current.p5;
+                        //     var mp = window.navRef.current.main_polygon;
+                        //     var poly = new Polygon(
+                        //         dist_p5,
+                        //         mp.x,
+                        //         mp.y,
+                        //         mp.poly_size,
+                        //         po.scale
+                        //     )
+                        //     window.navRef.current.changeMainScale(dist_p5, poly, mp)
+                        //     console.log(po.scale, poly)
+                        // }
+
+                        po.draw(
+                            false,
+                            false, { x: 0, y: 0 },
+                            (window.navRef.current.main_polygon.scale == po.scale ?
+                                1.25 :
+                                1) + (cli ? 0.2 : 0)
+                        );
                     }
                 }
             }
