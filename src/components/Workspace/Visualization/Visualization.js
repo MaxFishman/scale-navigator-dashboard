@@ -203,22 +203,25 @@ const Visualization = () => {
                         if (
                             window.navRef.current.main_polygon.scale == po.scale
                         ) {
-                            var x = po.x;
-                            var y = po.y;
+                            if (document.getElementById("visu_inp_l_" + getCheckboxIDByScale(po.scale)).checked) {
 
-                            if (window.navRef.current.main_polygon.animation.active) {
-                                var _p = window.navRef.current.main_polygon.animation.animation_curve(window.navRef.current.main_polygon.animation.progress());
-                                x = p5.lerp(po.x, old_m_p.x, 1 - _p)
-                                y = p5.lerp(po.y, old_m_p.y, 1 - _p)
-                            }
+                                var x = po.x;
+                                var y = po.y;
 
-                            p5.push();
-                            p5.noStroke();
-                            for (var i = 0; i < 1; i += 1 / 20) {
-                                p5.fill(255, 255, 255, i * 64)
-                                p5.ellipse(x * p5.width, y * p5.height, 5 * po.radius * (1 - i))
+                                if (window.navRef.current.main_polygon.animation.active) {
+                                    var _p = window.navRef.current.main_polygon.animation.animation_curve(window.navRef.current.main_polygon.animation.progress());
+                                    x = p5.lerp(po.x, old_m_p.x, 1 - _p)
+                                    y = p5.lerp(po.y, old_m_p.y, 1 - _p)
+                                }
+
+                                p5.push();
+                                p5.noStroke();
+                                for (var i = 0; i < 1; i += 1 / 20) {
+                                    p5.fill(255, 255, 255, i * 64)
+                                    p5.ellipse(x * p5.width, y * p5.height, 5 * po.radius * (1 - i))
+                                }
+                                p5.pop();
                             }
-                            p5.pop();
                         }
 
                         p5.push();
