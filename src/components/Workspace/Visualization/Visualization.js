@@ -151,6 +151,14 @@ const Visualization = () => {
         }
     };
 
+    const addBreadcrumb = (p1, p2, st = true) => {
+        if (!breadcrumbs[p1]) breadcrumbs[p1] = {};
+        if (!breadcrumbs[p2]) breadcrumbs[p2] = {};
+
+        breadcrumbs[p1][p2] = st;
+        breadcrumbs[p2][p1] = st;
+    }
+
     const draw = (p5) => {
         if (!ran_setup) setup(p5);
         else {
@@ -197,11 +205,7 @@ const Visualization = () => {
             var mp = window.navRef.current.main_polygon.scale;
             if (last_mp) {
                 if (last_mp != mp) {
-                    if (!breadcrumbs[last_mp]) breadcrumbs[last_mp] = {};
-                    if (!breadcrumbs[mp]) breadcrumbs[mp] = {};
-
-                    breadcrumbs[last_mp][mp] = true;
-                    breadcrumbs[mp][last_mp] = true;
+                    addBreadcrumb(last_mp, mp)
                 }
             }
 
@@ -336,19 +340,12 @@ const Visualization = () => {
                 for (var po of l) {
                     if (po.data && document.getElementById("visu_inp_l_" + getCheckboxIDByScale(po.scale)).checked) {
                         var cli = po.click();
-                        // if (cli && clickInNextFrame > 0) {
-                        //     var dist_p5 = window.navRef.current.p5;
-                        //     var mp = window.navRef.current.main_polygon;
-                        //     var poly = new Polygon(
-                        //         dist_p5,
-                        //         mp.x,
-                        //         mp.y,
-                        //         mp.poly_size,
-                        //         po.scale
-                        //     )
-                        //     window.navRef.current.changeMainScale(dist_p5, poly, mp)
-                        //     console.log(po.scale, poly)
-                        // }
+                        if (cli && clickInNextFrame > 0) {
+                            var mp = window.navRef.current.main_polygon;
+
+                            addBreadcrumb(mp.scale, po.scale)
+                            window.navRef.current.jumpToScale(po.scale)
+                        }
 
                         po.draw(
                             false,
