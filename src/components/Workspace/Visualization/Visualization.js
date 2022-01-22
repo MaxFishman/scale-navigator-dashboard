@@ -10,6 +10,10 @@ const Visualization = () => {
     var canvasParentRef = document.getElementById("canv_container_visu");
     var cnv;
     var l = 0;
+
+    var last_mp = undefined;
+    var breadcrumbs = {}
+    window.breadcrumbs = breadcrumbs;
     /*
     var diatonic = [],
         acoustic = [],
@@ -190,6 +194,17 @@ const Visualization = () => {
                 old_m_p = getScaleObjectByName(window.navRef.current.old_main_polygon.scale).po
             }
 
+            var mp = window.navRef.current.main_polygon.scale;
+            if (last_mp) {
+                if (last_mp != mp) {
+                    if (!breadcrumbs[last_mp]) breadcrumbs[last_mp] = {};
+                    if (!breadcrumbs[mp]) breadcrumbs[mp] = {};
+
+                    breadcrumbs[last_mp][mp] = true;
+                    breadcrumbs[mp][last_mp] = true;
+                }
+            }
+
             for (var id = 0; id < layers.length; id++) {
                 var l = layers[id];
 
@@ -293,7 +308,14 @@ const Visualization = () => {
                                     p5.strokeWeight(sw);
                                 }
 
-                                if (window.navRef.current.main_polygon.scale == po.scale) p5.stroke(255)
+
+                                if (breadcrumbs[adj]) {
+                                    if (breadcrumbs[adj][
+                                            [po.scale]
+                                        ]) {
+                                        p5.stroke(255, 0, 0, (window.navRef.current.main_polygon.scale == po.scale ? 255 : alph))
+                                    }
+                                } else if (window.navRef.current.main_polygon.scale == po.scale) p5.stroke(255)
 
                                 var x1 = p5.width * scale.x;
                                 var y1 = p5.height * scale.y;
@@ -340,6 +362,7 @@ const Visualization = () => {
             }
 
             clickInNextFrame--;
+            last_mp = window.navRef.current.main_polygon.scale;
 
             p5.pop();
         }
