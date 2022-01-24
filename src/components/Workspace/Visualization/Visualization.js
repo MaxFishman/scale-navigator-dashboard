@@ -348,7 +348,7 @@ const Visualization = () => {
                             window.navRef.current.jumpToScale(po.scale)
 
                             if (!n.includes(po.scale)) {
-                                resetBreadcrumbs();
+                                //resetBreadcrumbs();
                             }
                         }
 
