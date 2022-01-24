@@ -12,8 +12,8 @@ const Visualization = () => {
     var l = 0;
 
     var last_mp = undefined;
-    var breadcrumbs = {}
-    window.breadcrumbs = breadcrumbs;
+    window.breadcrumbs = {};
+
     /*
     var diatonic = [],
         acoustic = [],
@@ -152,11 +152,11 @@ const Visualization = () => {
     };
 
     const addBreadcrumb = (p1, p2, st = true) => {
-        if (!breadcrumbs[p1]) breadcrumbs[p1] = {};
-        if (!breadcrumbs[p2]) breadcrumbs[p2] = {};
+        if (!window.breadcrumbs[p1]) window.breadcrumbs[p1] = {};
+        if (!window.breadcrumbs[p2]) window.breadcrumbs[p2] = {};
 
-        breadcrumbs[p1][p2] = st;
-        breadcrumbs[p2][p1] = st;
+        window.breadcrumbs[p1][p2] = st;
+        window.breadcrumbs[p2][p1] = st;
     }
 
     const draw = (p5) => {
@@ -202,10 +202,10 @@ const Visualization = () => {
                 old_m_p = getScaleObjectByName(window.navRef.current.old_main_polygon.scale).po
             }
 
-            var mp = window.navRef.current.main_polygon.scale;
+            var mp = window.navRef.current.main_polygon;
             if (last_mp) {
-                if (last_mp != mp) {
-                    addBreadcrumb(last_mp, mp)
+                if (last_mp != mp.scale) {
+                    addBreadcrumb(last_mp, mp.scale)
                 }
             }
 
@@ -313,8 +313,8 @@ const Visualization = () => {
                                 }
 
 
-                                if (breadcrumbs[adj]) {
-                                    if (breadcrumbs[adj][
+                                if (window.breadcrumbs[adj]) {
+                                    if (window.breadcrumbs[adj][
                                             [po.scale]
                                         ]) {
                                         p5.stroke(255, 0, 0, (window.navRef.current.main_polygon.scale == po.scale ? 255 : alph))
@@ -342,9 +342,15 @@ const Visualization = () => {
                         var cli = po.click();
                         if (cli && clickInNextFrame > 0) {
                             var mp = window.navRef.current.main_polygon;
+                            var n = mp.getNeighbors().map(x => x.scale)
 
                             addBreadcrumb(mp.scale, po.scale)
                             window.navRef.current.jumpToScale(po.scale)
+
+                            if (!n.includes(po.scale)) {
+                                console.log(mp)
+                                resetBreadcrumbs();
+                            }
                         }
 
                         po.draw(
@@ -385,6 +391,11 @@ const Visualization = () => {
     };
 
     const preload = (p5) => {};
+
+    const resetBreadcrumbs = () => {
+        console.log("x")
+        window.breadcrumbs = {};
+    }
 
     return ( <
         Sketch preload = { preload }
