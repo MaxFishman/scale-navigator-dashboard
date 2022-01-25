@@ -351,11 +351,11 @@ export default class Polygon {
         };
 
         this.onStartHover = () => {
-            //console.log(this.scale, "start")
+            // console.log(this.scale, "start")
         };
 
         this.onEndHover = () => {
-            //console.log(this.scale, "end")
+            // console.log(this.scale, "end")
         };
     }
 

@@ -71,10 +71,22 @@
     }
 }
 
+
+
+
 .visu-wrapper {
     width: 100%;
     padding: 5%;
 }
+
+#vis_checkboxes {
+
+    @media (max-width: 900px) {
+        display:none;
+    }
+
+}
+
 
 #canv_container_visu {
 

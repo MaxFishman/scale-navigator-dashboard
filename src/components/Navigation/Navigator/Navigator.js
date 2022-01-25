@@ -275,36 +275,41 @@ function Navigator({ setScaleData }) {
         var ind = this.main_polygon
             .getNeighbors()
             .findIndex((x) => x.isMatching(p));
-        var positions = p.getNeighborPositions(p.x, p.y, p.radius, undefined, undefined, p5.PI / 2 + (2 * p5.PI * (ind - 1)) / total_poly, p5.PI / 2 + (2 * p5.PI * (ind + 1)) / total_poly, this.actually_new_polygons.length)
-            // var positions = p.getNeighborPositions(
-            //     p.x,
-            //     p.y,
-            //     p5.RADIUS,
-            //     undefined,
-            //     undefined,
-            //     p5.PI / 2,
-            //     p5.PI / 2 + 2 * p5.PI,
-            //     this.actually_new_polygons.length
-            // );
 
-        //position them
-        for (var a_n = 0; a_n < this.actually_new_polygons.length; a_n++) {
-            var pol = this.preview_polygons.find(x => this.actually_new_polygons[a_n].isMatching(x))
+        console.log(ind)
 
-            pol.set(["x", positions[a_n].x], ["y", positions[a_n].y], ["size", positions[a_n].size])
-        }
+        if (ind >= 0) {
+            var positions = p.getNeighborPositions(p.x, p.y, p.radius, undefined, undefined, p5.PI / 2 + (2 * p5.PI * (ind - 1)) / total_poly, p5.PI / 2 + (2 * p5.PI * (ind + 1)) / total_poly, this.actually_new_polygons.length)
+                // var positions = p.getNeighborPositions(
+                //     p.x,
+                //     p.y,
+                //     p5.RADIUS,
+                //     undefined,
+                //     undefined,
+                //     p5.PI / 2,
+                //     p5.PI / 2 + 2 * p5.PI,
+                //     this.actually_new_polygons.length
+                // );
 
-        if (animation) {
-            for (var prev of this.actually_new_polygons) {
-                var oldx = prev.x;
-                var oldy = prev.y;
+            //position them
+            for (var a_n = 0; a_n < this.actually_new_polygons.length; a_n++) {
+                var pol = this.preview_polygons.find(x => this.actually_new_polygons[a_n].isMatching(x))
 
-                prev.set(["x", p.x], ["y", p.y]);
-                prev.move(oldx, oldy, prev.size);
+                pol.set(["x", positions[a_n].x], ["y", positions[a_n].y], ["size", positions[a_n].size])
             }
-        }
 
-        this.preview_polygons_ready = true;
+            if (animation) {
+                for (var prev of this.actually_new_polygons) {
+                    var oldx = prev.x;
+                    var oldy = prev.y;
+
+                    prev.set(["x", p.x], ["y", p.y]);
+                    prev.move(oldx, oldy, prev.size);
+                }
+            }
+
+            this.preview_polygons_ready = true;
+        }
 
         return;
     };
