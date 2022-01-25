@@ -69,7 +69,7 @@ export default function Workspace() {
                         <Provider>
                         <KeepAlive name="Visualization">
                             <div className="navigation__scalenav visu-wrapper" id="canv_container_visu" >
-                                <div style={{position:"absolute"}}>
+                                <div id="vis_checkboxes" style={{position:"absolute"}}>
                                     Diatonic
                                     <input type="checkbox" id="visu_inp_l_0" checked></input><br></br>
                                     Acoustic
