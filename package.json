@@ -39,11 +39,8 @@
     "tone": "^14.7.77",
     "vexflow": "^3.0.9",
     "web-vitals": "^1.0.1",
-    "@stripe/react-stripe-js": "^1.0.0",
-    "@stripe/stripe-js": "^1.0.0",
     "concurrently": "4.1.2",
-    "express": "^4.17.1",
-    "stripe": "^7.1.0"
+    "express": "^4.17.1"
   },
   "proxy": "http://localhost:4242",
   "scripts": {

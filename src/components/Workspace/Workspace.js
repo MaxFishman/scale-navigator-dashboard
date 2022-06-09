@@ -21,7 +21,7 @@ import "./Workspace.scss";
 import AccountLanding from './AccountLanding'
 import LoginModal from 'components/LoginModal'
 import SignUpModal from 'components/SignUpModal'
-import Ecomm from 'components/Ecomm'
+
 
 export default function Workspace() {
     const dispatch = useDispatch()
@@ -99,9 +99,7 @@ export default function Workspace() {
                         <AccountLanding/>
                     </Route>
 
-                <Route path={ROUTES.CHECKOUT}>
-                        <Ecomm/>
-                    </Route>
+
 
 
                     {window.innerWidth > 960 &&
