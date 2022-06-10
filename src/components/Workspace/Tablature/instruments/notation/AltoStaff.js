@@ -13,7 +13,7 @@ export default function Alto({ keyData }) {
 
     var stave_width;
 
-    console.log("staffwide ", window.innerWidth);
+    //console.log("staffwide ", window.innerWidth);
 
     if (window.innerWidth <= 600){
       stave_width = 350;
@@ -54,19 +54,22 @@ export default function Alto({ keyData }) {
       var octavation = match_obj[3];
 
       if (inflection == ""){
-        notes.push(new VF.StaveNote({clef: "alto", keys: [base_note_name + convert_octavation[octavation]], duration: "q" }))
+        notes.push(new VF.StaveNote({clef: "alto", keys: [base_note_name + convert_octavation[octavation]], duration: "q", stem_direction: Vex.Flow.StaveNote.STEM_DOWN }))
       }
       else {
-        notes.push(new VF.StaveNote({clef: "alto", keys: [base_note_name + convert_octavation[octavation]], duration: "q" }).
+        notes.push(new VF.StaveNote({clef: "alto", keys: [base_note_name + convert_octavation[octavation]], duration: "q", stem_direction: Vex.Flow.StaveNote.STEM_DOWN }).
         addAccidental(0, new VF.Accidental(convert_inflection[inflection])));
       }  
+
+
     });
-    console.log("notes: ",notes);
+    //console.log("notes: ",notes);
 
 
     const voice = new VF.Voice({
       num_beats: keyData.pitch_classes.length,
       beat_value: 4,
+
     });
     voice.addTickables(notes);
     new VF.Formatter().joinVoices([voice]).format([voice], stave_width);

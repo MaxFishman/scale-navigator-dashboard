@@ -13,7 +13,7 @@ export default function Treble({ keyData }) {
 
     var stave_width;
 
-    console.log("staffwide ", window.innerWidth);
+    //console.log("staffwide ", window.innerWidth);
 
     if (window.innerWidth <= 600){
       stave_width = 350;
@@ -61,7 +61,7 @@ export default function Treble({ keyData }) {
         addAccidental(0, new VF.Accidental(convert_inflection[inflection])));
       }  
     });
-    console.log("notes: ",notes);
+    //console.log("notes: ",notes);
 
 
     const voice = new VF.Voice({

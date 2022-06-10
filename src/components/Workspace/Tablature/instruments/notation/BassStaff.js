@@ -13,7 +13,7 @@ export default function Bass({ keyData }) {
 
     var stave_width;
 
-    console.log("staffwide ", window.innerWidth);
+    //console.log("staffwide ", window.innerWidth);
 
     if (window.innerWidth <= 600){
       stave_width = 350;
@@ -53,15 +53,17 @@ export default function Bass({ keyData }) {
       var inflection = match_obj[2];
       var octavation = match_obj[3];
 
+
       if (inflection == ""){
-        notes.push(new VF.StaveNote({clef: "bass", keys: [base_note_name + convert_octavation[octavation]], duration: "q" }))
+        notes.push(new VF.StaveNote({clef: "bass", keys: [base_note_name + convert_octavation[octavation]], duration: "q", stem_direction: Vex.Flow.StaveNote.STEM_DOWN }))
       }
       else {
-        notes.push(new VF.StaveNote({clef: "bass", keys: [base_note_name + convert_octavation[octavation]], duration: "q" }).
+        notes.push(new VF.StaveNote({clef: "bass", keys: [base_note_name + convert_octavation[octavation]], duration: "q", stem_direction: Vex.Flow.StaveNote.STEM_DOWN }).
         addAccidental(0, new VF.Accidental(convert_inflection[inflection])));
-      }  
+      } 
+
     });
-    console.log("notes: ",notes);
+    
 
 
     const voice = new VF.Voice({
