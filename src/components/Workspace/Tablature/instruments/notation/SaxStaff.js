@@ -6,8 +6,21 @@ import Vex from "vexflow";
 function transposeScale(object, value, transposition) {
   let old_scale = ScaleData[Object.keys(object).find(key => object[key] === value)];
 
+  let modulus = 12;
+
+  if (old_scale.scale_class == "octatonic") {
+    modulus = 3;
+  } else if (old_scale.scale_class == "hexatonic") {
+    modulus = 4;
+  } else if (old_scale.scale_class == "whole_tone") {
+    modulus = 2;
+  } else {
+    modulus = 12;
+  }
+
   for (const [key, value] of Object.entries(ScaleData)) {
-    if (old_scale.scale_class == ScaleData[key].scale_class && ((old_scale.root+2)%12) == ScaleData[key].root){
+    if (old_scale.scale_class == ScaleData[key].scale_class && ((old_scale.root+transposition)%modulus) == ScaleData[key].root%modulus){
+      console.log(old_scale, key);
       return key;
     }
   }
@@ -18,7 +31,7 @@ export default function Sax({ keyData }) {
   useEffect(() => {
 
 
-    keyData = ScaleData[transposeScale(ScaleData, keyData, -2)];
+    keyData = ScaleData[transposeScale(ScaleData, keyData, 9)];
 
 
     const VF = Vex.Flow;

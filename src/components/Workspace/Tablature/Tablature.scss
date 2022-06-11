@@ -25,6 +25,14 @@ $label-font-size: 0.8rem;
         color: black;
     }
 
+    &__transposition {
+        tect-align: center;
+        top: 0.15rem;
+        margin: 0;
+        font-size: $label-font-size;
+        color: black;
+    }
+
     &__close {
         position: absolute;
         right: 0rem;

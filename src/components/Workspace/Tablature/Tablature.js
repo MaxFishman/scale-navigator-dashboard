@@ -93,7 +93,7 @@ export default function Tablature() {
     const dispatch = useDispatch()
     const { tabData, scaleData } = useSelector(state => state.root)
     const setTablatureInstruments = (payload) => dispatch({ type: 'SET_TAB_DATA', payload })
-console.log(scaleData);
+    // console.log(scaleData);
     const options = [
         {
             label: "Fretted Instruments",
