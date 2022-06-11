@@ -11,6 +11,7 @@ import Piano from "./instruments/keyboard/Piano";
 import Treble from "./instruments/notation/TrebleStaff";
 import Bass from "./instruments/notation/BassStaff";
 import Alto from "./instruments/notation/AltoStaff";
+import Sax from "./instruments/notation/SaxStaff";
 import Triads from "./instruments/chords/Triads";
 import TriadCircle from "./instruments/chords/TriadCircle";
 import { SortableContainer, SortableElement } from "react-sortable-hoc";
@@ -66,6 +67,11 @@ const INST = {
     display: "Alto Staff",
     Fn: Alto,
   },
+  SAXSTAFF: {
+    name: "SAXSTAFF",
+    display: "Sax Staff",
+    Fn: Sax,
+  },
   TRIADS: {
     name: "TRIADS",
     display: "Triads",
@@ -114,7 +120,8 @@ console.log(scaleData);
             options: [
                 { label: "Treble Staff", value: INST.TREBLESTAFF.name },
                 { label: "Bass Staff", value: INST.BASSSTAFF.name },
-                { label: "Alto Staff", value: INST.ALTOSTAFF.name }
+                { label: "Alto Staff", value: INST.ALTOSTAFF.name },
+                { label: "Sax Staff", value: INST.SAXSTAFF.name }
             ],
             },
             {
