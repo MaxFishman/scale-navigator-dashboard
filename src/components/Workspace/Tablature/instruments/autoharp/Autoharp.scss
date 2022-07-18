@@ -1,0 +1,74 @@
+// Responsive Sizing
+// (currently optimized for horizontal scaling)
+$buttonboard_Width: 60%;
+$buttonboard_Height: ($buttonboard_Width * 0.48);
+$border_Width: 2px;
+$whitebutton_Count: 7;
+$whitebutton_Height: $buttonboard_Height;
+$whitebutton_Width: ($buttonboard_Width / $whitebutton_Count);
+$blackbutton_Height: ($whitebutton_Height * 0.55);
+$blackbutton_Width: ($whitebutton_Width * 0.55);
+$blackbutton_Offset: calc(#{- ($blackbutton_Width / 2)} - #{$border_Width});
+
+$whitebutton_Color: white;
+$blackbutton_Color: white;
+$blackbutton_BorderColor: black;
+$whitebutton_BorderColor: black;
+
+.piano {
+  padding-bottom: $buttonboard_Height;
+  width: 100%;
+
+  &__clear {
+    clear: both;
+  }
+
+  &__button {
+    float: left;
+    position: relative;
+
+    &:first-child {
+      margin-left: (100% - $buttonboard_Width) / 2;
+    }
+
+    &:last-child {
+      border-right: $border_Width solid $whitebutton_BorderColor;
+    }
+
+    &--white {
+      padding-bottom: $whitebutton_Height;
+      width: $whitebutton_Width;
+      z-index: 1;
+      border-top: $border_Width solid $whitebutton_BorderColor;
+      border-bottom: $border_Width solid $whitebutton_BorderColor;
+      border-left: $border_Width solid $whitebutton_BorderColor;
+
+      background-color: #ffde6a;
+      border-bottom-left-radius: 5px;
+      border-bottom-right-radius: 5px;
+    }
+
+    &--black {
+      padding-bottom: $blackbutton_Height;
+      width: $blackbutton_Width;
+      z-index: 2;
+      border: 2px solid $blackbutton_BorderColor;
+      background-color: #ffde6a;
+      margin: 0 0 0 $blackbutton_Offset;
+      border-bottom-left-radius: 10px;
+      border-bottom-right-radius: 10px;
+    }
+
+    &--on {
+      background-color: white;
+    }
+  }
+}
+
+.a,
+.b,
+.d,
+.e,
+.g {
+  margin: 0 0 0 $blackbutton_Offset;
+}
