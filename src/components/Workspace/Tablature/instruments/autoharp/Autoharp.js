@@ -24,7 +24,7 @@ export default function Autoharp({ keyData }) {
                     )}
                 >
                     <h2>
-                        E <em>b</em>
+                        E♭
                     </h2>
                 </div>
                 <div
@@ -37,7 +37,7 @@ export default function Autoharp({ keyData }) {
                     )}
                 >
                     <h2>
-                        F<em>#</em>
+                        F♯
                     </h2>
                 </div>
                 <div
@@ -58,7 +58,7 @@ export default function Autoharp({ keyData }) {
                     )}
                 >
                     <h2>
-                        C<em>#</em>
+                        C♯
                     </h2>
                 </div>
                 <div
@@ -88,7 +88,7 @@ export default function Autoharp({ keyData }) {
                     )}
                 >
                     <h2>
-                        B <em>b</em>
+                        B♭
                     </h2>
                 </div>
                 <div
@@ -120,7 +120,7 @@ export default function Autoharp({ keyData }) {
                     )}
                 >
                     <h2>
-                        G<em>#</em>
+                        G♯
                     </h2>
                 </div>
 
