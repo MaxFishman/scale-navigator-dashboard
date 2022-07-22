@@ -1,74 +1,117 @@
-// Responsive Sizing
-// (currently optimized for horizontal scaling)
-$buttonboard_Width: 60%;
-$buttonboard_Height: ($buttonboard_Width * 0.48);
-$border_Width: 2px;
-$whitebutton_Count: 7;
-$whitebutton_Height: $buttonboard_Height;
-$whitebutton_Width: ($buttonboard_Width / $whitebutton_Count);
-$blackbutton_Height: ($whitebutton_Height * 0.55);
-$blackbutton_Width: ($whitebutton_Width * 0.55);
-$blackbutton_Offset: calc(#{- ($blackbutton_Width / 2)} - #{$border_Width});
+.autoharp {
+    font-size: 0;
+    --s: 100px;
+    --m: 100px;
 
-$whitebutton_Color: white;
-$blackbutton_Color: white;
-$blackbutton_BorderColor: black;
-$whitebutton_BorderColor: black;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: repeat(3, 9rem);
+    padding-bottom: 1rem;
+    margin-top: 1.8rem;
 
-.piano {
-  padding-bottom: $buttonboard_Height;
-  width: 100%;
-
-  &__clear {
-    clear: both;
-  }
-
-  &__button {
-    float: left;
-    position: relative;
-
-    &:first-child {
-      margin-left: (100% - $buttonboard_Width) / 2;
+    .c_sharp,
+    .e,
+    .g,
+    .a_sharp {
+        justify-self: center;
     }
 
-    &:last-child {
-      border-right: $border_Width solid $whitebutton_BorderColor;
+    .d,
+    .f,
+    .g_sharp,
+    .b {
+        justify-self: end;
     }
 
-    &--white {
-      padding-bottom: $whitebutton_Height;
-      width: $whitebutton_Width;
-      z-index: 1;
-      border-top: $border_Width solid $whitebutton_BorderColor;
-      border-bottom: $border_Width solid $whitebutton_BorderColor;
-      border-left: $border_Width solid $whitebutton_BorderColor;
-
-      background-color: #ffde6a;
-      border-bottom-left-radius: 5px;
-      border-bottom-right-radius: 5px;
+    h2 {
+        font-weight: bold;
     }
 
-    &--black {
-      padding-bottom: $blackbutton_Height;
-      width: $blackbutton_Width;
-      z-index: 2;
-      border: 2px solid $blackbutton_BorderColor;
-      background-color: #ffde6a;
-      margin: 0 0 0 $blackbutton_Offset;
-      border-bottom-left-radius: 10px;
-      border-bottom-right-radius: 10px;
+    &__button {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        position: relative;
+        width: var(--s);
+        height: var(--m);
+        background-color: #ffde6a;
+        margin: 28.87px 0;
+        border-left: solid 2.3px #333333;
+        border-right: solid 2.3px #333333;
+        &--on {
+            background-color: white;
+        }
+    }
+    &__button::before,
+    &__button::after {
+        content: "";
+        position: absolute;
+        z-index: 1;
+        width: 70.71px;
+        height: 70.71px;
+        -webkit-transform: scaleY(0.5774) rotate(-45deg);
+        -ms-transform: scaleY(0.5774) rotate(-45deg);
+        transform: scaleY(0.5774) rotate(-45deg);
+        background-color: inherit;
+        left: 12.3447px;
     }
 
-    &--on {
-      background-color: white;
+    &__button::before {
+        top: -35.3553px;
+        border-top: solid 3.2527px #333333;
+        border-right: solid 3.2527px #333333;
     }
-  }
-}
 
-.a,
-.b,
-.d,
-.e,
-.g {
-  margin: 0 0 0 $blackbutton_Offset;
+    &__button::after {
+        bottom: -35.3553px;
+        border-bottom: solid 3.2527px #333333;
+        border-left: solid 3.2527px #333333;
+    }
+    @media screen and (max-width: 1140px) {
+        grid-template-rows: repeat(3, 6rem);
+        &__button {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            width: 60px;
+            height: 60px;
+            background-color: #ffde6a;
+            margin: 17.32px 0;
+            border-left: solid 2.3px #333333;
+            border-right: solid 2.3px #333333;
+            &--on {
+                background-color: white;
+            }
+        }
+        &__button::before,
+        &__button::after {
+            content: "";
+            position: absolute;
+            z-index: 1;
+            width: 42.43px;
+            height: 42.43px;
+            -webkit-transform: scaleY(0.5774) rotate(-45deg);
+            -ms-transform: scaleY(0.5774) rotate(-45deg);
+            transform: scaleY(0.5774) rotate(-45deg);
+            background-color: inherit;
+            left: 6.4868px;
+        }
+
+        &__button::before {
+            top: -21.2132px;
+            border-top: solid 3.2527px #333333;
+            border-right: solid 3.2527px #333333;
+        }
+
+        &__button::after {
+            bottom: -21.2132px;
+            border-bottom: solid 3.2527px #333333;
+            border-left: solid 3.2527px #333333;
+        }
+
+        h2 {
+            font-size: 18px;
+        }
+    }
 }
