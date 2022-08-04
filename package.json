@@ -3,6 +3,10 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@capacitor-community/keep-awake": "^3.0.0",
+    "@capacitor/android": "^4.0.1",
+    "@capacitor/core": "^4.0.1",
+    "@capacitor/ios": "^4.0.1",
     "@testing-library/jest-dom": "^5.11.4",
     "@testing-library/react": "^11.1.0",
     "@testing-library/user-event": "^12.1.10",
@@ -12,6 +16,8 @@
     "bezier": "^0.1.0",
     "bootstrap": "^5.1.1",
     "classnames": "^2.3.1",
+    "concurrently": "4.1.2",
+    "express": "^4.17.1",
     "firebase": "^8.9.1",
     "jquery": "^3.6.0",
     "multiselect-react-dropdown": "^2.0.5",
@@ -38,9 +44,7 @@
     "styled-components": "^5.3.1",
     "tone": "^14.7.77",
     "vexflow": "^3.0.9",
-    "web-vitals": "^1.0.1",
-    "concurrently": "4.1.2",
-    "express": "^4.17.1"
+    "web-vitals": "^1.0.1"
   },
   "proxy": "http://localhost:4242",
   "scripts": {
@@ -49,7 +53,8 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "start": "concurrently \"yarn start-client\" \"yarn start-server\""
+    "start": "concurrently \"yarn start-client\" \"yarn start-server\"",
+    "cap:android": "yarn build && npx cap sync android && npx cap open android"
   },
   "eslintConfig": {
     "extends": [
@@ -70,6 +75,7 @@
     ]
   },
   "devDependencies": {
+    "@capacitor/cli": "^4.0.1",
     "prettier": "^2.3.2"
   }
 }
