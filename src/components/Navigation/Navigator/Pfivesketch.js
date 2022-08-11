@@ -16,14 +16,16 @@ function Pfivesketch({ navRef, canvasWrapperRef, isMember = false }) {
     const wrapperElm = canvasWrapperRef.current;
 
     const setup = (p5, canvasParentRef) => {
-        const p = wrapperElm && wrapperElm.getBoundingClientRect();
+        setTimeout(() => {
+            const p = wrapperElm && wrapperElm.getBoundingClientRect();
 
-        if (!p) return
-
-        p5.createCanvas(p.width, Math.max(p.height, document.body.getBoundingClientRect().height / 2)).parent(canvasParentRef);
-        p5.frameRate(fps);
-        navRef.init(p5);
-        windowResized(p5);
+            if (!p) return
+    
+            p5.createCanvas(p.width, Math.max(p.height, document.body.getBoundingClientRect().height / 2)).parent(canvasParentRef);
+            p5.frameRate(fps);
+            navRef.init(p5);
+            windowResized(p5);
+        }, 1000)
     };
 
     const draw = (p5) => {
