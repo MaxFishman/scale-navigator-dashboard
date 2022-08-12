@@ -1,4 +1,3 @@
-import ChordChooser from "../../ToneJS/ChordChooser";
 import Polygon from "./Polygon";
 import Helper from "./Helper";
 
@@ -22,16 +21,6 @@ function Navigator({ setScaleData }) {
         chordClicks: 0
     };
 
-    this.init = (p5) => {
-        this.p5 = p5;
-        this.init_autopilot(p5);
-
-        this.poly_size = (this.p5.width + this.p5.height) / 22;
-        this.poly_size = p5.max((1200) / 22, this.poly_size)
-
-        this.initPolygons();
-    };
-
     this.initPolygons = () => {
         this.main_polygon = new Polygon(this.p5, 0.5, 0.5, this.poly_size, this.scale);
         this.neighbors = this.main_polygon.getNeighbors();
@@ -42,6 +31,55 @@ function Navigator({ setScaleData }) {
         this.hover_polygons = [];
         this.hover_polygons_to_be_removed = [];
         this.preview_polygons = [];
+    };
+
+    this.init = (p5) => {
+        this.p5 = p5;
+        this.init_autopilot(p5);
+
+        this.poly_size = (this.p5.width + this.p5.height) / 22;
+        this.poly_size = p5.max((1200) / 22, this.poly_size);
+
+        this.initPolygons();
+    };
+
+
+
+    this.draw = (p5) => {
+        try {
+            p5.push();
+            p5.ellipseMode(p5.RADIUS);
+
+            for (var h = 0; h < this.hover_polygons.length; h++) {
+                this.hover_polygons[h].draw(false);
+            }
+
+            //background(255);
+            var allPolygons = [this.main_polygon].concat(
+                this.preview_polygons,
+                this.old_neighbors
+            );
+            allPolygons.push(...this.neighbors);
+            allPolygons.push(this.old_main_polygon);
+
+            //draw all the polygons
+            for (var p of allPolygons) {
+                if (p) {
+                    // p.draw(true, p != this.main_polygon, this.neighbors.includes(p) ? {
+                    //     x: (p.animation.target.x - this.main_polygon.animation.target.x) / 3,
+                    //     y: (p.animation.target.y - this.main_polygon.animation.target.y) / 3
+                    // } : { x: 0, y: 0 });
+                    p.draw(true);
+                }
+                // document.getElementById("labels_checkbox").checked
+            }
+
+            this.third_gen_hover(p5);
+
+            p5.pop();
+        } catch (error) {
+            console.error(error);
+        }
     };
 
     this.init_autopilot = (p5) => {
@@ -127,42 +165,7 @@ function Navigator({ setScaleData }) {
         }
     };
 
-    this.draw = (p5) => {
-        try {
-            p5.push();
-            p5.ellipseMode(p5.RADIUS);
 
-            for (var h = 0; h < this.hover_polygons.length; h++) {
-                this.hover_polygons[h].draw(false);
-            }
-
-            //background(255);
-            var allPolygons = [this.main_polygon].concat(
-                this.preview_polygons,
-                this.old_neighbors
-            );
-            allPolygons.push(...this.neighbors);
-            allPolygons.push(this.old_main_polygon);
-
-            //draw all the polygons
-            for (var p of allPolygons) {
-                if (p) {
-                    // p.draw(true, p != this.main_polygon, this.neighbors.includes(p) ? {
-                    //     x: (p.animation.target.x - this.main_polygon.animation.target.x) / 3,
-                    //     y: (p.animation.target.y - this.main_polygon.animation.target.y) / 3
-                    // } : { x: 0, y: 0 });
-                    p.draw(true);
-                }
-                // document.getElementById("labels_checkbox").checked
-            }
-
-            this.third_gen_hover(p5);
-
-            p5.pop();
-        } catch (error) {
-            console.error(error);
-        }
-    };
 
     this.mousePressed = (p5, event) => {
         try {
@@ -235,13 +238,13 @@ function Navigator({ setScaleData }) {
 
                 this.hover_polygons.push(...add);
             } else if (clickData.end) {
-                for (var p of this.get_new_neighbors(p5, n).new) {
-                    for (var h = 0; h < this.hover_polygons.length; h++) {
+                for (var q of this.get_new_neighbors(p5, n).new) {
+                    for (var s = 0; s < this.hover_polygons.length; s++) {
                         if (
-                            this.hover_polygons[h].isMatching(p) &&
-                            this.hover_polygons[h].generated_from == n
+                            this.hover_polygons[s].isMatching(q) &&
+                            this.hover_polygons[s].generated_from == n
                         ) {
-                            var _h = this.hover_polygons[h];
+                            var _h = this.hover_polygons[s];
 
                             _h.move(
                                 n.x,
@@ -251,7 +254,7 @@ function Navigator({ setScaleData }) {
                                 1,
                                 (id) => {
                                     this.hover_polygons_to_be_removed.push(id);
-                                }, [h]
+                                }, [s]
                             );
                         }
                     }
@@ -280,16 +283,16 @@ function Navigator({ setScaleData }) {
 
         if (ind >= 0) {
             var positions = p.getNeighborPositions(p.x, p.y, p.radius, undefined, undefined, p5.PI / 2 + (2 * p5.PI * (ind - 1)) / total_poly, p5.PI / 2 + (2 * p5.PI * (ind + 1)) / total_poly, this.actually_new_polygons.length)
-                // var positions = p.getNeighborPositions(
-                //     p.x,
-                //     p.y,
-                //     p5.RADIUS,
-                //     undefined,
-                //     undefined,
-                //     p5.PI / 2,
-                //     p5.PI / 2 + 2 * p5.PI,
-                //     this.actually_new_polygons.length
-                // );
+            // var positions = p.getNeighborPositions(
+            //     p.x,
+            //     p.y,
+            //     p5.RADIUS,
+            //     undefined,
+            //     undefined,
+            //     p5.PI / 2,
+            //     p5.PI / 2 + 2 * p5.PI,
+            //     this.actually_new_polygons.length
+            // );
 
             //position them
             for (var a_n = 0; a_n < this.actually_new_polygons.length; a_n++) {

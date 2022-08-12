@@ -5,27 +5,26 @@ import './../../../resources/Mulish/Mulish-Regular.ttf';
 
 const fps = 30;
 
-function Pfivesketch({ navRef, canvasWrapperRef, isMember = false }) {
+function Pfivesketch({ canvasWrapperRef, navRef, isMember = false }) {
     const location = useLocation();
+
+    const wrapperElm = canvasWrapperRef.current;
 
     useLayoutEffect(() => {
         const p = wrapperElm && wrapperElm.getBoundingClientRect();
         window.scaleP5 && window.scaleP5.resizeCanvas(p.width, p.height);
     }, [location.pathname])
 
-    const wrapperElm = canvasWrapperRef.current;
 
     const setup = (p5, canvasParentRef) => {
-        setTimeout(() => {
-            const p = wrapperElm && wrapperElm.getBoundingClientRect();
 
-            if (!p) return
-    
-            p5.createCanvas(p.width, Math.max(p.height, document.body.getBoundingClientRect().height / 2)).parent(canvasParentRef);
-            p5.frameRate(fps);
-            navRef.init(p5);
-            windowResized(p5);
-        }, 1000)
+        console.log("nav ref",navRef, "wrapper el", wrapperElm);
+        const p = wrapperElm && wrapperElm.getBoundingClientRect();
+
+        p5.createCanvas(p.width, Math.max(p.height, document.body.getBoundingClientRect().height / 2)).parent(canvasParentRef);
+        p5.frameRate(fps);
+        navRef.init(p5);
+        windowResized(p5);
     };
 
     const draw = (p5) => {
