@@ -104,7 +104,9 @@ const Navigation = (props) => {
                         : (<p>You are currently the guest of : <span>{authUser.currentEnsemble}</span></p>)}
                     </HostBanner>}
 
-                <ScaleNavigator canvasWrapperRef={canvasWrapperRef} navRef={navRef.current} hasActiveRoute={hasActiveRoute}/>
+                {canvasWrapperRef && navRef ?
+                    <ScaleNavigator canvasWrapperRef={canvasWrapperRef} navRef={navRef.current} hasActiveRoute={hasActiveRoute}/>
+                : (<p></p>)}
 
                 <div className="navinfo" style={navInfoStyle}>
                     <div className="navinfo__root">
