@@ -1,7 +1,7 @@
 import React, { useEffect, useRef } from "react";
-import { compose } from 'recompose'
-import { useSelector, useDispatch } from 'react-redux'
-import { useLocation } from 'react-router-dom';
+import { compose } from "recompose";
+import { useSelector, useDispatch } from "react-redux";
+import { useLocation } from "react-router-dom";
 import ScaleData from "common/ScaleData";
 import PitchClassData from "common/PitchClassData";
 import Navigator from "./Navigator/Navigator";
@@ -9,10 +9,10 @@ import Tabs from "components/Tabs";
 import ScaleNavigator from "components/ScaleNavigator";
 import MobileMenu from "../MobileMenu";
 import useWindowSize from "../../hooks/device/index";
-import styled from 'styled-components';
-import { ReactComponent as Logo } from '../../assets/logo.svg'
-import { withFirebase } from '../Firebase';
-import { logoStyle } from '../../common/LayoutConfig'
+import styled from "styled-components";
+import { ReactComponent as Logo } from "../../assets/logo.svg";
+import { withFirebase } from "../Firebase";
+import { logoStyle } from "../../common/LayoutConfig";
 import "./Navigation.scss";
 
 const MainWrapper = styled.div`
@@ -31,14 +31,16 @@ const HostBanner = styled.div`
     margin-bottom: -36px;
 `;
 
-const Navigation = (props) => {
-    const dispatch = useDispatch()
-    const { scaleData, isEnsembleMember, currentRoomId } = useSelector(state => state.root)
+const Navigation = ({ firebase, authUser }) => {
+    const dispatch = useDispatch();
+    const { scaleData, isEnsembleMember, currentRoomId } = useSelector(
+        (state) => state.root
+    );
     const { scale } = scaleData;
 
     const setScaleData = (payload) => {
-        dispatch({ type: 'SET_SCALE_DATA', payload })
-    }
+        dispatch({ type: "SET_SCALE_DATA", payload });
+    };
 
     const location = useLocation();
     const size = useWindowSize();
@@ -57,54 +59,74 @@ const Navigation = (props) => {
     }, [scale]);
 
     useEffect(() => {
-        if (isEnsembleMember) getFirebaseScaleData()
+        if (isEnsembleMember) getFirebaseScaleData();
     }, [isEnsembleMember]);
 
     const setFirebaseScaleData = (scaleData) => {
-        const roomId = currentRoomId
-        props.firebase.room(roomId).update({ scaleData })
-    }
+        const roomId = currentRoomId;
+        firebase.room(roomId).update({ scaleData });
+    };
 
     window.setFirebaseScaleData = setFirebaseScaleData;
 
     const getFirebaseScaleData = () => {
-        const roomId = currentRoomId
+        const roomId = currentRoomId;
 
-        if (!roomId) { return }
+        if (!roomId) {
+            return;
+        }
 
-        props.firebase.room(roomId)
-            .onSnapshot(doc => {
-                if (!doc.exists) { return }
+        firebase.room(roomId).onSnapshot((doc) => {
+            if (!doc.exists) {
+                return;
+            }
 
-                const { scaleData } = doc.data()
-                navRef.current.jumpToScale(scaleData);
-                setScaleData(scaleData)
-            });
-    }
+            const { scaleData } = doc.data();
+            navRef.current.jumpToScale(scaleData);
+            setScaleData(scaleData);
+        });
+    };
 
-    const hasActiveRoute = isMobile && location.pathname !== '/';
-    const wrapperStyle = hasActiveRoute ? { height: '40vh', overflow: 'hidden' } : {};
-    const navInfoStyle = hasActiveRoute ? { display: 'none' } : {};
-
-    const { authUser } = props
+    const hasActiveRoute = isMobile && location.pathname !== "/";
+    const wrapperStyle = hasActiveRoute
+        ? { height: "40vh", overflow: "hidden" }
+        : {};
+    const navInfoStyle = hasActiveRoute ? { display: "none" } : {};
 
     return (
         <div className="navigation" style={wrapperStyle}>
-            <div className="header-wrapper" style={hasActiveRoute ? logoStyle : {}}>
+            <div
+                className="header-wrapper"
+                style={hasActiveRoute ? logoStyle : {}}
+            >
                 <div className="app-logo">
-                    <Logo/>
+                    <Logo />
                 </div>
-                {isMobile && <MobileMenu/>}
+                {isMobile && <MobileMenu />}
             </div>
 
             <MainWrapper>
-                {authUser &&
+                {authUser && (
                     <HostBanner>
-                        {authUser.isHost ? (<p>You are currently the host of : <span>{authUser.currentEnsemble}</span></p>)
-                        : (<p>You are currently the guest of : <span>{authUser.currentEnsemble}</span></p>)}
-                    </HostBanner>}
+                        {authUser.isHost ? (
+                            <p>
+                                You are currently the host of :{" "}
+                                <span>{authUser.currentEnsemble}</span>
+                            </p>
+                        ) : (
+                            <p>
+                                You are currently the guest of :{" "}
+                                <span>{authUser.currentEnsemble}</span>
+                            </p>
+                        )}
+                    </HostBanner>
+                )}
 
-                <ScaleNavigator canvasWrapperRef={canvasWrapperRef} navRef={navRef.current} hasActiveRoute={hasActiveRoute}/>
+                <ScaleNavigator
+                    canvasWrapperRef={canvasWrapperRef}
+                    navRef={navRef.current}
+                    hasActiveRoute={hasActiveRoute}
+                />
 
                 <div className="navinfo" style={navInfoStyle}>
                     <div className="navinfo__root">
@@ -134,7 +156,7 @@ const Navigation = (props) => {
 
                         <div className="navinfo__option">
                             <input
-                                style={{direction: "rtl"}}
+                                style={{ direction: "rtl" }}
                                 type="range"
                                 autoComplete="off"
                                 name="autopilot_interval"
@@ -146,15 +168,11 @@ const Navigation = (props) => {
                         </div>
                     </div>
                 </div>
-
             </MainWrapper>
 
-            <Tabs className="mobile-tabs"/>
+            <Tabs className="mobile-tabs" />
         </div>
     );
 };
-
-
-
 
 export default compose(withFirebase)(Navigation);

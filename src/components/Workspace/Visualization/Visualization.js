@@ -1,134 +1,44 @@
 import React from "react";
 import Sketch from "react-p5";
-import Polygon from "components/Navigation/Navigator/Polygon";
-import ScaleData from "common/ScaleData";
+import Layers from "./Layers";
+
+const fps = 30;
+let clickInNextFrame = 0;
+let ran_setup = false;
+let cnv;
+let l = 0;
+let last_mp = undefined;
+let layers = [];
 
 const Visualization = () => {
-    const fps = 30;
-    var clickInNextFrame = 0;
-    var ran_setup = false;
-    var canvasParentRef = document.getElementById("canv_container_visu");
-    var cnv;
-    var l = 0;
-
-    var last_mp = undefined;
+    // var canvasParentRef = document.getElementById("canv_container_visu");
+    console.log("Init Visualization");
     window.breadcrumbs = {};
 
-    /*
-    var diatonic = [],
-        acoustic = [],
-        harmonic_major = [],
-        harmonic_minor = [],
-        octatonic = [],
-        hexatonic = [],
-        whole_tone = [];*/
-    var layers = [];
+    const addBreadcrumb = (p1, p2, st = true) => {
+        if (!window.breadcrumbs[p1]) window.breadcrumbs[p1] = {};
+        if (!window.breadcrumbs[p2]) window.breadcrumbs[p2] = {};
 
-    const setup = (p5) => {
+        window.breadcrumbs[p1][p2] = st;
+        window.breadcrumbs[p2][p1] = st;
+    };
+
+    const setup = (p5, canvasParentRef) => {
         if (canvasParentRef == null)
             canvasParentRef = document.getElementById("canv_container_visu");
         if (canvasParentRef) {
             const p = canvasParentRef.getBoundingClientRect();
+            var s = (p5.width + p5.height) / 100;
 
             cnv = p5
                 .createCanvas(p.width * 0.9, p.height * 0.9)
                 .parent(canvasParentRef);
+
             p5.frameRate(fps);
             windowResized(p5);
-
             ran_setup = true;
 
-            var keys = Object.keys(ScaleData);
-            var scale_data_arr = keys.map((k, id) =>
-                Object.defineProperty(ScaleData[k], "name", { value: k })
-            );
-
-            var s = (p5.width + p5.height) / 100;
-
-            layers = [
-                [
-                    new Polygon(p5, 0, 0, s, "c_diatonic"),
-                    new Polygon(p5, 0, 0, s, "g_diatonic"),
-                    new Polygon(p5, 0, 0, s, "d_diatonic"),
-                    new Polygon(p5, 0, 0, s, "a_diatonic"),
-                    new Polygon(p5, 0, 0, s, "e_diatonic"),
-                    new Polygon(p5, 0, 0, s, "b_diatonic"),
-                    new Polygon(p5, 0, 0, s, "fs_diatonic"),
-                    new Polygon(p5, 0, 0, s, "cs_diatonic"),
-                    new Polygon(p5, 0, 0, s, "gs_diatonic"),
-                    new Polygon(p5, 0, 0, s, "ds_diatonic"),
-                    new Polygon(p5, 0, 0, s, "as_diatonic"),
-                    new Polygon(p5, 0, 0, s, "f_diatonic"),
-                ],
-                [
-                    new Polygon(p5, 0, 0, s, "c_acoustic"),
-                    new Polygon(p5, 0, 0, s, "g_acoustic"),
-                    new Polygon(p5, 0, 0, s, "d_acoustic"),
-                    new Polygon(p5, 0, 0, s, "a_acoustic"),
-                    new Polygon(p5, 0, 0, s, "e_acoustic"),
-                    new Polygon(p5, 0, 0, s, "b_acoustic"),
-                    new Polygon(p5, 0, 0, s, "fs_acoustic"),
-                    new Polygon(p5, 0, 0, s, "cs_acoustic"),
-                    new Polygon(p5, 0, 0, s, "gs_acoustic"),
-                    new Polygon(p5, 0, 0, s, "ds_acoustic"),
-                    new Polygon(p5, 0, 0, s, "as_acoustic"),
-                    new Polygon(p5, 0, 0, s, "f_acoustic"),
-                ],
-                [
-                    new Polygon(p5, 0, 0, s, "d_harmonic_minor"),
-                    new Polygon(p5, 0, 0, s, "d_harmonic_major"),
-                    new Polygon(p5, 0, 0, s, "b_harmonic_minor"),
-                    new Polygon(p5, 0, 0, s, "b_harmonic_major"),
-                    new Polygon(p5, 0, 0, s, "gs_harmonic_minor"),
-                    new Polygon(p5, 0, 0, s, "gs_harmonic_major"),
-                    new Polygon(p5, 0, 0, s, "f_harmonic_minor"),
-                    new Polygon(p5, 0, 0, s, "f_harmonic_major"),
-                ],
-                [
-                    {},
-                    new Polygon(p5, 0, 0, s, "a_harmonic_minor"),
-                    new Polygon(p5, 0, 0, s, "a_harmonic_major"),
-                    {},
-                    new Polygon(p5, 0, 0, s, "fs_harmonic_minor"),
-                    new Polygon(p5, 0, 0, s, "fs_harmonic_major"),
-                    {},
-                    new Polygon(p5, 0, 0, s, "ds_harmonic_minor"),
-                    new Polygon(p5, 0, 0, s, "ds_harmonic_major"),
-                    {},
-                    new Polygon(p5, 0, 0, s, "c_harmonic_minor"),
-                    new Polygon(p5, 0, 0, s, "c_harmonic_major"),
-                ],
-                [
-                    new Polygon(p5, 0, 0, s, "g_harmonic_major"),
-                    new Polygon(p5, 0, 0, s, "e_harmonic_minor"),
-                    new Polygon(p5, 0, 0, s, "e_harmonic_major"),
-                    new Polygon(p5, 0, 0, s, "cs_harmonic_minor"),
-                    new Polygon(p5, 0, 0, s, "cs_harmonic_major"),
-                    new Polygon(p5, 0, 0, s, "as_harmonic_minor"),
-                    new Polygon(p5, 0, 0, s, "as_harmonic_major"),
-                    new Polygon(p5, 0, 0, s, "g_harmonic_minor"),
-                ],
-                [
-                    new Polygon(p5, 0, 0, s, "hexatonic_4"),
-                    new Polygon(p5, 0, 0, s, "hexatonic_3"),
-                    new Polygon(p5, 0, 0, s, "hexatonic_2"),
-                    new Polygon(p5, 0, 0, s, "hexatonic_1"),
-                ],
-                [
-                    {},
-                    new Polygon(p5, 0, 0, s, "octatonic_3"),
-                    {},
-                    new Polygon(p5, 0, 0, s, "octatonic_2"),
-                    {},
-                    new Polygon(p5, 0, 0, s, "octatonic_1"),
-                ],
-                [
-                    {},
-                    new Polygon(p5, 0, 0, s, "whole_tone_2"),
-                    {},
-                    new Polygon(p5, 0, 0, s, "whole_tone_1"),
-                ],
-            ];
+            layers = Layers(p5, s);
 
             p5.translate(p5.width / 2, p5.height / 2);
 
@@ -151,28 +61,22 @@ const Visualization = () => {
         }
     };
 
-    const addBreadcrumb = (p1, p2, st = true) => {
-        if (!window.breadcrumbs[p1]) window.breadcrumbs[p1] = {};
-        if (!window.breadcrumbs[p2]) window.breadcrumbs[p2] = {};
-
-        window.breadcrumbs[p1][p2] = st;
-        window.breadcrumbs[p2][p1] = st;
-    }
-
     const draw = (p5) => {
         if (!ran_setup) setup(p5);
         else {
             p5.push();
 
-            cnv.parent(canvasParentRef);
-            const p = canvasParentRef.getBoundingClientRect();
-            if (p5.width != p.width * 0.9 || p5.height != p.height * 0.9)
-                windowResized(p5);
+            // cnv.parent(canvasParentRef);
+            // const p = canvasParentRef.getBoundingClientRect();
+            // if (p5.width != p.width * 0.9 || p5.height != p.height * 0.9) {
+            //     windowResized(p5);
+            // }
+
             p5.background(0);
 
             function getScaleObjectByName(name) {
                 for (var id = 0; id < layers.length; id++) {
-                    var l = layers[id]
+                    var l = layers[id];
                     for (var po of l) {
                         if (po) {
                             if (po.scale == name) return { po: po, l: id };
@@ -186,26 +90,28 @@ const Visualization = () => {
                 var a = ["diatonic", "acoustic", "major", "minor"];
                 var b = ["hexatonic", "octatonic", "whole"];
 
-                var s = scale.split("_")
-                var id = a.indexOf(s[s.length - 1])
+                var s = scale.split("_");
+                var id = a.indexOf(s[s.length - 1]);
 
                 if (id == -1) {
-                    return 4 + b.indexOf(s[0])
-                } else return id
+                    return 4 + b.indexOf(s[0]);
+                } else return id;
             }
 
-            //p5.fill(255, 0, 0)
-            //p5.text(p5.mouseX + ", " + p5.mouseY, p5.mouseX, p5.mouseY)
-
             var old_m_p;
+
+            // TODO:
+            // Data shouldnt be under window object.
             if (window.navRef.current.old_main_polygon) {
-                old_m_p = getScaleObjectByName(window.navRef.current.old_main_polygon.scale).po
+                old_m_p = getScaleObjectByName(
+                    window.navRef.current.old_main_polygon.scale
+                ).po;
             }
 
             var mp = window.navRef.current.main_polygon;
             if (last_mp) {
                 if (last_mp != mp.scale) {
-                    addBreadcrumb(last_mp, mp.scale)
+                    addBreadcrumb(last_mp, mp.scale);
                 }
             }
 
@@ -214,30 +120,44 @@ const Visualization = () => {
 
                 var lay_ellipse_w_r;
                 var lay_ellipse_h_r;
-                lay_ellipse_h_r = p5.height / 2 - l[0].y * p5.height
-                lay_ellipse_w_r = p5.width / p5.height * lay_ellipse_h_r;
+                lay_ellipse_h_r = p5.height / 2 - l[0].y * p5.height;
+                lay_ellipse_w_r = (p5.width / p5.height) * lay_ellipse_h_r;
 
                 for (var po of l) {
                     if (po.data) {
                         if (
                             window.navRef.current.main_polygon.scale == po.scale
                         ) {
-                            if (document.getElementById("visu_inp_l_" + getCheckboxIDByScale(po.scale)).checked) {
-
+                            if (
+                                document.getElementById(
+                                    "visu_inp_l_" +
+                                        getCheckboxIDByScale(po.scale)
+                                ).checked
+                            ) {
                                 var x = po.x;
                                 var y = po.y;
 
-                                if (window.navRef.current.main_polygon.animation.active) {
-                                    var _p = window.navRef.current.main_polygon.animation.animation_curve(window.navRef.current.main_polygon.animation.progress());
-                                    x = p5.lerp(po.x, old_m_p.x, 1 - _p)
-                                    y = p5.lerp(po.y, old_m_p.y, 1 - _p)
+                                if (
+                                    window.navRef.current.main_polygon.animation
+                                        .active
+                                ) {
+                                    var _p =
+                                        window.navRef.current.main_polygon.animation.animation_curve(
+                                            window.navRef.current.main_polygon.animation.progress()
+                                        );
+                                    x = p5.lerp(po.x, old_m_p.x, 1 - _p);
+                                    y = p5.lerp(po.y, old_m_p.y, 1 - _p);
                                 }
 
                                 p5.push();
                                 p5.noStroke();
                                 for (var i = 0; i < 1; i += 1 / 20) {
-                                    p5.fill(255, 255, 255, i * 64)
-                                    p5.ellipse(x * p5.width, y * p5.height, 5 * po.radius * (1 - i))
+                                    p5.fill(255, 255, 255, i * 64);
+                                    p5.ellipse(
+                                        x * p5.width,
+                                        y * p5.height,
+                                        5 * po.radius * (1 - i)
+                                    );
                                 }
                                 p5.pop();
                             }
@@ -269,18 +189,19 @@ const Visualization = () => {
                             [255, 255, 255, alph],
                         ];
 
-                        var ang = Math.PI / 2 -
-                            Math.atan2((p5.mouseX - p5.width / 2) / lay_ellipse_w_r, (p5.mouseY - p5.height / 2) / lay_ellipse_h_r)
+                        var ang =
+                            Math.PI / 2 -
+                            Math.atan2(
+                                (p5.mouseX - p5.width / 2) / lay_ellipse_w_r,
+                                (p5.mouseY - p5.height / 2) / lay_ellipse_h_r
+                            );
                         if (
-                            /*
-                            l
-                            .map((x) => {
-                                if (x) return x.scale;
-                            })
-                            .includes(
-                                window.navRef.current.main_polygon.scale
-                            )*/
-                            p5.dist(Math.cos(ang) * lay_ellipse_w_r + p5.width / 2, Math.sin(ang) * lay_ellipse_h_r + p5.height / 2, p5.mouseX, p5.mouseY) < 15
+                            p5.dist(
+                                Math.cos(ang) * lay_ellipse_w_r + p5.width / 2,
+                                Math.sin(ang) * lay_ellipse_h_r + p5.height / 2,
+                                p5.mouseX,
+                                p5.mouseY
+                            ) < 15
                         ) {
                             cols_same[po.layer_id][3] *= 2;
                             layerAllowed = true;
@@ -290,13 +211,17 @@ const Visualization = () => {
                             var scale_d = getScaleObjectByName(adj);
                             var scale = scale_d.po;
 
-                            // && document.getElementById("visu_inp_l_" + scale_d.l).checked
-                            if (scale &&
-                                document.getElementById("visu_inp_l_" + getCheckboxIDByScale(scale.scale)).checked &&
-                                document.getElementById("visu_inp_l_" + getCheckboxIDByScale(po.scale)).checked) {
-
-                                //console.log(getCheckboxIDByScale(scale.scale), getCheckboxIDByScale(po.scale))
-
+                            if (
+                                scale &&
+                                document.getElementById(
+                                    "visu_inp_l_" +
+                                        getCheckboxIDByScale(scale.scale)
+                                ).checked &&
+                                document.getElementById(
+                                    "visu_inp_l_" +
+                                        getCheckboxIDByScale(po.scale)
+                                ).checked
+                            ) {
                                 if (scale.layer_id == po.layer_id) {
                                     p5.stroke(...cols_same[po.layer_id]);
                                     if (layerAllowed) p5.strokeWeight(sw * 3);
@@ -312,14 +237,23 @@ const Visualization = () => {
                                     p5.strokeWeight(sw);
                                 }
 
-
                                 if (window.breadcrumbs[adj]) {
-                                    if (window.breadcrumbs[adj][
-                                            [po.scale]
-                                        ]) {
-                                        p5.stroke(255, 0, 0, (window.navRef.current.main_polygon.scale == po.scale ? 255 : alph))
+                                    if (window.breadcrumbs[adj][[po.scale]]) {
+                                        p5.stroke(
+                                            255,
+                                            0,
+                                            0,
+                                            window.navRef.current.main_polygon
+                                                .scale == po.scale
+                                                ? 255
+                                                : alph
+                                        );
                                     }
-                                } else if (window.navRef.current.main_polygon.scale == po.scale) p5.stroke(255)
+                                } else if (
+                                    window.navRef.current.main_polygon.scale ==
+                                    po.scale
+                                )
+                                    p5.stroke(255);
 
                                 var x1 = p5.width * scale.x;
                                 var y1 = p5.height * scale.y;
@@ -334,18 +268,23 @@ const Visualization = () => {
                 }
             }
 
-            for (var id = 0; id < layers.length; id++) {
+            for (let id = 0; id < layers.length; id++) {
                 var l = layers[id];
 
-                for (var po of l) {
-                    if (po.data && document.getElementById("visu_inp_l_" + getCheckboxIDByScale(po.scale)).checked) {
+                for (let po of l) {
+                    if (
+                        po.data &&
+                        document.getElementById(
+                            "visu_inp_l_" + getCheckboxIDByScale(po.scale)
+                        ).checked
+                    ) {
                         var cli = po.click();
                         if (cli && clickInNextFrame > 0) {
                             var mp = window.navRef.current.main_polygon;
-                            var n = mp.getNeighbors().map(x => x.scale)
+                            var n = mp.getNeighbors().map((x) => x.scale);
 
-                            addBreadcrumb(mp.scale, po.scale)
-                            window.navRef.current.jumpToScale(po.scale)
+                            addBreadcrumb(mp.scale, po.scale);
+                            window.navRef.current.jumpToScale(po.scale);
 
                             if (!n.includes(po.scale)) {
                                 //resetBreadcrumbs();
@@ -354,10 +293,12 @@ const Visualization = () => {
 
                         po.draw(
                             false,
-                            false, { x: 0, y: 0 },
-                            (window.navRef.current.main_polygon.scale == po.scale ?
-                                1.25 :
-                                1) + (cli ? 0.2 : 0)
+                            false,
+                            { x: 0, y: 0 },
+                            (window.navRef.current.main_polygon.scale ==
+                            po.scale
+                                ? 1.25
+                                : 1) + (cli ? 0.2 : 0)
                         );
                     }
                 }
@@ -374,34 +315,24 @@ const Visualization = () => {
         clickInNextFrame = 1;
     };
 
-    const mouseReleased = (p5, event) => {};
-
     const windowResized = (p5) => {
-        if (canvasParentRef) {
-            const p = canvasParentRef.getBoundingClientRect();
-            p5.resizeCanvas(p.width * 0.9, p.height * 0.9);
-
-            for (var l of layers) {
-                for (var po of l) {
-                    if (po) po.radius = (p5.width + p5.height) / 100;
-                }
-            }
-        }
+        // if (canvasParentRef) {
+        //     const p = canvasParentRef.getBoundingClientRect();
+        //     p5.resizeCanvas(p.width * 0.9, p.height * 0.9);
+        //     for (var l of layers) {
+        //         for (var po of l) {
+        //             if (po) po.radius = (p5.width + p5.height) / 100;
+        //         }
+        //     }
+        // }
     };
 
-    const preload = (p5) => {};
-
-    const resetBreadcrumbs = () => {
-        window.breadcrumbs = {};
-    }
-
-    return ( <
-        Sketch preload = { preload }
-        setup = { setup }
-        draw = { draw }
-        mousePressed = { mousePressed }
-        mouseReleased = { mouseReleased }
-        windowResized = { windowResized }
+    return (
+        <Sketch
+            setup={setup}
+            draw={draw}
+            mousePressed={mousePressed}
+            windowResized={windowResized}
         />
     );
 };
