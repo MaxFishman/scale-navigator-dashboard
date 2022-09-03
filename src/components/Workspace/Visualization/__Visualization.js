@@ -1,47 +1,137 @@
 import React from "react";
 import Sketch from "react-p5";
-import Layers from "./Layers";
-
-const fps = 30;
-let clickInNextFrame = 0;
-let ran_setup = false;
-let cnv;
-let l = 0;
-let last_mp = undefined;
-let layers = [];
+import Polygon from "components/Navigation/Navigator/Polygon";
+import ScaleData from "common/ScaleData";
 
 const Visualization = () => {
-    // var canvasParentRef = document.getElementById("canv_container_visu");
-    console.log("Init Visualization");
+    const fps = 30;
+    var clickInNextFrame = 0;
+    var ran_setup = false;
+    var canvasParentRef = document.getElementById("canv_container_visu");
+    var cnv;
+    var l = 0;
+
+    var last_mp = undefined;
     window.breadcrumbs = {};
 
-    const addBreadcrumb = (p1, p2, st = true) => {
-        if (!window.breadcrumbs[p1]) window.breadcrumbs[p1] = {};
-        if (!window.breadcrumbs[p2]) window.breadcrumbs[p2] = {};
-
-        window.breadcrumbs[p1][p2] = st;
-        window.breadcrumbs[p2][p1] = st;
-    };
+    /*
+    var diatonic = [],
+        acoustic = [],
+        harmonic_major = [],
+        harmonic_minor = [],
+        octatonic = [],
+        hexatonic = [],
+        whole_tone = [];*/
+    var layers = [];
 
     const setup = (p5, canvasParentRef) => {
-        if (canvasParentRef == null)
-            canvasParentRef = document.getElementById("canv_container_visu");
+        console.log("setup");
+
         if (canvasParentRef) {
             const p = canvasParentRef.getBoundingClientRect();
-            var s = (p5.width + p5.height) / 100;
 
             cnv = p5
                 .createCanvas(p.width * 0.9, p.height * 0.9)
                 .parent(canvasParentRef);
-
             p5.frameRate(fps);
             windowResized(p5);
+
             ran_setup = true;
 
-            layers = Layers(p5, s);
+            var keys = Object.keys(ScaleData);
+            var scale_data_arr = keys.map((k, id) =>
+                Object.defineProperty(ScaleData[k], "name", { value: k })
+            );
+
+            var s = (p5.width + p5.height) / 100;
+
+            layers = [
+                [
+                    new Polygon(p5, 0, 0, s, "c_diatonic"),
+                    new Polygon(p5, 0, 0, s, "g_diatonic"),
+                    new Polygon(p5, 0, 0, s, "d_diatonic"),
+                    new Polygon(p5, 0, 0, s, "a_diatonic"),
+                    new Polygon(p5, 0, 0, s, "e_diatonic"),
+                    new Polygon(p5, 0, 0, s, "b_diatonic"),
+                    new Polygon(p5, 0, 0, s, "fs_diatonic"),
+                    new Polygon(p5, 0, 0, s, "cs_diatonic"),
+                    new Polygon(p5, 0, 0, s, "gs_diatonic"),
+                    new Polygon(p5, 0, 0, s, "ds_diatonic"),
+                    new Polygon(p5, 0, 0, s, "as_diatonic"),
+                    new Polygon(p5, 0, 0, s, "f_diatonic"),
+                ],
+                [
+                    new Polygon(p5, 0, 0, s, "c_acoustic"),
+                    new Polygon(p5, 0, 0, s, "g_acoustic"),
+                    new Polygon(p5, 0, 0, s, "d_acoustic"),
+                    new Polygon(p5, 0, 0, s, "a_acoustic"),
+                    new Polygon(p5, 0, 0, s, "e_acoustic"),
+                    new Polygon(p5, 0, 0, s, "b_acoustic"),
+                    new Polygon(p5, 0, 0, s, "fs_acoustic"),
+                    new Polygon(p5, 0, 0, s, "cs_acoustic"),
+                    new Polygon(p5, 0, 0, s, "gs_acoustic"),
+                    new Polygon(p5, 0, 0, s, "ds_acoustic"),
+                    new Polygon(p5, 0, 0, s, "as_acoustic"),
+                    new Polygon(p5, 0, 0, s, "f_acoustic"),
+                ],
+                [
+                    new Polygon(p5, 0, 0, s, "d_harmonic_minor"),
+                    new Polygon(p5, 0, 0, s, "d_harmonic_major"),
+                    new Polygon(p5, 0, 0, s, "b_harmonic_minor"),
+                    new Polygon(p5, 0, 0, s, "b_harmonic_major"),
+                    new Polygon(p5, 0, 0, s, "gs_harmonic_minor"),
+                    new Polygon(p5, 0, 0, s, "gs_harmonic_major"),
+                    new Polygon(p5, 0, 0, s, "f_harmonic_minor"),
+                    new Polygon(p5, 0, 0, s, "f_harmonic_major"),
+                ],
+                [
+                    {},
+                    new Polygon(p5, 0, 0, s, "a_harmonic_minor"),
+                    new Polygon(p5, 0, 0, s, "a_harmonic_major"),
+                    {},
+                    new Polygon(p5, 0, 0, s, "fs_harmonic_minor"),
+                    new Polygon(p5, 0, 0, s, "fs_harmonic_major"),
+                    {},
+                    new Polygon(p5, 0, 0, s, "ds_harmonic_minor"),
+                    new Polygon(p5, 0, 0, s, "ds_harmonic_major"),
+                    {},
+                    new Polygon(p5, 0, 0, s, "c_harmonic_minor"),
+                    new Polygon(p5, 0, 0, s, "c_harmonic_major"),
+                ],
+                [
+                    new Polygon(p5, 0, 0, s, "g_harmonic_major"),
+                    new Polygon(p5, 0, 0, s, "e_harmonic_minor"),
+                    new Polygon(p5, 0, 0, s, "e_harmonic_major"),
+                    new Polygon(p5, 0, 0, s, "cs_harmonic_minor"),
+                    new Polygon(p5, 0, 0, s, "cs_harmonic_major"),
+                    new Polygon(p5, 0, 0, s, "as_harmonic_minor"),
+                    new Polygon(p5, 0, 0, s, "as_harmonic_major"),
+                    new Polygon(p5, 0, 0, s, "g_harmonic_minor"),
+                ],
+                [
+                    new Polygon(p5, 0, 0, s, "hexatonic_4"),
+                    new Polygon(p5, 0, 0, s, "hexatonic_3"),
+                    new Polygon(p5, 0, 0, s, "hexatonic_2"),
+                    new Polygon(p5, 0, 0, s, "hexatonic_1"),
+                ],
+                [
+                    {},
+                    new Polygon(p5, 0, 0, s, "octatonic_3"),
+                    {},
+                    new Polygon(p5, 0, 0, s, "octatonic_2"),
+                    {},
+                    new Polygon(p5, 0, 0, s, "octatonic_1"),
+                ],
+                [
+                    {},
+                    new Polygon(p5, 0, 0, s, "whole_tone_2"),
+                    {},
+                    new Polygon(p5, 0, 0, s, "whole_tone_1"),
+                ],
+            ];
 
             p5.translate(p5.width / 2, p5.height / 2);
-
+            console.log({ layers });
             for (var j = 0; j < layers.length; j++) {
                 l = 45 / 50 - j / (layers.length + 1);
                 var arr = layers[j];
@@ -61,17 +151,23 @@ const Visualization = () => {
         }
     };
 
+    const addBreadcrumb = (p1, p2, st = true) => {
+        if (!window.breadcrumbs[p1]) window.breadcrumbs[p1] = {};
+        if (!window.breadcrumbs[p2]) window.breadcrumbs[p2] = {};
+
+        window.breadcrumbs[p1][p2] = st;
+        window.breadcrumbs[p2][p1] = st;
+    };
+
     const draw = (p5) => {
         if (!ran_setup) setup(p5);
         else {
             p5.push();
 
-            // cnv.parent(canvasParentRef);
-            // const p = canvasParentRef.getBoundingClientRect();
-            // if (p5.width != p.width * 0.9 || p5.height != p.height * 0.9) {
-            //     windowResized(p5);
-            // }
-
+            cnv.parent(canvasParentRef);
+            const p = canvasParentRef.getBoundingClientRect();
+            if (p5.width != p.width * 0.9 || p5.height != p.height * 0.9)
+                windowResized(p5);
             p5.background(0);
 
             function getScaleObjectByName(name) {
@@ -98,10 +194,10 @@ const Visualization = () => {
                 } else return id;
             }
 
-            var old_m_p;
+            //p5.fill(255, 0, 0)
+            //p5.text(p5.mouseX + ", " + p5.mouseY, p5.mouseX, p5.mouseY)
 
-            // TODO:
-            // Data shouldnt be under window object.
+            var old_m_p;
             if (window.navRef.current.old_main_polygon) {
                 old_m_p = getScaleObjectByName(
                     window.navRef.current.old_main_polygon.scale
@@ -196,6 +292,14 @@ const Visualization = () => {
                                 (p5.mouseY - p5.height / 2) / lay_ellipse_h_r
                             );
                         if (
+                            /*
+                            l
+                            .map((x) => {
+                                if (x) return x.scale;
+                            })
+                            .includes(
+                                window.navRef.current.main_polygon.scale
+                            )*/
                             p5.dist(
                                 Math.cos(ang) * lay_ellipse_w_r + p5.width / 2,
                                 Math.sin(ang) * lay_ellipse_h_r + p5.height / 2,
@@ -211,6 +315,7 @@ const Visualization = () => {
                             var scale_d = getScaleObjectByName(adj);
                             var scale = scale_d.po;
 
+                            // && document.getElementById("visu_inp_l_" + scale_d.l).checked
                             if (
                                 scale &&
                                 document.getElementById(
@@ -222,6 +327,8 @@ const Visualization = () => {
                                         getCheckboxIDByScale(po.scale)
                                 ).checked
                             ) {
+                                //console.log(getCheckboxIDByScale(scale.scale), getCheckboxIDByScale(po.scale))
+
                                 if (scale.layer_id == po.layer_id) {
                                     p5.stroke(...cols_same[po.layer_id]);
                                     if (layerAllowed) p5.strokeWeight(sw * 3);
@@ -268,10 +375,10 @@ const Visualization = () => {
                 }
             }
 
-            for (let id = 0; id < layers.length; id++) {
+            for (var id = 0; id < layers.length; id++) {
                 var l = layers[id];
 
-                for (let po of l) {
+                for (var po of l) {
                     if (
                         po.data &&
                         document.getElementById(
@@ -315,23 +422,34 @@ const Visualization = () => {
         clickInNextFrame = 1;
     };
 
+    const mouseReleased = (p5, event) => {};
+
     const windowResized = (p5) => {
-        // if (canvasParentRef) {
-        //     const p = canvasParentRef.getBoundingClientRect();
-        //     p5.resizeCanvas(p.width * 0.9, p.height * 0.9);
-        //     for (var l of layers) {
-        //         for (var po of l) {
-        //             if (po) po.radius = (p5.width + p5.height) / 100;
-        //         }
-        //     }
-        // }
+        if (canvasParentRef) {
+            const p = canvasParentRef.getBoundingClientRect();
+            p5.resizeCanvas(p.width * 0.9, p.height * 0.9);
+
+            for (var l of layers) {
+                for (var po of l) {
+                    if (po) po.radius = (p5.width + p5.height) / 100;
+                }
+            }
+        }
+    };
+
+    const preload = (p5) => {};
+
+    const resetBreadcrumbs = () => {
+        window.breadcrumbs = {};
     };
 
     return (
         <Sketch
+            preload={preload}
             setup={setup}
             draw={draw}
             mousePressed={mousePressed}
+            mouseReleased={mouseReleased}
             windowResized={windowResized}
         />
     );

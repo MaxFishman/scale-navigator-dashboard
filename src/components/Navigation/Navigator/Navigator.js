@@ -2,7 +2,7 @@ import ChordChooser from "../../ToneJS/ChordChooser";
 import Polygon from "./Polygon";
 import Helper from "./Helper";
 
-function Navigator({ setScaleData }) {
+function Navigator({ setScaleData, setNavigatorData }) {
     this.scale = "c_diatonic";
     this.main_polygon = undefined;
     this.neighbors = [];
@@ -23,6 +23,14 @@ function Navigator({ setScaleData }) {
     };
 
     this.init = (p5) => {
+        window.addEventListener(
+            "jumpToScale",
+            (e) => {
+                this.jumpToScale(e.detail.polygonScale);
+            },
+            false
+        );
+
         this.p5 = p5;
         this.init_autopilot(p5);
 
@@ -40,6 +48,9 @@ function Navigator({ setScaleData }) {
             this.poly_size,
             this.scale
         );
+
+        setNavigatorData({ main_polygon: this.main_polygon });
+
         this.neighbors = this.main_polygon.getNeighbors();
         this.old_main_polygon = undefined;
         this.old_neighbors = undefined;
@@ -315,8 +326,6 @@ function Navigator({ setScaleData }) {
             .getNeighbors()
             .findIndex((x) => x.isMatching(p));
 
-        console.log(ind);
-
         if (ind >= 0) {
             var positions = p.getNeighborPositions(
                 p.x,
@@ -428,8 +437,11 @@ function Navigator({ setScaleData }) {
         // p5.push the current polygons into old polygons
         this.old_neighbors = [...this.neighbors];
         this.old_main_polygon = this.main_polygon;
+        setNavigatorData({ old_main_polygon: this.main_polygon });
 
         this.main_polygon = new_main;
+        setNavigatorData({ main_polygon: new_main });
+
         this.neighbors = this.preview_polygons;
 
         //Handle duplicates

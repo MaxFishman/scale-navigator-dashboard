@@ -1,7 +1,10 @@
 import React from "react";
 
 const Checkboxes = () => (
-    <div id="vis_checkboxes" style={{ position: "absolute" }}>
+    <div
+        id="vis_checkboxes"
+        style={{ position: "absolute", zIndex: 1, left: 0, top: 0 }}
+    >
         Diatonic
         <input type="checkbox" id="visu_inp_l_0" checked></input>
         <br></br>

@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useCallback } from "react";
 import { compose } from "recompose";
 import { useSelector, useDispatch } from "react-redux";
 import { useLocation } from "react-router-dom";
@@ -13,6 +13,8 @@ import styled from "styled-components";
 import { ReactComponent as Logo } from "../../assets/logo.svg";
 import { withFirebase } from "../Firebase";
 import { logoStyle } from "../../common/LayoutConfig";
+import { jumpToScaleEvent } from "../../events";
+
 import "./Navigation.scss";
 
 const MainWrapper = styled.div`
@@ -38,9 +40,19 @@ const Navigation = ({ firebase, authUser }) => {
     );
     const { scale } = scaleData;
 
-    const setScaleData = (payload) => {
-        dispatch({ type: "SET_SCALE_DATA", payload });
-    };
+    const setScaleData = useCallback(
+        (payload) => {
+            dispatch({ type: "SET_SCALE_DATA", payload });
+        },
+        [dispatch]
+    );
+
+    const setNavigatorData = useCallback(
+        (payload) => {
+            dispatch({ type: "SET_NAVIGATOR_DATA", payload });
+        },
+        [dispatch]
+    );
 
     const location = useLocation();
     const size = useWindowSize();
@@ -51,11 +63,16 @@ const Navigation = ({ firebase, authUser }) => {
     window.navRef = navRef;
 
     useEffect(() => {
-        navRef.current = new Navigator.Navigator({ setScaleData });
-    }, []);
+        const navigator = new Navigator.Navigator({
+            setScaleData,
+            setNavigatorData,
+        });
+
+        navRef.current = navigator;
+    }, [setNavigatorData, setScaleData]);
 
     useEffect(() => {
-        navRef.current.jumpToScale(scale);
+        jumpToScaleEvent(scale);
     }, [scale]);
 
     useEffect(() => {
@@ -82,7 +99,8 @@ const Navigation = ({ firebase, authUser }) => {
             }
 
             const { scaleData } = doc.data();
-            navRef.current.jumpToScale(scaleData);
+
+            jumpToScaleEvent(scaleData);
             setScaleData(scaleData);
         });
     };

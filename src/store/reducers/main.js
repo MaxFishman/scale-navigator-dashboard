@@ -12,6 +12,15 @@ const scaleData = {
     scaleIndex: 0,
 };
 
+const navigatorData = {
+    main_polygon: {
+        scale: undefined,
+    },
+    old_main_polygon: {
+        scale: undefined,
+    },
+};
+
 const midiData = {
     featureEnabled: false,
     midiEnabled: false,
@@ -29,6 +38,7 @@ const initialState = {
     userData,
     chordData,
     scaleData,
+    navigatorData,
     tabData,
     midiData,
     midiOutputs: [],
@@ -74,6 +84,17 @@ const reducer = (state = initialState, action) => {
                 scaleData: {
                     scale: newScaleData,
                     scaleIndex: state.scaleData.scaleIndex + 1,
+                },
+            };
+        }
+
+        case "SET_NAVIGATOR_DATA": {
+            const data = action.payload;
+
+            return {
+                ...state,
+                navigatorData: {
+                    ...data,
                 },
             };
         }

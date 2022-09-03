@@ -2,22 +2,26 @@ import React from "react";
 import "./Tablature.scss";
 
 export default function TabContainer({
-  onClose,
-  className,
-  instrumentName,
-  children,
+    onClose,
+    className,
+    instrumentName,
+    children,
 }) {
-  return (
-    <li className={"tabcontainer " + className}>
-      <h2 class="tabcontainer__title">{instrumentName}</h2>
+    return (
+        <li className={"tabcontainer " + className}>
+            <h2 className="tabcontainer__title">{instrumentName}</h2>
 
-      {/*<label class="tabcontainer__transposition" for="transposition">transposition:</label>
+            {/*<label className="tabcontainer__transposition" for="transposition">transposition:</label>
       <input type="text"></input>*/}
 
-      <button aria-label="Close" onClick={onClose} class="tabcontainer__close">
-        X
-      </button>
-      {children}
-    </li>
-  );
+            <button
+                aria-label="Close"
+                onClick={onClose}
+                className="tabcontainer__close"
+            >
+                X
+            </button>
+            {children}
+        </li>
+    );
 }

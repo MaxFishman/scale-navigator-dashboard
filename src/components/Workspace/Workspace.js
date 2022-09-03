@@ -10,7 +10,7 @@ import { Switch, Route, Redirect, useLocation } from "react-router-dom";
 import ROUTES from "common/Routes";
 import { Provider, KeepAlive } from "react-keep-alive";
 import Tabs from "components/Tabs";
-import Visualization from "./Visualization/Visualization";
+import Visualization from "./Visualization";
 import AccountLanding from "./AccountLanding";
 import LoginModal from "components/LoginModal";
 import SignUpModal from "components/SignUpModal";
@@ -67,8 +67,9 @@ export default function Workspace() {
                         <Provider>
                             <KeepAlive name="Visualization">
                                 <div
-                                    id="canv_container_visu"
-                                    className="navigation__scalenav visu-wrapper"
+                                    style={{
+                                        position: "relative",
+                                    }}
                                 >
                                     <Checkboxes />
                                     <Visualization />
