@@ -1,9 +1,8 @@
 import React from "react";
 import Sketch from "react-p5";
+import { useSelector } from "react-redux";
 import Layers from "./Layers";
-import { useSelector, useDispatch } from "react-redux";
 import { jumpToScaleEvent } from "../../../events";
-// import Polygon from "components/Navigation/Navigator/Polygon";
 
 const FPS_RATE = 30;
 let clickInNextFrame = 0;
@@ -11,30 +10,6 @@ let l = 0;
 let last_mp = undefined;
 let layers = [];
 let breadcrumbs = {};
-
-const doSomethingWithLayers = (p5, s) => {
-    // Create an array of Polygons.
-    const _layers = Layers(p5, s);
-
-    for (var j = 0; j < _layers.length; j++) {
-        l = 45 / 50 - j / (_layers.length + 1);
-        var arr = _layers[j];
-
-        for (var i = 0; i < arr.length; i++) {
-            var a = (Math.PI * 2 * i) / arr.length - Math.PI / 2;
-            var x = (Math.cos(a) * l) / 2;
-            var y = (Math.sin(a) * l) / 2;
-
-            if (arr[i]) {
-                arr[i].x = x + 1 / 2;
-                arr[i].y = y + 1 / 2;
-                arr[i].layer_id = j;
-            }
-        }
-    }
-
-    layers = arr;
-};
 
 const getScaleObjectByName = (name = "", layers) => {
     for (var id = 0; id < layers.length; id++) {
@@ -76,17 +51,13 @@ const Visualization = () => {
         p5.frameRate(FPS_RATE);
 
         p5.createCanvas(
-            canvasParentRef.clientWidth,
-            canvasParentRef.clientWidth
+            canvasParentRef.clientWidth / 1.2,
+            canvasParentRef.clientWidth / 1.2
         ).parent(canvasParentRef);
 
         const s = (p5.width + p5.height) / 100;
-        // doSomethingWithLayers(p5, s);
-        p5.translate(p5.width / 2, p5.height / 2);
 
         layers = Layers(p5, s);
-
-        p5.translate(p5.width / 2, p5.height / 2);
 
         for (var j = 0; j < layers.length; j++) {
             l = 45 / 50 - j / (layers.length + 1);
@@ -311,17 +282,17 @@ const Visualization = () => {
         clickInNextFrame = 1;
     };
 
-    const windowResized = (p5, canvasParentRef) => {
-        console.log(canvasParentRef);
-        // if (canvasParentRef) {
-        //     const p = canvasParentRef.getBoundingClientRect();
-        //     p5.resizeCanvas(p.width * 0.9, p.height * 0.9);
-        //     for (var l of layers) {
-        //         for (var po of l) {
-        //             if (po) po.radius = (p5.width + p5.height) / 100;
-        //         }
-        //     }
-        // }
+    const windowResized = (p5) => {
+        const parentElm = p5._renderer.parent();
+        const { width, height } = parentElm.getBoundingClientRect();
+
+        p5.resizeCanvas(width, height);
+
+        for (var l of layers) {
+            for (var po of l) {
+                if (po) po.radius = (p5.width + p5.height) / 100;
+            }
+        }
     };
 
     return (

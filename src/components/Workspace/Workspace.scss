@@ -71,31 +71,23 @@
     }
 }
 
-
-
-
 .visu-wrapper {
     width: 100%;
     padding: 5%;
 }
 
 #vis_checkboxes {
-
     @media (max-width: 900px) {
-        display:none;
+        display: none;
     }
-
 }
 
-
 #canv_container_visu {
-
     height: 51vh;
 
     @include md {
         height: 100%;
     }
-
 }
 
 .workspace__navwrap.desktop {
@@ -120,7 +112,7 @@
             border-radius: 20px 20px 0px 0px;
         }
 
-        &>a {
+        & > a {
             text-decoration: none;
             color: black;
         }
