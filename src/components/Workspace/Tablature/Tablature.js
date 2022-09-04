@@ -1,5 +1,5 @@
 import React from "react";
-import { useSelector, useDispatch } from 'react-redux'
+import { useSelector, useDispatch } from "react-redux";
 import Mandolin from "./instruments/strings/Mandolin";
 import Guitar from "./instruments/strings/Guitar";
 import Banjo from "./instruments/strings/Banjo";
@@ -22,77 +22,78 @@ import TabContainer from "./TabContainer";
 import "./Tablature.scss";
 
 const INST = {
-  GUITAR: {
-    name: "GUITAR",
-    display: "Guitar",
-    Fn: Guitar,
-  },
-  BANJO: {
-    name: "BANJO",
-    display: "Banjo",
-    Fn: Banjo,
-  },
-  MANDOLIN: {
-    name: "MANDOLIN",
-    display: "Mandolin",
-    Fn: Mandolin,
-  },
-  UKULELE: {
-    name: "UKULELE",
-    display: "Ukulele",
-    Fn: Ukulele,
-  },
-  FLUTE: {
-    name: "FLUTE",
-    display: "Flute",
-    Fn: Flute,
-  },
-  PIANO: {
-    name: "PIANO",
-    display: "Piano",
-    Fn: Piano,
-  },
-  TREBLESTAFF: {
-    name: "TREBLESTAFF",
-    display: "Treble Staff",
-    Fn: Treble,
-  },
-  BASSSTAFF: {
-    name: "BASSSTAFF",
-    display: "Bass Staff",
-    Fn: Bass,
-  },
-  ALTOSTAFF: {
-    name: "ALTOSTAFF",
-    display: "Alto Staff",
-    Fn: Alto,
-  },
-  SAXSTAFF: {
-    name: "SAXSTAFF",
-    display: "Sax Staff",
-    Fn: Sax,
-  },
-  TRIADS: {
-    name: "TRIADS",
-    display: "Triads",
-    Fn: Triads,
-  },
-  TRIADCIRCLE: {
-    name: "TRIADCIRCLE",
-    display: "Circle of Triads",
-    Fn: TriadCircle,
-  },
-  AUTOHARP: {
-    name: "AUTOHARP",
-    display: "Autoharp",
-    Fn: Autoharp,
-  },
+    GUITAR: {
+        name: "GUITAR",
+        display: "Guitar",
+        Fn: Guitar,
+    },
+    BANJO: {
+        name: "BANJO",
+        display: "Banjo",
+        Fn: Banjo,
+    },
+    MANDOLIN: {
+        name: "MANDOLIN",
+        display: "Mandolin",
+        Fn: Mandolin,
+    },
+    UKULELE: {
+        name: "UKULELE",
+        display: "Ukulele",
+        Fn: Ukulele,
+    },
+    FLUTE: {
+        name: "FLUTE",
+        display: "Flute",
+        Fn: Flute,
+    },
+    PIANO: {
+        name: "PIANO",
+        display: "Piano",
+        Fn: Piano,
+    },
+    TREBLESTAFF: {
+        name: "TREBLESTAFF",
+        display: "Treble Staff",
+        Fn: Treble,
+    },
+    BASSSTAFF: {
+        name: "BASSSTAFF",
+        display: "Bass Staff",
+        Fn: Bass,
+    },
+    ALTOSTAFF: {
+        name: "ALTOSTAFF",
+        display: "Alto Staff",
+        Fn: Alto,
+    },
+    SAXSTAFF: {
+        name: "SAXSTAFF",
+        display: "Sax Staff",
+        Fn: Sax,
+    },
+    TRIADS: {
+        name: "TRIADS",
+        display: "Triads",
+        Fn: Triads,
+    },
+    TRIADCIRCLE: {
+        name: "TRIADCIRCLE",
+        display: "Circle of Triads",
+        Fn: TriadCircle,
+    },
+    AUTOHARP: {
+        name: "AUTOHARP",
+        display: "Autoharp",
+        Fn: Autoharp,
+    },
 };
 
 export default function Tablature() {
-    const dispatch = useDispatch()
-    const { tabData, scaleData } = useSelector(state => state.root)
-    const setTablatureInstruments = (payload) => dispatch({ type: 'SET_TAB_DATA', payload })
+    const dispatch = useDispatch();
+    const { tabData, scaleData } = useSelector((state) => state.root);
+    const setTablatureInstruments = (payload) =>
+        dispatch({ type: "SET_TAB_DATA", payload });
     // console.log(scaleData);
     const options = [
         {
@@ -103,34 +104,34 @@ export default function Tablature() {
                 { label: "Mandolin", value: INST.MANDOLIN.name },
                 { label: "Ukulele", value: INST.UKULELE.name },
             ],
-            },
-            {
+        },
+        {
             label: "Aerophones",
             options: [{ label: "Flute", value: INST.FLUTE.name }],
-            },
-            {
+        },
+        {
             label: "Keyboard",
             options: [
                 { label: "Piano", value: INST.PIANO.name },
                 { label: "Autoharp", value: INST.AUTOHARP.name },
             ],
-            },
-            {
+        },
+        {
             label: "Staff Notation",
             options: [
                 { label: "Treble Staff", value: INST.TREBLESTAFF.name },
                 { label: "Bass Staff", value: INST.BASSSTAFF.name },
                 { label: "Alto Staff", value: INST.ALTOSTAFF.name },
-                { label: "Sax Staff", value: INST.SAXSTAFF.name }
+                { label: "Sax Staff", value: INST.SAXSTAFF.name },
             ],
-            },
-            {
+        },
+        {
             label: "Chords",
             options: [
                 { label: "Triads", value: INST.TRIADS.name },
                 {
-                label: "Circle of Major and Minor Triads",
-                value: INST.TRIADCIRCLE.name,
+                    label: "Circle of Major and Minor Triads",
+                    value: INST.TRIADCIRCLE.name,
                 },
             ],
         },
@@ -154,23 +155,23 @@ export default function Tablature() {
 
     const SortableTabsList = SortableContainer(({ keyData, curSelected }) => {
         return (
-            <ul class="alltabscontainer">
+            <ul className="alltabscontainer">
                 {curSelected.map((selection, i) => {
-                if (INST[selection.value]) {
-                    const Inst = INST[selection.value];
-                    const SortableTab = SortableElement(() => {
-                    return (
-                        <TabContainer
-                        onClose={makeCloseFn(Inst.name)}
-                        instrumentName={Inst.display}
-                        >
-                        <Inst.Fn keyData={keyData} />
-                        </TabContainer>
-                    );
-                    });
-                    return <SortableTab key={i} index={i}></SortableTab>;
-                }
-                return <></>;
+                    if (INST[selection.value]) {
+                        const Inst = INST[selection.value];
+                        const SortableTab = SortableElement(() => {
+                            return (
+                                <TabContainer
+                                    onClose={makeCloseFn(Inst.name)}
+                                    instrumentName={Inst.display}
+                                >
+                                    <Inst.Fn keyData={keyData} />
+                                </TabContainer>
+                            );
+                        });
+                        return <SortableTab key={i} index={i}></SortableTab>;
+                    }
+                    return <></>;
                 })}
             </ul>
         );
