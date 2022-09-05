@@ -5,7 +5,7 @@ import classNames from "classnames";
 export default function Autoharp({ keyData }) {
     return (
         <>
-            <div class="autoharp">
+            <div className="autoharp">
                 <div
                     class={classNames("autoharp__button autoharp__button c", {
                         "autoharp__button--on":
@@ -23,9 +23,7 @@ export default function Autoharp({ keyData }) {
                         }
                     )}
                 >
-                    <h2>
-                        E♭
-                    </h2>
+                    <h2>E♭</h2>
                 </div>
                 <div
                     class={classNames(
@@ -36,9 +34,7 @@ export default function Autoharp({ keyData }) {
                         }
                     )}
                 >
-                    <h2>
-                        F♯
-                    </h2>
+                    <h2>F♯</h2>
                 </div>
                 <div
                     class={classNames("autoharp__button autoharp__button a", {
@@ -57,9 +53,7 @@ export default function Autoharp({ keyData }) {
                         }
                     )}
                 >
-                    <h2>
-                        C♯
-                    </h2>
+                    <h2>C♯</h2>
                 </div>
                 <div
                     class={classNames("autoharp__button autoharp__button e", {
@@ -87,9 +81,7 @@ export default function Autoharp({ keyData }) {
                         }
                     )}
                 >
-                    <h2>
-                        B♭
-                    </h2>
+                    <h2>B♭</h2>
                 </div>
                 <div
                     class={classNames("autoharp__button autoharp__button d", {
@@ -119,9 +111,7 @@ export default function Autoharp({ keyData }) {
                         }
                     )}
                 >
-                    <h2>
-                        G♯
-                    </h2>
+                    <h2>G♯</h2>
                 </div>
 
                 <div
@@ -133,7 +123,7 @@ export default function Autoharp({ keyData }) {
                     <h2>B</h2>
                 </div>
             </div>
-            <div class="autoharp__clear"></div>
+            <div className="autoharp__clear"></div>
         </>
     );
 }

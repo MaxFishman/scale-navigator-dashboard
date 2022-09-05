@@ -1,7 +1,7 @@
 import Polygon from "./Polygon";
 import Helper from "./Helper";
 
-function Navigator({ setScaleData }) {
+function Navigator({ setScaleData, setNavigatorData }) {
     this.scale = "c_diatonic";
     this.main_polygon = undefined;
     this.neighbors = [];
@@ -18,11 +18,37 @@ function Navigator({ setScaleData }) {
         animate: true,
         max_visited: 10,
         visited: [],
-        chordClicks: 0
+        chordClicks: 0,
+    };
+    this.init = (p5) => {
+        window.addEventListener(
+            "jumpToScale",
+            (e) => {
+                this.jumpToScale(e.detail.polygonScale);
+            },
+            false
+        );
+
+        this.p5 = p5;
+        this.init_autopilot(p5);
+
+        this.poly_size = (this.p5.width + this.p5.height) / 22;
+        this.poly_size = p5.max(1200 / 22, this.poly_size);
+
+        this.initPolygons();
     };
 
     this.initPolygons = () => {
-        this.main_polygon = new Polygon(this.p5, 0.5, 0.5, this.poly_size, this.scale);
+        this.main_polygon = new Polygon(
+            this.p5,
+            0.5,
+            0.5,
+            this.poly_size,
+            this.scale
+        );
+
+        setNavigatorData({ main_polygon: this.main_polygon });
+
         this.neighbors = this.main_polygon.getNeighbors();
         this.old_main_polygon = undefined;
         this.old_neighbors = undefined;
@@ -32,18 +58,6 @@ function Navigator({ setScaleData }) {
         this.hover_polygons_to_be_removed = [];
         this.preview_polygons = [];
     };
-
-    this.init = (p5) => {
-        this.p5 = p5;
-        this.init_autopilot(p5);
-
-        this.poly_size = (this.p5.width + this.p5.height) / 22;
-        this.poly_size = p5.max((1200) / 22, this.poly_size);
-
-        this.initPolygons();
-    };
-
-
 
     this.draw = (p5) => {
         try {
@@ -87,35 +101,54 @@ function Navigator({ setScaleData }) {
             this.autopilot_data.period = this.autopilot_data.default_period;
 
         var k = 1;
-        if (document.getElementById("autopilot_interval") != null && document.getElementById("autopilot_interval")) k = document.getElementById("autopilot_interval").value
-        this.autopilot_data.chosen = p5.random(this.autopilot_data.period.map(x => x * k))
+        if (
+            document.getElementById("autopilot_interval") != null &&
+            document.getElementById("autopilot_interval")
+        )
+            k = document.getElementById("autopilot_interval").value;
+        this.autopilot_data.chosen = p5.random(
+            this.autopilot_data.period.map((x) => x * k)
+        );
 
         this.autopilot_data.intervalID = setInterval(
             (p5) => {
                 if (this.autopilot_data.active) {
                     var p = p5.random(this.neighbors.concat(this.main_polygon));
 
-                    var passes = 0
-                    while (this.autopilot_data.visited.includes(p) && passes < 100) {
+                    var passes = 0;
+                    while (
+                        this.autopilot_data.visited.includes(p) &&
+                        passes < 100
+                    ) {
                         p = p5.random(this.neighbors.concat(this.main_polygon));
-                        passes++
+                        passes++;
                     }
 
                     var k = 1;
-                    if (document.getElementById("autopilot_interval") != null && document.getElementById("autopilot_interval")) k = document.getElementById("autopilot_interval").value
-                    this.autopilot_data.chosen = p5.random(this.autopilot_data.period.map(x => x * k))
+                    if (
+                        document.getElementById("autopilot_interval") != null &&
+                        document.getElementById("autopilot_interval")
+                    )
+                        k = document.getElementById("autopilot_interval").value;
+                    this.autopilot_data.chosen = p5.random(
+                        this.autopilot_data.period.map((x) => x * k)
+                    );
 
                     if (this.autopilot_data.chordClicks > p5.random(4, 8)) {
-                        if (this.autopilot_data.visited.length >= this.autopilot_data.max_visited) {
-                            this.autopilot_data.visited.pop()
+                        if (
+                            this.autopilot_data.visited.length >=
+                            this.autopilot_data.max_visited
+                        ) {
+                            this.autopilot_data.visited.pop();
                         }
-                        this.autopilot_data.visited.unshift(p)
+                        this.autopilot_data.visited.unshift(p);
 
-                        this.autopilot_data.chordClicks = 0
+                        this.autopilot_data.chordClicks = 0;
                     } else {
                         p = this.main_polygon;
                         this.autopilot_data.chordClicks++;
-                        this.autopilot_data.chosen = Math.sqrt(this.autopilot_data.chosen / 500) * 500;
+                        this.autopilot_data.chosen =
+                            Math.sqrt(this.autopilot_data.chosen / 500) * 500;
                     }
 
                     this.changeMainScale(
@@ -125,7 +158,10 @@ function Navigator({ setScaleData }) {
                         this.autopilot_data.animate
                     );
 
-                    this.set_autopilot_period(p5, this.autopilot_data.default_period)
+                    this.set_autopilot_period(
+                        p5,
+                        this.autopilot_data.default_period
+                    );
                     return;
                 }
             },
@@ -144,7 +180,7 @@ function Navigator({ setScaleData }) {
 
     this.reset_autopilot = () => {
         this.autopilot_data.active = false;
-        this.autopilot_data.visited = []
+        this.autopilot_data.visited = [];
         this.autopilot_data.chordClicks = 0;
         this.set_autopilot_period(undefined);
     };
@@ -212,9 +248,8 @@ function Navigator({ setScaleData }) {
                 this.hover_polygons_to_be_removed.indexOf(h),
                 1
             );
-            this.hover_polygons_to_be_removed = this.hover_polygons_to_be_removed.map(
-                (x) => x - 1
-            );
+            this.hover_polygons_to_be_removed =
+                this.hover_polygons_to_be_removed.map((x) => x - 1);
             h--;
         }
 
@@ -224,8 +259,19 @@ function Navigator({ setScaleData }) {
                 var add = this.get_new_neighbors(p5, n).new;
 
                 var total_poly = this.neighbors.length;
-                var ind = this.main_polygon.getNeighbors().findIndex((x) => x.isMatching(n));
-                var pos = n.getNeighborPositions(n.x, n.y, n.radius, undefined, undefined, p5.PI / 2 + (2 * p5.PI * (ind - 1)) / total_poly, p5.PI / 2 + (2 * p5.PI * (ind + 1)) / total_poly, add.length)
+                var ind = this.main_polygon
+                    .getNeighbors()
+                    .findIndex((x) => x.isMatching(n));
+                var pos = n.getNeighborPositions(
+                    n.x,
+                    n.y,
+                    n.radius,
+                    undefined,
+                    undefined,
+                    p5.PI / 2 + (2 * p5.PI * (ind - 1)) / total_poly,
+                    p5.PI / 2 + (2 * p5.PI * (ind + 1)) / total_poly,
+                    add.length
+                );
 
                 for (var p = 0; p < add.length; p++) {
                     add[p].set(["x", n.x], ["y", n.y], ["generated_from", n]);
@@ -254,7 +300,8 @@ function Navigator({ setScaleData }) {
                                 1,
                                 (id) => {
                                     this.hover_polygons_to_be_removed.push(id);
-                                }, [s]
+                                },
+                                [h]
                             );
                         }
                     }
@@ -279,10 +326,17 @@ function Navigator({ setScaleData }) {
             .getNeighbors()
             .findIndex((x) => x.isMatching(p));
 
-        console.log(ind)
-
         if (ind >= 0) {
-            var positions = p.getNeighborPositions(p.x, p.y, p.radius, undefined, undefined, p5.PI / 2 + (2 * p5.PI * (ind - 1)) / total_poly, p5.PI / 2 + (2 * p5.PI * (ind + 1)) / total_poly, this.actually_new_polygons.length)
+            var positions = p.getNeighborPositions(
+                p.x,
+                p.y,
+                p.radius,
+                undefined,
+                undefined,
+                p5.PI / 2 + (2 * p5.PI * (ind - 1)) / total_poly,
+                p5.PI / 2 + (2 * p5.PI * (ind + 1)) / total_poly,
+                this.actually_new_polygons.length
+            );
             // var positions = p.getNeighborPositions(
             //     p.x,
             //     p.y,
@@ -296,9 +350,15 @@ function Navigator({ setScaleData }) {
 
             //position them
             for (var a_n = 0; a_n < this.actually_new_polygons.length; a_n++) {
-                var pol = this.preview_polygons.find(x => this.actually_new_polygons[a_n].isMatching(x))
+                var pol = this.preview_polygons.find((x) =>
+                    this.actually_new_polygons[a_n].isMatching(x)
+                );
 
-                pol.set(["x", positions[a_n].x], ["y", positions[a_n].y], ["size", positions[a_n].size])
+                pol.set(
+                    ["x", positions[a_n].x],
+                    ["y", positions[a_n].y],
+                    ["size", positions[a_n].size]
+                );
             }
 
             if (animation) {
@@ -320,7 +380,7 @@ function Navigator({ setScaleData }) {
     this.updateSizes = (p5) => {
         var oldps = this.poly_size;
         this.poly_size = (p5.width + p5.height) / 22;
-        this.poly_size = p5.max((1200) / 22, this.poly_size)
+        this.poly_size = p5.max(1200 / 22, this.poly_size);
 
         //background(255);
         var allPolygons = [this.main_polygon].concat(
@@ -332,7 +392,7 @@ function Navigator({ setScaleData }) {
         allPolygons.push(this.old_main_polygon);
 
         for (var p of allPolygons) {
-            if (p) p.radius = p.radius / oldps * this.poly_size;
+            if (p) p.radius = (p.radius / oldps) * this.poly_size;
         }
 
         var pos = this.main_polygon.getNeighborPositions();
@@ -340,7 +400,7 @@ function Navigator({ setScaleData }) {
             this.neighbors[p].x = pos[p].x;
             this.neighbors[p].y = pos[p].y;
         }
-    }
+    };
 
     this.get_new_neighbors = (p5, p) => {
         var prev_poly = p.getNeighbors();
@@ -377,12 +437,18 @@ function Navigator({ setScaleData }) {
         // p5.push the current polygons into old polygons
         this.old_neighbors = [...this.neighbors];
         this.old_main_polygon = this.main_polygon;
+        setNavigatorData({ old_main_polygon: this.main_polygon });
 
         this.main_polygon = new_main;
+        setNavigatorData({ main_polygon: new_main });
+
         this.neighbors = this.preview_polygons;
 
         //Handle duplicates
-        this.old_neighbors.splice(this.old_neighbors.indexOf(this.main_polygon), 1);
+        this.old_neighbors.splice(
+            this.old_neighbors.indexOf(this.main_polygon),
+            1
+        );
 
         // duplicate of main polygon
         var index = this.neighbors.findIndex((x) => {
@@ -457,12 +523,12 @@ function Navigator({ setScaleData }) {
     this.updateScaleState = (newScale) => {
         this.scale = newScale;
         setScaleData(newScale);
-        window.setFirebaseScaleData(newScale)
-    }
+        window.setFirebaseScaleData(newScale);
+    };
 
     this.jumpToScale = (newScale) => {
         if (newScale !== this.scale) {
-            this.updateScaleState(newScale)
+            this.updateScaleState(newScale);
             this.initPolygons();
         }
     };
