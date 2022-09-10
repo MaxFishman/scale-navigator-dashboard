@@ -47,53 +47,12 @@ const Navigation = ({ firebase, authUser }) => {
         [dispatch]
     );
 
-    const setNavigatorData = useCallback(
-        (payload) => {
-            dispatch({ type: "SET_NAVIGATOR_DATA", payload });
-        },
-        [dispatch]
-    );
-
-    const location = useLocation();
-    const size = useWindowSize();
-    const isMobile = size.width < 425;
-
-    const canvasWrapperRef = useRef(null);
-    const navRef = useRef(null);
-    window.navRef = navRef;
-
-    useEffect(() => {
-        const navigator = new Navigator.Navigator({
-            setScaleData,
-            setNavigatorData,
-        });
-
-        navRef.current = navigator;
-    }, [setNavigatorData, setScaleData]);
-
-    useEffect(() => {
-        jumpToScaleEvent(scale);
-    }, [scale]);
-
-    useEffect(() => {
-        if (isEnsembleMember) getFirebaseScaleData();
-    }, [isEnsembleMember]);
-
-    const setFirebaseScaleData = (scaleData) => {
-        const roomId = currentRoomId;
-        firebase.room(roomId).update({ scaleData });
-    };
-
-    window.setFirebaseScaleData = setFirebaseScaleData;
-
-    const getFirebaseScaleData = () => {
-        const roomId = currentRoomId;
-
-        if (!roomId) {
+    const getFirebaseScaleData = useCallback(() => {
+        if (!currentRoomId) {
             return;
         }
 
-        firebase.room(roomId).onSnapshot((doc) => {
+        firebase.room(currentRoomId).onSnapshot((doc) => {
             if (!doc.exists) {
                 return;
             }
@@ -103,7 +62,39 @@ const Navigation = ({ firebase, authUser }) => {
             jumpToScaleEvent(scaleData);
             setScaleData(scaleData);
         });
+    }, [currentRoomId, firebase, setScaleData]);
+
+    const location = useLocation();
+    const size = useWindowSize();
+    const isMobile = size.width < 425;
+
+    const canvasWrapperRef = useRef(null);
+    const navRef = useRef(null);
+    window.navRef = navRef;
+
+    // useEffect(() => {
+    //     const navigator = new Navigator.Navigator({
+    //         setScaleData,
+    //         setNavigatorData,
+    //     });
+
+    //     navRef.current = navigator;
+    // }, [setNavigatorData, setScaleData]);
+
+    useEffect(() => {
+        jumpToScaleEvent(scale);
+    }, [scale]);
+
+    useEffect(() => {
+        if (isEnsembleMember) getFirebaseScaleData();
+    }, [isEnsembleMember, getFirebaseScaleData]);
+
+    const setFirebaseScaleData = (scaleData) => {
+        const roomId = currentRoomId;
+        firebase.room(roomId).update({ scaleData });
     };
+
+    window.setFirebaseScaleData = setFirebaseScaleData;
 
     const hasActiveRoute = isMobile && location.pathname !== "/";
     const wrapperStyle = hasActiveRoute
@@ -141,8 +132,8 @@ const Navigation = ({ firebase, authUser }) => {
                 )}
 
                 <ScaleNavigator
-                    canvasWrapperRef={canvasWrapperRef}
                     navRef={navRef.current}
+                    canvasWrapperRef={canvasWrapperRef}
                     hasActiveRoute={hasActiveRoute}
                 />
 

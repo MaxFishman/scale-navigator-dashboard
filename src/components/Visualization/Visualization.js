@@ -30,7 +30,7 @@ const Navigation = () => {
     const navRef = useRef(null);
 
     useEffect(() => {
-        navRef.current = new Navigator.Navigator(setScaleData);
+        // navRef.current = new Navigator.Navigator(setScaleData);
     }, []);
 
     useEffect(() => {
@@ -58,7 +58,6 @@ const Navigation = () => {
 
             <ScaleNavigator
                 canvasWrapperRef={canvasWrapperRef}
-                navRef={navRef.current}
                 hasActiveRoute={hasActiveRoute}
             />
 

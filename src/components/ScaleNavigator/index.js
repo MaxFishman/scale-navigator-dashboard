@@ -7,7 +7,7 @@ export const sketchWrapperStyle = {
     marginTop: "53px",
 };
 
-const ScaleNavigator = ({ canvasWrapperRef, navRef, hasActiveRoute }) => {
+const ScaleNavigator = ({ navRef, canvasWrapperRef, hasActiveRoute }) => {
     const { isEnsembleMember } = useSelector((state) => state.root);
 
     return (
@@ -18,7 +18,7 @@ const ScaleNavigator = ({ canvasWrapperRef, navRef, hasActiveRoute }) => {
             style={hasActiveRoute ? sketchWrapperStyle : {}}
         >
             <Pfivesketch
-                navRef={navRef}
+                // navRef={navRef}
                 canvasWrapperRef={canvasWrapperRef}
                 isMember={isEnsembleMember}
             />
