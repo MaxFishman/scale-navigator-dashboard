@@ -282,25 +282,25 @@ const Visualization = () => {
         clickInNextFrame = 1;
     };
 
-    const windowResized = (p5) => {
-        const parentElm = p5._renderer.parent();
-        const { width, height } = parentElm.getBoundingClientRect();
+    // const windowResized = (p5) => {
+    //     const parentElm = p5._renderer.parent();
+    //     const { width, height } = parentElm.getBoundingClientRect();
 
-        p5.resizeCanvas(width, height);
+    //     p5.resizeCanvas(width, height);
 
-        for (var l of layers) {
-            for (var po of l) {
-                if (po) po.radius = (p5.width + p5.height) / 100;
-            }
-        }
-    };
+    //     for (var l of layers) {
+    //         for (var po of l) {
+    //             if (po) po.radius = (p5.width + p5.height) / 100;
+    //         }
+    //     }
+    // };
 
     return (
         <Sketch
             setup={setup}
             draw={draw}
             mousePressed={mousePressed}
-            windowResized={windowResized}
+            // windowResized={windowResized}
         />
     );
 };

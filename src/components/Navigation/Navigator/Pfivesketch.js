@@ -67,7 +67,7 @@ function Pfivesketch({ canvasWrapperRef, isMember = false }) {
 
     const mouseReleased = (p5, event) => {
         if (isMember) return;
-        navigatorMouseReleased({ setNavigatorData, event });
+        navigatorMouseReleased({ setScaleData, setNavigatorData, event });
     };
 
     const windowResized = (p5) => {

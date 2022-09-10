@@ -30,7 +30,12 @@ export const init = ({ p5, setNavigatorData, setScaleData }) => {
     window.addEventListener(
         "jumpToScale",
         (e) => {
-            jumpToScale({ p5, newScale: e.detail.polygonScale });
+            jumpToScale({
+                p5,
+                newScale: e.detail.polygonScale,
+                setScaleData,
+                setNavigatorData,
+            });
         },
         false
     );
@@ -217,7 +222,11 @@ export const navigatorMousePressed = ({ p5, setScaleData, event }) => {
     }
 };
 
-export const navigatorMouseReleased = ({ setNavigatorData, event }) => {
+export const navigatorMouseReleased = ({
+    setScaleData,
+    setNavigatorData,
+    event,
+}) => {
     if (event.type === "mouseup") {
         // check for clicks on all polygons
         for (var p of neighbors) {
@@ -227,7 +236,11 @@ export const navigatorMouseReleased = ({ setNavigatorData, event }) => {
                 !p.animation.active &&
                 preview_polygons_ready
             ) {
-                finishChangeMainScale({ setNavigatorData, new_main: p });
+                finishChangeMainScale({
+                    setScaleData,
+                    setNavigatorData,
+                    new_main: p,
+                });
                 return;
             }
         }
@@ -278,8 +291,8 @@ export const third_gen_hover = (p5) => {
 
             hover_polygons.push(...add);
         } else if (clickData.end) {
-            for (var p of get_new_neighbors(n).new) {
-                for (var h = 0; h < hover_polygons.length; h++) {
+            for (let p of get_new_neighbors(n).new) {
+                for (let h = 0; h < hover_polygons.length; h++) {
                     if (
                         hover_polygons[h].isMatching(p) &&
                         hover_polygons[h].generated_from == n
@@ -382,12 +395,12 @@ export const updateSizes = (p5) => {
     allPolygons.push(...neighbors);
     allPolygons.push(old_main_polygon);
 
-    for (var p of allPolygons) {
+    for (let p of allPolygons) {
         if (p) p.radius = (p.radius / oldps) * poly_size;
     }
 
     var pos = main_polygon.getNeighborPositions();
-    for (var p = 0; p < neighbors.length; p++) {
+    for (let p = 0; p < neighbors.length; p++) {
         neighbors[p].x = pos[p].x;
         neighbors[p].y = pos[p].y;
     }
@@ -399,6 +412,7 @@ export const get_new_neighbors = (p) => {
     // duplicates between neighbors
     var all_current = neighbors.concat([main_polygon]);
     var acc_new_poly = new Set();
+
     for (var n = 0; n < all_current.length; n++) {
         for (var pre = 0; pre < prev_poly.length; pre++) {
             if (all_current[n].isMatching(prev_poly[pre])) {
@@ -461,7 +475,9 @@ export const finishChangeMainScale = ({
                 positions[i].size,
                 1
             );
-        } catch (error) {}
+        } catch (error) {
+            console.error(error);
+        }
     }
 
     // Neighboring polygons animation
@@ -507,9 +523,14 @@ export const updateScaleState = ({ setScaleData, newScale }) => {
     window.setFirebaseScaleData(newScale);
 };
 
-export const jumpToScale = ({ p5, newScale, setScaleData }) => {
+export const jumpToScale = ({
+    p5,
+    newScale,
+    setScaleData,
+    setNavigatorData,
+}) => {
     if (newScale !== scale) {
         updateScaleState({ newScale, setScaleData });
-        initPolygons({ p5 });
+        initPolygons({ p5, setNavigatorData });
     }
 };
