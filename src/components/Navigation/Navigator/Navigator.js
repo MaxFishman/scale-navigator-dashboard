@@ -40,6 +40,14 @@ export const init = ({ p5, setNavigatorData, setScaleData }) => {
         false
     );
 
+    window.addEventListener(
+        "navigatorAutoPilot",
+        (e) => {
+            toggle_autopilot(e.detail.state);
+        },
+        false
+    );
+
     init_autopilot({ p5, setScaleData });
 
     poly_size = (p5.width + p5.height) / 22;
@@ -173,7 +181,7 @@ export const navigatorDraw = ({ p5 }) => {
             hover_polygons[h].draw(false);
         }
 
-        //background(255);
+        // background(255);
         var allPolygons = [main_polygon].concat(
             preview_polygons,
             old_neighbors
@@ -184,10 +192,22 @@ export const navigatorDraw = ({ p5 }) => {
         //draw all the polygons
         for (var p of allPolygons) {
             if (p) {
-                // p.draw(true, p != main_polygon, neighbors.includes(p) ? {
-                //     x: (p.animation.target.x - main_polygon.animation.target.x) / 3,
-                //     y: (p.animation.target.y - main_polygon.animation.target.y) / 3
-                // } : { x: 0, y: 0 });
+                // p.draw(
+                //     true,
+                //     p != main_polygon,
+                //     neighbors.includes(p)
+                //         ? {
+                //               x:
+                //                   (p.animation.target.x -
+                //                       main_polygon.animation.target.x) /
+                //                   3,
+                //               y:
+                //                   (p.animation.target.y -
+                //                       main_polygon.animation.target.y) /
+                //                   3,
+                //           }
+                //         : { x: 0, y: 0 }
+                // );
                 p.draw(true);
             }
             // document.getElementById("labels_checkbox").checked
@@ -422,9 +442,9 @@ export const get_new_neighbors = (p) => {
     }
 
     // find polygons which are actually new
-    for (var pre = 0; pre < prev_poly.length; pre++) {
-        if (!all_current.includes(prev_poly[pre])) {
-            acc_new_poly.add(prev_poly[pre]);
+    for (var _pre = 0; _pre < prev_poly.length; _pre++) {
+        if (!all_current.includes(prev_poly[_pre])) {
+            acc_new_poly.add(prev_poly[_pre]);
         }
     }
 
@@ -520,7 +540,7 @@ export const changeMainScale = ({
 export const updateScaleState = ({ setScaleData, newScale }) => {
     scale = newScale;
     setScaleData(newScale);
-    window.setFirebaseScaleData(newScale);
+    // window.setFirebaseScaleData(newScale);
 };
 
 export const jumpToScale = ({

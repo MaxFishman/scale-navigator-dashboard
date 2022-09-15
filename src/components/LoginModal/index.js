@@ -136,7 +136,7 @@ const LoginModal = (props) => {
                 style={customStyles}
                 onRequestClose={()=>window.location.replace('/account')}
             >
-                <form autocomplete="off"  onSubmit={onSubmit}>
+                <form autoComplete="off"  onSubmit={onSubmit}>
                     <Wrapper>
 
                         <Title>Login to access!</Title>

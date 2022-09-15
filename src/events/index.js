@@ -7,3 +7,13 @@ export const jumpToScaleEvent = (scale) => {
         })
     );
 };
+
+export const navigatorAutoPilot = (state) => {
+    window.dispatchEvent(
+        new CustomEvent("navigatorAutoPilot", {
+            detail: {
+                state,
+            },
+        })
+    );
+};

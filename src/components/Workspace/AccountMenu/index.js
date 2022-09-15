@@ -41,7 +41,7 @@ function AccountMenu(props) {
        )}
   </AuthUserContext.Consumer>
  )
-};
+}
 
 
 

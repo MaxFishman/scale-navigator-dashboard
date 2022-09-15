@@ -1,10 +1,9 @@
-import React, { useEffect, useRef, useCallback } from "react";
+import React, { useEffect, useCallback } from "react";
 import { compose } from "recompose";
 import { useSelector, useDispatch } from "react-redux";
 import { useLocation } from "react-router-dom";
 import ScaleData from "common/ScaleData";
 import PitchClassData from "common/PitchClassData";
-import Navigator from "./Navigator/Navigator";
 import Tabs from "components/Tabs";
 import ScaleNavigator from "components/ScaleNavigator";
 import MobileMenu from "../MobileMenu";
@@ -13,7 +12,7 @@ import styled from "styled-components";
 import { ReactComponent as Logo } from "../../assets/logo.svg";
 import { withFirebase } from "../Firebase";
 import { logoStyle } from "../../common/LayoutConfig";
-import { jumpToScaleEvent } from "../../events";
+import { jumpToScaleEvent, navigatorAutoPilot } from "../../events";
 
 import "./Navigation.scss";
 
@@ -68,19 +67,6 @@ const Navigation = ({ firebase, authUser }) => {
     const size = useWindowSize();
     const isMobile = size.width < 425;
 
-    const canvasWrapperRef = useRef(null);
-    const navRef = useRef(null);
-    window.navRef = navRef;
-
-    // useEffect(() => {
-    //     const navigator = new Navigator.Navigator({
-    //         setScaleData,
-    //         setNavigatorData,
-    //     });
-
-    //     navRef.current = navigator;
-    // }, [setNavigatorData, setScaleData]);
-
     useEffect(() => {
         jumpToScaleEvent(scale);
     }, [scale]);
@@ -89,18 +75,24 @@ const Navigation = ({ firebase, authUser }) => {
         if (isEnsembleMember) getFirebaseScaleData();
     }, [isEnsembleMember, getFirebaseScaleData]);
 
-    const setFirebaseScaleData = (scaleData) => {
-        const roomId = currentRoomId;
-        firebase.room(roomId).update({ scaleData });
-    };
-
-    window.setFirebaseScaleData = setFirebaseScaleData;
+    // TODO: refactor
+    // shouldnt be under window object.
+    //
+    // const setFirebaseScaleData = (scaleData) => {
+    //     const roomId = currentRoomId;
+    //     firebase.room(roomId).update({ scaleData });
+    // };
+    // window.setFirebaseScaleData = setFirebaseScaleData;
 
     const hasActiveRoute = isMobile && location.pathname !== "/";
     const wrapperStyle = hasActiveRoute
         ? { height: "40vh", overflow: "hidden" }
         : {};
     const navInfoStyle = hasActiveRoute ? { display: "none" } : {};
+
+    const handleAutoPilotToggle = (event) => {
+        navigatorAutoPilot(event.target.checked);
+    };
 
     return (
         <div className="navigation" style={wrapperStyle}>
@@ -131,11 +123,7 @@ const Navigation = ({ firebase, authUser }) => {
                     </HostBanner>
                 )}
 
-                <ScaleNavigator
-                    navRef={navRef.current}
-                    canvasWrapperRef={canvasWrapperRef}
-                    hasActiveRoute={hasActiveRoute}
-                />
+                <ScaleNavigator hasActiveRoute={hasActiveRoute} />
 
                 <div className="navinfo" style={navInfoStyle}>
                     <div className="navinfo__root">
@@ -158,7 +146,7 @@ const Navigation = ({ firebase, authUser }) => {
                                 type="checkbox"
                                 autoComplete="off"
                                 name="autopilot"
-                                id="autopilot_checkbox"
+                                onChange={handleAutoPilotToggle}
                             />
                             <label htmlFor="autopilot">autopilot</label>
                         </div>

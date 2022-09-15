@@ -37,7 +37,7 @@
         "react-recompose": "^0.31.1",
         "react-redux": "^7.2.5",
         "react-router-dom": "^5.2.1",
-        "react-scripts": "4.0.3",
+        "react-scripts": "5.0.1",
         "react-select": "^4.3.1",
         "react-sortable-hoc": "^2.0.0",
         "react-tabs": "^3.2.2",
@@ -70,7 +70,7 @@
         ]
     },
     "devDependencies": {
-        "eslint": "^8.23.0",
+        "eslint": "^7.11.0",
         "eslint-plugin-react": "^7.31.8",
         "prettier": "^2.3.2"
     }

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useRef } from "react";
 import Pfivesketch from "../Navigation/Navigator/Pfivesketch";
 import { useSelector } from "react-redux";
 
@@ -7,21 +7,18 @@ export const sketchWrapperStyle = {
     marginTop: "53px",
 };
 
-const ScaleNavigator = ({ navRef, canvasWrapperRef, hasActiveRoute }) => {
+const ScaleNavigator = ({ hasActiveRoute }) => {
     const { isEnsembleMember } = useSelector((state) => state.root);
+    const wrapperRef = useRef();
 
     return (
         <div
-            className="navigation__scalenav canvas-wrapper"
+            ref={wrapperRef}
             id="canv_container"
-            ref={canvasWrapperRef}
+            className="navigation__scalenav canvas-wrapper"
             style={hasActiveRoute ? sketchWrapperStyle : {}}
         >
-            <Pfivesketch
-                // navRef={navRef}
-                canvasWrapperRef={canvasWrapperRef}
-                isMember={isEnsembleMember}
-            />
+            <Pfivesketch isMember={isEnsembleMember} wrapperRef={wrapperRef} />
         </div>
     );
 };

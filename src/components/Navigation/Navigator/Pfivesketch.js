@@ -1,6 +1,5 @@
-import React, { useEffect, useCallback } from "react";
-import { useSelector, useDispatch } from "react-redux";
-import { useLocation } from "react-router-dom";
+import React, { useCallback } from "react";
+import { useDispatch } from "react-redux";
 import Sketch from "react-p5";
 import {
     init,
@@ -11,7 +10,7 @@ import {
 
 const fps = 30;
 
-function Pfivesketch({ canvasWrapperRef, isMember = false }) {
+function Pfivesketch({ isMember = false, wrapperRef }) {
     const dispatch = useDispatch();
 
     const setScaleData = useCallback(
@@ -28,36 +27,21 @@ function Pfivesketch({ canvasWrapperRef, isMember = false }) {
         [dispatch]
     );
 
-    // const location = useLocation();
-
-    // useLayoutEffect(() => {
-    // const p = wrapperElm && wrapperElm.getBoundingClientRect();
-    // window.scaleP5 && window.scaleP5.resizeCanvas(p.width, p.height);
-    // }, [location.pathname]);
-
-    const wrapperElm = canvasWrapperRef.current;
-
-    const setup = (p5, canvasParentRef) => {
-        const p = wrapperElm && wrapperElm.getBoundingClientRect();
+    const setup = (p5) => {
+        const p = wrapperRef.current.getBoundingClientRect();
 
         p5.createCanvas(
             p.width,
             Math.max(p.height, document.body.getBoundingClientRect().height / 2)
-        ).parent(canvasParentRef);
+        ).parent(wrapperRef.current);
+
         p5.frameRate(fps);
-        windowResized(p5);
         init({ p5, setNavigatorData, setScaleData });
     };
 
     const draw = (p5) => {
         p5.clear();
         navigatorDraw({ p5 });
-        // if (
-        //     document.getElementById("autopilot_checkbox").checked !==
-        //     navRef.autopilot_data.active
-        // ) {
-        //     navRef.toggle_autopilot();
-        // }
     };
 
     const mousePressed = (p5, event) => {
@@ -70,19 +54,12 @@ function Pfivesketch({ canvasWrapperRef, isMember = false }) {
         navigatorMouseReleased({ setScaleData, setNavigatorData, event });
     };
 
-    const windowResized = (p5) => {
-        const p = wrapperElm && wrapperElm.getBoundingClientRect();
-        p5.resizeCanvas(p.width, p.height);
-        // navRef.updateSizes(p5);
-    };
-
     return (
         <Sketch
             setup={setup}
             draw={draw}
             mousePressed={mousePressed}
             mouseReleased={mouseReleased}
-            // windowResized={windowResized}
         />
     );
 }
