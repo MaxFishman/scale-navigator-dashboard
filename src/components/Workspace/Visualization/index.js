@@ -278,7 +278,7 @@ const Visualization = () => {
         p5.pop();
     };
 
-    const mousePressed = (p5, event) => {
+    const mousePressed = () => {
         clickInNextFrame = 1;
     };
 

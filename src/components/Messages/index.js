@@ -1,6 +1,6 @@
-import React from 'react';
-import styled from 'styled-components';
-import SendMessage from './SendMessage'
+import React from "react";
+import styled from "styled-components";
+import SendMessage from "./SendMessage";
 
 const Wrapper = styled.div`
     color: #fff;
@@ -25,23 +25,22 @@ const MessageBubble = styled.div`
     padding: 4px 12px;
 `;
 
-const formatCreatedAt = (timestamp) => new Date(timestamp).toTimeString().split(' ')[0]
+const formatCreatedAt = (timestamp) =>
+    new Date(timestamp).toTimeString().split(" ")[0];
 
 const Messages = ({ data = [] }) => (
     <Wrapper>
-        {data.map(({ createdAt, userId, message }, key)=> (
-            <div>
+        {data.map(({ createdAt, userId, message }, key) => (
+            <div key={key}>
                 <MsgHeader>
                     {userId}
                     <span>{formatCreatedAt(createdAt)}</span>
                 </MsgHeader>
-                <MessageBubble key={key}>
-                {message}
-                </MessageBubble>
+                <MessageBubble key={key}>{message}</MessageBubble>
             </div>
         ))}
     </Wrapper>
 );
 
-export {SendMessage}
+export { SendMessage };
 export default Messages;

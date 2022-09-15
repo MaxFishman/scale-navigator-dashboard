@@ -1,5 +1,4 @@
 import React, { useEffect } from "react";
-import PitchClassData from "common/PitchClassData";
 import Vex from "vexflow";
 
 export default function Bass({ keyData }) {

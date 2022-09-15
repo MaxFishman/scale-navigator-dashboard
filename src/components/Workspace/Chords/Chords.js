@@ -106,7 +106,7 @@ class Chords extends React.Component {
         this.updateNotation();
     }
 
-    componentDidUpdate(prevProps, prevState) {
+    componentDidUpdate(prevProps) {
         if (this.props.chordData.chord !== prevProps.chordData.chord) {
             this.updateNotation();
         }
@@ -279,9 +279,13 @@ class Chords extends React.Component {
         const modulate = (scale) => () => this.modulate(scale);
 
         const pivotModulationButtons = this.getPivotModulations().map(
-            (scale) => {
+            (scale, key) => {
                 return (
-                    <button className="supersets" onClick={modulate(scale)}>
+                    <button
+                        key={key}
+                        className="supersets"
+                        onClick={modulate(scale)}
+                    >
                         {scale
                             .split("_")
                             .map((word) => word.charAt(0) + word.slice(1))
