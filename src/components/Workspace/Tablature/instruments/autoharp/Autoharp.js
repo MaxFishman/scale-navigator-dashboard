@@ -7,7 +7,7 @@ export default function Autoharp({ keyData }) {
         <>
             <div className="autoharp">
                 <div
-                    class={classNames("autoharp__button autoharp__button c", {
+                    className={classNames("autoharp__button autoharp__button c", {
                         "autoharp__button--on":
                             keyData.pitch_classes.includes(0),
                     })}
@@ -15,7 +15,7 @@ export default function Autoharp({ keyData }) {
                     <h2>C</h2>
                 </div>
                 <div
-                    class={classNames(
+                    className={classNames(
                         "autoharp__button autoharp__button d_sharp",
                         {
                             "autoharp__button--on":
@@ -26,7 +26,7 @@ export default function Autoharp({ keyData }) {
                     <h2>E♭</h2>
                 </div>
                 <div
-                    class={classNames(
+                    className={classNames(
                         "autoharp__button autoharp__button f_sharp",
                         {
                             "autoharp__button--on":
@@ -37,7 +37,7 @@ export default function Autoharp({ keyData }) {
                     <h2>F♯</h2>
                 </div>
                 <div
-                    class={classNames("autoharp__button autoharp__button a", {
+                    className={classNames("autoharp__button autoharp__button a", {
                         "autoharp__button--on":
                             keyData.pitch_classes.includes(9),
                     })}
@@ -45,7 +45,7 @@ export default function Autoharp({ keyData }) {
                     <h2>A</h2>
                 </div>
                 <div
-                    class={classNames(
+                    className={classNames(
                         "autoharp__button autoharp__button c_sharp",
                         {
                             "autoharp__button--on":
@@ -56,7 +56,7 @@ export default function Autoharp({ keyData }) {
                     <h2>C♯</h2>
                 </div>
                 <div
-                    class={classNames("autoharp__button autoharp__button e", {
+                    className={classNames("autoharp__button autoharp__button e", {
                         "autoharp__button--on":
                             keyData.pitch_classes.includes(4),
                     })}
@@ -65,7 +65,7 @@ export default function Autoharp({ keyData }) {
                     <h2>E</h2>
                 </div>
                 <div
-                    class={classNames("autoharp__button autoharp__button g", {
+                    className={classNames("autoharp__button autoharp__button g", {
                         "autoharp__button--on":
                             keyData.pitch_classes.includes(7),
                     })}
@@ -73,7 +73,7 @@ export default function Autoharp({ keyData }) {
                     <h2>G</h2>
                 </div>
                 <div
-                    class={classNames(
+                    className={classNames(
                         "autoharp__button autoharp__button a_sharp",
                         {
                             "autoharp__button--on":
@@ -84,7 +84,7 @@ export default function Autoharp({ keyData }) {
                     <h2>B♭</h2>
                 </div>
                 <div
-                    class={classNames("autoharp__button autoharp__button d", {
+                    className={classNames("autoharp__button autoharp__button d", {
                         "autoharp__button--on":
                             keyData.pitch_classes.includes(2),
                     })}
@@ -93,7 +93,7 @@ export default function Autoharp({ keyData }) {
                 </div>
 
                 <div
-                    class={classNames("autoharp__button autoharp__button f", {
+                    className={classNames("autoharp__button autoharp__button f", {
                         "autoharp__button--on":
                             keyData.pitch_classes.includes(5),
                     })}
@@ -103,7 +103,7 @@ export default function Autoharp({ keyData }) {
                 </div>
 
                 <div
-                    class={classNames(
+                    className={classNames(
                         "autoharp__button autoharp__button g_sharp",
                         {
                             "autoharp__button--on":
@@ -115,7 +115,7 @@ export default function Autoharp({ keyData }) {
                 </div>
 
                 <div
-                    class={classNames("autoharp__button autoharp__button b", {
+                    className={classNames("autoharp__button autoharp__button b", {
                         "autoharp__button--on":
                             keyData.pitch_classes.includes(11),
                     })}

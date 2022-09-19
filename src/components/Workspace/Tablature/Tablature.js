@@ -137,7 +137,7 @@ export default function Tablature() {
         },
     ];
 
-    const onChange = (newSelected, s) => {
+    const onChange = (newSelected) => {
         setTablatureInstruments(newSelected);
     };
 
