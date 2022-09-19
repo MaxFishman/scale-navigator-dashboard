@@ -1,0 +1,6 @@
+version: "Apple Swift version 5.6.1 (swiftlang-5.6.0.323.66 clang-1316.0.20.12)"
+options: "07e5c5d1414db8ff1aeb8d2f8f93169d7948cffa2d7ba59dd62c36ff90ce21b4"
+build_start_time: [1660161971, 352034091]
+build_end_time: [1660161971, 775187969]
+inputs:
+  "/Users/soney/Github/scale-navigator-dashboard/node_modules/@capacitor-community/keep-awake/ios/Plugin/KeepAwakePlugin.swift": [499162500, 0]

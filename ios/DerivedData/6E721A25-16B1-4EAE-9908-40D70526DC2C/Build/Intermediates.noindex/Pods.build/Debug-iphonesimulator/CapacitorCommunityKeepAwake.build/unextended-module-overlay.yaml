@@ -1,0 +1,14 @@
+{
+  'version': 0,
+  'use-external-names': 'false',
+  'case-sensitive': 'false',
+  'roots': [{
+    'type': 'directory',
+    'name': "/Users/soney/Github/scale-navigator-dashboard/ios/DerivedData/6E721A25-16B1-4EAE-9908-40D70526DC2C/Build/Products/Debug-iphonesimulator/CapacitorCommunityKeepAwake/CapacitorCommunityKeepAwake.framework/Modules"
+    'contents': [{
+      'type': 'file',
+      'name': "module.modulemap",
+      'external-contents': "/Users/soney/Github/scale-navigator-dashboard/ios/DerivedData/6E721A25-16B1-4EAE-9908-40D70526DC2C/Build/Intermediates.noindex/Pods.build/Debug-iphonesimulator/CapacitorCommunityKeepAwake.build/unextended-module.modulemap",
+    }]
+  }]
+}

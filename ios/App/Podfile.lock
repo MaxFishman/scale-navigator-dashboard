@@ -1,0 +1,28 @@
+PODS:
+  - Capacitor (4.0.1):
+    - CapacitorCordova
+  - CapacitorCommunityKeepAwake (3.0.0):
+    - Capacitor
+  - CapacitorCordova (4.0.1)
+
+DEPENDENCIES:
+  - "Capacitor (from `../../node_modules/@capacitor/ios`)"
+  - "CapacitorCommunityKeepAwake (from `../../node_modules/@capacitor-community/keep-awake`)"
+  - "CapacitorCordova (from `../../node_modules/@capacitor/ios`)"
+
+EXTERNAL SOURCES:
+  Capacitor:
+    :path: "../../node_modules/@capacitor/ios"
+  CapacitorCommunityKeepAwake:
+    :path: "../../node_modules/@capacitor-community/keep-awake"
+  CapacitorCordova:
+    :path: "../../node_modules/@capacitor/ios"
+
+SPEC CHECKSUMS:
+  Capacitor: 706b36563433f4a866cbe6d2eade7c04725d9e08
+  CapacitorCommunityKeepAwake: d0d94fed3cdd798f75687146f64e06dd4e811d81
+  CapacitorCordova: 728728aeeee853028558fefb4ccf7310e9d85a7a
+
+PODFILE CHECKSUM: 17386af29f228ecb32cc00f662e293b4ef115d73
+
+COCOAPODS: 1.11.3
