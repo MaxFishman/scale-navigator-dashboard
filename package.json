@@ -1,4 +1,5 @@
 {
+
     "name": "scale-navigator-dashboard",
     "version": "0.1.0",
     "private": true,
@@ -9,9 +10,15 @@
         "test": "react-scripts test",
         "eject": "react-scripts eject",
         "start": "concurrently \"yarn start-client\" \"yarn start-server\"",
-        "lint": "eslint . --fix"
+        "lint": "eslint . --fix",
+        "cap:android": "yarn build && npx cap sync android && npx cap open android",
+        "cap:ios": "yarn build && npx cap sync ios && npx cap open ios"
     },
     "dependencies": {
+        "@capacitor-community/keep-awake": "^3.0.0",
+        "@capacitor/android": "^4.0.1",
+        "@capacitor/core": "^4.0.1",
+        "@capacitor/ios": "^4.0.1",
         "@testing-library/jest-dom": "^5.11.4",
         "@testing-library/react": "^11.1.0",
         "@testing-library/user-event": "^12.1.10",
@@ -54,7 +61,9 @@
     "eslintConfig": {
         "extends": [
             "eslint:recommended",
-            "plugin:react/recommended"
+            "plugin:react/recommended",
+            "react-app",
+            "react-app/jest"
         ]
     },
     "browserslist": {
@@ -72,6 +81,8 @@
     "devDependencies": {
         "eslint": "^8.23.1",
         "eslint-plugin-react": "^7.31.8",
-        "prettier": "^2.3.2"
+        "prettier": "^2.3.2",
+        "@capacitor/cli": "^4.0.1"
     }
+
 }

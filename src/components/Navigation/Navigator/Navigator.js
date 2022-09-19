@@ -1,6 +1,7 @@
 import Polygon from "./Polygon";
 import Helper from "./Helper";
 
+
 let scale = "c_diatonic";
 let main_polygon = undefined;
 let preview_polygons;
@@ -88,6 +89,7 @@ export const init_autopilot = ({ p5, setScaleData }) => {
             () => {
                 if (autopilot_data.active) {
                     var p = p5.random(neighbors.concat(main_polygon));
+
 
                     var passes = 0;
                     while (autopilot_data.visited.includes(p) && passes < 100) {
@@ -181,6 +183,7 @@ export const navigatorDraw = ({ p5 }) => {
             hover_polygons[h].draw(false);
         }
 
+
         // background(255);
         var allPolygons = [main_polygon].concat(
             preview_polygons,
@@ -212,6 +215,7 @@ export const navigatorDraw = ({ p5 }) => {
             }
             // document.getElementById("labels_checkbox").checked
         }
+
 
         third_gen_hover(p5);
 
