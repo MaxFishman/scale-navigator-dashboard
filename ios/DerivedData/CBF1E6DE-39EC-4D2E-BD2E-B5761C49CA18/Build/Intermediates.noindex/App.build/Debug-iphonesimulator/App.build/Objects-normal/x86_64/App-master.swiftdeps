@@ -1,6 +1,0 @@
-version: "Apple Swift version 5.6.1 (swiftlang-5.6.0.323.66 clang-1316.0.20.12)"
-options: "2d1469686f2f96ab8ca0050336906f2e7e4afbec84a6ac79d876e25950daabe3"
-build_start_time: [1660161999, 60432910]
-build_end_time: [1660162001, 404587030]
-inputs:
-  "/Users/soney/Github/scale-navigator-dashboard/ios/App/App/AppDelegate.swift": [1660158289, 429648876]

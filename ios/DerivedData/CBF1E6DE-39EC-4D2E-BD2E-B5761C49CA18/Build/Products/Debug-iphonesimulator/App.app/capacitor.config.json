@@ -1,6 +1,0 @@
-{
-	"appId": "scalenavigatordashboard.app",
-	"appName": "Scale Navigator Dashboard",
-	"webDir": "build",
-	"bundledWebRuntime": false
-}

@@ -1,6 +1,0 @@
-[
-	{
-		"pkg": "@capacitor-community/keep-awake",
-		"classpath": "com.getcapacitor.community.keepawake.KeepAwakePlugin"
-	}
-]

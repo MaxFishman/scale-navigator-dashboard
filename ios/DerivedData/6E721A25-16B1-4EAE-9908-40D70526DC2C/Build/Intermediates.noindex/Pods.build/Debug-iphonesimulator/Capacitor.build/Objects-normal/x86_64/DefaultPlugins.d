@@ -1,8 +1,0 @@
-dependencies: \
-  /Users/soney/Github/scale-navigator-dashboard/node_modules/@capacitor/ios/Capacitor/Capacitor/Plugins/DefaultPlugins.m \
-  /Users/soney/Github/scale-navigator-dashboard/ios/DerivedData/6E721A25-16B1-4EAE-9908-40D70526DC2C/Build/Intermediates.noindex/Pods.build/Debug-iphonesimulator/Capacitor.build/module.modulemap \
-  /Users/soney/Github/scale-navigator-dashboard/ios/App/Pods/Target\ Support\ Files/Capacitor/Capacitor-prefix.pch \
-  /Users/soney/Github/scale-navigator-dashboard/node_modules/@capacitor/ios/Capacitor/Capacitor/CAPBridgedPlugin.h \
-  /Users/soney/Github/scale-navigator-dashboard/node_modules/@capacitor/ios/Capacitor/Capacitor/CAPPluginMethod.h \
-  /Users/soney/Github/scale-navigator-dashboard/node_modules/@capacitor/ios/Capacitor/Capacitor/CAPPluginCall.h \
-  /Users/soney/Github/scale-navigator-dashboard/node_modules/@capacitor/ios/Capacitor/Capacitor/CAPPlugin.h
