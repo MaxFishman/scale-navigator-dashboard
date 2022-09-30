@@ -48,7 +48,7 @@ export const init = ({ p5, setNavigatorData, setScaleData }) => {
         false
     );
 
-    init_autopilot({ p5, setScaleData });
+    init_autopilot({ p5, setScaleData, setNavigatorData });
 
     poly_size = (p5.width + p5.height) / 22;
     poly_size = p5.max(1200 / 22, poly_size);
@@ -71,7 +71,55 @@ export const initPolygons = ({ p5, setNavigatorData }) => {
     preview_polygons = [];
 };
 
-export const init_autopilot = ({ p5, setScaleData }) => {
+const autopilotIntervanFunction = ({ p5, setScaleData, setNavigatorData }) => {
+    if (!autopilot_data.active) return;
+
+    var p = p5.random(neighbors.concat(main_polygon));
+    var passes = 0;
+
+    while (autopilot_data.visited.includes(p) && passes < 100) {
+        p = p5.random(neighbors.concat(main_polygon));
+        passes++;
+    }
+
+    var k = 1;
+    const autoPilotIntervalElm = document.getElementById("autopilot_interval");
+
+    if (autoPilotIntervalElm != null && autoPilotIntervalElm)
+        k = autoPilotIntervalElm.value;
+    autopilot_data.chosen = p5.random(autopilot_data.period.map((x) => x * k));
+
+    if (autopilot_data.chordClicks > p5.random(4, 8)) {
+        if (autopilot_data.visited.length >= autopilot_data.max_visited) {
+            autopilot_data.visited.pop();
+        }
+        autopilot_data.visited.unshift(p);
+
+        autopilot_data.chordClicks = 0;
+    } else {
+        p = main_polygon;
+        autopilot_data.chordClicks++;
+        autopilot_data.chosen = Math.sqrt(autopilot_data.chosen / 500) * 500;
+    }
+
+    changeMainScale({
+        p5,
+        new_main: p,
+        all_duration: Helper.default_animation_duration,
+        animation: autopilot_data.animate,
+        setScaleData,
+        setNavigatorData,
+    });
+
+    set_autopilot_period({
+        p5,
+        new_period: autopilot_data.default_period,
+        setScaleData,
+        setNavigatorData,
+    });
+};
+
+export const init_autopilot = ({ p5, setScaleData, setNavigatorData }) => {
     if (!p5) return;
 
     if (!autopilot_data.period)
@@ -81,66 +129,18 @@ export const init_autopilot = ({ p5, setScaleData }) => {
     const elm = document.getElementById("autopilot_interval");
 
     if (elm) k = elm.value;
+
     autopilot_data.chosen = p5.random(autopilot_data.period.map((x) => x * k));
 
-    autopilot_data.intervalID = () => {
-        return setInterval(
-            () => {
-                if (autopilot_data.active) {
-                    var p = p5.random(neighbors.concat(main_polygon));
-
-                    var passes = 0;
-                    while (autopilot_data.visited.includes(p) && passes < 100) {
-                        p = p5.random(neighbors.concat(main_polygon));
-                        passes++;
-                    }
-
-                    var k = 1;
-                    if (
-                        document.getElementById("autopilot_interval") != null &&
-                        document.getElementById("autopilot_interval")
-                    )
-                        k = document.getElementById("autopilot_interval").value;
-                    autopilot_data.chosen = p5.random(
-                        autopilot_data.period.map((x) => x * k)
-                    );
-
-                    if (autopilot_data.chordClicks > p5.random(4, 8)) {
-                        if (
-                            autopilot_data.visited.length >=
-                            autopilot_data.max_visited
-                        ) {
-                            autopilot_data.visited.pop();
-                        }
-                        autopilot_data.visited.unshift(p);
-
-                        autopilot_data.chordClicks = 0;
-                    } else {
-                        p = main_polygon;
-                        autopilot_data.chordClicks++;
-                        autopilot_data.chosen =
-                            Math.sqrt(autopilot_data.chosen / 500) * 500;
-                    }
-
-                    changeMainScale({
-                        p5,
-                        new_main: p,
-                        all_duration: Helper.default_animation_duration,
-                        animation: autopilot_data.animate,
-                        setScaleData,
-                    });
-
-                    set_autopilot_period({
-                        p5,
-                        new_period: autopilot_data.default_period,
-                    });
-                    return;
-                }
-            },
-            autopilot_data.chosen,
-            p5
-        );
-    };
+    autopilot_data.intervalID = setInterval(
+        autopilotIntervanFunction,
+        autopilot_data.chosen,
+        {
+            p5,
+            setScaleData,
+            setNavigatorData,
+        }
+    );
 };
 
 export const toggle_autopilot = (forced_value = undefined) => {
@@ -158,10 +158,15 @@ export const reset_autopilot = () => {
     // set_autopilot_period(undefined);
 };
 
-export const set_autopilot_period = ({ p5, new_period }) => {
+export const set_autopilot_period = ({
+    p5,
+    new_period,
+    setScaleData,
+    setNavigatorData,
+}) => {
     autopilot_data.period = new_period;
     clearInterval(autopilot_data.intervalID);
-    init_autopilot(p5);
+    init_autopilot({ p5, setScaleData, setNavigatorData });
 };
 
 export const toggle_autopilot_animation = (forced_value = undefined) => {
@@ -532,9 +537,16 @@ export const changeMainScale = ({
     all_duration = Helper.default_animation_duration,
     animation = false,
     setScaleData,
+    setNavigatorData,
 }) => {
     prepareChangeMainScale({ p5, p: new_main, animation });
-    finishChangeMainScale({ p5, new_main, all_duration, setScaleData });
+    finishChangeMainScale({
+        p5,
+        new_main,
+        all_duration,
+        setScaleData,
+        setNavigatorData,
+    });
 };
 
 export const updateScaleState = ({ setScaleData, newScale }) => {

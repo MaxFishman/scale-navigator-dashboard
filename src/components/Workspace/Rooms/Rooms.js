@@ -115,8 +115,8 @@ function Rooms(props) {
 
     const [roomName, setRoomName] = useState("");
     const [rooms, setRooms] = useState([]);
-    const [listMode, setListMode] = useState(true);
-    console.log(setListMode);
+
+    const listMode = true;
 
     const handleNewRoom = () => {
         if (roomName == "") return;
