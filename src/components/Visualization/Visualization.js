@@ -1,9 +1,8 @@
 import React, { useEffect, useRef } from "react";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 import { useLocation } from "react-router-dom";
 import ScaleData from "common/ScaleData";
 import PitchClassData from "common/PitchClassData";
-import Navigator from "./Navigator/Navigator";
 import Tabs from "components/Tabs";
 import ScaleNavigator from "components/ScaleNavigator";
 import MobileMenu from "../MobileMenu";
@@ -15,23 +14,14 @@ import { jumpToScaleEvent } from "../../events";
 import "./Navigation.scss";
 
 const Navigation = () => {
-    const dispatch = useDispatch();
     const { scaleData } = useSelector((state) => state.root);
     const { scale } = scaleData;
-
-    const setScaleData = (payload) =>
-        dispatch({ type: "SET_SCALE_DATA", payload });
 
     const location = useLocation();
     const size = useWindowSize();
     const isMobile = size.width < 425;
 
     const canvasWrapperRef = useRef(null);
-    const navRef = useRef(null);
-
-    useEffect(() => {
-        navRef.current = new Navigator.Navigator(setScaleData);
-    }, []);
 
     useEffect(() => {
         jumpToScaleEvent(scale);
@@ -58,7 +48,6 @@ const Navigation = () => {
 
             <ScaleNavigator
                 canvasWrapperRef={canvasWrapperRef}
-                navRef={navRef.current}
                 hasActiveRoute={hasActiveRoute}
             />
 

@@ -1,47 +1,47 @@
-import React, { useState } from 'react';
-import { useDispatch } from 'react-redux'
-import styled from 'styled-components';
-import Modal from 'react-modal';
-import { withRouter, Link } from 'react-router-dom';
-import { withFirebase } from '../Firebase';
-import ROUTES from 'common/Routes';
-import { compose } from 'recompose';
+import React, { useState } from "react";
+import { useDispatch } from "react-redux";
+import styled from "styled-components";
+import Modal from "react-modal";
+import { withRouter, Link } from "react-router-dom";
+import { withFirebase } from "../Firebase";
+import ROUTES from "common/Routes";
+import { compose } from "recompose";
 
-const ERROR_CODE_ACCOUNT_EXISTS = 'auth/email-already-in-use';
+// const ERROR_CODE_ACCOUNT_EXISTS = "auth/email-already-in-use";
 
-const ERROR_MSG_ACCOUNT_EXISTS = `
-  An account with this E-Mail address already exists.
-  Try to login with this account instead. If you think the
-  account is already used from one of the social logins, try
-  to sign in with one of them. Afterward, associate your accounts
-  on your personal account page.
-`;
+// const ERROR_MSG_ACCOUNT_EXISTS = `
+//   An account with this E-Mail address already exists.
+//   Try to login with this account instead. If you think the
+//   account is already used from one of the social logins, try
+//   to sign in with one of them. Afterward, associate your accounts
+//   on your personal account page.
+// `;
 
 const customStyles = {
     content: {
-        top: '50%',
-        left: '50%',
-        right: 'auto',
-        bottom: 'auto',
-        width: '100%',
-        maxWidth: '550px',
-        marginRight: '-50%',
-        transform: 'translate(-50%, -50%)',
-        background: 'transparent',
+        top: "50%",
+        left: "50%",
+        right: "auto",
+        bottom: "auto",
+        width: "100%",
+        maxWidth: "550px",
+        marginRight: "-50%",
+        transform: "translate(-50%, -50%)",
+        background: "transparent",
         border: 0,
-        zIndex: 9090
+        zIndex: 9090,
     },
 };
 
 const Wrapper = styled.div`
     color: #fff;
     background: #000000;
-    border: 3px solid #FFFFFF;
+    border: 3px solid #ffffff;
     box-sizing: border-box;
     border-radius: 38px;
     padding: 12px 0 35px;
 
-    &>div {
+    & > div {
         width: 100%;
         max-width: 350px;
         margin: 0 auto;
@@ -63,13 +63,13 @@ const Label = styled.label`
     line-height: 22px;
     display: block;
 
-    &>div {
+    & > div {
         margin-bottom: 10px;
     }
 `;
 
 const Input = styled.input`
-    border: 2px solid #FFFFFF;
+    border: 2px solid #ffffff;
     box-sizing: border-box;
     border-radius: 9px;
     background-color: transparent;
@@ -80,7 +80,7 @@ const Input = styled.input`
 `;
 
 const Submit = styled.button`
-    background: #FFDE6A;
+    background: #ffde6a;
     border-radius: 9px;
     text-align: center;
     width: 139px;
@@ -96,8 +96,8 @@ const SignUpContent = styled.div`
     font-size: 16px;
     line-height: 20px;
     text-align: center;
-    color: #FFFFFF;
-    text-shadow: 0px 4px 24px rgba(255, 255, 255, 0.5), 0px 0px 6px #FFFFFF;
+    color: #ffffff;
+    text-shadow: 0px 4px 24px rgba(255, 255, 255, 0.5), 0px 0px 6px #ffffff;
 
     a {
         color: white;
@@ -106,39 +106,41 @@ const SignUpContent = styled.div`
 `;
 
 const Forgot = styled.span`
-    color: #FFDE6A;
+    color: #ffde6a;
 `;
 
 const LoginModal = (props) => {
-    const dispatch = useDispatch()
+    const dispatch = useDispatch();
 
-    const isVisible = true
-    const [ email, setEmail] = useState('')
-    const [ passwordOne, setPasswordOne] = useState('')
+    const isVisible = true;
+    const [email, setEmail] = useState("");
+    const [passwordOne, setPasswordOne] = useState("");
 
-    const onSubmit = evt => {
+    const onSubmit = (evt) => {
         evt.preventDefault();
-        props.firebase.doSignInWithEmailAndPassword(email, passwordOne)
-            .then(authUser => {
-                dispatch({ type: 'HYDRATE_FIREBASE_DATA', payload: authUser })
+        props.firebase
+            .doSignInWithEmailAndPassword(email, passwordOne)
+            .then((authUser) => {
+                dispatch({ type: "HYDRATE_FIREBASE_DATA", payload: authUser });
 
-                return props.firebase.user(authUser.user.uid).set({ email }, { merge: true });
+                return props.firebase
+                    .user(authUser.user.uid)
+                    .set({ email }, { merge: true });
             })
             .then(() => {
-                props.history.push(ROUTES.ENSEMBLE)
-            })
-    }
+                props.history.push(ROUTES.ENSEMBLE);
+            });
+    };
 
     return (
         <>
             <Modal
                 isOpen={isVisible}
                 style={customStyles}
-                onRequestClose={()=>window.location.replace('/account')}
+                onRequestClose={() => window.location.replace("/account")}
             >
-                <form autocomplete="off"  onSubmit={onSubmit}>
+                <form autoComplete="off" onSubmit={onSubmit}>
                     <Wrapper>
-
                         <Title>Login to access!</Title>
 
                         <div>
@@ -150,7 +152,7 @@ const LoginModal = (props) => {
                                     required
                                     placeholder="email"
                                     name="email"
-                                    onChange={e => setEmail(e.target.value)}
+                                    onChange={(e) => setEmail(e.target.value)}
                                     autoFocus
                                 />
                             </Label>
@@ -162,7 +164,9 @@ const LoginModal = (props) => {
                                     required
                                     id="password"
                                     type="password"
-                                    onChange={e => setPasswordOne(e.target.value)}
+                                    onChange={(e) =>
+                                        setPasswordOne(e.target.value)
+                                    }
                                 />
                             </Label>
                         </div>
@@ -170,7 +174,10 @@ const LoginModal = (props) => {
                         <Submit type="submit">Sign In</Submit>
 
                         <SignUpContent>
-                            <Link to={ROUTES.SIGN_UP}>Don't have an account? Create one</Link><br/>
+                            <Link to={ROUTES.SIGN_UP}>
+                                {`Don't have an account? Create one`}
+                            </Link>
+                            <br />
                             <Link to={ROUTES.RESET_PWD}>
                                 <Forgot>Forgotten Password</Forgot>
                             </Link>
@@ -180,6 +187,6 @@ const LoginModal = (props) => {
             </Modal>
         </>
     );
-}
+};
 
-export default compose(withRouter, withFirebase) (LoginModal);
+export default compose(withRouter, withFirebase)(LoginModal);

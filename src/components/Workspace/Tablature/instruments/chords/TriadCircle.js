@@ -65,7 +65,7 @@ export default function TriadCircle({ keyData }) {
                 return (
                     <>
                         <circle
-                            class={classNames("triadcircle__chord", {
+                            className={classNames("triadcircle__chord", {
                                 "triadcircle__chord--off":
                                     !keyData.chords.includes(chord),
                             })}
@@ -74,7 +74,7 @@ export default function TriadCircle({ keyData }) {
                             r="100.0"
                         />
                         <text
-                            class={classNames("triadcircle__chordtext", {
+                            className={classNames("triadcircle__chordtext", {
                                 "triadcircle__chordtext--off":
                                     !keyData.chords.includes(chord),
                             })}

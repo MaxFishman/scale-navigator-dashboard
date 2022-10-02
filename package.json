@@ -1,4 +1,5 @@
 {
+
     "name": "scale-navigator-dashboard",
     "version": "0.1.0",
     "private": true,
@@ -8,9 +9,16 @@
         "build": "react-scripts build",
         "test": "react-scripts test",
         "eject": "react-scripts eject",
-        "start": "concurrently \"yarn start-client\" \"yarn start-server\""
+        "start": "concurrently \"yarn start-client\" \"yarn start-server\"",
+        "lint": "eslint . --fix",
+        "cap:android": "yarn build && npx cap sync android && npx cap open android",
+        "cap:ios": "yarn build && npx cap sync ios && npx cap open ios"
     },
     "dependencies": {
+        "@capacitor-community/keep-awake": "^3.0.0",
+        "@capacitor/android": "^4.0.1",
+        "@capacitor/core": "^4.0.1",
+        "@capacitor/ios": "^4.0.1",
         "@testing-library/jest-dom": "^5.11.4",
         "@testing-library/react": "^11.1.0",
         "@testing-library/user-event": "^12.1.10",
@@ -36,7 +44,7 @@
         "react-recompose": "^0.31.1",
         "react-redux": "^7.2.5",
         "react-router-dom": "^5.2.1",
-        "react-scripts": "4.0.3",
+        "react-scripts": "5.0.1",
         "react-select": "^4.3.1",
         "react-sortable-hoc": "^2.0.0",
         "react-tabs": "^3.2.2",
@@ -52,6 +60,8 @@
     "proxy": "http://localhost:4242",
     "eslintConfig": {
         "extends": [
+            "eslint:recommended",
+            "plugin:react/recommended",
             "react-app",
             "react-app/jest"
         ]
@@ -69,6 +79,10 @@
         ]
     },
     "devDependencies": {
-        "prettier": "^2.3.2"
+        "eslint": "^8.23.1",
+        "eslint-plugin-react": "^7.31.8",
+        "prettier": "^2.3.2",
+        "@capacitor/cli": "^4.0.1"
     }
+
 }

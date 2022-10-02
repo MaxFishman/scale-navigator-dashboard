@@ -49,14 +49,14 @@ const About = () => (
                 these objects within an easy-to-understand and easy-to-navigate
                 framework. Even as an instrumentalist, it takes work to
                 physically learn scales / chords before you can actually{" "}
-                <em>hear them</em>; and if you can't play an instrument, these
-                things can be locked away. Scale Navigator unlocks these
+                <em>hear them</em>; and if you {`can't`} play an instrument,
+                these things can be locked away. Scale Navigator unlocks these
                 harmonic concepts by giving them form, and by placing them in
                 context.
             </p>
 
             <p>
-                Scale Navigator represents scales as icons. A scale icon's
+                Scale Navigator represents scales as icons. A scale {`icon's`}
                 polygonal shape indicates its scale class:
             </p>
 
@@ -152,7 +152,7 @@ const About = () => (
                 </Figure>
             </div>
 
-            <p>A scale icon's color indicates its root:</p>
+            <p>{`A scale icon's color indicates its root:`}</p>
             <br />
 
             <div id="circle_container">
@@ -195,7 +195,7 @@ const About = () => (
             </div>
 
             <p>
-                Users can travel (or "modulate") to a new scale by clicking on
+                {`Users can travel (or "modulate") to a new scale by clicking on
                 its scale icon in the Navigator interface. The current selected
                 scale is in the center, radially surrounded by adjacent neighbor
                 scales. Each neighbor scale shares all notes in common with the
@@ -203,15 +203,15 @@ const About = () => (
                 from the current scale by a single note. Enable autopilot (in
                 the infobox below the Navigator interface) to automatically
                 select a new current scale&mdash;adjust the autopilot slider to
-                change the rate at which the autopilot selects a new scale.
+                change the rate at which the autopilot selects a new scale.`}
             </p>
 
             <p>
-                The Navigator interface displays the local harmonic context as
+                {`The Navigator interface displays the local harmonic context as
                 it relates to the current selected scale. A bird's eye view of
                 all of the scales as they relate to one another can be seen in
                 the <Link to="scale-network">Visualization tab</Link>, which
-                desplays all of the scale icons in a network graph.
+                desplays all of the scale icons in a network graph.`}
             </p>
 
             <p>
@@ -225,8 +225,9 @@ const About = () => (
             </p>
 
             <p>
-                In the words of Dmitri Tymoczko, "New scales [provide] access to
-                new chords, while new chords, in turn, [suggest] new scales."
+                In the words of Dmitri Tymoczko,{" "}
+                {`"New scales [provide] access to
+                new chords, while new chords, in turn, [suggest] new scales."`}
                 Use the <Link to="chords">Chords tab</Link> to generate chords
                 within the context of the current selected scale.
             </p>
@@ -240,10 +241,10 @@ const About = () => (
                     Manipulating Harmony in Composition, Performance and
                     Installation”
                 </a>{" "}
-                describes not only Scale Navigator's design, but also its use as
-                a music compositional assistive tool, a performance tool, and as
-                a framework&mdash;and interface&mdash;for interactive multimedia
-                installations. I later presented this work at the{" "}
+                describes not only Scale {`Navigator's`} design, but also its
+                use as a music compositional assistive tool, a performance tool,
+                and as a framework&mdash;and interface&mdash;for interactive
+                multimedia installations. I later presented this work at the{" "}
                 <a href="https://www.nime.org/proceedings/2019/nime2019_paper020.pdf">
                     New Interfaces for Musical Expression conference
                 </a>{" "}
@@ -271,7 +272,7 @@ const About = () => (
             <h2>Credits</h2>
             <ul id="credits">
                 <li>
-                    <a href="https://yobro.icu/">Nate Ben</a>
+                    <a href="https://hapy.space/">Nate Ben</a>
                 </li>
                 <li>
                     <a href="https://bboettcher3.github.io/">Brady Boettcher</a>

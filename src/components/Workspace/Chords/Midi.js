@@ -5,9 +5,7 @@ import OutputTypes from "./OutputTypes";
 
 function Midi() {
     const dispatch = useDispatch();
-    const { midiData, midiOutputs } = useSelector(
-        (state) => state.root
-    );
+    const { midiData, midiOutputs } = useSelector((state) => state.root);
 
     const _addMidiOutput = useCallback(
         (payload) => dispatch({ type: "ADD_MIDI_OUTPUT", payload }),
@@ -38,7 +36,7 @@ function Midi() {
             outputMap[output.id] = output;
         }
 
-        midiInfo.onstatechange = (e) => {
+        midiInfo.onstatechange = () => {
             // Use new object for useEffect comparison
             const newMap = {};
             for (let output of midiInfo.outputs.values()) {
@@ -100,7 +98,8 @@ function Midi() {
                                 _addMidiOutput({
                                     octave: 0,
                                     channel: 0,
-                                    type: OutputTypes.current_scale_pitch_class.index,
+                                    type: OutputTypes.current_scale_pitch_class
+                                        .index,
                                     outputPortId: "",
                                 })
                             }
@@ -120,4 +119,3 @@ function Midi() {
 }
 
 export default Midi;
-

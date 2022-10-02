@@ -1,10 +1,9 @@
-import React, { useEffect, useRef, useCallback } from "react";
+import React, { useEffect, useCallback } from "react";
 import { compose } from "recompose";
 import { useSelector, useDispatch } from "react-redux";
 import { useLocation } from "react-router-dom";
 import ScaleData from "common/ScaleData";
 import PitchClassData from "common/PitchClassData";
-import Navigator from "./Navigator/Navigator";
 import Tabs from "components/Tabs";
 import ScaleNavigator from "components/ScaleNavigator";
 import MobileMenu from "../MobileMenu";
@@ -13,7 +12,7 @@ import styled from "styled-components";
 import { ReactComponent as Logo } from "../../assets/logo.svg";
 import { withFirebase } from "../Firebase";
 import { logoStyle } from "../../common/LayoutConfig";
-import { jumpToScaleEvent } from "../../events";
+import { jumpToScaleEvent, navigatorAutoPilot } from "../../events";
 
 import "./Navigation.scss";
 
@@ -47,53 +46,12 @@ const Navigation = ({ firebase, authUser }) => {
         [dispatch]
     );
 
-    const setNavigatorData = useCallback(
-        (payload) => {
-            dispatch({ type: "SET_NAVIGATOR_DATA", payload });
-        },
-        [dispatch]
-    );
-
-    const location = useLocation();
-    const size = useWindowSize();
-    const isMobile = size.width < 425;
-
-    const canvasWrapperRef = useRef(null);
-    const navRef = useRef(null);
-    window.navRef = navRef;
-
-    useEffect(() => {
-        const navigator = new Navigator.Navigator({
-            setScaleData,
-            setNavigatorData,
-        });
-
-        navRef.current = navigator;
-    }, [setNavigatorData, setScaleData]);
-
-    useEffect(() => {
-        jumpToScaleEvent(scale);
-    }, [scale]);
-
-    useEffect(() => {
-        if (isEnsembleMember) getFirebaseScaleData();
-    }, [isEnsembleMember]);
-
-    const setFirebaseScaleData = (scaleData) => {
-        const roomId = currentRoomId;
-        firebase.room(roomId).update({ scaleData });
-    };
-
-    window.setFirebaseScaleData = setFirebaseScaleData;
-
-    const getFirebaseScaleData = () => {
-        const roomId = currentRoomId;
-
-        if (!roomId) {
+    const getFirebaseScaleData = useCallback(() => {
+        if (!currentRoomId) {
             return;
         }
 
-        firebase.room(roomId).onSnapshot((doc) => {
+        firebase.room(currentRoomId).onSnapshot((doc) => {
             if (!doc.exists) {
                 return;
             }
@@ -103,13 +61,38 @@ const Navigation = ({ firebase, authUser }) => {
             jumpToScaleEvent(scaleData);
             setScaleData(scaleData);
         });
-    };
+    }, [currentRoomId, firebase, setScaleData]);
+
+    const location = useLocation();
+    const size = useWindowSize();
+    const isMobile = size.width < 425;
+
+    useEffect(() => {
+        jumpToScaleEvent(scale);
+    }, [scale]);
+
+    useEffect(() => {
+        if (isEnsembleMember) getFirebaseScaleData();
+    }, [isEnsembleMember, getFirebaseScaleData]);
+
+    // TODO: refactor
+    // shouldnt be under window object.
+    //
+    // const setFirebaseScaleData = (scaleData) => {
+    //     const roomId = currentRoomId;
+    //     firebase.room(roomId).update({ scaleData });
+    // };
+    // window.setFirebaseScaleData = setFirebaseScaleData;
 
     const hasActiveRoute = isMobile && location.pathname !== "/";
     const wrapperStyle = hasActiveRoute
         ? { height: "40vh", overflow: "hidden" }
         : {};
     const navInfoStyle = hasActiveRoute ? { display: "none" } : {};
+
+    const handleAutoPilotToggle = (event) => {
+        navigatorAutoPilot(event.target.checked);
+    };
 
     return (
         <div className="navigation" style={wrapperStyle}>
@@ -140,11 +123,7 @@ const Navigation = ({ firebase, authUser }) => {
                     </HostBanner>
                 )}
 
-                <ScaleNavigator
-                    canvasWrapperRef={canvasWrapperRef}
-                    navRef={navRef.current}
-                    hasActiveRoute={hasActiveRoute}
-                />
+                <ScaleNavigator hasActiveRoute={hasActiveRoute} />
 
                 <div className="navinfo" style={navInfoStyle}>
                     <div className="navinfo__root">
@@ -167,7 +146,7 @@ const Navigation = ({ firebase, authUser }) => {
                                 type="checkbox"
                                 autoComplete="off"
                                 name="autopilot"
-                                id="autopilot_checkbox"
+                                onChange={handleAutoPilotToggle}
                             />
                             <label htmlFor="autopilot">autopilot</label>
                         </div>
