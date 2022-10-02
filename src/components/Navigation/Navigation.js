@@ -142,13 +142,15 @@ const Navigation = ({ firebase, authUser }) => {
 
                     <div className="navinfo__options">
                         <div className="navinfo__option">
-                            <input
-                                type="checkbox"
-                                autoComplete="off"
-                                name="autopilot"
-                                onChange={handleAutoPilotToggle}
-                            />
-                            <label htmlFor="autopilot">autopilot</label>
+                            <label>
+                                <input
+                                    type="checkbox"
+                                    autoComplete="off"
+                                    name="autopilot"
+                                    onChange={handleAutoPilotToggle}
+                                />
+                                autopilot
+                            </label>
                         </div>
 
                         <div className="navinfo__option">

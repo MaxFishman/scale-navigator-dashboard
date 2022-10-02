@@ -44,22 +44,27 @@ const App = ({ firebase }) => {
     }, [firebase, dispatch]);
 
     return (
-        <Router>
-            <Container fluid>
-                <Row>
-                    <Chords />
-                    <MidiPersist />
+        <>
+            <Chords />
+            <MidiPersist />
+            <Router>
+                <Container fluid>
+                    <Row>
+                        <Col xs="12" sm="12" md="5">
+                            <AuthUserContext.Consumer>
+                                {(authUser) => (
+                                    <Navigation authUser={authUser} />
+                                )}
+                            </AuthUserContext.Consumer>
+                        </Col>
 
-                    <Col xs="12" md="5">
-                        <AuthUserContext.Consumer>
-                            {(authUser) => <Navigation authUser={authUser} />}
-                        </AuthUserContext.Consumer>
-                    </Col>
-
-                    <Workspace />
-                </Row>
-            </Container>
-        </Router>
+                        <Col xs="12" sm="12" md="7">
+                            <Workspace />
+                        </Col>
+                    </Row>
+                </Container>
+            </Router>
+        </>
     );
 };
 

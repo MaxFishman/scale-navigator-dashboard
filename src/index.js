@@ -5,7 +5,6 @@ import Firebase, { FirebaseContext } from "./components/Firebase";
 import { Provider } from "react-redux";
 import store from "./store";
 
-import "bootstrap/dist/css/bootstrap.min.css";
 import "./index.css";
 import "./App.scss";
 import "./resources/Mulish/Mulish-Regular.ttf";

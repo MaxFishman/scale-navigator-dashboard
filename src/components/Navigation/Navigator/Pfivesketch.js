@@ -56,12 +56,21 @@ function Pfivesketch({ isMember = false, wrapperRef }) {
         navigatorMouseReleased({ setScaleData, setNavigatorData, event });
     };
 
+    const windowResized = (p5) => {
+        const wrapperElmDimensions = wrapperRef.current.getBoundingClientRect();
+        p5.resizeCanvas(
+            wrapperElmDimensions.width,
+            wrapperElmDimensions.height
+        );
+    };
+
     return (
         <Sketch
             setup={setup}
             draw={draw}
             mousePressed={mousePressed}
             mouseReleased={mouseReleased}
+            windowResized={windowResized}
         />
     );
 }

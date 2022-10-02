@@ -31,29 +31,19 @@ ul {
 }
 
 .p5Canvas {
-    width: 100% !important;
-    height: 100% !important;
+    margin: 0 auto;
 }
 
 .appcontainer {
     background-color: $accent-medium;
     width: 100%;
-    height: 100vh;
     padding: 0;
-}
-
-.workspace,
-.navigation {
-    padding: 10px 0;
 }
 
 .contentcontainer {
     background: black;
     height: 100%;
     padding: 14px;
-
-    @include md {
-    }
 }
 
 label {
@@ -65,17 +55,13 @@ label {
 }
 
 .btn-group button {
-    border: 1px solid black;
-    /* Green border */
-    cursor: pointer;
-    /* Pointer/hand icon */
     display: block;
-    /* Make the buttons appear below each other */
+    cursor: pointer;
+    border: 1px solid black;
 }
 
 .btn-group button:not(:last-child) {
     border-bottom: none;
-    /* Prevent double borders */
 }
 
 /* Add a background color on hover */
@@ -482,14 +468,6 @@ button {
     top: 0;
     position: fixed;
     z-index: 123123;
-}
-
-.workspace__content {
-    padding-bottom: 70px;
-
-    @include md {
-        padding-bottom: 0;
-    }
 }
 
 .app-logo {

@@ -1,5 +1,4 @@
 import { useSelector, useDispatch } from "react-redux";
-import { Col } from "reactstrap";
 import classnames from "classnames";
 import About from "./About/About";
 import Chords from "./Chords/Chords";
@@ -34,7 +33,7 @@ export default function Workspace() {
     });
 
     return (
-        <Col xs="12" md="7" className={classNames}>
+        <div className={classNames}>
             <Tabs className="desktop" />
 
             <div className="workspace__content">
@@ -93,6 +92,6 @@ export default function Workspace() {
                     )}
                 </Switch>
             </div>
-        </Col>
+        </div>
     );
 }

@@ -354,7 +354,7 @@ class Chords extends React.Component {
                         </p>
                     </div>
                 </div>
-                <Midi></Midi>
+                <Midi />
             </div>
         );
     }

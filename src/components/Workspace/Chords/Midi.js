@@ -2,6 +2,7 @@ import { useDispatch, useSelector } from "react-redux";
 import React, { useEffect, useCallback } from "react";
 import MidiOutputSettings from "./MidiOutputSettings";
 import OutputTypes from "./OutputTypes";
+import { isChrome, isMobile } from "../../../utils";
 
 function Midi() {
     const dispatch = useDispatch();
@@ -17,14 +18,6 @@ function Midi() {
     );
 
     useEffect(() => {
-        const isChrome =
-            !!window.chrome &&
-            (!!window.chrome.webstore || !!window.chrome.runtime);
-
-        const isMobile =
-            /Android|webOS|iPhone|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
-                navigator.userAgent
-            );
         _setMidiData({
             featureEnabled: isChrome && !isMobile,
         });
@@ -55,67 +48,65 @@ function Midi() {
         });
     };
 
-    if (midiData.featureEnabled) {
-        return (
-            <div id="midi_controls">
-                {!midiData.midiEnabled && !midiData.midiError && (
-                    <button
-                        id="midi_enable"
-                        onClick={() => {
-                            navigator
-                                .requestMIDIAccess()
-                                .then(onMidiConnectSuccess, (errorCode) =>
-                                    _setMidiData({
-                                        midiError: errorCode,
-                                    })
-                                );
-                        }}
-                    >
-                        Enable Midi Output
-                    </button>
-                )}
-                {midiData.midiEnabled && (
-                    <>
-                        <h3>Midi Outputs:</h3>
-                        <ul id="midi_outputs">
-                            {midiOutputs.map((output, i) => {
-                                return (
-                                    <MidiOutputSettings
-                                        key={i}
-                                        index={i}
-                                        type={output.type}
-                                        channel={output.channel}
-                                        outputPortId={output.outputPortId}
-                                        octave={output.octave}
-                                        midiOutputMap={midiData.midiOutputMap}
-                                    ></MidiOutputSettings>
-                                );
-                            })}
-                        </ul>
-                        <button
-                            id="midi_add_output"
-                            onClick={() =>
-                                _addMidiOutput({
-                                    octave: 0,
-                                    channel: 0,
-                                    type: OutputTypes.current_scale_pitch_class
-                                        .index,
-                                    outputPortId: "",
-                                })
-                            }
-                        >
-                            Add Output
-                        </button>
-                    </>
-                )}
-                {midiData.midiError && (
-                    <p>Midi Connection Error: {midiData.midiError}</p>
-                )}
-            </div>
-        );
-    }
+    if (!midiData.featureEnabled) return null;
 
-    return <></>;
+    return (
+        <div id="midi_controls">
+            {!midiData.midiEnabled && !midiData.midiError && (
+                <button
+                    id="midi_enable"
+                    onClick={() => {
+                        navigator
+                            .requestMIDIAccess()
+                            .then(onMidiConnectSuccess, (errorCode) =>
+                                _setMidiData({
+                                    midiError: errorCode,
+                                })
+                            );
+                    }}
+                >
+                    Enable Midi Output
+                </button>
+            )}
+            {midiData.midiEnabled && (
+                <>
+                    <h3>Midi Outputs:</h3>
+                    <ul id="midi_outputs">
+                        {midiOutputs.map((output, i) => {
+                            return (
+                                <MidiOutputSettings
+                                    key={i}
+                                    index={i}
+                                    type={output.type}
+                                    channel={output.channel}
+                                    outputPortId={output.outputPortId}
+                                    octave={output.octave}
+                                    midiOutputMap={midiData.midiOutputMap}
+                                ></MidiOutputSettings>
+                            );
+                        })}
+                    </ul>
+                    <button
+                        id="midi_add_output"
+                        onClick={() =>
+                            _addMidiOutput({
+                                octave: 0,
+                                channel: 0,
+                                type: OutputTypes.current_scale_pitch_class
+                                    .index,
+                                outputPortId: "",
+                            })
+                        }
+                    >
+                        Add Output
+                    </button>
+                </>
+            )}
+            {midiData.midiError && (
+                <p>Midi Connection Error: {midiData.midiError}</p>
+            )}
+        </div>
+    );
 }
 
 export default Midi;
