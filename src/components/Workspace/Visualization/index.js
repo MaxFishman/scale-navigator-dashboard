@@ -35,7 +35,7 @@ const getCheckboxIDByScale = (scale) => {
     } else return id;
 };
 
-const Visualization = () => {
+const Visualization = ({ wrapperRef }) => {
     const { navigatorData } = useSelector((state) => state.root);
     const { old_main_polygon, main_polygon } = navigatorData;
 
@@ -282,6 +282,14 @@ const Visualization = () => {
         clickInNextFrame = 1;
     };
 
+    const windowResized = (p5) => {
+        const wrapperElmDimensions = wrapperRef.current.getBoundingClientRect();
+        p5.resizeCanvas(
+            wrapperElmDimensions.width,
+            wrapperElmDimensions.height
+        );
+    };
+
     // const windowResized = (p5) => {
     //     const parentElm = p5._renderer.parent();
     //     const { width, height } = parentElm.getBoundingClientRect();
@@ -300,7 +308,7 @@ const Visualization = () => {
             setup={setup}
             draw={draw}
             mousePressed={mousePressed}
-            // windowResized={windowResized}
+            windowResized={windowResized}
         />
     );
 };

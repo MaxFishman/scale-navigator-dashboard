@@ -20,7 +20,8 @@ const MainWrapper = styled.div`
     height: 100%;
 
     .canvas-wrapper {
-        height: 80%;
+        /* Minus Header/Logo + Bottom Nav */
+        height: calc(100% - 90px - 85px);
     }
     .navinfo {
         height: 20%;

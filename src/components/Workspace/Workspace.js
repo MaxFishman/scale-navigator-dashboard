@@ -4,7 +4,7 @@ import About from "./About/About";
 import Chords from "./Chords/Chords";
 import Ensemble from "./Ensemble/Ensemble";
 import Tablature from "./Tablature/Tablature";
-import React from "react";
+import React, { useRef } from "react";
 import { Switch, Route, Redirect, useLocation } from "react-router-dom";
 import ROUTES from "common/Routes";
 import { Provider, KeepAlive } from "react-keep-alive";
@@ -31,6 +31,8 @@ export default function Workspace() {
     const classNames = classnames("workspace", {
         "is-visible": location.pathname !== "/",
     });
+
+    const visualizationWrapperRef = useRef();
 
     return (
         <div className={classNames}>
@@ -69,9 +71,12 @@ export default function Workspace() {
                                     style={{
                                         position: "relative",
                                     }}
+                                    ref={visualizationWrapperRef}
                                 >
                                     <Checkboxes />
-                                    <Visualization />
+                                    <Visualization
+                                        wrapperRef={visualizationWrapperRef}
+                                    />
                                 </div>
                             </KeepAlive>
                         </Provider>
