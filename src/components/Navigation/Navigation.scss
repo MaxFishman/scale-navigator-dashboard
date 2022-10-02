@@ -6,11 +6,12 @@
     justify-content: space-between;
     align-items: center;
     z-index: 1;
+    margin-top: 12px;
 }
 
 .navigation {
     width: 100%;
-    height: 89%;
+    // height: 89%;
     display: flex;
     flex-flow: column nowrap;
     justify-content: space-between;
