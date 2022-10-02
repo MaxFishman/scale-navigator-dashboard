@@ -4,7 +4,7 @@
     padding: 0 14px;
     z-index: 2;
     position: fixed;
-    bottom: 11px;
+    bottom: 6px;
     left: 0;
     background-color: black;
 
@@ -57,19 +57,19 @@
     }
 
     .icon.Tablature {
-        background-image: url('./assets/Tablature.svg');
+        background-image: url("./assets/Tablature.svg");
     }
     .icon.Navigator {
-        background-image: url('./assets/Navigator.svg');
+        background-image: url("./assets/Navigator.svg");
     }
     .icon.Ensemble {
-        background-image: url('./assets/Ensemble.svg');
+        background-image: url("./assets/Ensemble.svg");
     }
     .icon.Chords {
-        background-image: url('./assets/Chords.svg');
+        background-image: url("./assets/Chords.svg");
     }
     .icon.Visualization {
-        background-image: url('./assets/Visualizer.svg');
+        background-image: url("./assets/Visualizer.svg");
     }
 
     .workspace__navitem {

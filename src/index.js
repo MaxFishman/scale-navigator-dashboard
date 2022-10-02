@@ -4,7 +4,6 @@ import App from "./App";
 import Firebase, { FirebaseContext } from "./components/Firebase";
 import { Provider } from "react-redux";
 import store from "./store";
-import { ChakraProvider } from "@chakra-ui/react";
 
 import "./index.css";
 import "./App.scss";
@@ -14,9 +13,7 @@ ReactDOM.render(
     <React.StrictMode>
         <FirebaseContext.Provider value={new Firebase()}>
             <Provider store={store}>
-                <ChakraProvider>
-                    <App />
-                </ChakraProvider>
+                <App />
             </Provider>
         </FirebaseContext.Provider>
     </React.StrictMode>,
