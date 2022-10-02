@@ -10,6 +10,7 @@ import {
 
 const fps = 30;
 
+
 function Pfivesketch({ isMember = false, wrapperRef }) {
     const dispatch = useDispatch();
 
@@ -34,6 +35,7 @@ function Pfivesketch({ isMember = false, wrapperRef }) {
             p.width,
             Math.max(p.height, document.body.getBoundingClientRect().height / 2)
         ).parent(wrapperRef.current);
+
 
         p5.frameRate(fps);
         init({ p5, setNavigatorData, setScaleData });

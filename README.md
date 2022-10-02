@@ -18,3 +18,10 @@ First clone the project and change to the respective directory. Yarn install wil
 
 ## Server
 The server components is all handled by the firebase SDK and firebase API and will be installed via the yarn inastall. 
+
+
+## Mobile App
+
+#### Android 
+
+`yarn cap:android`
