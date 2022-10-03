@@ -45,6 +45,10 @@ import styled from "styled-components";
 
 const Wrapper = styled.div`
     height: 100%;
+
+    button {
+        font-size: 16px !important;
+    }
 `;
 
 // const ModalWrapper = styled.div`

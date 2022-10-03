@@ -6,12 +6,10 @@
     justify-content: space-between;
     align-items: center;
     z-index: 1;
-    margin-top: 12px;
 }
 
 .navigation {
     width: 100%;
-    // height: 89%;
     display: flex;
     flex-flow: column nowrap;
     justify-content: space-between;
@@ -60,6 +58,11 @@
 
 .canvas-wrapper {
     width: 100%;
+    height: 80%;
+
+    @include sm {
+        height: 88%;
+    }
 
     canvas {
         width: 100%;
@@ -72,6 +75,14 @@
     display: block;
 }
 
+.container-fluid {
+    padding: 12px 0;
+
+    @include sm {
+        padding: 0;
+    }
+}
+
 .navinfo {
     flex: 0 0 auto;
     display: grid;
@@ -80,8 +91,15 @@
     color: white;
     font-family: "Karla";
     font-weight: bold;
+    position: fixed;
+    bottom: 80px;
+    left: 3%;
+    z-index: 1;
+    width: 94%;
+    margin: 0 auto;
 
     @include sm {
+        position: static;
         padding-bottom: 0;
     }
 

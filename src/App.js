@@ -10,7 +10,7 @@ import Workspace from "./components/Workspace/Workspace";
 import { BrowserRouter as Router } from "react-router-dom";
 import Chords from "components/ToneJS/Chord";
 import MidiPersist from "components/Workspace/Chords/MidiPersist";
-import { KeepAwake } from '@capacitor-community/keep-awake';
+import { KeepAwake } from "@capacitor-community/keep-awake";
 
 Modal.setAppElement("#modal-root");
 Modal.defaultStyles.overlay.backgroundColor = "rgb(0 0 0 / 65%)";
@@ -23,7 +23,7 @@ const startScreenKeepAwake = async () => {
     }
 };
 
-startScreenKeepAwake()
+startScreenKeepAwake();
 
 const App = ({ firebase }) => {
     const dispatch = useDispatch();

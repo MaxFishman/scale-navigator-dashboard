@@ -18,14 +18,6 @@ import "./Navigation.scss";
 
 const MainWrapper = styled.div`
     height: 100%;
-
-    .canvas-wrapper {
-        /* Minus Header/Logo + Bottom Nav */
-        height: calc(100% - 90px - 85px);
-    }
-    .navinfo {
-        height: 20%;
-    }
 `;
 
 const HostBanner = styled.div`
@@ -86,9 +78,7 @@ const Navigation = ({ firebase, authUser }) => {
     // window.setFirebaseScaleData = setFirebaseScaleData;
 
     const hasActiveRoute = isMobile && location.pathname !== "/";
-    const wrapperStyle = hasActiveRoute
-        ? { height: "40vh", overflow: "hidden" }
-        : {};
+    const wrapperStyle = hasActiveRoute ? {} : {}; //height: "50vh"
     const navInfoStyle = hasActiveRoute ? { display: "none" } : {};
 
     const handleAutoPilotToggle = (event) => {

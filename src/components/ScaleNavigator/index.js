@@ -3,8 +3,8 @@ import Pfivesketch from "../Navigation/Navigator/Pfivesketch";
 import { useSelector } from "react-redux";
 
 export const sketchWrapperStyle = {
-    height: "35vh",
-    marginTop: "53px",
+    height: "50vh",
+    marginTop: "80px",
 };
 
 const ScaleNavigator = ({ hasActiveRoute }) => {
