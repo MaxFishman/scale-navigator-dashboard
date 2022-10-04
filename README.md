@@ -25,3 +25,7 @@ The server components is all handled by the firebase SDK and firebase API and wi
 #### Android 
 
 `yarn cap:android`
+
+#### iOS
+
+`yarn cap:ios`
