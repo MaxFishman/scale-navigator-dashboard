@@ -114,7 +114,10 @@ const Navigation = ({ firebase, authUser }) => {
                     </HostBanner>
                 )}
 
-                <ScaleNavigator hasActiveRoute={hasActiveRoute} />
+                <ScaleNavigator
+                    hasActiveRoute={hasActiveRoute}
+                    isMobile={isMobile}
+                />
 
                 <div className="navinfo" style={navInfoStyle}>
                     <div className="navinfo__root">
