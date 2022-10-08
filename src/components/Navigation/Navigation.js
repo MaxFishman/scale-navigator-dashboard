@@ -77,9 +77,9 @@ const Navigation = ({ firebase, authUser }) => {
     // };
     // window.setFirebaseScaleData = setFirebaseScaleData;
 
-    const hasActiveRoute = isMobile && location.pathname !== "/";
-    const wrapperStyle = hasActiveRoute ? {} : {}; //height: "50vh"
-    const navInfoStyle = hasActiveRoute ? { display: "none" } : {};
+    const isMobileAndNotHomePage = isMobile && location.pathname !== "/";
+    const wrapperStyle = isMobileAndNotHomePage ? {} : {}; //height: "50vh"
+    const navInfoStyle = isMobileAndNotHomePage ? { display: "none" } : {};
 
     const handleAutoPilotToggle = (event) => {
         navigatorAutoPilot(event.target.checked);
@@ -89,7 +89,7 @@ const Navigation = ({ firebase, authUser }) => {
         <div className="navigation" style={wrapperStyle}>
             <div
                 className="header-wrapper"
-                style={hasActiveRoute ? logoStyle : {}}
+                style={isMobileAndNotHomePage ? logoStyle : {}}
             >
                 <div className="app-logo">
                     <Logo />
@@ -115,7 +115,7 @@ const Navigation = ({ firebase, authUser }) => {
                 )}
 
                 <ScaleNavigator
-                    hasActiveRoute={hasActiveRoute}
+                    isMobileAndNotHomePage={isMobileAndNotHomePage}
                     isMobile={isMobile}
                 />
 

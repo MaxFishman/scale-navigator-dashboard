@@ -1,4 +1,4 @@
-import React, { useCallback } from "react";
+import React, { useCallback, useLayoutEffect } from "react";
 import { useDispatch } from "react-redux";
 import Sketch from "react-p5";
 import {
@@ -10,7 +10,7 @@ import {
 
 const fps = 30;
 
-function Pfivesketch({ isMember = false, wrapperRef }) {
+function Pfivesketch({ isMember = false, wrapperRef, isMobileAndNotHomePage }) {
     const dispatch = useDispatch();
 
     const setScaleData = useCallback(
@@ -27,15 +27,39 @@ function Pfivesketch({ isMember = false, wrapperRef }) {
         [dispatch]
     );
 
+    useLayoutEffect(() => {
+        if (!window.scaleP5) return;
+
+        const p = wrapperRef.current.getBoundingClientRect();
+        const height = getCanvasHeight({ isMobileAndNotHomePage });
+
+        window.scaleP5.resizeCanvas(p.width, height);
+    }, [isMobileAndNotHomePage]);
+
+    const getCanvasHeight = ({ isMobileAndNotHomePage }) => {
+        let height = 600; // Fixed height for Desktop view only.
+
+        if (isMobileAndNotHomePage) {
+            // Fixed height for Mobile view only, and only for pages other than homepage.
+            // couldnt set a dynamic height in here.
+            height = 430;
+        }
+
+        return height;
+    };
+
+    const preload = (p5) => {
+        window.scaleP5 = p5;
+    };
+
     const setup = (p5) => {
+        const canvasHeight = getCanvasHeight({
+            isMobileAndNotHomePage,
+        });
         const p = wrapperRef.current.getBoundingClientRect();
 
-        p5.createCanvas(
-            p.width,
-            Math.max(p.height, document.body.getBoundingClientRect().height / 2)
-        ).parent(wrapperRef.current);
-
         p5.frameRate(fps);
+        p5.createCanvas(p.width, canvasHeight).parent(wrapperRef.current);
         init({ p5, setNavigatorData, setScaleData });
     };
 
@@ -55,15 +79,19 @@ function Pfivesketch({ isMember = false, wrapperRef }) {
     };
 
     const windowResized = (p5) => {
-        const wrapperElmDimensions = wrapperRef.current.getBoundingClientRect();
-        p5.resizeCanvas(
-            wrapperElmDimensions.width,
-            wrapperElmDimensions.height
-        );
+        resizeCanvas(p5);
+    };
+
+    const resizeCanvas = (p5) => {
+        const wrapperDimensions = wrapperRef.current.getBoundingClientRect();
+        const height = getCanvasHeight({ isMobileAndNotHomePage });
+
+        p5.resizeCanvas(wrapperDimensions.width, height);
     };
 
     return (
         <Sketch
+            preload={preload}
             setup={setup}
             draw={draw}
             mousePressed={mousePressed}

@@ -3,14 +3,14 @@ import Pfivesketch from "../Navigation/Navigator/Pfivesketch";
 import { useSelector } from "react-redux";
 
 export const otherPageStyle = {
-    height: "50vh",
-    marginTop: "26px",
+    height: "40vh",
+    marginTop: "10px",
 };
 
-const ScaleNavigator = ({ hasActiveRoute, isMobile }) => {
+const ScaleNavigator = ({ hasActiveRoute, isMobileAndNotHomePage }) => {
     const { isEnsembleMember } = useSelector((state) => state.root);
     const wrapperRef = useRef();
-    const homePageStyle = isMobile ? { height: "100%" } : {};
+    const homePageStyle = isMobileAndNotHomePage ? { height: "100%" } : {};
     const style = hasActiveRoute ? otherPageStyle : homePageStyle;
 
     return (
@@ -20,7 +20,11 @@ const ScaleNavigator = ({ hasActiveRoute, isMobile }) => {
             id="canv_container"
             className="navigation__scalenav canvas-wrapper"
         >
-            <Pfivesketch isMember={isEnsembleMember} wrapperRef={wrapperRef} />
+            <Pfivesketch
+                isMember={isEnsembleMember}
+                wrapperRef={wrapperRef}
+                isMobileAndNotHomePage={isMobileAndNotHomePage}
+            />
         </div>
     );
 };
