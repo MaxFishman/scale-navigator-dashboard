@@ -99,7 +99,7 @@
     left: 3%;
     z-index: 1;
     width: 94%;
-    margin: 0 auto;
+    margin: 0 auto 1.75rem auto;
 
     @include sm {
         position: static;
@@ -166,5 +166,11 @@
         & > * {
             display: inline-block;
         }
+    }
+}
+
+@media screen and (max-width: 576px) {
+    .navinfo {
+        height: 30vw;
     }
 }
