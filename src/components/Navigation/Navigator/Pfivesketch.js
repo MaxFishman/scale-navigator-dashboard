@@ -37,13 +37,8 @@ function Pfivesketch({ isMember = false, wrapperRef, isMobileAndNotHomePage }) {
     }, [isMobileAndNotHomePage]);
 
     const getCanvasHeight = ({ isMobileAndNotHomePage }) => {
-        let height = 500; // Fixed height for Desktop view only.
-        // if (size.width > 474) {
-        //     console.log("GREATER THAN 575");
-        //     height = 600;
-        // } else {
-        //     height = 1.3 * size.width;
-        // }
+        let height = 500;
+
         if (isMobileAndNotHomePage) {
             // Fixed height for Mobile view only, and only for pages other than homepage.
             // couldnt set a dynamic height in here.

@@ -19,13 +19,6 @@ const ScaleNavigator = ({ isMobileAndNotHomePage }) => {
 
     return (
         <div
-            // style={{
-            //     marginTop: "3rem",
-            //     display: "flex",
-            //     justifyContent: "center",
-            //     alignItems: "center",
-            //     height: "500px",
-            // }}
             ref={wrapperRef}
             id="canv_container"
             className="navigation__scalenav canvas-wrapper"

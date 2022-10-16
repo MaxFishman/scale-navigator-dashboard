@@ -1,13 +1,13 @@
 #canv_container {
-    margin-top: 3rem;
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 700px;
+    height: calc(100vh - 200px);
 }
 
 @media screen and (max-width: 576px) {
     #canv_container {
         height: auto;
+        margin-top: 3rem;
     }
 }
