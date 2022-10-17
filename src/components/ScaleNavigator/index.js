@@ -13,15 +13,23 @@ import "./ScaleNavigator.scss";
 const ScaleNavigator = ({ isMobileAndNotHomePage }) => {
     const { isEnsembleMember } = useSelector((state) => state.root);
     const wrapperRef = useRef();
-    // const homePageStyle = isMobileAndNotHomePage ? { height: "100%" } : {};
-    // const style = hasActiveRoute ? otherPageStyle : homePageStyle;
-    // const size = useWindowSize();
+
+    let style;
+    if (isMobileAndNotHomePage) {
+        style = {
+            marginTop: "3rem",
+        };
+    } else {
+        style = { marginTop: "auto" };
+    }
+    console.log(isMobileAndNotHomePage);
 
     return (
         <div
             ref={wrapperRef}
             id="canv_container"
             className="navigation__scalenav canvas-wrapper"
+            style={style}
         >
             <Pfivesketch
                 isMember={isEnsembleMember}

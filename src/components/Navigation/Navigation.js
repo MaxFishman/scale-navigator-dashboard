@@ -17,7 +17,7 @@ import { jumpToScaleEvent, navigatorAutoPilot } from "../../events";
 import "./Navigation.scss";
 
 const MainWrapper = styled.div`
-    height: 100%;
+    height: auto;
 `;
 
 const HostBanner = styled.div`

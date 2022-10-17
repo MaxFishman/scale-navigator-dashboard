@@ -45,6 +45,8 @@ function Pfivesketch({ isMember = false, wrapperRef, isMobileAndNotHomePage }) {
             height = size.height * 0.3;
         } else if (size.width < 576) {
             height = size.height * 0.6;
+        } else {
+            height = size.height * 0.8;
         }
         return height;
     };
