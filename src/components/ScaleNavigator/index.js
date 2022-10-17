@@ -2,23 +2,34 @@ import React, { useRef } from "react";
 import Pfivesketch from "../Navigation/Navigator/Pfivesketch";
 import { useSelector } from "react-redux";
 
-export const otherPageStyle = {
-    height: "40vh",
-    marginTop: "10px",
-};
+import "./ScaleNavigator.scss";
+// import useWindowSize from "hooks/device";
 
-const ScaleNavigator = ({ hasActiveRoute, isMobileAndNotHomePage }) => {
+// export const otherPageStyle = {
+//     height: "40vh",
+//     marginTop: "10px",
+// };
+
+const ScaleNavigator = ({ isMobileAndNotHomePage }) => {
     const { isEnsembleMember } = useSelector((state) => state.root);
     const wrapperRef = useRef();
-    const homePageStyle = isMobileAndNotHomePage ? { height: "100%" } : {};
-    const style = hasActiveRoute ? otherPageStyle : homePageStyle;
+
+    let style;
+    if (isMobileAndNotHomePage) {
+        style = {
+            marginTop: "3rem",
+        };
+    } else {
+        style = { marginTop: "auto" };
+    }
+    console.log(isMobileAndNotHomePage);
 
     return (
         <div
-            style={style}
             ref={wrapperRef}
             id="canv_container"
             className="navigation__scalenav canvas-wrapper"
+            style={style}
         >
             <Pfivesketch
                 isMember={isEnsembleMember}

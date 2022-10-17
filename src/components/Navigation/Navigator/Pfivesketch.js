@@ -7,12 +7,12 @@ import {
     navigatorMousePressed,
     navigatorMouseReleased,
 } from "./Navigator";
-
+import useWindowSize from "hooks/device";
 const fps = 30;
 
 function Pfivesketch({ isMember = false, wrapperRef, isMobileAndNotHomePage }) {
     const dispatch = useDispatch();
-
+    const size = useWindowSize();
     const setScaleData = useCallback(
         (payload) => {
             dispatch({ type: "SET_SCALE_DATA", payload });
@@ -37,14 +37,17 @@ function Pfivesketch({ isMember = false, wrapperRef, isMobileAndNotHomePage }) {
     }, [isMobileAndNotHomePage]);
 
     const getCanvasHeight = ({ isMobileAndNotHomePage }) => {
-        let height = 600; // Fixed height for Desktop view only.
+        let height = 500;
 
         if (isMobileAndNotHomePage) {
             // Fixed height for Mobile view only, and only for pages other than homepage.
             // couldnt set a dynamic height in here.
-            height = 430;
+            height = size.height * 0.3;
+        } else if (size.width < 576) {
+            height = size.height * 0.6;
+        } else {
+            height = size.height * 0.8;
         }
-
         return height;
     };
 

@@ -11,6 +11,7 @@ import { BrowserRouter as Router } from "react-router-dom";
 import Chords from "components/ToneJS/Chord";
 import MidiPersist from "components/Workspace/Chords/MidiPersist";
 import { KeepAwake } from "@capacitor-community/keep-awake";
+import useWindowSize from "hooks/device";
 
 Modal.setAppElement("#modal-root");
 Modal.defaultStyles.overlay.backgroundColor = "rgb(0 0 0 / 65%)";
@@ -27,7 +28,18 @@ startScreenKeepAwake();
 
 const App = ({ firebase }) => {
     const dispatch = useDispatch();
+    const size = useWindowSize();
 
+    let style;
+    if (size.width < 576) {
+        style = { display: "block" };
+        console.log("BLOCK");
+    } else {
+        style = { display: "flex" };
+        console.log("FLEX");
+    }
+
+    console.log(style);
     useEffect(() => {
         const authUser = JSON.parse(localStorage.getItem("authUser"));
         if (!authUser) return;
@@ -49,8 +61,8 @@ const App = ({ firebase }) => {
             <MidiPersist />
             <Router>
                 <Container fluid>
-                    <Row>
-                        <Col xs="12" sm="12" md="5">
+                    <Row style={style}>
+                        <Col xs="12" sm="12" md="5" style={{ height: "auto" }}>
                             <AuthUserContext.Consumer>
                                 {(authUser) => (
                                     <Navigation authUser={authUser} />
