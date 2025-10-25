@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 import "./Strings.scss";
 import { FRETS, FRET_POS, STRINGS, STRING_POS } from "./BoardData";
 import Notes from "./Notes";
@@ -192,3 +193,9 @@ export default class Main extends React.Component {
         );
     }
 }
+
+Main.propTypes = {
+    keyData: PropTypes.shape({
+        pitch_classes: PropTypes.array.isRequired
+    }).isRequired
+};

@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 import classNames from "classnames";
 import { FRET_POS } from "./BoardData";
 import PitchClassData from "common/PitchClassData";
@@ -72,3 +73,30 @@ export default function Notes({ markers, noteMappings, keyData, openFn }) {
         </>
     );
 }
+
+// PropTypes for Note component
+Note.propTypes = {
+    children: PropTypes.node,
+    className: PropTypes.string,
+    note: PropTypes.string,
+    x: PropTypes.number.isRequired,
+    y: PropTypes.number.isRequired
+};
+
+// PropTypes for Notes component
+Notes.propTypes = {
+    markers: PropTypes.arrayOf(PropTypes.shape({
+        location: PropTypes.shape({
+            x: PropTypes.number.isRequired,
+            y: PropTypes.number.isRequired
+        }).isRequired,
+        fret: PropTypes.number.isRequired
+    })).isRequired,
+    noteMappings: PropTypes.arrayOf(PropTypes.shape({
+        pitchClass: PropTypes.string.isRequired
+    })).isRequired,
+    keyData: PropTypes.shape({
+        pitch_classes: PropTypes.array.isRequired
+    }).isRequired,
+    openFn: PropTypes.func
+};
