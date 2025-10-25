@@ -24,13 +24,13 @@
         "@testing-library/user-event": "^12.1.10",
         "antd": "^4.16.11",
         "array-move": "^4.0.0",
-        "axios": "^0.21.4",
+        "axios": "^1.6.0",
         "bezier": "^0.1.0",
         "bootstrap": "^5.1.1",
         "classnames": "^2.3.1",
         "concurrently": "4.1.2",
-        "express": "^4.17.1",
-        "firebase": "^8.9.1",
+        "express": "^4.18.2",
+        "firebase": "^10.7.0",
         "jquery": "^3.6.0",
         "multiselect-react-dropdown": "^2.0.5",
         "rc-drawer": "^4.4.2",
@@ -84,7 +84,7 @@
         "@capacitor/cli": "^4.0.1"
     },
     "engines": {
-        "node": "22.x",
+        "node": ">=18.0.0 <=22.x",vercel
         "npm": ">=8.0.0"
     }
 
