@@ -1,0 +1,43 @@
+{
+  "short_name": "Scale Navigator",
+  "name": "Scale Navigator",
+  "description": "A comprehensive music theory and ensemble collaboration platform",
+  "icons": [
+    {
+      "src": "favicon-64.png",
+      "sizes": "64x64",
+      "type": "image/png"
+    },
+    {
+      "src": "favicon-32.png",
+      "sizes": "32x32",
+      "type": "image/png"
+    },
+    {
+      "src": "favicon-16.png",
+      "sizes": "16x16",
+      "type": "image/png"
+    },
+    {
+      "src": "logo192.png",
+      "type": "image/png",
+      "sizes": "192x192",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "logo512.png",
+      "type": "image/png",
+      "sizes": "512x512",
+      "purpose": "any maskable"
+    }
+  ],
+  "start_url": "/",
+  "display": "standalone",
+  "theme_color": "#000000",
+  "background_color": "#2C2C2C",
+  "orientation": "portrait-primary",
+  "scope": "/",
+  "categories": ["music", "education", "productivity"],
+  "lang": "en",
+  "dir": "ltr"
+}

@@ -1,0 +1,58 @@
+@font-face {
+  font-family: "Chewy";
+  font-style: normal;
+  font-weight: normal;
+  src: url("../resources/Chewy/Chewy-Regular.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "Karla";
+  font-style: normal;
+  font-weight: normal;
+  src: url("../resources/Karla/Karla-Regular.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "Karla";
+  font-style: normal;
+  font-weight: 700;
+  src: url("../resources/Karla/Karla-Bold.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "Mulish";
+  font-style: normal;
+  font-weight: normal;
+  src: url("../resources/Mulish/Mulish-Regular.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "Mulish";
+  font-style: normal;
+  font-weight: 700;
+  src: url("../resources/Mulish/Mulish-Bold.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "Wild Wolf Regular";
+  font-style: normal;
+  font-weight: normal;
+  src: local("../resources/Wild Wolf Regular"),
+    url("../resources/Wild Wolf.woff") format("woff");
+}
+
+@font-face {
+  font-family: "Glow Better";
+  font-style: normal;
+  font-weight: normal;
+  src: local("../resources/Glow Better Serif"),
+    url("../resources/Glow Better Serif.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "Glow Better Script";
+  font-style: normal;
+  font-weight: normal;
+  src: local("../resources/Glow Better Script"),
+    url("../resources/Glow Better Script.otf") format("truetype");
+}

@@ -1,0 +1,38 @@
+{
+  "files": {
+    "main.css": "/static/css/main.489cf46b.css",
+    "main.js": "/static/js/main.a460353b.js",
+    "static/js/849.6835de73.chunk.js": "/static/js/849.6835de73.chunk.js",
+    "static/media/hexatonic.svg": "/static/media/hexatonic.8728e1b7d550893a99d001da91599edc.svg",
+    "static/media/Wild Wolf.woff": "/static/media/Wild Wolf.1013397d14fb8b5f52dc.woff",
+    "static/media/Glow Better Script.otf": "/static/media/Glow Better Script.7915a1cb4df69ca56776.otf",
+    "static/media/Mulish-Bold.ttf": "/static/media/Mulish-Bold.178a6a4cce0058d48679.ttf",
+    "static/media/Mulish-Regular.ttf": "/static/media/Mulish-Regular.92c7cbf699f46f71c503.ttf",
+    "static/media/diatonic.svg": "/static/media/diatonic.0d0bf0033a9264dc7e42f0eea931b458.svg",
+    "static/media/Glow Better Serif.ttf": "/static/media/Glow Better Serif.e9e90d197c5bc049b755.ttf",
+    "static/media/Chewy-Regular.ttf": "/static/media/Chewy-Regular.e94e4ae6b454c4a3e69c.ttf",
+    "static/media/harmonic_major.svg": "/static/media/harmonic_major.f5365c6f1ea40820d47198df297ac374.svg",
+    "static/media/Karla-Bold.ttf": "/static/media/Karla-Bold.f0553c327ed82384c20f.ttf",
+    "static/media/harmonic_minor.svg": "/static/media/harmonic_minor.fafa1cf86b099f0a53cb8ea6508c8f18.svg",
+    "static/media/Karla-Regular.ttf": "/static/media/Karla-Regular.6d937d4fa9dc8485f28b.ttf",
+    "static/media/logo.svg": "/static/media/logo.ac0baefbe7cc83fc6ad1c69c96646526.svg",
+    "static/media/checked-1.png": "/static/media/checked-1.cf07e038125692ec4ceb.png",
+    "static/media/octatonic.svg": "/static/media/octatonic.b79b79b8b86ed1c64c654b40ccc361c7.svg",
+    "static/media/acoustic.svg": "/static/media/acoustic.0dbc81acc622bf1897a865f3eeeda282.svg",
+    "static/media/Navigator.svg": "/static/media/Navigator.da387fc6a4dbd49b69b5.svg",
+    "index.html": "/index.html",
+    "static/media/Ensemble.svg": "/static/media/Ensemble.ecf47dbf210d293856fe.svg",
+    "static/media/whole_tone.svg": "/static/media/whole_tone.dde05bc640f43fe6431bcc38088c7c90.svg",
+    "static/media/Tablature.svg": "/static/media/Tablature.fda44b1d859970d7db2c.svg",
+    "static/media/Chords.svg": "/static/media/Chords.9de4950700296bae4244.svg",
+    "static/media/Visualizer.svg": "/static/media/Visualizer.1c8da7f5fa9aa98787fd.svg",
+    "static/media/menu.svg": "/static/media/menu.aa04ddbc0d16e360c03d.svg",
+    "main.489cf46b.css.map": "/static/css/main.489cf46b.css.map",
+    "main.a460353b.js.map": "/static/js/main.a460353b.js.map",
+    "849.6835de73.chunk.js.map": "/static/js/849.6835de73.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.489cf46b.css",
+    "static/js/main.a460353b.js"
+  ]
+}
