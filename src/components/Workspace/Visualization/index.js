@@ -1,5 +1,5 @@
-import React from "react";
-import Sketch from "react-p5";
+import React, { useEffect, useRef } from "react";
+import p5 from "p5";
 import { useSelector } from "react-redux";
 import Layers from "./Layers";
 import { jumpToScaleEvent } from "../../../events";
@@ -38,6 +38,8 @@ const getCheckboxIDByScale = (scale) => {
 const Visualization = ({ wrapperRef }) => {
     const { navigatorData } = useSelector((state) => state.root);
     const { old_main_polygon, main_polygon } = navigatorData;
+    const p5Ref = useRef(null);
+    const sketchRef = useRef(null);
 
     const addBreadcrumb = (p1, p2, st = true) => {
         if (!breadcrumbs[p1]) breadcrumbs[p1] = {};
@@ -303,14 +305,37 @@ const Visualization = ({ wrapperRef }) => {
     //     }
     // };
 
-    return (
-        <Sketch
-            setup={setup}
-            draw={draw}
-            mousePressed={mousePressed}
-            windowResized={windowResized}
-        />
-    );
+    useEffect(() => {
+        if (wrapperRef.current && !sketchRef.current) {
+            const sketch = (p) => {
+                p.setup = () => setup(p, wrapperRef.current);
+                p.draw = () => draw(p);
+                p.mousePressed = () => mousePressed();
+                p.windowResized = () => windowResized(p);
+            };
+            
+            sketchRef.current = new p5(sketch, wrapperRef.current);
+        }
+
+        return () => {
+            if (sketchRef.current) {
+                sketchRef.current.remove();
+                sketchRef.current = null;
+            }
+        };
+    }, [wrapperRef]);
+
+    useEffect(() => {
+        if (sketchRef.current && wrapperRef.current) {
+            const wrapperElmDimensions = wrapperRef.current.getBoundingClientRect();
+            sketchRef.current.resizeCanvas(
+                wrapperElmDimensions.width,
+                wrapperElmDimensions.height
+            );
+        }
+    }, [wrapperRef]);
+
+    return <div ref={p5Ref} />;
 };
 
 export default Visualization;
