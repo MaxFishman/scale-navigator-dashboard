@@ -1,6 +1,18 @@
-import app from "firebase/app";
-import "firebase/auth";
-import "firebase/firestore";
+import { initializeApp } from "firebase/app";
+import { 
+    getAuth, 
+    GoogleAuthProvider, 
+    EmailAuthProvider,
+    createUserWithEmailAndPassword,
+    signInWithEmailAndPassword,
+    signInWithPopup,
+    signOut,
+    sendPasswordResetEmail,
+    sendEmailVerification,
+    updatePassword,
+    onAuthStateChanged
+} from "firebase/auth";
+import { getFirestore, FieldValue, doc, onSnapshot } from "firebase/firestore";
 
 const process = {};
 
@@ -17,51 +29,51 @@ const config = {
 
 class Firebase {
     constructor() {
-        app.initializeApp(config);
+        this.app = initializeApp(config);
 
         /* Helper */
 
-        this.fieldValue = app.firestore.FieldValue;
-        this.emailAuthProvider = app.auth.EmailAuthProvider;
-        this.googleAuthProvider = new app.auth.GoogleAuthProvider();
+        this.fieldValue = FieldValue;
+        this.emailAuthProvider = EmailAuthProvider;
+        this.googleAuthProvider = new GoogleAuthProvider();
 
         /* Firebase APIs */
 
-        this.auth = app.auth();
-        this.db = app.firestore();
+        this.auth = getAuth(this.app);
+        this.db = getFirestore(this.app);
     }
 
     // *** Auth API ***
 
     doCreateUserWithEmailAndPassword = (email, password) =>
-        this.auth.createUserWithEmailAndPassword(email, password);
+        createUserWithEmailAndPassword(this.auth, email, password);
 
     doSignInWithEmailAndPassword = (email, password) =>
-        this.auth.signInWithEmailAndPassword(email, password);
+        signInWithEmailAndPassword(this.auth, email, password);
 
     doSignInWithGoogle = () =>
-        this.auth.signInWithPopup(this.googleAuthProvider);
+        signInWithPopup(this.auth, this.googleAuthProvider);
 
-    doSignOut = () => this.auth.signOut();
+    doSignOut = () => signOut(this.auth);
 
-    doPasswordReset = (email) => this.auth.sendPasswordResetEmail(email);
+    doPasswordReset = (email) => sendPasswordResetEmail(this.auth, email);
 
     doSendEmailVerification = () =>
-        this.auth.currentUser.sendEmailVerification({
+        sendEmailVerification(this.auth.currentUser, {
             url:
                 process.env.REACT_APP_CONFIRMATION_EMAIL_REDIRECT ||
                 "someurl.since.process.is.undefined",
         });
 
     doPasswordUpdate = (password) =>
-        this.auth.currentUser.updatePassword(password);
+        updatePassword(this.auth.currentUser, password);
 
     // *** Merge Auth and DB User API *** //
 
     onAuthUserListener = (next, fallback) =>
-        this.auth.onAuthStateChanged((authUser) => {
+        onAuthStateChanged(this.auth, (authUser) => {
             if (authUser) {
-                this.user(authUser.uid).onSnapshot((doc) => {
+                onSnapshot(this.user(authUser.uid), (doc) => {
                     const dbUser = doc.data();
 
                     // default empty roles
@@ -87,13 +99,13 @@ class Firebase {
 
     // *** User API ***
 
-    user = (uid) => this.db.doc(`users/${uid}`);
+    user = (uid) => doc(this.db, `users/${uid}`);
 
     users = () => this.db.collection("users");
 
     // *** Rooms API ***
 
-    room = (uid) => this.db.doc(`rooms/${uid}`);
+    room = (uid) => doc(this.db, `rooms/${uid}`);
 
     rooms = () => this.db.collection("rooms");
 }
