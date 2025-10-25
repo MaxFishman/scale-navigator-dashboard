@@ -1,4 +1,5 @@
 import React, { useEffect, useRef } from "react";
+import PropTypes from "prop-types";
 import p5 from "p5";
 import { useSelector } from "react-redux";
 import Layers from "./Layers";
@@ -336,6 +337,12 @@ const Visualization = ({ wrapperRef }) => {
     }, [wrapperRef]);
 
     return <div ref={p5Ref} />;
+};
+
+Visualization.propTypes = {
+    wrapperRef: PropTypes.shape({
+        current: PropTypes.instanceOf(Element)
+    }).isRequired
 };
 
 export default Visualization;
