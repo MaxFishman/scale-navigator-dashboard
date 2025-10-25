@@ -1,0 +1,12 @@
+#canv_container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: calc(100vh - 200px);
+}
+
+@media screen and (max-width: 576px) {
+    #canv_container {
+        height: auto;
+    }
+}

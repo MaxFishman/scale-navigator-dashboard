@@ -1,0 +1,64 @@
+.strings {
+  padding: 0.75rem;
+  padding-right: 0;
+
+
+  &__string {
+    stroke: black;
+
+    @for $i from 1 through 6 {
+      &--#{$i} {
+        stroke-width: #{1.5 + 0.25 * $i};
+      }
+    }
+  }
+
+  &__fret {
+    stroke-width: 3;
+    stroke: rgb(150, 150, 150);
+
+    &--nut {
+      stroke-width: 7;
+      stroke: black;
+    }
+  }
+
+  // notify changing note color: #E35F60
+
+  &__note {
+    fill: #ffde6a;
+
+    & + text {
+      text-anchor: middle;
+      font-size: 20px;
+      font-weight: bold;
+    }
+
+    &--open {
+      stroke: black;
+      stroke-width: 3;
+
+      &.strings__note--off {
+        fill: white;
+      }
+    }
+
+    &--fingered {
+      & + text {
+        fill: black;
+      }
+
+      &.strings__note--off {
+        opacity: 0;
+
+        & + text {
+          opacity: 0;
+        }
+      }
+    }
+
+    &--marker {
+      fill: rgb(200, 200, 200);
+    }
+  }
+}

@@ -1,0 +1,101 @@
+import app from "firebase/app";
+import "firebase/auth";
+import "firebase/firestore";
+
+const process = {};
+
+const config = {
+    apiKey: "AIzaSyBiTTX24mBjypGdel2ARBx0UUvFQEaRDf4",
+    authDomain: "scale-navigator-ensemble.firebaseapp.com",
+    databaseURL: "https://scale-navigator-ensemble-default-rtdb.firebaseio.com",
+    projectId: "scale-navigator-ensemble",
+    storageBucket: "scale-navigator-ensemble.appspot.com",
+    messagingSenderId: "156837833740",
+    appId: "1:156837833740:web:ce00fcf2297f899f8b9229",
+    measurementId: "G-5G2C3541ZY",
+};
+
+class Firebase {
+    constructor() {
+        app.initializeApp(config);
+
+        /* Helper */
+
+        this.fieldValue = app.firestore.FieldValue;
+        this.emailAuthProvider = app.auth.EmailAuthProvider;
+        this.googleAuthProvider = new app.auth.GoogleAuthProvider();
+
+        /* Firebase APIs */
+
+        this.auth = app.auth();
+        this.db = app.firestore();
+    }
+
+    // *** Auth API ***
+
+    doCreateUserWithEmailAndPassword = (email, password) =>
+        this.auth.createUserWithEmailAndPassword(email, password);
+
+    doSignInWithEmailAndPassword = (email, password) =>
+        this.auth.signInWithEmailAndPassword(email, password);
+
+    doSignInWithGoogle = () =>
+        this.auth.signInWithPopup(this.googleAuthProvider);
+
+    doSignOut = () => this.auth.signOut();
+
+    doPasswordReset = (email) => this.auth.sendPasswordResetEmail(email);
+
+    doSendEmailVerification = () =>
+        this.auth.currentUser.sendEmailVerification({
+            url:
+                process.env.REACT_APP_CONFIRMATION_EMAIL_REDIRECT ||
+                "someurl.since.process.is.undefined",
+        });
+
+    doPasswordUpdate = (password) =>
+        this.auth.currentUser.updatePassword(password);
+
+    // *** Merge Auth and DB User API *** //
+
+    onAuthUserListener = (next, fallback) =>
+        this.auth.onAuthStateChanged((authUser) => {
+            if (authUser) {
+                this.user(authUser.uid).onSnapshot((doc) => {
+                    const dbUser = doc.data();
+
+                    // default empty roles
+                    // if (!dbUser.roles) {
+                    // dbUser.roles = {};
+                    //}
+
+                    // merge auth and db user
+                    authUser = {
+                        uid: authUser.uid,
+                        email: authUser.email,
+                        emailVerified: authUser.emailVerified,
+                        providerData: authUser.providerData,
+                        ...dbUser,
+                    };
+
+                    next(authUser);
+                });
+            } else {
+                fallback();
+            }
+        });
+
+    // *** User API ***
+
+    user = (uid) => this.db.doc(`users/${uid}`);
+
+    users = () => this.db.collection("users");
+
+    // *** Rooms API ***
+
+    room = (uid) => this.db.doc(`rooms/${uid}`);
+
+    rooms = () => this.db.collection("rooms");
+}
+
+export default Firebase;
