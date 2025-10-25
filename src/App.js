@@ -18,17 +18,25 @@ Modal.defaultStyles.overlay.backgroundColor = "rgb(0 0 0 / 65%)";
 Modal.defaultStyles.overlay.zIndex = 123;
 
 const startScreenKeepAwake = async () => {
-    const result = await KeepAwake.isSupported();
-    if (result.isSupported) {
-        await KeepAwake.keepAwake();
+    try {
+        const result = await KeepAwake.isSupported();
+        if (result.isSupported) {
+            await KeepAwake.keepAwake();
+        }
+    } catch (error) {
+        // Silently fail in web environment
+        console.log("KeepAwake not available in web environment");
     }
 };
-
-startScreenKeepAwake();
 
 const App = ({ firebase }) => {
     const dispatch = useDispatch();
     const size = useWindowSize();
+
+    // Initialize KeepAwake inside component
+    React.useEffect(() => {
+        startScreenKeepAwake();
+    }, []);
 
     let style;
     if (size.width < 576) {
