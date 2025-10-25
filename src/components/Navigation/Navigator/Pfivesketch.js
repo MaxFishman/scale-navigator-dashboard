@@ -1,6 +1,6 @@
-import React, { useCallback, useLayoutEffect } from "react";
+import React, { useCallback, useLayoutEffect, useEffect, useRef } from "react";
 import { useDispatch } from "react-redux";
-import Sketch from "react-p5";
+import p5 from "p5";
 import {
     init,
     navigatorDraw,
@@ -13,6 +13,8 @@ const fps = 30;
 function Pfivesketch({ isMember = false, wrapperRef, isMobileAndNotHomePage }) {
     const dispatch = useDispatch();
     const size = useWindowSize();
+    const p5Ref = useRef(null);
+    const sketchRef = useRef(null);
     const setScaleData = useCallback(
         (payload) => {
             dispatch({ type: "SET_SCALE_DATA", payload });
@@ -92,16 +94,37 @@ function Pfivesketch({ isMember = false, wrapperRef, isMobileAndNotHomePage }) {
         p5.resizeCanvas(wrapperDimensions.width, height);
     };
 
-    return (
-        <Sketch
-            preload={preload}
-            setup={setup}
-            draw={draw}
-            mousePressed={mousePressed}
-            mouseReleased={mouseReleased}
-            windowResized={windowResized}
-        />
-    );
+    useEffect(() => {
+        if (wrapperRef.current && !sketchRef.current) {
+            const sketch = (p) => {
+                p.preload = () => preload(p);
+                p.setup = () => setup(p);
+                p.draw = () => draw(p);
+                p.mousePressed = (event) => mousePressed(p, event);
+                p.mouseReleased = (event) => mouseReleased(p, event);
+                p.windowResized = () => windowResized(p);
+            };
+            
+            sketchRef.current = new p5(sketch, wrapperRef.current);
+        }
+
+        return () => {
+            if (sketchRef.current) {
+                sketchRef.current.remove();
+                sketchRef.current = null;
+            }
+        };
+    }, [wrapperRef, isMember, isMobileAndNotHomePage]);
+
+    useEffect(() => {
+        if (sketchRef.current && wrapperRef.current) {
+            const wrapperDimensions = wrapperRef.current.getBoundingClientRect();
+            const height = getCanvasHeight({ isMobileAndNotHomePage });
+            sketchRef.current.resizeCanvas(wrapperDimensions.width, height);
+        }
+    }, [isMobileAndNotHomePage, size]);
+
+    return <div ref={p5Ref} />;
 }
 
 Pfivesketch.note_names = [
