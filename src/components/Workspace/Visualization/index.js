@@ -1,4 +1,4 @@
-esimport React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef } from "react";
 import PropTypes from "prop-types";
 import p5 from "p5";
 import { useSelector } from "react-redux";
