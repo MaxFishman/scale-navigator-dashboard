@@ -1,9 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import Figure from "react-bootstrap/Figure";
-
 import "./About.scss";
-
 import acoustic from "./shape_svgs/acoustic.svg";
 import diatonic from "./shape_svgs/diatonic.svg";
 import harmonic_major from "./shape_svgs/harmonic_major.svg";
@@ -11,17 +9,14 @@ import harmonic_minor from "./shape_svgs/harmonic_minor.svg";
 import hexatonic from "./shape_svgs/hexatonic.svg";
 import octatonic from "./shape_svgs/octatonic.svg";
 import whole_tone from "./shape_svgs/whole_tone.svg";
-
 const About = () => (
     <div className="page-about">
         <div>
             <h2>About</h2>
-
             <p>
                 <strong>Scale Navigator Dashboard</strong> is a web app for
                 exploring musical harmony! Use it to:
             </p>
-
             <ul id="activities">
                 <li>
                     Creatively <strong>compose</strong> music
@@ -42,7 +37,6 @@ const About = () => (
                     harmonically synchronize your <strong>DAW</strong>
                 </li>
             </ul>
-
             <p>
                 Scale Navigator makes harmony accessible by giving users
                 tangible harmonic objects to <em>play with</em>, and placing
@@ -54,12 +48,10 @@ const About = () => (
                 harmonic concepts by giving them form, and by placing them in
                 context.
             </p>
-
             <p>
                 Scale Navigator represents scales as icons. A scale {`icon's`}
                 polygonal shape indicates its scale class:
             </p>
-
             <div id="scale_table">
                 <Figure className="scale_fig">
                     <Figure.Image
@@ -72,7 +64,6 @@ const About = () => (
                         </a>
                     </Figure.Caption>
                 </Figure>
-
                 <Figure className="scale_fig">
                     <Figure.Image
                         alt="acoustic scale class icon"
@@ -84,7 +75,6 @@ const About = () => (
                         </a>
                     </Figure.Caption>
                 </Figure>
-
                 <Figure className="scale_fig">
                     <Figure.Image
                         alt="harmonic major scale class icon"
@@ -98,7 +88,6 @@ const About = () => (
                         </a>
                     </Figure.Caption>
                 </Figure>
-
                 <Figure className="scale_fig">
                     <Figure.Image
                         alt="harmonic minor scale class icon"
@@ -112,7 +101,6 @@ const About = () => (
                         </a>
                     </Figure.Caption>
                 </Figure>
-
                 <Figure className="scale_fig">
                     <Figure.Image
                         alt="whole tone scale class icon"
@@ -126,7 +114,6 @@ const About = () => (
                         </a>
                     </Figure.Caption>
                 </Figure>
-
                 <Figure className="scale_fig">
                     <Figure.Image
                         alt="octatonic scale class icon"
@@ -138,7 +125,6 @@ const About = () => (
                         </a>
                     </Figure.Caption>
                 </Figure>
-
                 <Figure className="scale_fig">
                     <Figure.Image
                         alt="hexatonic scale class icon"
@@ -151,10 +137,8 @@ const About = () => (
                     </Figure.Caption>
                 </Figure>
             </div>
-
             <p>{`A scale icon's color indicates its root:`}</p>
             <br />
-
             <div id="circle_container">
                 <div className="root_heading" id="root_f">
                     F
@@ -193,7 +177,6 @@ const About = () => (
                     B♭
                 </div>
             </div>
-
             <p>
                 {`Users can travel (or "modulate") to a new scale by clicking on
                 its scale icon in the Navigator interface. The current selected
@@ -205,7 +188,6 @@ const About = () => (
                 select a new current scale&mdash;adjust the autopilot slider to
                 change the rate at which the autopilot selects a new scale.`}
             </p>
-
             <p>
                 {`The Navigator interface displays the local harmonic context as
                 it relates to the current selected scale. A bird's eye view of
@@ -213,17 +195,14 @@ const About = () => (
                 the <Link to="scale-network">Visualization tab</Link>, which
                 desplays all of the scale icons in a network graph.`}
             </p>
-
             <p>
                 Make music with your friends by creating or joining an ensemble
                 in the <Link to="ensemble">Ensemble tab</Link>.
             </p>
-
             <p>
                 Select an instrument with which to compose or improvise music in
                 the <Link to="tablature">Tablature tab</Link>.
             </p>
-
             <p>
                 In the words of Dmitri Tymoczko,{" "}
                 {`"New scales [provide] access to
@@ -231,7 +210,6 @@ const About = () => (
                 Use the <Link to="chords">Chords tab</Link> to generate chords
                 within the context of the current selected scale.
             </p>
-
             <h2>Further Reading</h2>
             <p>
                 Scale Navigator was the subject of my graduate thesis at
@@ -264,13 +242,15 @@ const About = () => (
                 </a>{" "}
                 by Garrett Michaelsen.
             </p>
-
             <p style={{ "text-align": "right" }}>
                 &mdash; Nathan Turczan, September 2021
             </p>
 
             <h2>Credits</h2>
             <ul id="credits">
+                <li>
+                    <a>Max Fishman</a>
+                </li>
                 <li>
                     <a href="https://hapy.space/">Nate Ben</a>
                 </li>
@@ -289,7 +269,6 @@ const About = () => (
                 <li>
                     <a href="https://github.com/mjmaurer">Michael Maurer</a>
                 </li>
-
                 <li>
                     <a href="https://github.com/rudytak">Ondřej Sedláček</a>
                 </li>
@@ -303,5 +282,4 @@ const About = () => (
         </div>
     </div>
 );
-
 export default About;
